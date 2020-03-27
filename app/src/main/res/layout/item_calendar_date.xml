@@ -1,0 +1,566 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools" xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+                name="date"
+                type="com.icoo.ssgsag_android.data.model.date.Date"/>
+    </data>
+
+    <RelativeLayout
+            app:calendar_height="@{date.lines}"
+            android:id="@+id/item_date_ll_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:paddingBottom="10dp"
+            android:background="@color/white">
+
+        <View
+                android:id="@+id/item_calendar_date_v"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#eeeeee"
+                android:layout_marginBottom="2dp"/>
+
+        <TextView
+                tools:text="day"
+                android:id="@+id/item_date_tv_day"
+                android:layout_marginBottom="2dp"
+                android:paddingBottom="3dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:gravity="center"
+                android:layout_centerInParent="true"
+                android:textColor="@color/activeMonth"
+                app:calendar_date="@{date}"
+                android:layout_below="@+id/item_calendar_date_v"/>
+
+        <LinearLayout
+                android:layout_marginHorizontal="2dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_below="@+id/item_date_tv_day">
+
+            <androidx.cardview.widget.CardView
+                    app:date="@{date}"
+                    app:position="@{0}"
+                    tools:visibility="visible"
+                    android:visibility="invisible"
+                    android:id="@+id/item_date_cv_schedule_1"
+                    android:layout_marginBottom="2dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    app:cardElevation="0dp"
+                    app:cardCornerRadius="4dp"
+                    app:cardBackgroundColor="@color/contest">
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                    <ImageView
+                            tools:visibility="visible"
+                            app:date="@{date}"
+                            app:position="@{0}"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/calendar_favorite"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="4dp"/>
+
+                    <TextView
+                            android:layout_marginStart="2dp"
+                            tools:text="월별공모"
+                            app:date="@{date}"
+                            app:position="@{0}"
+                            android:fontFamily="@font/noto_sans_kr_regular"
+                            android:gravity="center_vertical"
+                            android:id="@+id/item_date_tv_schedule_1_text"
+                            android:textColor="@color/white"
+                            android:textSize="8sp"
+                            android:maxLines="1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                    app:date="@{date}"
+                    app:position="@{1}"
+                    tools:visibility="visible"
+                    android:visibility="invisible"
+                    android:id="@+id/item_date_cv_schedule_2"
+                    android:layout_marginBottom="2dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    app:cardElevation="0dp"
+                    app:cardCornerRadius="4dp"
+                    app:cardBackgroundColor="@color/contest">
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                    <ImageView
+                            tools:visibility="visible"
+                            app:date="@{date}"
+                            app:position="@{1}"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/calendar_favorite"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="4dp"/>
+
+                    <TextView
+                            android:layout_marginStart="2dp"
+                            tools:text="월별공모"
+                            app:date="@{date}"
+                            app:position="@{1}"
+                            android:fontFamily="@font/noto_sans_kr_regular"
+                            android:id="@+id/item_date_tv_schedule_2_text"
+                            android:textColor="@color/white"
+                            android:textSize="8sp"
+                            android:maxLines="1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                    app:date="@{date}"
+                    app:position="@{2}"
+                    tools:visibility="visible"
+                    android:visibility="invisible"
+                    android:id="@+id/item_date_cv_schedule_3"
+                    android:layout_marginBottom="2dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    app:cardElevation="0dp"
+                    app:cardCornerRadius="4dp"
+                    app:cardBackgroundColor="@color/contest">
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                    <ImageView
+                            tools:visibility="visible"
+                            app:date="@{date}"
+                            app:position="@{2}"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/calendar_favorite"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="4dp"/>
+
+                    <TextView
+                            android:layout_marginStart="2dp"
+                            tools:text="월별공모"
+                            app:date="@{date}"
+                            app:position="@{2}"
+                            android:fontFamily="@font/noto_sans_kr_regular"
+                            android:gravity="center_vertical"
+                            android:id="@+id/item_date_tv_schedule_3_text"
+                            android:textColor="@color/white"
+                            android:textSize="8sp"
+                            android:maxLines="1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                    android:id="@+id/item_date_cv_schedule_4"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginBottom="2dp"
+                    android:layout_weight="1"
+                    android:visibility="invisible"
+                    app:cardBackgroundColor="@color/contest"
+                    app:cardCornerRadius="4dp"
+                    app:cardElevation="0dp"
+                    app:date="@{date}"
+                    app:position="@{3}"
+                    tools:visibility="visible">
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                    <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="4dp"
+                            android:src="@drawable/calendar_favorite"
+                            app:date="@{date}"
+                            app:position="@{3}"
+                            tools:visibility="visible" />
+
+                    <TextView
+                            android:id="@+id/item_date_tv_schedule_4_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="2dp"
+                            android:fontFamily="@font/noto_sans_kr_regular"
+                            android:gravity="center_vertical"
+                            android:maxLines="1"
+                            android:textColor="@color/white"
+                            android:textSize="8sp"
+                            app:date="@{date}"
+                            app:position="@{3}"
+                            tools:text="월별공모" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+
+        <androidx.cardview.widget.CardView
+                app:date="@{date}"
+                app:position="@{4}"
+                tools:visibility="visible"
+                android:visibility="gone"
+                android:id="@+id/item_date_cv_schedule_5"
+                android:layout_marginBottom="2dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:cardElevation="0dp"
+                app:cardCornerRadius="4dp"
+                app:cardBackgroundColor="@color/white"
+                android:layout_alignParentBottom="true">
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:orientation="horizontal">
+
+
+                <TextView
+                        android:layout_marginStart="2dp"
+                        tools:text="+7"
+                        app:date="@{date}"
+                        app:position="@{4}"
+                        android:fontFamily="@font/noto_sans_kr_regular"
+                        android:gravity="center_vertical"
+                        android:id="@+id/item_date_tv_schedule_5_text"
+                        android:textColor="#999999"
+                        android:textSize="10sp"
+                        android:maxLines="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </RelativeLayout>
+</layout>
+
+
+        <!--<?xml version="1.0" encoding="utf-8"?>-->
+        <!--<layout xmlns:tools="http://schemas.android.com/tools" xmlns:app="http://schemas.android.com/apk/res-auto">-->
+
+        <!--<data>-->
+        <!--<variable-->
+        <!--clubName="date"-->
+        <!--type="com.ssgsag.data.model.date.Date"/>-->
+        <!--</data>-->
+
+        <!--<LinearLayout-->
+        <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
+        <!--android:id="@+id/item_date_ll_view"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:orientation="vertical"-->
+        <!--android:gravity="center">-->
+
+        <!--<View android:layout_width="match_parent" android:layout_height="1dp"-->
+        <!--android:background="#eeeeee"-->
+        <!--android:layout_marginBottom="2dp"/>-->
+
+        <!--<TextView-->
+        <!--tools:text="day"-->
+        <!--android:id="@+id/item_date_tv_day"-->
+        <!--android:layout_marginBottom="2dp"-->
+        <!--android:layout_width="24dp"-->
+        <!--android:layout_height="24dp"-->
+        <!--android:gravity="center"-->
+        <!--android:textColor="@color/activeMonth"-->
+        <!--app:calendar_date="@{date}"/>-->
+
+        <!--<LinearLayout-->
+        <!--android:layout_marginBottom="12dp"-->
+        <!--android:layout_marginHorizontal="2dp"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:orientation="vertical">-->
+
+        <!--<androidx.cardview.widget.CardView-->
+        <!--app:date="@{date}"-->
+        <!--app:position="@{0}"-->
+        <!--android:visibility="gone"-->
+        <!--android:id="@+id/item_date_cv_schedule_1"-->
+        <!--android:layout_marginBottom="1dp"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="13dp"-->
+        <!--app:cardElevation="0dp"-->
+        <!--app:cardCornerRadius="2dp"-->
+        <!--app:cardBackgroundColor="@color/contest">-->
+
+        <!--<TextView-->
+        <!--android:layout_marginStart="3dp"-->
+        <!--tools:text="월별공모"-->
+        <!--app:date="@{date}"-->
+        <!--app:position="@{0}"-->
+        <!--android:fontFamily="@font/noto_sans_kr_regular"-->
+        <!--android:gravity="center_vertical"-->
+        <!--android:id="@+id/item_date_tv_schedule_1_text"-->
+        <!--android:textColor="@color/white"-->
+        <!--android:textSize="8sp"-->
+        <!--android:maxLines="1"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent"/>-->
+
+        <!--</androidx.cardview.widget.CardView>-->
+
+        <!--<androidx.cardview.widget.CardView-->
+        <!--app:date="@{date}"-->
+        <!--app:position="@{1}"-->
+        <!--android:visibility="gone"-->
+        <!--android:id="@+id/item_date_cv_schedule_2"-->
+        <!--android:layout_marginBottom="1dp"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="13dp"-->
+        <!--app:cardElevation="0dp"-->
+        <!--app:cardCornerRadius="2dp"-->
+        <!--app:cardBackgroundColor="@color/contest">-->
+
+        <!--<TextView-->
+        <!--android:layout_marginStart="3dp"-->
+        <!--tools:text="월별공모"-->
+        <!--app:date="@{date}"-->
+        <!--app:position="@{1}"-->
+        <!--android:fontFamily="@font/noto_sans_kr_regular"-->
+        <!--android:gravity="center_vertical"-->
+        <!--android:id="@+id/item_date_tv_schedule_2_text"-->
+        <!--android:textColor="@color/white"-->
+        <!--android:textSize="8sp"-->
+        <!--android:maxLines="1"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent"/>-->
+
+        <!--</androidx.cardview.widget.CardView>-->
+
+        <!--<androidx.cardview.widget.CardView-->
+        <!--app:date="@{date}"-->
+        <!--app:position="@{2}"-->
+        <!--android:visibility="gone"-->
+        <!--android:id="@+id/item_date_cv_schedule_3"-->
+        <!--android:layout_marginBottom="1dp"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="13dp"-->
+        <!--app:cardElevation="0dp"-->
+        <!--app:cardCornerRadius="2dp"-->
+        <!--app:cardBackgroundColor="@color/contest">-->
+
+        <!--<TextView-->
+        <!--android:layout_marginStart="3dp"-->
+        <!--tools:text="월별공모"-->
+        <!--app:date="@{date}"-->
+        <!--app:position="@{2}"-->
+        <!--android:fontFamily="@font/noto_sans_kr_regular"-->
+        <!--android:gravity="center_vertical"-->
+        <!--android:id="@+id/item_date_tv_schedule_3_text"-->
+        <!--android:textColor="@color/white"-->
+        <!--android:textSize="8sp"-->
+        <!--android:maxLines="1"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent"/>-->
+
+        <!--</androidx.cardview.widget.CardView>-->
+
+        <!--<androidx.cardview.widget.CardView-->
+        <!--app:date="@{date}"-->
+        <!--app:position="@{4}"-->
+        <!--android:visibility="gone"-->
+        <!--android:layout_marginBottom="1dp"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="13dp"-->
+        <!--app:cardElevation="0dp"-->
+        <!--app:cardCornerRadius="2dp"-->
+        <!--app:cardBackgroundColor="@color/contest">-->
+
+        <!--<TextView-->
+        <!--android:layout_marginStart="3dp"-->
+        <!--tools:text="월별공모"-->
+        <!--app:date="@{date}"-->
+        <!--app:position="@{4}"-->
+        <!--android:fontFamily="@font/noto_sans_kr_regular"-->
+        <!--android:gravity="center_vertical"-->
+        <!--android:textColor="@color/white"-->
+        <!--android:textSize="8sp"-->
+        <!--android:maxLines="1"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent"/>-->
+
+        <!--</androidx.cardview.widget.CardView>-->
+
+        <!--<androidx.cardview.widget.CardView-->
+        <!--app:date="@{date}"-->
+        <!--app:position="@{5}"-->
+        <!--android:visibility="gone"-->
+        <!--android:layout_marginBottom="1dp"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="13dp"-->
+        <!--app:cardElevation="0dp"-->
+        <!--app:cardCornerRadius="2dp"-->
+        <!--app:cardBackgroundColor="@color/contest">-->
+
+        <!--<TextView-->
+        <!--android:layout_marginStart="3dp"-->
+        <!--tools:text="월별공모"-->
+        <!--app:date="@{date}"-->
+        <!--app:position="@{5}"-->
+        <!--android:fontFamily="@font/noto_sans_kr_regular"-->
+        <!--android:gravity="center_vertical"-->
+        <!--android:textColor="@color/white"-->
+        <!--android:textSize="8sp"-->
+        <!--android:maxLines="1"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent"/>-->
+
+        <!--</androidx.cardview.widget.CardView>-->
+
+        <!--<androidx.cardview.widget.CardView-->
+        <!--app:date="@{date}"-->
+        <!--app:position="@{6}"-->
+        <!--android:visibility="gone"-->
+        <!--android:layout_marginBottom="1dp"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="13dp"-->
+        <!--app:cardElevation="0dp"-->
+        <!--app:cardCornerRadius="2dp"-->
+        <!--app:cardBackgroundColor="@color/contest">-->
+
+        <!--<TextView-->
+        <!--android:layout_marginStart="3dp"-->
+        <!--tools:text="월별공모"-->
+        <!--app:date="@{date}"-->
+        <!--app:position="@{6}"-->
+        <!--android:fontFamily="@font/noto_sans_kr_regular"-->
+        <!--android:gravity="center_vertical"-->
+        <!--android:textColor="@color/white"-->
+        <!--android:textSize="8sp"-->
+        <!--android:maxLines="1"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent"/>-->
+
+        <!--</androidx.cardview.widget.CardView>-->
+
+        <!--<androidx.cardview.widget.CardView-->
+        <!--app:date="@{date}"-->
+        <!--app:position="@{7}"-->
+        <!--android:visibility="gone"-->
+        <!--android:layout_marginBottom="1dp"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="13dp"-->
+        <!--app:cardElevation="0dp"-->
+        <!--app:cardCornerRadius="2dp"-->
+        <!--app:cardBackgroundColor="@color/contest">-->
+
+        <!--<TextView-->
+        <!--android:layout_marginStart="3dp"-->
+        <!--tools:text="월별공모"-->
+        <!--app:date="@{date}"-->
+        <!--app:position="@{7}"-->
+        <!--android:fontFamily="@font/noto_sans_kr_regular"-->
+        <!--android:gravity="center_vertical"-->
+        <!--android:textColor="@color/white"-->
+        <!--android:textSize="8sp"-->
+        <!--android:maxLines="1"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent"/>-->
+
+        <!--</androidx.cardview.widget.CardView>-->
+
+        <!--<androidx.cardview.widget.CardView-->
+        <!--app:date="@{date}"-->
+        <!--app:position="@{8}"-->
+        <!--android:visibility="gone"-->
+        <!--android:layout_marginBottom="1dp"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="13dp"-->
+        <!--app:cardElevation="0dp"-->
+        <!--app:cardCornerRadius="2dp"-->
+        <!--app:cardBackgroundColor="@color/contest">-->
+
+        <!--<TextView-->
+        <!--android:layout_marginStart="3dp"-->
+        <!--tools:text="월별공모"-->
+        <!--app:date="@{date}"-->
+        <!--app:position="@{8}"-->
+        <!--android:fontFamily="@font/noto_sans_kr_regular"-->
+        <!--android:gravity="center_vertical"-->
+        <!--android:textColor="@color/white"-->
+        <!--android:textSize="8sp"-->
+        <!--android:maxLines="1"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent"/>-->
+
+        <!--</androidx.cardview.widget.CardView>-->
+
+        <!--<androidx.cardview.widget.CardView-->
+        <!--app:date="@{date}"-->
+        <!--app:position="@{9}"-->
+        <!--android:visibility="gone"-->
+        <!--android:layout_marginBottom="1dp"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="13dp"-->
+        <!--app:cardElevation="0dp"-->
+        <!--app:cardCornerRadius="2dp"-->
+        <!--app:cardBackgroundColor="@color/contest">-->
+
+        <!--<TextView-->
+        <!--android:layout_marginStart="3dp"-->
+        <!--tools:text="월별공모"-->
+        <!--app:date="@{date}"-->
+        <!--app:position="@{9}"-->
+        <!--android:fontFamily="@font/noto_sans_kr_regular"-->
+        <!--android:gravity="center_vertical"-->
+        <!--android:textColor="@color/white"-->
+        <!--android:textSize="8sp"-->
+        <!--android:maxLines="1"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent"/>-->
+
+        <!--</androidx.cardview.widget.CardView>-->
+
+        <!--</LinearLayout>-->
+        <!--</LinearLayout>-->
+        <!--</layout>-->

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:tool="http://schemas.android.com/tools">
+    <data>
+        <variable
+                name="subscribeFilter"
+                type="com.icoo.ssgsag_android.data.model.subscribe.SubscribeFilter"/>
+    </data>
+
+    <androidx.cardview.widget.CardView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            app:cardCornerRadius="15dp"
+            android:layout_marginBottom="8dp"
+            app:cardElevation="0dp">
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="15dp"
+                android:paddingVertical="8dp"
+                android:background="@drawable/selector_subscribe_intern_filter_background"
+                filterBg="@{subscribeFilter}">
+            <TextView
+                    android:id="@+id/item_subscribe_intern_filter_tv"
+                    tool:text ="SW 개발"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{subscribeFilter.name}"
+                    android:textSize="13dp"
+                    android:textColor="@drawable/selector_subscribe_intern_filter_text"
+                    android:fontFamily="@font/noto_sans_kr_medium"
+                    android:lineHeight="14sp"
+                    android:layout_centerVertical="true"/>
+        </RelativeLayout>
+
+
+
+    </androidx.cardview.widget.CardView>
+</layout>

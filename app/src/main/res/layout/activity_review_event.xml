@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+                name="vm"
+                type="com.icoo.ssgsag_android.ui.main.review.event.ReviewEventViewModel" />
+    </data>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/act_review_event_cl_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/toolbar_height"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+        <ImageView
+                android:id="@+id/act_review_event_iv_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/cancel_grey"
+                android:layout_marginStart="12dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/noto_sans_kr_bold"
+                android:text="@string/review_event"
+                android:textColor="@color/black_2"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/act_review_event_cl_toolbar"
+            android:layout_above="@+id/act_review_event_cl_done"
+            android:layout_weight="1"
+            android:overScrollMode="never"
+            android:fillViewport="true">
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="40dp">
+
+    <ImageView
+            android:id="@+id/act_review_event_iv_photo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/img_starbucks"
+            android:adjustViewBounds="true"
+            android:layout_marginTop="42dp"
+            />
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="28dp"
+            android:layout_marginHorizontal="24dp">
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/noto_sans_kr_bold"
+                android:textSize="24dp"
+                android:textColor="@color/black_1"
+                android:text="@string/review_event_ment"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/noto_sans_kr_regular"
+                android:textSize="14dp"
+                android:textColor="@color/grey_1"
+                android:text="정성스런 후기일수록, 여러 후기 쓸수록 당첨확률 up!\n(후기가 승인되면 이벤트에 자동으로 응모됩니다.) "
+                android:layout_marginTop="4dp"/>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="32dp">
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="전화번호(-없이)"
+                    android:fontFamily="@font/noto_sans_kr_regular"
+                    android:textSize="12sp"
+                    android:textColor="@color/black_1"/>
+
+            <EditText
+                    android:id="@+id/act_review_event_et_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/noto_sans_kr_regular"
+                    android:imeOptions="actionNext"
+                    android:singleLine="true"
+                    android:hint="01012341234"
+                    android:textColor="@color/black_1"
+                    android:textSize="14sp"
+                    android:layout_marginTop="4dp"
+                    style="@style/EditTheme"/>
+        </LinearLayout>
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="20dp">
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="이름"
+                    android:fontFamily="@font/noto_sans_kr_regular"
+                    android:textSize="12sp"
+                    android:textColor="@color/black_1"/>
+
+            <EditText
+                    android:id="@+id/act_review_event_et_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/noto_sans_kr_regular"
+                    android:imeOptions="actionNext"
+                    android:singleLine="true"
+                    android:hint="김슥삭"
+                    android:textColor="@color/black_1"
+                    android:textSize="14sp"
+                    android:layout_marginTop="4dp"
+                    style="@style/EditTheme"/>
+        </LinearLayout>
+
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp">
+
+            <CheckBox
+                    android:paddingRight="8dp"
+                    android:id="@+id/act_review_event_cb_personal_info"
+                    android:button="@color/very_light_pink"
+                    android:background="@drawable/cb_selector"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"/>
+            <LinearLayout
+                    android:id="@+id/act_review_event_ll_personal_info"
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp">
+                <TextView
+                        android:text="개인정보 제공동의"
+                        android:textColor="@color/black_1"
+                        android:fontFamily="@font/noto_sans_kr_regular"
+                        android:textSize="10sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                <TextView
+                        android:text="개인정보는 이벤트 추첨 외 용도로 사용되지 않습니다."
+                        android:textColor="@color/grey_2"
+                        android:textStyle="normal"
+                        android:fontFamily="@font/noto_sans_kr_regular"
+                        android:textSize="10sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+        </LinearLayout>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp">
+
+            <CheckBox
+                    android:paddingRight="8dp"
+                    android:id="@+id/act_review_event_cb_push_alarm"
+                    android:button="@color/very_light_pink"
+                    android:background="@drawable/cb_selector"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"/>
+            <LinearLayout
+                    android:id="@+id/act_review_event_ll_push_alarm"
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp">
+                <TextView
+                        android:text="푸쉬알림 동의"
+                        android:textColor="@color/black_1"
+                        android:fontFamily="@font/noto_sans_kr_regular"
+                        android:textSize="10sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                <TextView
+                        android:text="매일 점심시간에 꼭 필요한 맞춤정보를 알려드려요."
+                        android:textColor="@color/grey_2"
+                        android:textStyle="normal"
+                        android:fontFamily="@font/noto_sans_kr_regular"
+                        android:textSize="10sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    </LinearLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/act_review_event_cl_done"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="@color/grey_2"
+            android:layout_alignParentBottom="true">
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="제출하기"
+                android:fontFamily="@font/noto_sans_kr_medium"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</RelativeLayout>
+</layout>

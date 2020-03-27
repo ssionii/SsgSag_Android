@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+                name="vm"
+                type="com.icoo.ssgsag_android.ui.main.ssgSag.todaySwipePoster.TodaySwipePosterViewModel" />
+    </data>
+
+    <RelativeLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white">
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/act_today_swipe_poster_rl_go_calendar">
+            <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:background="@color/white"
+                    android:paddingLeft="12dp">
+                <ImageView
+                        android:id="@+id/act_today_swipe_poster_iv_back"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/back"/>
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/today_ssgsag"
+                        android:textColor="#444444"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/noto_sans_kr_bold"
+                        android:layout_centerInParent="true"/>
+            </RelativeLayout>
+
+            <androidx.core.widget.NestedScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:overScrollMode="never"
+                    android:fillViewport="true">
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="1">
+
+                <LinearLayout
+                        android:visibility="gone"
+                        android:id="@+id/act_today_swipe_poster_ll_ssg_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="32dp">
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/noto_sans_kr_bold"
+                            android:textSize="18sp"
+                            android:textColor="@color/black_1"
+                            android:text="@string/today_ssg"
+                            android:layout_marginStart="24dp"
+                            />
+                    <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/act_today_swipe_poster_rv_ssg"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:overScrollMode="never"
+                            android:layout_marginTop="20dp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                        android:visibility="gone"
+                        android:id="@+id/act_today_swipe_poster_ll_sag_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="48dp">
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/noto_sans_kr_bold"
+                            android:textSize="18sp"
+                            android:textColor="@color/black_1"
+                            android:text="@string/today_sag"
+                            android:layout_marginStart="24dp"
+                            />
+                    <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/act_today_swipe_poster_rv_sag"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:overScrollMode="never"
+                            android:layout_marginTop="20dp"/>
+                </LinearLayout>
+
+                    <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:paddingBottom="40dp">
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="오늘의 추천정보는 유익하셨나요?"
+                                android:fontFamily="@font/noto_sans_kr_medium"
+                                android:textSize="14sp"
+                                android:textColor="@color/grey_1"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_marginTop="50dp"/>
+
+                        <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_marginTop="12dp">
+                            <ImageView
+                                    android:id="@+id/act_today_swipe_poster_iv_no"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/selector_today_swipe_no"
+                                    android:layout_marginEnd="33dp"/>
+                            <ImageView
+                                    android:id="@+id/act_today_swipe_poster_iv_yes"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/selector_today_swipe_yes"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+
+            </LinearLayout>
+
+            </androidx.core.widget.NestedScrollView>
+
+
+        </LinearLayout>
+        <ProgressBar
+                android:visibility="@{vm.isProgress}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"/>
+
+        <RelativeLayout
+                android:id="@+id/act_today_swipe_poster_rl_go_calendar"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:background="@color/ssgsag"
+                android:layout_alignParentBottom="true">
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/noto_sans_kr_medium"
+                    android:textSize="16sp"
+                    android:textColor="@color/white"
+                    android:text="내 캘린더에서 확인하기"
+                    android:layout_centerInParent="true"
+                    />
+        </RelativeLayout>
+    </RelativeLayout>
+
+
+</layout>

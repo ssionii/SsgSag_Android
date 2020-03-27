@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:background="@drawable/header_dialog_plus_radius"
+>
+    <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/img_starbucks"
+            android:adjustViewBounds="true"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/noto_sans_kr_bold"
+            android:textSize="18sp"
+            android:textColor="@color/black_1"
+            android:text="동아리 후기 작성하고\n아이패드/에어팟 받자!😚"
+            android:textAlignment="center"
+            android:layout_marginTop="6dp"
+            />
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/noto_sans_kr_regular"
+            android:textSize="12sp"
+            android:textColor="@color/grey_1"
+            android:text="후기 작성 완료 시 이벤트창을 통해 바로 응모할 수 있어요!"
+            android:textAlignment="center"
+            android:layout_marginTop="5dp"
+            />
+
+
+    <androidx.cardview.widget.CardView
+            android:id="@+id/frag_review_main_popup_cv"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            app:cardCornerRadius="4dp"
+            app:cardElevation="2dp"
+            app:cardBackgroundColor="@color/ssgsag"
+            android:layout_marginHorizontal="32dp"
+            android:layout_marginTop="31dp">
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="후기 작성하러가기"
+                android:fontFamily="@font/noto_sans_kr_medium"
+                android:textSize="12sp"
+                android:textColor="@color/white"
+                android:layout_gravity="center" />
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>
+<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--        xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--        android:orientation="vertical"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:gravity="center_horizontal"-->
+<!--        android:background="@drawable/header_dialog_plus_radius"-->
+<!--        android:paddingTop="54dp"-->
+<!--        android:paddingHorizontal="32dp">-->
+<!--    <ImageView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:src="@drawable/img_career_popup"/>-->
+<!--    <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:fontFamily="@font/noto_sans_kr_bold"-->
+<!--            android:textSize="18sp"-->
+<!--            android:textColor="@color/black_1"-->
+<!--            android:text="어디로 가야하죠~아죠씨?\n후기를 통해 새내기들을 도와주세요!"-->
+<!--            android:textAlignment="center"-->
+<!--            android:layout_marginTop="15dp"-->
+<!--            />-->
+
+
+<!--    <androidx.cardview.widget.CardView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="48dp"-->
+<!--            app:cardCornerRadius="4dp"-->
+<!--            app:cardElevation="2dp"-->
+<!--            app:cardBackgroundColor="@color/ssgsag"-->
+<!--            android:layout_marginTop="31dp">-->
+<!--        <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="확인"-->
+<!--                android:fontFamily="@font/noto_sans_kr_medium"-->
+<!--                android:textSize="12sp"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:layout_gravity="center" />-->
+
+<!--    </androidx.cardview.widget.CardView>-->
+
+<!--</LinearLayout>-->

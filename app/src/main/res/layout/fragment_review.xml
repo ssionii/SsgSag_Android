@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+                name="vm"
+                type="com.icoo.ssgsag_android.ui.main.review.ReviewViewModel" />
+    </data>
+
+    <FrameLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white">
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/frag_review_rl_toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:paddingHorizontal="12dp">
+
+                <ImageView
+                        android:id="@+id/frag_review_iv_my_page"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:src="@drawable/profile"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:text="동아리 후기"
+                            android:textSize="16sp"
+                            android:textColor="#444444"
+                            android:fontFamily="@font/noto_sans_kr_bold"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"/>
+
+                <ImageView
+                        android:id="@+id/frag_review_iv_search"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/search_gray"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/frag_review_tl_category"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    app:tabSelectedTextColor="@color/ssgsag"
+                    app:tabTextColor="#bbbbbb"
+                    app:tabIndicatorColor="@color/ssgsag"
+                    app:tabIndicatorHeight="2dp"
+                    app:tabMode="fixed"
+                    app:tabGravity="fill"
+
+                    android:background="@color/white"/>
+            <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/frag_review_vp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:saveEnabled="false"/>
+
+
+        </LinearLayout>
+
+        <androidx.cardview.widget.CardView
+                android:id="@+id/frag_review_cv_write_review"
+                android:layout_width="81dp"
+                android:layout_height="36dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="2dp"
+                app:cardBackgroundColor="@color/ssgsag"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="32dp"
+                >
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="후기 쓰기"
+                    android:fontFamily="@font/noto_sans_kr_medium"
+                    android:textSize="12sp"
+                    android:lineHeight="13sp"
+                    android:layout_gravity="center"
+                    android:textColor="@color/white"/>
+
+        </androidx.cardview.widget.CardView>
+        </RelativeLayout>
+    </FrameLayout>
+</layout>

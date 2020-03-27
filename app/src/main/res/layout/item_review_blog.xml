@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+                name="blogReview"
+                type="com.icoo.ssgsag_android.data.model.review.club.BlogReview" />
+    </data>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="136dp"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="12dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="6dp"
+                            android:ellipsize="end"
+                            android:fontFamily="@font/noto_sans_kr_medium"
+                            android:maxLines="1"
+                            android:text="@{blogReview.blogTitle}"
+                            android:textColor="@color/black_1"
+                            android:textSize="12sp"
+                            tools:text="뚜왓뚜왓 SOPT 후기! ㅎㅎ" />
+
+                    <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:fontFamily="@font/noto_sans_kr_regular"
+                            android:maxLines="3"
+                            android:text="@{blogReview.blogDescription}"
+                            android:textColor="@color/black_1"
+                            android:textSize="12sp"
+                            tools:text="이번주에는 두구두구두구 대망의 APP JAM!! 로 팔로로로로 파롤로로 파롤로롤 몬스타엑스 최고 흥해라 " />
+
+                    <View
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_weight="1" />
+
+                    <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:fontFamily="@font/noto_sans_kr_regular"
+                                android:text="@{blogReview.blogNickname}"
+                                android:textColor="@color/grey_2"
+                                android:textSize="10sp"
+                                tools:text="작성자" />
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:fontFamily="@font/noto_sans_kr_regular"
+                                android:textColor="@color/grey_2"
+                                android:textSize="10sp"
+                                android:text=" | " />
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:fontFamily="@font/noto_sans_kr_regular"
+                                android:text="@{blogReview.blogRegDate}"
+                                android:textColor="@color/grey_2"
+                                android:textSize="10sp"
+                                tools:text="2019.10.22" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <ImageView
+                        android:id="@+id/item_review_blog_iv"
+                        blogReviewImg="@{blogReview.blogImageUrl}"
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/grey_4"/>
+    </LinearLayout>
+
+</layout>

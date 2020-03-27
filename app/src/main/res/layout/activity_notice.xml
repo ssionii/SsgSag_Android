@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.main.myPage.notice.NoticeActivity"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+
+    <androidx.appcompat.widget.Toolbar
+            android:id="@+id/act_notice_tl_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/white"
+            android:paddingLeft="10dp"
+            android:layout_gravity="center_vertical"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+        <TextView
+                android:layout_gravity="center"
+                android:letterSpacing="-0.02"
+                android:textColor="#444444"
+                android:fontFamily="@font/noto_sans_kr_bold"
+                android:textSize="16sp"
+                android:text="공지사항"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <View
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:background="#eeeeee"/>
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/act_notice_rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+</LinearLayout>

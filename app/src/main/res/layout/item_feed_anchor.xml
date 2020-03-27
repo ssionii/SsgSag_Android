@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+        <variable
+                name="category"
+                type="com.icoo.ssgsag_android.data.model.category.Category"/>
+
+    </data>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal">
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="anchor"
+            android:textColor="#bbbbbb"
+            android:textSize="14sp"
+            android:fontFamily="@font/noto_sans_kr_regular"
+            android:lineHeight="14sp"
+            anchorText="@{category.categoryIdx}"
+            selectedAnchorText="@{category.isChecked}"/>
+    <ImageView
+            android:layout_width="6dp"
+            android:layout_height="6dp"
+            android:src="@drawable/circle_656ef0"
+            android:layout_marginTop="7dp"
+            selectedAnchorSelector="@{category.isChecked}"/>
+</LinearLayout>
+</layout>

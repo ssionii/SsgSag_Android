@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+                name="vm"
+                type="com.icoo.ssgsag_android.ui.main.review.main.ReviewMainViewModel" />
+    </data>
+    <FrameLayout
+            android:id="@+id/frag_review_main_fl_container"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="@dimen/main_navi_height"
+            android:background="@color/white">
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/frag_review_main_rl_toolbar"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:paddingHorizontal="12dp">
+
+                    <ImageView
+                            android:id="@+id/frag_review_main_iv_my_page"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:src="@drawable/profile"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:text="@string/review_main_title"
+                            android:textSize="16sp"
+                            android:textColor="#444444"
+                            android:fontFamily="@font/noto_sans_kr_bold"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"/>
+
+                    <ImageView
+                            android:id="@+id/frag_review_main_iv_search"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/search_gray"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/img_starbucks"
+                        android:adjustViewBounds="true"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/review_main_ment"
+                        android:fontFamily="@font/noto_sans_kr_bold"
+                        android:textSize="20sp"
+                        android:textColor="@color/black_1"
+                        android:layout_marginLeft="24dp"
+                        android:layout_marginTop="36dp"/>
+
+                <RelativeLayout
+                        android:id="@+id/frag_review_main_rl_club"
+                        android:layout_width="match_parent"
+                        android:layout_height="80dp"
+                        android:layout_marginHorizontal="20dp"
+                        android:layout_marginTop="40dp"
+                        android:background="@drawable/border_eeeeee_8">
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black_1"
+                            android:text="@string/review_main_club"
+                            android:textSize="16sp"
+                            android:fontFamily="@font/noto_sans_kr_medium"
+                            android:layout_centerInParent="true"
+                            />
+                </RelativeLayout>
+                <RelativeLayout
+                        android:id="@+id/frag_review_main_rl_act"
+                        android:layout_width="match_parent"
+                        android:layout_height="80dp"
+                        android:layout_marginHorizontal="20dp"
+                        android:layout_marginTop="12dp"
+                        android:background="@drawable/border_eeeeee_8">
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black_1"
+                            android:text="@string/review_main_act"
+                            android:textSize="16sp"
+                            android:fontFamily="@font/noto_sans_kr_medium"
+                            android:layout_centerInParent="true"
+                            />
+                </RelativeLayout>
+                <RelativeLayout
+                        android:id="@+id/frag_review_main_rl_intern"
+                        android:layout_width="match_parent"
+                        android:layout_height="80dp"
+                        android:layout_marginHorizontal="20dp"
+                        android:layout_marginTop="12dp"
+                        android:background="@drawable/border_eeeeee_8">
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black_1"
+                            android:text="@string/review_main_intern"
+                            android:textSize="16sp"
+                            android:fontFamily="@font/noto_sans_kr_medium"
+                            android:layout_centerInParent="true"
+                            />
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+    </FrameLayout>
+</layout>

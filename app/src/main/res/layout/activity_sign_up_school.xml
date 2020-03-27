@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+        <variable
+                name="vm"
+                type="com.icoo.ssgsag_android.ui.login.LoginViewModel"/>
+    </data>
+
+    <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.Toolbar
+                android:id="@+id/act_sign_up_school_tb_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/white"
+                android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+        </androidx.appcompat.widget.Toolbar>
+
+        <ImageView
+                android:layout_below="@+id/act_sign_up_school_tb_toolbar"
+                android:scaleType="fitXY"
+                android:src="@drawable/progressbar_3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            <ScrollView
+                    android:layout_below="@+id/act_sign_up_school_tb_toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content">
+                <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                    <RelativeLayout
+
+                            android:layout_marginHorizontal="20dp"
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                        <LinearLayout
+                                android:layout_marginTop="30dp"
+                                android:focusable="true"
+                                android:focusableInTouchMode="true"
+                                android:orientation="vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                            <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="편리한 서비스 제공을 위해 몇 가지 정보가 필요해요!"
+                                    android:textColor="#656ef0"
+                                    android:textSize="13sp"
+                                    android:fontFamily="@font/noto_sans_kr_regular"/>
+                            <TextView
+                                    android:textSize="20sp"
+                                    android:fontFamily="sans-serif"
+                                    android:textStyle="bold"
+                                    android:letterSpacing="-0.02"
+                                    android:textColor="#000"
+                                    android:text="학교 정보를 입력해주세요"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"/>
+                            <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/school_info"
+                                    android:layout_gravity="center_horizontal"
+                                    android:layout_marginVertical="40dp"/>
+
+                            <AutoCompleteTextView
+                                    android:completionThreshold="1"
+                                    android:background="@null"
+                                    android:singleLine="true"
+                                    android:imeOptions="actionNext"
+                                    android:id="@+id/act_sign_up_school_at_school"
+                                    android:hint="학교 선택"
+                                    android:letterSpacing="-0.02"
+                                    android:textColor="#000"
+                                    android:textStyle="normal"
+                                    android:fontFamily="@font/noto_sans_kr_regular"
+                                    android:textSize="17sp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginVertical="8dp"/>
+
+                            <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:background="#e0e0e0"
+                                    android:layout_marginBottom="28dp"/>
+
+                            <AutoCompleteTextView
+                                    android:completionThreshold="1"
+                                    android:background="@null"
+                                    android:singleLine="true"
+                                    android:id="@+id/act_sign_up_school_at_major"
+                                    android:hint="학과 선택"
+                                    android:imeOptions="actionNext"
+                                    android:letterSpacing="-0.02"
+                                    android:textColor="#000"
+                                    android:textStyle="normal"
+                                    android:fontFamily="@font/noto_sans_kr_regular"
+                                    android:textSize="17sp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginVertical="8dp"/>
+
+                            <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:background="#e0e0e0"
+                                    android:layout_marginBottom="28dp"/>
+
+                            <!--<EditText-->
+                            <!--android:maxLength="10"-->
+                            <!--android:inputType="number"-->
+                            <!--android:background="@null"-->
+                            <!--android:imeOptions="actionNext"-->
+                            <!--android:singleLine="true"-->
+                            <!--android:id="@+id/act_sign_up_school_et_grade"-->
+                            <!--android:hint="학년"-->
+                            <!--android:letterSpacing="-0.02"-->
+                            <!--android:textColor="#000"-->
+                            <!--android:textStyle="normal"-->
+                            <!--android:fontFamily="sans-serif"-->
+                            <!--android:textSize="16sp"-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:layout_marginVertical="8dp"/>-->
+
+
+
+                            <Spinner
+                                    android:id="@+id/act_sing_up_school_sn_grade"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="40dp"/>
+
+                            <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:background="#e0e0e0"
+                                    android:layout_marginBottom="28dp"/>
+
+                            <!--<EditText-->
+                            <!--android:maxLength="20"-->
+                            <!--android:inputType="number"-->
+                            <!--android:background="@null"-->
+                            <!--android:imeOptions="actionDone"-->
+                            <!--android:singleLine="true"-->
+                            <!--android:id="@+id/act_sign_up_school_et_sid"-->
+                            <!--android:hint="입학년도 ex)2018"-->
+                            <!--android:letterSpacing="-0.02"-->
+                            <!--android:textColor="#000"-->
+                            <!--android:textStyle="normal"-->
+                            <!--android:fontFamily="sans-serif"-->
+                            <!--android:textSize="16sp"-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:layout_marginVertical="8dp"/>-->
+
+                            <Spinner
+                                    android:layout_gravity="center_vertical"
+                                    android:id="@+id/act_sing_up_school_sn_year"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="40dp"/>
+
+                            <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:background="#e0e0e0"
+                                    android:layout_marginBottom="28dp"/>
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+                </FrameLayout>
+            </ScrollView>
+
+
+
+            <ImageView
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/bt_start_unactive"
+                    android:id="@+id/act_sign_up_school_iv_next"
+                    android:layout_gravity="bottom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</layout>

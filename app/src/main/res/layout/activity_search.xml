@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+                name="vm"
+                type="com.icoo.ssgsag_android.ui.main.allPosters.search.SearchViewModel"/>
+    </data>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white">
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="12dp">
+            <ImageView
+                    android:id="@+id/act_search_iv_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/back"/>
+
+            <EditText
+                    android:id="@+id/act_search_et_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/act_search_iv_back"
+                    android:layout_toLeftOf="@+id/act_search_iv_search"
+                    android:textColor="#444444"
+                    android:textSize="14sp"
+                    android:textAlignment="textEnd"
+                    android:singleLine="true"
+                    android:layout_centerVertical="true"
+                    android:fontFamily="@font/noto_sans_kr_regular"
+                    android:background="@android:color/transparent"
+                    android:layout_marginRight="15dp"
+                    android:hint="포스터 이름으로 검색"
+                    android:textColorHint="#c8c8c8"
+                    android:imeOptions="actionSearch"
+                    android:maxLength="20"/>
+            <ImageView
+                    android:id="@+id/act_search_iv_search"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/search"
+                    android:layout_alignParentRight="true"/>
+
+        </RelativeLayout>
+
+        <TextView
+                android:id="@+id/act_search_tv_keyword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                resultSize="@{vm.resultSize}"
+                keyword="@{vm.keyword}"
+                android:fontFamily="@font/noto_sans_kr_medium"
+                android:textSize="14sp"
+                android:textColor="@color/grey_2"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="14dp"/>
+
+
+        <LinearLayout
+                android:id="@+id/act_search_ll_rgstr_club"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:paddingHorizontal="24dp"
+                android:layout_marginTop="50dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:visibility="gone">
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/noto_sans_kr_bold"
+                    android:textSize="14sp"
+                    android:textColor="@color/ssgsag"
+                    clubRgstr = "@{vm.keyword}"
+                    tools:text="'뜨끈한 국밥' 동아리 등록하러 가기"
+                    />
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_arrow_next_active"
+                    android:layout_marginLeft="4dp"/>
+        </LinearLayout>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/act_search_rv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginTop="20dp"
+                android:background="@color/white" />
+
+
+
+    </LinearLayout>
+
+</layout>

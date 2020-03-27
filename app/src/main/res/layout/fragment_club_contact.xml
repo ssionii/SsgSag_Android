@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+                name="vm"
+                type="com.icoo.ssgsag_android.ui.main.review.club.registration.ClubRgstrViewModel" />
+    </data>
+
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:elevation="0dp"
+            android:id="@+id/fragment_club_contact_container">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/toolbar_height">
+            <ImageView
+                    android:id="@+id/frag_club_contact_iv_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/back"
+                    android:layout_marginStart="12dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/club_registration"
+                    android:textColor="#444444"
+                    android:fontFamily="@font/noto_sans_kr_bold"
+                    android:textSize="16sp"
+                    android:lineHeight="28sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:overScrollMode="never"
+                android:fillViewport="true"
+                android:layout_weight="1">
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        android:layout_marginHorizontal="24dp">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/club_registration_3"
+                            android:fontFamily="@font/noto_sans_kr_medium"
+                            android:textSize="18sp"
+                            android:textColor="#333333"
+                            android:layout_marginTop="28dp" />
+
+                    <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginTop="44dp">
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="이메일"
+                                android:fontFamily="@font/noto_sans_kr_regular"
+                                android:textSize="12sp"
+                                android:textColor="@color/black_1" />
+
+                        <EditText
+                                android:id="@+id/frag_club_contact_et_email"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/noto_sans_kr_regular"
+                                android:imeOptions="actionNext"
+                                android:singleLine="true"
+                                android:textColor="@color/black_1"
+                                android:textSize="14sp"
+                                android:layout_marginTop="4dp"
+                                style="@style/EditTheme"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginTop="32dp">
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="전화번호(-없이)"
+                                android:fontFamily="@font/noto_sans_kr_regular"
+                                android:textSize="12sp"
+                                android:textColor="@color/black_1"/>
+
+                        <EditText
+                                android:id="@+id/frag_club_contact_et_phone"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/noto_sans_kr_regular"
+                                android:imeOptions="actionNext"
+                                android:singleLine="true"
+                                android:textColor="@color/black_1"
+                                android:textSize="14sp"
+                                android:layout_marginTop="4dp"
+                                style="@style/EditTheme"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/frag_club_contact_cl_next"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/bottom_btn_height"
+                        android:layout_gravity="bottom"
+                        android:layout_marginTop="80dp"
+                        android:background="@color/ssgsag">
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="제출하기"
+                            android:fontFamily="@font/noto_sans_kr_medium"
+                            android:textSize="14sp"
+                            android:textColor="@color/white"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+
+
+    </LinearLayout>
+</layout>

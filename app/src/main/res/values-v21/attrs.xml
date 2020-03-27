@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="SplitView">
+        <attr name="splitRatio" format="float"/>
+        <attr name="minSplitTop" format="dimension"/>
+        <attr name="minSplitBottom" format="dimension"/>
+    </declare-styleable>
+
+
+    <declare-styleable name="ImageScaleView">
+        <attr name="matrixType" format="enum">
+            <enum name="top_center" value="0" />
+            <enum name="bottom_center" value="1" />
+        </attr>
+    </declare-styleable>
+
+</resources>

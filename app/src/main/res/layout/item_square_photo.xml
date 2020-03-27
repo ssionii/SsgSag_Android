@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+                name="photo"
+                type="String" />
+    </data>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="8dp">
+
+    <ImageView
+            android:id="@+id/item_square_photo_iv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            glideImgFromSquare="@{photo}"/>
+    <TextView
+            android:id="@+id/item_square_photo_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            tools:text="+10장"
+            android:visibility="gone"
+            android:fontFamily="@font/noto_sans_kr_regular"
+            android:textSize="16sp"
+            android:textColor="@color/white" />
+
+    <ImageView
+            android:id="@+id/item_square_photo_iv_remove"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_x_chip"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="2dp"
+            android:layout_marginRight="2dp"
+            android:visibility="invisible"/>
+</RelativeLayout>
+</layout>

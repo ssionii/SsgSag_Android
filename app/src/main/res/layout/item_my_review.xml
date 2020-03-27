@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+                name="clubPost"
+                type="com.icoo.ssgsag_android.data.model.review.club.ClubPost" />
+    </data>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="12dp"
+        android:paddingBottom="17dp"
+        android:background="@color/white"
+        android:paddingHorizontal="24dp">
+
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="#14656ef0"
+                app:cardCornerRadius="3dp"
+                android:layout_marginRight="4dp">
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="연합"
+                    reviewClubType="@{clubPost.clubType}"
+                    android:layout_margin="4dp"
+                    android:fontFamily="@font/noto_sans_kr_regular"
+                    android:textSize="10sp"
+                    android:lineHeight="10sp"
+                    android:textColor="@color/ssgsag" />
+        </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
+                android:id="@+id/item_Club_review_cv_category1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardElevation="0dp"
+                android:visibility="gone"
+                app:cardBackgroundColor="#14656ef0"
+                app:cardCornerRadius="3dp"
+                android:layout_marginRight="4dp">
+            <TextView
+                    android:id="@+id/item_club_review_tv_category1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="연합"
+                    android:layout_margin="4dp"
+                    android:fontFamily="@font/noto_sans_kr_regular"
+                    android:textSize="10sp"
+                    android:lineHeight="10sp"
+                    android:textColor="@color/ssgsag" />
+        </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
+                android:id="@+id/item_Club_review_cv_category2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardElevation="0dp"
+                android:visibility="gone"
+                app:cardBackgroundColor="#14656ef0"
+                app:cardCornerRadius="3dp"
+                android:layout_marginRight="4dp">
+            <TextView
+                    android:id="@+id/item_club_review_tv_category2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="연합"
+                    android:layout_margin="4dp"
+                    android:fontFamily="@font/noto_sans_kr_regular"
+                    android:textSize="10sp"
+                    android:lineHeight="10sp"
+                    android:textColor="@color/ssgsag" />
+        </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
+                android:id="@+id/item_club_review_Cv_category3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="#14656ef0"
+                app:cardCornerRadius="3dp"
+                android:visibility="gone"
+                android:layout_marginRight="4dp">
+            <TextView
+                    android:id="@+id/item_club_review_tv_category3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="연합"
+                    android:layout_margin="4dp"
+                    android:fontFamily="@font/noto_sans_kr_regular"
+                    android:textSize="10sp"
+                    android:lineHeight="10sp"
+                    android:textColor="@color/ssgsag" />
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{clubPost.clubName}"
+            tools:text="한마디"
+            android:fontFamily="@font/noto_sans_kr_medium"
+            android:textSize="14sp"
+            android:textColor="@color/black_1"
+            android:layout_marginTop="4dp"/>
+
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="4dp">
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                myReviewRegDate="@{clubPost.regDate}"
+                android:textColor="@color/grey_2"
+                android:fontFamily="@font/noto_sans_kr_regular"
+                android:textSize="10sp"
+                tools:text="작성일 : 2020.02.15"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                myReviewAcceptStatus="@{clubPost.adminAccept}"
+                android:textColor="@color/ssgsag"
+                android:fontFamily="@font/noto_sans_kr_regular"
+                android:textSize="10sp"
+                android:layout_marginLeft="4dp"
+                tools:text="상태"/>
+    </LinearLayout>
+    </LinearLayout>
+
+    <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_arrow_next_active"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

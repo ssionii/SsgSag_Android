@@ -1,0 +1,174 @@
+package com.icoo.ssgsag_android.ui.main
+
+import android.content.Context
+import android.content.Intent
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.MotionEvent
+import android.view.View
+import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.RelativeLayout
+import android.widget.Toast
+import com.icoo.ssgsag_android.base.BaseActivity
+import com.icoo.ssgsag_android.base.BasePagerAdapter
+import com.icoo.ssgsag_android.data.local.pref.PreferenceManager
+import com.icoo.ssgsag_android.databinding.ActivityMainBinding
+import com.icoo.ssgsag_android.R
+import com.icoo.ssgsag_android.data.local.pref.SharedPreferenceController
+import com.icoo.ssgsag_android.ui.main.MainActivity.mainActivityContext.mainContext
+import com.icoo.ssgsag_android.ui.main.allPosters.category.AllCategoryFragment
+import com.icoo.ssgsag_android.ui.main.calendar.CalendarFragment
+import com.icoo.ssgsag_android.ui.main.calendar.calendarDetail.CalendarDetailActivity
+import com.icoo.ssgsag_android.ui.main.coachmark.FilterCoachmarkDialogFragment
+import com.icoo.ssgsag_android.ui.main.feed.FeedFragment
+import com.icoo.ssgsag_android.ui.main.review.main.ReviewMainFragment
+import com.icoo.ssgsag_android.ui.main.ssgSag.SsgSagViewModel
+import com.igaworks.v2.core.AdBrixRm
+import org.koin.androidx.viewmodel.ext.android.viewModel
+
+class MainActivity : BaseActivity<ActivityMainBinding, SsgSagViewModel>() {
+
+    override val layoutResID: Int
+        get() = R.layout.activity_main
+    override val viewModel: SsgSagViewModel by viewModel()
+
+    object mainActivityFragment {
+        var mainFragment = MainFragment()
+        lateinit var categoryFragment: AllCategoryFragment
+    }
+
+    object mainActivityContext {
+        lateinit var mainContext: Context
+    }
+
+    interface onKeyBackPressedListener{
+        fun onBack()
+    }
+
+    var mOnKeyBackPressedListener : onKeyBackPressedListener? = null
+    var isSsgSaged = false
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewDataBinding.vm = viewModel
+
+        mainContext = this
+
+        //myAuth를 원래 토큰으로 사용했는데 2.0버전은 실수로 TOKEN이라고 지음... 이미 TOKEN을 받아서 사용하는것도 많고 myAuth를 받아서 사용하는것도
+        //많아가지고 일단 이렇게 했슴다... 점진적으로 다른 클래스에서 서버통신할때 토큰받아오는거 TOKEN으로 수정합시당
+        PreferenceManager(this).putPreference("TOKEN", SharedPreferenceController.getAuthorization(this))
+
+        setViewPager()
+        setTabLayout()
+
+        if(intent.getStringExtra("param")!=null)
+            goToCalendarDetail(intent.getStringExtra("param"))
+
+        if(SharedPreferenceController.getIsFirstOpen(this)){
+            showCoachMark()
+        }
+    }
+
+    // 현재 필터설정만 존재
+    private fun showCoachMark(){
+        val dialogFragment = FilterCoachmarkDialogFragment()
+        dialogFragment.show(supportFragmentManager!!, "frag_dialog_filter_coachmark")
+    }
+
+    private fun setViewPager() {
+
+        //ViewPager
+        viewDataBinding.actMainVp.run {
+            adapter = BasePagerAdapter(supportFragmentManager).apply {
+                addFragment(FeedFragment())
+                addFragment(mainActivityFragment.mainFragment)
+                addFragment(CalendarFragment())
+                addFragment(ReviewMainFragment())
+                isSaveEnabled = false
+            }
+            currentItem = 1
+            offscreenPageLimit = 3
+            // todo: review 추가하면 3으로 늘리기
+        }
+    }
+
+    private fun setTabLayout() {
+        //TabLayout
+        val bottomNavigationLayout: View =
+            LayoutInflater.from(this).inflate(R.layout.navigation_main, null)
+
+        viewDataBinding.actMainTl.run {
+            setupWithViewPager(viewDataBinding.actMainVp)
+            getTabAt(0)!!.customView =
+                bottomNavigationLayout.findViewById(R.id.top_navigation_rl_feed) as RelativeLayout
+            getTabAt(1)!!.customView =
+                bottomNavigationLayout.findViewById(R.id.top_navigation_rl_ssg_sag) as RelativeLayout
+            getTabAt(2)!!.customView =
+                bottomNavigationLayout.findViewById(R.id.top_navigation_rl_calendar) as RelativeLayout
+            getTabAt(3)!!.customView =
+                bottomNavigationLayout.findViewById(R.id.top_navigation_rl_review) as RelativeLayout
+
+            setTabRippleColor(null)
+        }
+    }
+
+    fun moveFragment(item: Int){
+        viewDataBinding.actMainVp.currentItem = item
+    }
+    fun getCurrentPage(): Int{
+        return viewDataBinding.actMainVp.currentItem
+    }
+
+    private fun goToCalendarDetail(posterIdx : String){
+        val intent = Intent(this, CalendarDetailActivity::class.java)
+        val bundle = Bundle().apply {
+            putInt("Idx", posterIdx.toInt())
+            putString("from","main")
+        }
+
+        bundle?.let {
+            intent.putExtras(it)
+        }
+
+        startActivity(intent)
+
+        //adbrix
+        AdBrixRm.event("touchUp_PosterDetail",
+            AdBrixRm.AttrModel().setAttrs("posterIdx",posterIdx.toLong()))
+    }
+
+    /*
+    override fun onBackPressed() {
+        super.onBackPressed()
+
+        val fragmentList = supportFragmentManager.fragments
+        if (fragmentList != null) {
+            //TODO: Perform your logic to pass back press here
+            for (fragment in fragmentList) {
+                if (fragment is IOnBackPressedListener) {
+                    (fragment as IOnBackPressedListener).onBackPressed()
+                }
+            }
+        }
+    }*/
+
+    fun setOnKeyBackPressedListener(listener: onKeyBackPressedListener?){
+        if(listener != null) {
+            mOnKeyBackPressedListener = listener
+        }
+    }
+
+    override fun onBackPressed() {
+        if(mOnKeyBackPressedListener != null){
+            mOnKeyBackPressedListener!!.onBack()
+        }else {
+            super.onBackPressed()
+        }
+    }
+
+    companion object {
+        private val TAG = "MainActivity"
+    }
+
+}

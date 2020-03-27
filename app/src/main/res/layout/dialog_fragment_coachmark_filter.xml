@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout>
+
+
+    <data>
+        <variable
+                name="vm"
+                type="com.icoo.ssgsag_android.ui.main.ssgSag.SsgSagViewModel"/>
+    </data>
+
+    <RelativeLayout
+            android:id="@+id/dialog_frag_coachmark_filter_rl"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#80656ef0"
+            >
+
+        <ImageView
+                android:id="@+id/dialog_frag_coachmark_filter_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_coachmark_filter"
+                android:layout_alignParentRight="true"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="정보 추천 시스템이 업그레이드 되었어요.\n필터를 설정하고 필요한 정보만
+슥-삭 받아보세요!
+"
+                android:textAlignment="viewEnd"
+                android:fontFamily="@font/noto_sans_kr_medium"
+                android:textSize="14sp"
+                android:textColor="@color/white"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/dialog_frag_coachmark_filter_iv"
+                android:layout_marginTop="12dp"
+                android:layout_marginRight="24dp"
+                />
+    </RelativeLayout>
+
+</layout>

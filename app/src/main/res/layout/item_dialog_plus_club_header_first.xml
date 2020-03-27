@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical">
+    <ImageView
+            android:id="@+id/item_dialog_plus_club_header_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/cancel"
+            android:layout_marginLeft="12dp"/>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp"
+            android:layout_below="@+id/item_dialog_plus_club_header_cancel"
+            android:paddingHorizontal="32dp">
+        <androidx.cardview.widget.CardView
+                android:id="@+id/item_dialog_plus_club_header_cv_first"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                app:cardCornerRadius="4dp"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="#26656ef0"
+                android:layout_weight="1">
+            <TextView
+                    android:id="@+id/item_dialog_plus_club_header_tv_first"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="기업형태"
+                    android:fontFamily="@font/noto_sans_kr_medium"
+                    android:textSize="12sp"
+                    android:textColor="@color/ssgsag"
+                    android:layout_gravity="center"/>
+        </androidx.cardview.widget.CardView>
+
+        <View
+                android:layout_width="8dp"
+                android:layout_height="0dp"/>
+
+        <androidx.cardview.widget.CardView
+                android:id="@+id/item_dialog_plus_club_header_cv_second"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                app:cardCornerRadius="4dp"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="@color/grey_4"
+                android:layout_weight="1">
+            <TextView
+                    android:id="@+id/item_dialog_plus_club_header_tv_second"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="관심직무"
+                    android:fontFamily="@font/noto_sans_kr_medium"
+                    android:textSize="12sp"
+                    android:textColor="@color/grey_1"
+                    android:layout_gravity="center"/>
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+</RelativeLayout>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#346df3</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#5e7cff</color>
+
+
+
+    <!--Category color-->
+    <color name="contest">#346df3</color>
+    <color name="contestBg">#0c346df3</color>
+    <color name="act">#5f26cd</color>
+    <color name="actBg">#0c5f26cd</color>
+    <color name="club">#f7b631</color>
+    <color name="clubBg">#0cf7b631</color>
+    <color name="notice">#616161</color>
+    <color name="noticeBg">#0c616161</color>
+    <color name="recruit">#fe6d6d</color>
+    <color name="recruitBg">#0cfe6d6d</color>
+    <color name="education">#fd8f4c</color>
+    <color name="educationBg">#0cfd8f4c</color>
+    <color name="scholarship">#2ebd7a</color>
+    <color name="scholarshipBg">#0c2ebd7a</color>
+    <color name="etc">#c4c4c4</color>
+    <color name="etcBg">#0cc4c4c4</color>
+    <color name="etcText">#707070</color>
+
+
+    <!--MyPage color-->
+    <!--Subscribe color-->
+    <color name="subscribe_banner">#343434</color>
+    <color name="subscribe_active_tag">#ababab</color>
+
+    <!--SsgSag color-->
+
+    <!--Schedule color-->
+    <color name="today">#1eca49</color>
+    <color name="click">#ababab</color>
+    <color name="dayOfWeek">#777777</color>
+    <color name="activeMonth">#666666</color>
+    <color name="passiveMonth">#d7d8d8</color>
+    <color name="sunday">#ff2a42</color>
+    <color name="saturday">#477cff</color>
+
+    <color name="selectedTabColor">#656ef0</color>
+
+
+    <!--이전버전-->
+    <!--Category color-->
+    <color name="categoryContest">#346df3</color>
+    <color name="categoryAct">#f44f44</color>
+    <color name="categoryClub">#f7b631</color>
+    <color name="categoryNotice">#616161</color>
+    <color name="categoryRecruit">#5f26cd</color>
+    <color name="categoryEtc">#707070</color>
+    <color name="categoryEnd">#8b8b8b</color>
+    <!--Schedule color-->
+    <!--SsgSag color-->
+
+    <color name="bright_light_gray">#fbfbfb</color>
+    <color name="brown_grey">#9e9e9e</color>
+    <color name="account_line">#e6e6e6</color>
+    <color name="color_838383_withdrawal">#838383</color>
+    <color name="color_0076ff_cancel">#0076ff</color>
+    <color name="color_8d8d8d_logout">#8d8d8d</color>
+
+    <color name="unselected_text_color">#aaaaaa</color>
+
+
+    <!-- 20/01/13 제플린 styleguide 업데이트 -->
+    <color name="cornflower">#5e7cff</color>
+    <color name="very_light_pink">#c9c9c9</color>
+    <color name="reddish_pink">#ff2d55</color>
+    <color name="deep_sky_blue">#007aff</color>
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+    <color name="dialog_background">#80000000</color>
+
+    <!-- 20/02/03 제플린 styleguide 업데이트 -->
+    <color name="ssgsag">#656ef0</color>
+    <color name="black_1">#333333</color>
+    <color name="black_2">#444444</color>
+    <color name="grey_1">#777777</color>
+    <color name="grey_2">#aaaaaa</color>
+    <color name="grey_3">#cccccc</color>
+    <color name="grey_4">#eeeeee</color>
+
+
+
+
+</resources>

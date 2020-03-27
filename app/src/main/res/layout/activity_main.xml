@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+                name="vm"
+                type="com.icoo.ssgsag_android.ui.main.ssgSag.SsgSagViewModel"/>
+    </data>
+
+    <RelativeLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            android:background="@color/white">
+
+
+        <com.icoo.ssgsag_android.util.view.NonSwipeViewPager
+                android:id="@+id/act_main_vp"
+                android:layout_width="match_parent"
+                android:elevation="0dp"
+                android:layout_height="match_parent"
+                android:saveEnabled="false"/>
+
+        <com.google.android.material.tabs.TabLayout
+                android:id="@+id/act_main_tl"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/main_navi_height"
+                android:elevation="2dp"
+                app:tabIndicator="@null"
+                android:layout_alignParentBottom="true"/>
+
+    </RelativeLayout>
+</layout>

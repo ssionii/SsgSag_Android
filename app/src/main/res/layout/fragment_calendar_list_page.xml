@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+                name="vm"
+                type="com.icoo.ssgsag_android.ui.main.calendar.CalendarViewModel"/>
+    </data>
+
+    <!--
+    <androidx.core.widget.NestedScrollView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="48dp"
+            android:background="@color/white">-->
+        <RelativeLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/main_navi_height"
+                android:background="@color/white">
+
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/frag_calendar_list_page_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"/>
+
+            <ProgressBar
+                    android:visibility="@{vm.isProgress}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"/>
+
+        </RelativeLayout>
+
+    <!--</androidx.core.widget.NestedScrollView>-->
+
+</layout>

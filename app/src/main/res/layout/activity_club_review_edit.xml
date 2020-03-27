@@ -1,0 +1,933 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+                name="vm"
+                type="com.icoo.ssgsag_android.ui.main.myPage.myReview.MyReviewViewModel" />
+    </data>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:elevation="0dp">
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/toolbar_height">
+        <ImageView
+                android:id="@+id/act_club_review_edit_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/cancel_grey"
+                android:layout_marginStart="12dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/review_edit"
+                android:textColor="#444444"
+                android:fontFamily="@font/noto_sans_kr_bold"
+                android:textSize="16sp"
+                android:lineHeight="28sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.core.widget.NestedScrollView
+            android:id="@+id/act_club_review_edit_nsv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:overScrollMode="never"
+            android:fillViewport="true">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="24dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="32dp"
+                            android:fontFamily="@font/noto_sans_kr_bold"
+                            android:text="@string/review_edit_info"
+                            android:textColor="@color/black_1"
+                            android:textSize="18sp" />
+
+                    <LinearLayout
+                            android:id="@+id/act_club_review_edit_ll_univ"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="36dp"
+                            android:orientation="vertical">
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/noto_sans_kr_regular"
+                                android:text="소속 학교는"
+                                android:textColor="@color/black_1"
+                                android:textSize="12sp" />
+
+                        <TextView
+                                android:id="@+id/act_club_review_edit_tv_univ"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginVertical="4dp"
+                                android:fontFamily="@font/noto_sans_kr_regular"
+                                android:text="@{vm.myReviewDetail.univOrLocation}"
+                                android:imeOptions="actionNext"
+                                android:singleLine="true"
+                                android:textColor="@color/grey_1"
+                                android:textSize="14sp" />
+
+                        <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/grey_4" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                            android:id="@+id/act_club_review_edit_ll_act_place"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="32dp"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/noto_sans_kr_regular"
+                                android:text="활동 지역은"
+                                android:textColor="@color/black_1"
+                                android:textSize="12sp" />
+
+                        <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                            <TextView
+                                    android:id="@+id/act_club_review_edit_tv_act_place"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginVertical="4dp"
+                                    android:fontFamily="@font/noto_sans_kr_regular"
+                                    android:text="@{vm.myReviewDetail.univOrLocation}"
+                                    android:imeOptions="actionNext"
+                                    android:singleLine="true"
+                                    android:textColor="@color/grey_1"
+                                    android:textSize="14sp" />
+
+                            <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:background="@color/grey_4" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="32dp"
+                            android:orientation="vertical">
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/noto_sans_kr_regular"
+                                android:text="동아리 이름은"
+                                android:textColor="#333333"
+                                android:textSize="12sp" />
+
+                        <TextView
+                                android:id="@+id/act_club_review_edit_tv_club_name"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginVertical="4dp"
+                                android:fontFamily="@font/noto_sans_kr_regular"
+                                android:text="@{vm.myReviewDetail.clubName}"
+                                android:imeOptions="actionNext"
+                                android:singleLine="true"
+                                android:textColor="@color/grey_1"
+                                android:textSize="14sp" />
+
+                        <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/grey_4" />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="32dp"
+                            android:orientation="vertical">
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/noto_sans_kr_regular"
+                                android:text="활동 시기는"
+                                android:textColor="#333333"
+                                android:textSize="12sp" />
+
+                        <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                            <LinearLayout
+                                    android:layout_width="120dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="8dp"
+                                    android:orientation="vertical">
+
+                                <Spinner
+                                        android:id="@+id/act_club_review_edit_sp_start_year"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="35dp"
+                                        android:layout_marginTop="4dp"/>
+
+                                <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="1dp"
+                                        android:background="@color/grey_4" />
+                            </LinearLayout>
+
+
+                            <LinearLayout
+                                    android:layout_width="120dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="8dp"
+                                    android:orientation="vertical">
+
+                                <Spinner
+                                        android:id="@+id/act_club_review_edit_sp_start_month"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="35dp"
+                                        android:layout_marginTop="4dp" />
+
+                                <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="1dp"
+                                        android:background="@color/grey_4" />
+                            </LinearLayout>
+
+                            <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/noto_sans_kr_regular"
+                                    android:text="@string/date_start"
+                                    android:textColor="#444444"
+                                    android:textSize="14sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                            <LinearLayout
+                                    android:layout_width="120dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="8dp"
+                                    android:orientation="vertical">
+
+                                <Spinner
+                                        android:id="@+id/act_club_review_edit_sp_end_year"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="35dp"
+                                        android:layout_marginTop="4dp" />
+
+                                <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="1dp"
+                                        android:background="@color/grey_4" />
+                            </LinearLayout>
+
+
+                            <LinearLayout
+                                    android:layout_width="120dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="8dp"
+                                    android:orientation="vertical">
+
+                                <Spinner
+                                        android:id="@+id/act_club_review_edit_sp_end_month"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="35dp"
+                                        android:layout_marginTop="4dp"/>
+
+                                <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="1dp"
+                                        android:background="@color/grey_4" />
+                            </LinearLayout>
+
+                            <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/noto_sans_kr_regular"
+                                    android:text="@string/date_end"
+                                    android:textColor="#444444"
+                                    android:textSize="14sp" />
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View
+                        android:layout_width="match_parent"
+                        android:layout_height="8dp"
+                        android:layout_marginTop="48dp"
+                        android:background="@color/grey_4" />
+
+
+                <!-- 총 별점 추천  -->
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="24dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="32dp"
+                            android:fontFamily="@font/noto_sans_kr_bold"
+                            android:text="@string/review_edit_score"
+                            android:textColor="@color/black_1"
+                            android:textSize="18sp" />
+
+                    <me.zhanghai.android.materialratingbar.MaterialRatingBar
+                            android:id="@+id/act_club_review_edit_rb_0"
+                            style="@style/writeReviewRatingBar"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="20dp"
+                            android:layout_marginTop="32dp"
+                            android:stepSize="1"
+                            android:rating="@{vm.myReviewDetail.score0}"
+                            app:mrb_fillBackgroundStars="false"
+                            app:mrb_progressTint="#FFD026"
+                            app:mrb_secondaryProgressTint="#FFD026" />
+
+                    <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="20dp">
+
+                        <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/noto_sans_kr_regular"
+                                android:text="최악"
+                                android:textAlignment="center"
+                                android:textColor="@color/grey_1"
+                                android:textSize="8sp" />
+
+                        <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/noto_sans_kr_regular"
+                                android:text="별로"
+                                android:textAlignment="center"
+                                android:textColor="@color/grey_1"
+                                android:textSize="8sp" />
+
+                        <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/noto_sans_kr_regular"
+                                android:text="쏘쏘"
+                                android:textAlignment="center"
+                                android:textColor="@color/grey_1"
+                                android:textSize="8sp" />
+
+                        <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/noto_sans_kr_regular"
+                                android:text="좋아요"
+                                android:textAlignment="center"
+                                android:textColor="@color/grey_1"
+                                android:textSize="8sp" />
+
+                        <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/noto_sans_kr_regular"
+                                android:text="최고에요"
+                                android:textAlignment="center"
+                                android:textColor="@color/grey_1"
+                                android:textSize="8sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                            android:id="@+id/act_club_review_edit_ll_bottom_container"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                        <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="38dp"
+                                android:orientation="vertical">
+
+                            <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/noto_sans_kr_medium"
+                                    android:text="Q1. 동아리 활동이 얼마나 재미있었나요?"
+                                    android:textColor="@color/black_1"
+                                    android:textSize="14sp" />
+
+                            <me.zhanghai.android.materialratingbar.MaterialRatingBar
+                                    android:id="@+id/act_club_review_edit_rb_1"
+                                    style="@style/writeReviewRatingBar"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginHorizontal="20dp"
+                                    android:layout_marginTop="32dp"
+                                    android:stepSize="1"
+                                    android:rating="@{vm.myReviewDetail.score1}"
+                                    app:mrb_fillBackgroundStars="false"
+                                    app:mrb_progressTint="#FFD026"
+                                    app:mrb_secondaryProgressTint="#FFD026" />
+
+                            <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginHorizontal="20dp">
+
+                                <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/noto_sans_kr_regular"
+                                        android:text="개노잼"
+                                        android:textAlignment="center"
+                                        android:textColor="@color/grey_1"
+                                        android:textSize="8sp" />
+
+                                <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/noto_sans_kr_regular"
+                                        android:text="노잼"
+                                        android:textAlignment="center"
+                                        android:textColor="@color/grey_1"
+                                        android:textSize="8sp" />
+
+                                <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/noto_sans_kr_regular"
+                                        android:text="보통"
+                                        android:textAlignment="center"
+                                        android:textColor="@color/grey_1"
+                                        android:textSize="8sp" />
+
+                                <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/noto_sans_kr_regular"
+                                        android:text="꿀잼"
+                                        android:textAlignment="center"
+                                        android:textColor="@color/grey_1"
+                                        android:textSize="8sp" />
+
+                                <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/noto_sans_kr_regular"
+                                        android:text="개꿀잼"
+                                        android:textAlignment="center"
+                                        android:textColor="@color/grey_1"
+                                        android:textSize="8sp" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="38dp"
+                                android:orientation="vertical">
+
+                            <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/noto_sans_kr_medium"
+                                    android:text="Q2. 모임 주제에 대해 전문성이 있나요?"
+                                    android:textColor="@color/black_1"
+                                    android:textSize="14sp" />
+
+                            <me.zhanghai.android.materialratingbar.MaterialRatingBar
+                                    android:id="@+id/act_club_review_edit_rb_2"
+                                    style="@style/writeReviewRatingBar"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginHorizontal="20dp"
+                                    android:layout_marginTop="32dp"
+                                    android:stepSize="1"
+                                    android:rating="@{vm.myReviewDetail.score2}"
+                                    app:mrb_fillBackgroundStars="false"
+                                    app:mrb_progressTint="#FFD026"
+                                    app:mrb_secondaryProgressTint="#FFD026" />
+
+                            <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginHorizontal="20dp">
+
+                                <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/noto_sans_kr_regular"
+                                        android:text="매우 낮음"
+                                        android:textAlignment="center"
+                                        android:textColor="@color/grey_1"
+                                        android:textSize="8sp" />
+
+                                <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/noto_sans_kr_regular"
+                                        android:text="낮음"
+                                        android:textAlignment="center"
+                                        android:textColor="@color/grey_1"
+                                        android:textSize="8sp" />
+
+                                <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/noto_sans_kr_regular"
+                                        android:text="보통"
+                                        android:textAlignment="center"
+                                        android:textColor="@color/grey_1"
+                                        android:textSize="8sp" />
+
+                                <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/noto_sans_kr_regular"
+                                        android:text="높음"
+                                        android:textAlignment="center"
+                                        android:textColor="@color/grey_1"
+                                        android:textSize="8sp" />
+
+                                <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/noto_sans_kr_regular"
+                                        android:text="최고에요"
+                                        android:textAlignment="center"
+                                        android:textColor="@color/grey_1"
+                                        android:textSize="8sp" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="38dp"
+                                android:orientation="vertical">
+
+                            <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/noto_sans_kr_medium"
+                                    android:text="Q3. 동아리 활동 강도가 얼마나 빡센가요?"
+                                    android:textColor="@color/black_1"
+                                    android:textSize="14sp" />
+
+                            <me.zhanghai.android.materialratingbar.MaterialRatingBar
+                                    android:id="@+id/act_club_review_edit_rb_3"
+                                    style="@style/writeReviewRatingBar"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginHorizontal="20dp"
+                                    android:layout_marginTop="32dp"
+                                    android:stepSize="1"
+                                    android:rating="@{vm.myReviewDetail.score3}"
+                                    app:mrb_fillBackgroundStars="false"
+                                    app:mrb_progressTint="#FFD026"
+                                    app:mrb_secondaryProgressTint="#FFD026" />
+
+                            <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginHorizontal="20dp">
+
+                                <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/noto_sans_kr_regular"
+                                        android:text="개빡셈"
+                                        android:textAlignment="center"
+                                        android:textColor="@color/grey_1"
+                                        android:textSize="8sp" />
+
+                                <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/noto_sans_kr_regular"
+                                        android:text="빡셈"
+                                        android:textAlignment="center"
+                                        android:textColor="@color/grey_1"
+                                        android:textSize="8sp" />
+
+                                <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/noto_sans_kr_regular"
+                                        android:text="보통"
+                                        android:textAlignment="center"
+                                        android:textColor="@color/grey_1"
+                                        android:textSize="8sp" />
+
+                                <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/noto_sans_kr_regular"
+                                        android:text="안빡셈"
+                                        android:textAlignment="center"
+                                        android:textColor="@color/grey_1"
+                                        android:textSize="8sp" />
+
+                                <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/noto_sans_kr_regular"
+                                        android:text="널널"
+                                        android:textAlignment="center"
+                                        android:textColor="@color/grey_1"
+                                        android:textSize="8sp" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="38dp"
+                                android:orientation="vertical">
+
+                            <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/noto_sans_kr_medium"
+                                    android:text="Q4. 사람(친목)을 많이 얻을 수 있나요?"
+                                    android:textColor="@color/black_1"
+                                    android:textSize="14sp" />
+
+                            <me.zhanghai.android.materialratingbar.MaterialRatingBar
+                                    android:id="@+id/act_club_review_edit_rb_4"
+                                    style="@style/writeReviewRatingBar"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginHorizontal="20dp"
+                                    android:layout_marginTop="32dp"
+                                    android:stepSize="1"
+                                    android:rating="@{vm.myReviewDetail.score4}"
+                                    app:mrb_fillBackgroundStars="false"
+                                    app:mrb_progressTint="#FFD026"
+                                    app:mrb_secondaryProgressTint="#FFD026" />
+
+                            <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginHorizontal="20dp">
+
+                                <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/noto_sans_kr_regular"
+                                        android:text="최악"
+                                        android:textAlignment="center"
+                                        android:textColor="@color/grey_1"
+                                        android:textSize="8sp" />
+
+                                <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/noto_sans_kr_regular"
+                                        android:text="안좋음"
+                                        android:textAlignment="center"
+                                        android:textColor="@color/grey_1"
+                                        android:textSize="8sp" />
+
+                                <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/noto_sans_kr_regular"
+                                        android:text="보통"
+                                        android:textAlignment="center"
+                                        android:textColor="@color/grey_1"
+                                        android:textSize="8sp" />
+
+                                <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/noto_sans_kr_regular"
+                                        android:text="좋음"
+                                        android:textAlignment="center"
+                                        android:textColor="@color/grey_1"
+                                        android:textSize="8sp" />
+
+                                <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/noto_sans_kr_regular"
+                                        android:text="매우 좋음"
+                                        android:textAlignment="center"
+                                        android:textColor="@color/grey_1"
+                                        android:textSize="8sp" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <View
+                        android:layout_width="match_parent"
+                        android:layout_height="8dp"
+                        android:layout_marginTop="48dp"
+                        android:background="@color/grey_4" />
+
+
+                <!-- 정성 후기 -->
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        android:layout_marginHorizontal="24dp">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/review_edit_simple"
+                            android:fontFamily="@font/noto_sans_kr_bold"
+                            android:textSize="18sp"
+                            android:textColor="#333333"
+                            android:layout_marginTop="32dp" />
+
+                    <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginTop="58dp">
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="한줄평(20자 이내)"
+                                android:fontFamily="@font/noto_sans_kr_regular"
+                                android:textSize="12sp"
+                                android:textColor="@color/black_1"
+                                />
+
+                        <EditText
+                                android:id="@+id/act_club_review_edit_et_one_line"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/noto_sans_kr_regular"
+                                android:imeOptions="actionNext"
+                                android:singleLine="true"
+                                android:textSize="14sp"
+                                android:hint="이 동아리를 한줄로 표현하자면?"
+                                android:textColorHint="@color/grey_2"
+                                android:textColor="@color/black_1"
+                                android:layout_marginTop="4dp"
+                                android:maxLength="20"
+                                android:text="@{vm.myReviewDetail.oneLine}"
+                                style="@style/EditTheme"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginTop="32dp">
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="장점(20자 이상)"
+                                android:fontFamily="@font/noto_sans_kr_regular"
+                                android:textSize="12sp"
+                                android:textColor="@color/black_1"
+                                />
+
+                        <EditText
+                                android:id="@+id/act_club_review_edit_et_advantage"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="textMultiLine|textNoSuggestions"
+                                android:layout_marginTop="4dp"
+                                android:background="@drawable/border_eeeeee_4"
+                                android:hint="어떤 점이 좋았는지 알려주세요.\n구체적인 사례를 들어주면 더 좋아요 :)"
+                                android:gravity="top"
+                                android:paddingVertical="8dp"
+                                android:paddingHorizontal="10dp"
+                                android:fontFamily="@font/noto_sans_kr_regular"
+                                android:textSize="12sp"
+                                android:text="@{vm.myReviewDetail.advantage}"
+                                android:textColorHint="@color/grey_2"
+                                android:textColor="@color/black_1"
+                                android:scrollbars="vertical"
+                                android:lines="4"
+                                />
+                    </LinearLayout>
+
+                    <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginTop="32dp">
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="단점(20자 이상)"
+                                android:fontFamily="@font/noto_sans_kr_regular"
+                                android:textSize="12sp"
+                                android:textColor="@color/black_1"
+                                />
+
+                        <EditText
+                                android:id="@+id/act_club_review_edit_et_disadvantage"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="textMultiLine|textNoSuggestions"
+                                android:layout_marginTop="4dp"
+                                android:background="@drawable/border_eeeeee_4"
+                                android:hint="어떤 점이 아쉬웠는지 얘기해주세요.\n구체적일수록 좋아요!"
+                                android:gravity="top"
+                                android:text="@{vm.myReviewDetail.disadvantage}"
+                                android:paddingVertical="8dp"
+                                android:paddingHorizontal="10dp"
+                                android:fontFamily="@font/noto_sans_kr_regular"
+                                android:textSize="12sp"
+                                android:textColorHint="@color/grey_2"
+                                android:textColor="@color/black_1"
+                                android:scrollbars="vertical"
+                                android:lines="4"
+                                />
+                    </LinearLayout>
+
+                    <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginTop="32dp">
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="꿀팁(선택)"
+                                android:fontFamily="@font/noto_sans_kr_regular"
+                                android:textSize="12sp"
+                                android:textColor="@color/black_1"
+                                />
+
+                        <EditText
+                                android:id="@+id/act_club_review_edit_et_tip"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="textMultiLine|textNoSuggestions"
+                                android:layout_marginTop="4dp"
+                                android:background="@drawable/border_eeeeee_4"
+                                android:hint="합격 꿀팁, 활동 꿀팁 등을 알려주세요~!"
+                                android:gravity="top"
+                                android:text="@{vm.myReviewDetail.honeyTip}"
+                                android:paddingVertical="8dp"
+                                android:paddingHorizontal="10dp"
+                                android:fontFamily="@font/noto_sans_kr_regular"
+                                android:textSize="12sp"
+                                android:textColorHint="@color/grey_2"
+                                android:textColor="@color/black_1"
+                                android:scrollbars="vertical"
+                                android:lines="4"
+                                />
+                    </LinearLayout>
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/act_club_review_edit_cl_done"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/bottom_btn_height"
+                    android:layout_marginTop="80dp"
+                    android:background="@color/ssgsag">
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="수정하기"
+                        android:fontFamily="@font/noto_sans_kr_medium"
+                        android:textSize="16sp"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>
+</layout>

@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+                name="vm"
+                type="com.icoo.ssgsag_android.ui.main.myPage.MyPageViewModel"/>
+    </data>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white">
+        <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+        <ImageView
+                android:id="@+id/act_my_page_iv_cancel"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/cancel"
+        />
+
+        <LinearLayout
+                android:id="@+id/act_my_page_ll_user_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/act_my_page_iv_cancel"
+                android:layout_marginTop="40dp"
+                android:layout_marginLeft="38dp"
+                android:orientation="vertical">
+
+            <ImageView
+                    android:id="@+id/act_my_page_iv_profile"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:src="@drawable/img_default_profile"
+                    app:profileImg="@{vm.userInfo.userProfileUrl}"/>
+
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="22dp">
+                <TextView
+                        android:id="@+id/act_my_page_tv_nickname"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{vm.userInfo.userNickname}"
+                        tools:text="닉네임"
+                        android:textSize="24sp"
+                        android:fontFamily="@font/noto_sans_kr_bold"
+                        android:textColor="#333333" />
+            </LinearLayout>
+
+            <TextView
+                    android:id="@+id/act_my_page_tv_univ"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:text="@{vm.userInfo.userUniv}"
+                    tools:text="학교"
+                    android:textSize="15sp"
+                    android:textColor="#9b9b9b"
+                    android:fontFamily="@font/noto_sans_kr_regular"/>
+            <TextView
+                    android:id="@+id/act_my_page_tv_univ_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:text="@{@string/my_page_major_grade_format(vm.userInfo.userMajor, vm.userInfo.userGrade)}"
+                    tools:text="전공"
+                    android:textSize="15sp"
+                    android:textColor="#9b9b9b"
+                    android:fontFamily="@font/noto_sans_kr_regular"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_below="@+id/act_my_page_ll_user_info"
+                android:layout_marginTop="20dp">
+
+            <LinearLayout
+                    android:id="@+id/act_my_page_ll_review_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:paddingHorizontal="24dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_review_settings"/>
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="나의 후기"
+                        android:textColor="@color/black_1"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/noto_sans_kr_regular"
+                        android:layout_marginLeft="12dp"/>
+                <View
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_arrow_next"/>
+            </LinearLayout>
+
+            <LinearLayout
+                    android:id="@+id/act_my_page_ll_career_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:paddingHorizontal="24dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_job"/>
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="나의 이력"
+                        android:textColor="@color/black_1"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/noto_sans_kr_regular"
+                        android:layout_marginLeft="12dp"/>
+                <View
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_arrow_next"/>
+            </LinearLayout>
+
+            <LinearLayout
+                    android:id="@+id/act_my_page_ll_alarm_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:paddingHorizontal="24dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_alarm"/>
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="알람 설정"
+                        android:textColor="@color/black_1"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/noto_sans_kr_regular"
+                        android:layout_marginLeft="12dp"/>
+                <View
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_arrow_next"/>
+            </LinearLayout>
+
+            <LinearLayout
+                    android:id="@+id/act_my_page_ll_notice_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:paddingHorizontal="24dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_notice"/>
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="공지사항"
+                        android:textColor="@color/black_1"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/noto_sans_kr_regular"
+                        android:layout_marginLeft="12dp"/>
+                <View
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_arrow_next"/>
+            </LinearLayout>
+
+            <LinearLayout
+                    android:id="@+id/act_my_page_ll_inquiry_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:paddingHorizontal="24dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_report"/>
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="문의하기"
+                        android:textColor="@color/black_1"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/noto_sans_kr_regular"
+                        android:layout_marginLeft="12dp"/>
+                <View
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_arrow_next"/>
+            </LinearLayout>
+
+            <LinearLayout
+                    android:id="@+id/act_my_page_ll_service_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:paddingHorizontal="24dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_service_info"/>
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="서비스 정보"
+                        android:textColor="@color/black_1"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/noto_sans_kr_regular"
+                        android:layout_marginLeft="12dp"/>
+                <View
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_arrow_next"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:id="@+id/act_my_page_ll_setting_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:paddingHorizontal="24dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_settings"/>
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="계정 설정"
+                        android:textColor="@color/black_1"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/noto_sans_kr_regular"
+                        android:layout_marginLeft="12dp"/>
+                <View
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_arrow_next"/>
+            </LinearLayout>
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="38dp"/>
+
+        </LinearLayout>
+        </RelativeLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </RelativeLayout>
+</layout>

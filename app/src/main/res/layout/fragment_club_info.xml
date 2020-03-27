@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+                name="vm"
+                type="com.icoo.ssgsag_android.ui.main.review.reviewDetail.ReviewDetailViewModel" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never"
+            android:fillViewport="true">
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+        <LinearLayout
+                android:id="@+id/frag_club_info_ll_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:visibility="visible"
+                llVisibilityByString="@{vm.reviewDetail.activeNum}"
+                android:orientation="vertical">
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingTop="24dp"
+                    android:background="@color/white"
+                    android:layout_weight="1">
+
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="24dp">
+                <TextView
+                        android:layout_width="54dp"
+                        android:layout_height="wrap_content"
+                        android:text="활동인원"
+                        android:fontFamily="@font/noto_sans_kr_regular"
+                        android:textSize="12sp"
+                        android:textColor="@color/grey_2" />
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="40명"
+                        android:text="@{vm.reviewDetail.activeNum}"
+                        android:fontFamily="@font/noto_sans_kr_regular"
+                        android:textSize="12sp"
+                        android:textColor="@color/black_1"
+                        android:layout_marginLeft="16dp"/>
+
+            </LinearLayout>
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginHorizontal="24dp">
+                <TextView
+                        android:layout_width="54dp"
+                        android:layout_height="wrap_content"
+                        android:text="모임시간"
+                        android:fontFamily="@font/noto_sans_kr_regular"
+                        android:textSize="12sp"
+                        android:textColor="@color/grey_2" />
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="학기 중 매주 수요일"
+                        android:text="@{vm.reviewDetail.meetingTime}"
+                        android:fontFamily="@font/noto_sans_kr_regular"
+                        android:textSize="12sp"
+                        android:textColor="@color/black_1"
+                        android:layout_marginLeft="16dp"/>
+
+            </LinearLayout>
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginHorizontal="24dp">
+                <TextView
+                        android:layout_width="54dp"
+                        android:layout_height="wrap_content"
+                        android:text="회비"
+                        android:fontFamily="@font/noto_sans_kr_regular"
+                        android:textSize="12sp"
+                        android:textColor="@color/grey_2" />
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="학기 당 3만원"
+                        android:text="@{vm.reviewDetail.clubFee}"
+                        android:fontFamily="@font/noto_sans_kr_regular"
+                        android:textSize="12sp"
+                        android:textColor="@color/black_1"
+                        android:layout_marginLeft="16dp"/>
+
+            </LinearLayout>
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    llVisibilityByString="@{vm.reviewDetail.clubWebsite}"
+                    android:layout_marginHorizontal="24dp">
+                <TextView
+                        android:layout_width="54dp"
+                        android:layout_height="wrap_content"
+                        android:text="홈페이지"
+                        android:fontFamily="@font/noto_sans_kr_regular"
+                        android:textSize="12sp"
+                        android:textColor="@color/grey_2" />
+                <TextView
+                        android:id="@+id/frag_review_detail_info_iv_url"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="https://www.facebook.com/sopt"
+                        android:text="@{vm.reviewDetail.clubWebsite}"
+                        android:fontFamily="@font/noto_sans_kr_regular"
+                        android:textSize="12sp"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:textColor="#3540FF"
+                        android:layout_marginLeft="16dp"/>
+
+            </LinearLayout>
+
+                <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#f2f2f2"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginHorizontal="24dp"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="Shout Out Passion Together! 대학생을 위한 IT 벤처창업동아리"
+                    android:text="@{vm.reviewDetail.introduce}"
+                    android:fontFamily="@font/noto_sans_kr_regular"
+                    android:textSize="12sp"
+                    android:textColor="@color/black_1"
+                    android:layout_marginTop="21dp"
+                    android:layout_marginHorizontal="24dp"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/frag_review_detail_info_rv_photo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="24dp"
+                        android:layout_marginTop="32dp"
+                        android:layout_marginBottom="72dp"
+                        android:overScrollMode="never"
+                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
+            </LinearLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/frag_club_info_cl_edit_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:background="@drawable/border_eeeeee">
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:gravity="center">
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="동아리 정보 수정"
+                            android:fontFamily="@font/noto_sans_kr_regular"
+                            android:textSize="12sp"
+                            android:textColor="#777777"/>
+                    <ImageView
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:src="@drawable/small"/>
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                    clVisibilityByStringR="@{vm.reviewDetail.activeNum}"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    tools:visibility="gone"
+                    android:background="@color/white">
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:gravity="center_horizontal">
+                    <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/img_empty"
+                            android:layout_marginBottom="12dp" />
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/noto_sans_kr_regular"
+                            android:textSize="12sp"
+                            android:textColor="@color/grey_1"
+                            android:textAlignment="center"
+                            android:text="동아리 정보 입력해주세요\n현기증 난단 말이에요"
+                            android:layout_marginBottom="24dp"/>
+                    <androidx.cardview.widget.CardView
+                            android:id="@+id/frag_club_info_cv_rgstr_club_info"
+                            android:layout_width="150dp"
+                            android:layout_height="48dp"
+                            app:cardCornerRadius="4dp"
+                            app:cardElevation="2dp"
+                            app:cardBackgroundColor="@color/ssgsag">
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/noto_sans_kr_medium"
+                                android:textSize="12sp"
+                                android:textColor="@color/white"
+                                android:text="동아리 정보 등록하기"
+                                android:layout_gravity="center"/>
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</layout>

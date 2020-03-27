@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+                name="poster"
+                type="com.icoo.ssgsag_android.data.model.poster.posterDetail.PosterDetail"/>
+        />
+    </data>
+<androidx.cardview.widget.CardView
+        android:id="@+id/item_all_posters_card_cv_container"
+        android:layout_width="170dp"
+        android:layout_height="264dp"
+        app:cardElevation="4dp"
+        app:cardCornerRadius="6dp">
+       <RelativeLayout
+               android:layout_width="match_parent"
+               android:layout_height="match_parent">
+           <androidx.cardview.widget.CardView
+                   android:id="@+id/item_all_posters_card_cv_poster"
+                   android:layout_width="match_parent"
+                   android:layout_height="185dp"
+                   android:layout_centerHorizontal="true"
+                   android:layout_alignParentTop="true"
+                   app:cardElevation="0dp">
+
+               <ImageView
+                       android:id="@+id/item_all_posters_card_iv_poster"
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent"
+                       android:adjustViewBounds="true"
+                       android:scaleType="centerCrop"
+                       app:glideImg="@{poster.thumbPhotoUrl}"
+                       tools:src="@drawable/img_poster" />
+           </androidx.cardview.widget.CardView>
+
+           <androidx.cardview.widget.CardView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   app:cardBackgroundColor="@color/ssgsag"
+                   app:cardCornerRadius="3dp"
+                   app:cardElevation="0dp"
+                   android:layout_alignBottom="@+id/item_all_posters_card_cv_poster"
+                   android:layout_marginBottom="8dp"
+                   android:layout_marginLeft="12dp">
+               <TextView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       posterDetailDday="@{poster.dday}"
+                       tools:text="d-day"
+                       android:fontFamily="@font/noto_sans_kr_regular"
+                       android:textColor="@color/white"
+                       android:textSize="12sp"
+                       android:layout_marginHorizontal="5dp"
+                       android:layout_marginTop="1dp"
+                       android:layout_marginBottom="3dp" />
+           </androidx.cardview.widget.CardView>
+
+           <TextView
+                   android:id="@+id/item_all_posters_card_tv_title"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginTop="7dp"
+                   android:layout_marginHorizontal="12dp"
+                   android:textSize="14sp"
+                   android:textColor="#4f4f4f"
+                   android:fontFamily="@font/noto_sans_kr_medium"
+                   tools:text="포스터 제목인데 두줄이 되면 어떻게 될까요로오로"
+                   android:text="@{poster.posterName}"
+                   android:lines="2"
+                   android:maxLines="2"
+                   android:layout_below="@+id/item_all_posters_card_cv_poster"/>
+
+           <TextView
+                   android:id="@+id/item_all_posters_card_tv_hash"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginHorizontal="12dp"
+                   android:layout_marginTop="3dp"
+                   android:layout_marginBottom="8dp"
+                   android:textSize="10sp"
+                   android:textColor="#aaaaaa"
+                   android:fontFamily="@font/noto_sans_kr_regular"
+                   android:text="@{poster.keyword}"
+                   android:layout_below="@+id/item_all_posters_card_tv_title"
+                   tools:text="포스터 해시태그"
+                   android:singleLine="true"/>
+       </RelativeLayout>
+</androidx.cardview.widget.CardView>
+</layout>

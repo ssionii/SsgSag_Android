@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "90223575189",
+    "firebase_url": "https://ssgsag-6d216.firebaseio.com",
+    "project_id": "ssgsag-6d216",
+    "storage_bucket": "ssgsag-6d216.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:90223575189:android:454d20ac11f4d353",
+        "android_client_info": {
+          "package_name": "com.icoo.ssgsag_android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "90223575189-d8bc0ll4l90ssrcihhnothf00e1mmrsp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZaUvMk38uf8ogMtngvxrlVaTeCd5XLdo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

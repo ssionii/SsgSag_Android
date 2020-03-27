@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+                name="vm"
+                type="com.icoo.ssgsag_android.ui.main.feed.FeedViewModel"/>
+
+    </data>
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <RelativeLayout
+                android:id="@+id/frag_feed_rl_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@color/white">
+
+            <ImageView
+                    android:id="@+id/act_feed_web_detail_iv_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:src="@drawable/back"/>
+            <TextView
+                    android:id="@+id/act_feed_web_detail_tv_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="@{vm.feed.feedName}"
+                    android:maxLines="1"
+                    android:textSize="16sp"
+                    android:textColor="#4f4f4f"
+                    android:textAlignment="center"
+                    android:fontFamily="@font/noto_sans_kr_medium"
+                    android:singleLine="true"
+                    android:layout_marginHorizontal="85dp"/>
+
+            <ImageView
+                    android:id="@+id/act_feed_web_detail_iv_bookmark"
+                    isBookmarked="@{vm.feed.isSave()}"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="12dp" />
+
+        </RelativeLayout>
+
+        <ProgressBar
+                android:id="@+id/act_feed_web_detail_progress_bar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:indeterminate="true"
+                android:progressBackgroundTint="#656ef0"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:progress="2"
+                android:layout_below="@+id/frag_feed_rl_toolbar"
+                android:visibility="gone"
+                />
+
+        <WebView
+                android:id="@+id/act_feed_web_detail_wv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/act_feed_web_detail_progress_bar">
+
+
+        </WebView>
+
+    </RelativeLayout>
+
+
+
+</layout>

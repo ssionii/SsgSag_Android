@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools">
+        <data>
+            <variable
+                    name="clubInfo"
+                    type="com.icoo.ssgsag_android.data.model.review.club.ClubInfo" />
+        </data>
+    <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:orientation="vertical"
+            android:id="@+id/item_review_ll_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="24dp"
+            android:background="@drawable/border_review_box">
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal">
+            <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cardElevation="0dp"
+                    app:cardBackgroundColor="#14656ef0"
+                    app:cardCornerRadius="3dp"
+                    android:layout_marginRight="4dp">
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="연합"
+                        reviewClubType="@{clubInfo.clubType}"
+                        android:layout_margin="4dp"
+                        android:fontFamily="@font/noto_sans_kr_regular"
+                        android:textSize="10sp"
+                        android:lineHeight="10sp"
+                        android:textColor="@color/ssgsag" />
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                    android:id="@+id/item_Club_review_cv_category1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cardElevation="0dp"
+                    android:visibility="gone"
+                    app:cardBackgroundColor="#14656ef0"
+                    app:cardCornerRadius="3dp"
+                    android:layout_marginRight="4dp">
+                <TextView
+                        android:id="@+id/item_club_review_tv_category1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="연합"
+                        android:layout_margin="4dp"
+                        android:fontFamily="@font/noto_sans_kr_regular"
+                        android:textSize="10sp"
+                        android:lineHeight="10sp"
+                        android:textColor="@color/ssgsag" />
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                    android:id="@+id/item_Club_review_cv_category2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cardElevation="0dp"
+                    android:visibility="gone"
+                    app:cardBackgroundColor="#14656ef0"
+                    app:cardCornerRadius="3dp"
+                    android:layout_marginRight="4dp">
+                <TextView
+                        android:id="@+id/item_club_review_tv_category2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="연합"
+                        android:layout_margin="4dp"
+                        android:fontFamily="@font/noto_sans_kr_regular"
+                        android:textSize="10sp"
+                        android:lineHeight="10sp"
+                        android:textColor="@color/ssgsag" />
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                    android:id="@+id/item_club_review_Cv_category3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cardElevation="0dp"
+                    app:cardBackgroundColor="#14656ef0"
+                    app:cardCornerRadius="3dp"
+                    android:visibility="gone"
+                    android:layout_marginRight="4dp">
+                <TextView
+                        android:id="@+id/item_club_review_tv_category3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="연합"
+                        android:layout_margin="4dp"
+                        android:fontFamily="@font/noto_sans_kr_regular"
+                        android:textSize="10sp"
+                        android:lineHeight="10sp"
+                        android:textColor="@color/ssgsag" />
+            </androidx.cardview.widget.CardView>
+
+
+        </LinearLayout>
+
+
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@{clubInfo.clubName}"
+                tools:text="동아리 이름"
+                android:textColor="@color/black_1"
+                android:maxLines="1"
+                android:fontFamily="@font/noto_sans_kr_medium"
+                android:textSize="15sp"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="동아리 소개입니다!!"
+                noClubIntroduce="@{clubInfo.oneLine}"
+                android:fontFamily="@font/noto_sans_kr_regular"
+                android:textSize="10sp"
+                android:maxLines="1"
+                android:textColor="@color/grey_2"
+                android:layout_marginTop="2dp"/>
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal"
+                android:layout_marginBottom="18dp">
+
+            <RatingBar
+                    android:id="@+id/item_review_rb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/reviewRatingBar"
+                    android:isIndicator="true"
+                    android:numStars="5"
+                    android:stepSize="0.5"
+                    android:rating="@{clubInfo.aveScore}"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/noto_sans_kr_regular"
+                    android:textSize="8sp"
+                    tools:text="평점 4.0"
+                    reviewGrade="@{clubInfo.aveScore}"
+                    android:textColor="@color/grey_2"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="9dp"/>
+            <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"/>
+            <LinearLayout
+                    android:id="@+id/item_review_ll_view_review"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical">
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="후기 23개"
+                        reviewCount="@{clubInfo.scoreNum}"
+                        android:textColor="@color/ssgsag"
+                        android:fontFamily="@font/noto_sans_kr_regular"
+                        android:textSize="10sp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="8dp"/>
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_arrow_next_active"/>
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+</layout>

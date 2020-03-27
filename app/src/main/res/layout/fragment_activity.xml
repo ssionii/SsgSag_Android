@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#f2f3f5">
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+        <RelativeLayout
+                android:layout_marginVertical="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <RelativeLayout
+                    android:clickable="true"
+                    android:id="@+id/frag_act_rl_add_activity"
+                    android:layout_centerInParent="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                <ImageView
+                        android:clickable="false"
+                        android:id="@+id/frag_act_iv_career_plus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_plus"/>
+                <TextView
+                        android:clickable="false"
+                        android:layout_toRightOf="@+id/frag_act_iv_career_plus"
+                        android:layout_marginLeft="8dp"
+                        android:text="추가하기"
+                        android:textSize="16sp"
+                        android:fontFamily="sans-serif"
+                        android:textStyle="normal"
+                        android:textColor="#000000"
+                        android:letterSpacing="-0.02"
+                        android:lineSpacingExtra="14sp"
+                        android:gravity="center_horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <RelativeLayout
+                    android:visibility="gone"
+                    android:id="@+id/frag_act_rl_empty_career"
+                    android:gravity="center"
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                <ImageView
+                        android:id="@+id/frag_act_iv_empty_career"
+                        android:src="@drawable/img_empty_career"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                <TextView
+                        android:gravity="center"
+                        android:lineSpacingExtra="9sp"
+                        android:textColor="#b2b2b2"
+                        android:textSize="18sp"
+                        android:layout_marginTop="36dp"
+                        android:layout_below="@+id/frag_act_iv_empty_career"
+                        android:text="어떤 활동을 했는지\n기록해보세요!"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+            </RelativeLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                    android:visibility="gone"
+                    android:layout_centerHorizontal="true"
+                    android:id="@+id/frag_act_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+        </RelativeLayout>
+    </LinearLayout>
+
+
+</RelativeLayout>

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tool="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+                name="vm"
+                type="com.icoo.ssgsag_android.ui.main.ssgSag.filter.SsgSagFilterViewModel" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@color/white"
+            xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <RelativeLayout
+                android:id="@+id/act_ssgsag_filter_rl_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@color/white"
+                android:paddingLeft="12dp">
+            <ImageView
+                    android:id="@+id/act_ssgsag_filter_iv_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/back"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="맞춤 추천 설정"
+                    android:textColor="#444444"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/noto_sans_kr_bold"
+                    android:layout_centerInParent="true"/>
+
+
+        </RelativeLayout>
+
+        <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:overScrollMode="never">
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="32dp">
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="24dp">
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/noto_sans_kr_bold"
+                            android:textSize="18sp"
+                            android:textColor="@color/black_1"
+                            android:text="학교/학과" />
+                    <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/act_ssgsag_filter_rv_info"
+                            android:layout_marginTop="16dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:overScrollMode="never"/>
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/noto_sans_kr_regular"
+                            android:textSize="10sp"
+                            android:textColor="@color/grey_1"
+                            android:text="학교/학과 설정은 마이페이지>계정설정에서 변경가능합니다."/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="24dp"
+                    android:layout_marginTop="32dp">
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/noto_sans_kr_bold"
+                            android:textSize="18sp"
+                            android:textColor="@color/black_1"
+                            android:text="관심 분야" />
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/noto_sans_kr_regular"
+                            android:textSize="12sp"
+                            android:textColor="@color/grey_1"
+                            android:text="조금이라도 관심있는 분야를 모두 골라주세요!"
+                            android:layout_marginTop="4dp"/>
+                    <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/act_ssgsag_filter_rv_field"
+                            android:layout_marginTop="16dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:overScrollMode="never"
+                            app:fastScrollEnabled="false"
+                            replaceAll="@{vm.fieldFilter}"/>
+                </LinearLayout>
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="24dp"
+                        android:layout_marginTop="24dp">
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/noto_sans_kr_bold"
+                            android:textSize="18sp"
+                            android:textColor="@color/black_1"
+                            android:text="관심 직무" />
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/noto_sans_kr_regular"
+                            android:textSize="12sp"
+                            android:textColor="@color/grey_1"
+                            android:text="나와 같은 관심직무를 가진 친구/선배들을 분석하여 정보를 추천해드려요!"
+                            android:layout_marginTop="4dp"/>
+                    <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/act_ssgsag_filter_rv_enterprise"
+                            android:layout_marginTop="16dp"
+                            android:layout_width="match_parent"
+                            android:overScrollMode="never"
+                            app:fastScrollEnabled="false"
+                            android:layout_height="wrap_content"/>
+                    <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/act_ssgsag_filter_rv_job"
+                            android:layout_marginTop="28dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:overScrollMode="never"
+                            app:fastScrollEnabled="false"
+                            replaceAll="@{vm.jobFilter"/>
+                </LinearLayout>
+                <RelativeLayout
+                        android:id="@+id/act_ssgsag_filter_rl_done"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:layout_marginTop="80dp"
+                        android:background="@color/ssgsag">
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/noto_sans_kr_medium"
+                            android:textSize="16sp"
+                            android:textColor="@color/white"
+                            android:text="맞춤정보 저장"
+                            android:layout_centerInParent="true"/>
+                </RelativeLayout>
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+    </LinearLayout>
+</layout>
+

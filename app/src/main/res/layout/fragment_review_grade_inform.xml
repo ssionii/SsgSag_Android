@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="32dp"
+        android:paddingTop="44dp"
+        android:paddingBottom="48dp"
+        android:background="@drawable/header_dialog_plus_radius">
+
+    <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/img_review_score"
+            android:layout_marginStart="16dp"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/noto_sans_kr_bold"
+            android:textSize="18sp"
+            android:textColor="@color/black_1"
+            android:text="슥삭 후기 점수"
+            android:layout_marginTop="12dp"
+            android:layout_marginStart="16dp"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/noto_sans_kr_regular"
+            android:textSize="12sp"
+            android:textColor="@color/grey_1"
+            android:text="슥삭의 후기 점수는  유저들이 직접 작성, 입력한 평가에 근거하여 총평, 전문성, 재미, 강도, 친목 총 5가지 범주에 따라 매겨집니다."
+            android:layout_marginTop="5dp"
+            android:layout_marginHorizontal="16dp"/>
+
+    <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            app:cardCornerRadius="4dp"
+            app:cardElevation="2dp"
+            app:cardBackgroundColor="@color/ssgsag"
+            android:layout_marginTop="31dp">
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="확인"
+                android:fontFamily="@font/noto_sans_kr_medium"
+                android:textSize="12sp"
+                android:textColor="@color/white"
+                android:layout_gravity="center" />
+
+    </androidx.cardview.widget.CardView>
+</LinearLayout>

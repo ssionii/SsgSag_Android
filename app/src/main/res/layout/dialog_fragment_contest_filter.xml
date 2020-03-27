@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout>
+
+
+    <data>
+        <variable
+                name="vm"
+                type="com.icoo.ssgsag_android.ui.main.subscribe.subscribeDialog.SubscribeDialogViewModel"/>
+    </data>
+
+    <RelativeLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:background="#80000000"
+            android:paddingHorizontal="14dp"
+            >
+
+        <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/white"
+                android:layout_centerVertical="true"
+                app:cardCornerRadius="8dp">
+
+
+            <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                <RelativeLayout
+                        android:id="@+id/dialog_frag_contest_filter_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="22dp">
+                    <TextView
+                            android:id="@+id/dialog_frag_contest_filter_tv_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginTop="23dp"
+                            android:text="공모전 분야 설정"
+                            android:textColor="#777fff"
+                            android:fontFamily="@font/noto_sans_kr_medium"
+                            android:textSize="18sp"/>
+                    <TextView
+                            android:id="@+id/dialog_frag_contest_filter_tv_content"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="관심있는 공모전만 골라 추천해드려요."
+                            android:textColor="#99999999"
+                            android:fontFamily="@font/noto_sans_kr_regular"
+                            android:textSize="12dp"
+                            android:layout_below="@+id/dialog_frag_contest_filter_tv_title"
+                            android:layout_marginTop="2dp"
+                            android:layout_marginLeft="8dp"/>
+
+                    <RelativeLayout
+                            android:id="@+id/dialog_frag_contest_filter_rl_select_all"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginTop="30dp"
+                            android:layout_marginRight="10dp">
+
+                        <ImageView
+                                android:id="@+id/dialog_frag_contest_filter_iv_select_all"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/select_all_passive"
+                                android:layout_centerVertical="true"
+                                android:layout_marginRight="5dp"
+                                selectAllImage="@{vm.selectedAllContest}"/>
+
+                        <TextView
+                                android:id="@+id/dialog_frag_contest_filter_tv_select_all"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="전체"
+                                android:layout_centerVertical="true"
+                                android:textSize="13sp"
+                                android:lineHeight="14sp"
+                                android:textColor="#ababab"
+                                android:fontFamily="@font/noto_sans_kr_regular"
+                                selectAllText="@{vm.selectedAllContest}"
+                                android:layout_toRightOf="@+id/dialog_frag_contest_filter_iv_select_all"/>
+
+                    </RelativeLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/dialog_frag_contest_filter_rv"
+                            replaceAll="@{vm.contestFilter}"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/dialog_frag_contest_filter_tv_content"
+                            android:layout_marginTop="39dp">
+
+                    </androidx.recyclerview.widget.RecyclerView>
+
+                </RelativeLayout>
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="40dp"
+                        android:layout_below="@+id/dialog_frag_contest_filter_rl">
+
+                    <TextView
+                            android:id="@+id/dialog_frag_contest_filter_tv_cancel"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="취소"
+                            android:textColor="#aaaaaa"
+                            android:textSize="16dp"
+                            android:fontFamily="@font/noto_sans_kr_regular"
+                            android:layout_weight="1"
+                            android:gravity="center"/>
+
+                    <TextView
+                            android:id="@+id/dialog_frag_contest_filter_tv_done"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="완료"
+                            android:textColor="#656ef0"
+                            android:textSize="16dp"
+                            android:fontFamily="@font/noto_sans_kr_medium"
+                            android:layout_weight="1"
+                            android:gravity="center"/>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+    </RelativeLayout>
+
+</layout>

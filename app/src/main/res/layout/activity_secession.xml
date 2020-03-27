@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        tools:context=".ui.main.myPage.accountMgt.secession.SecessionActivity">
+
+    <androidx.appcompat.widget.Toolbar
+            android:id="@+id/act_secession_tl_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/white"
+            android:paddingLeft="10dp"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+        <TextView
+                android:layout_gravity="center"
+                android:letterSpacing="-0.02"
+                android:textColor="#444444"
+                android:fontFamily="@font/noto_sans_kr_bold"
+                android:textSize="16sp"
+                android:text="회원탈퇴"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <TextView
+            android:layout_centerHorizontal="true"
+            android:gravity="center_horizontal"
+            android:fontFamily="@font/noto_sans_kr_regular"
+            android:letterSpacing="-0.02"
+            android:textSize="16sp"
+            android:textColor="#000"
+            android:text="@string/delete_withdrawal_contents"
+            android:layout_marginTop="184dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    <ImageView
+            android:layout_above="@+id/act_withdrawal_ll"
+            android:background="@color/account_line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+
+    <LinearLayout
+            android:id="@+id/act_withdrawal_ll"
+            android:layout_alignParentBottom="true"
+            android:weightSum="1"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="56dp">
+
+        <TextView
+                android:id="@+id/act_withdrawal_tv_delete"
+                android:layout_gravity="center_vertical"
+                android:textSize="16sp"
+                android:textColor="@color/color_838383_withdrawal"
+                android:letterSpacing="-0.02"
+                android:gravity="center_horizontal"
+                android:text="회원탈퇴"
+                android:fontFamily="@font/noto_sans_kr_regular"
+                android:layout_weight="0.5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"/>
+
+        <TextView
+                android:id="@+id/act_withdrawal_tv_cancel"
+                android:layout_gravity="center_vertical"
+                android:textSize="16sp"
+                android:textColor="@color/color_0076ff_cancel"
+                android:letterSpacing="-0.02"
+                android:fontFamily="@font/noto_sans_kr_regular"
+                android:gravity="center_horizontal"
+                android:text="취소"
+                android:layout_weight="0.5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"/>
+
+
+    </LinearLayout>
+</RelativeLayout>

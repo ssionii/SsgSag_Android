@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+                name="feedCategory"
+                type="com.icoo.ssgsag_android.data.model.feed.FeedCategory" />
+    </data>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:layout_marginBottom="22dp">
+    <RelativeLayout
+            android:id="@+id/rv_feed_item_rl_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="7dp">
+        <TextView
+                android:id="@+id/rv_feed_item_tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="IT 뉴스"
+                feedCategoryTitle="@{feedCategory.categoryIdx}"
+                android:fontFamily="@font/noto_sans_kr_bold"
+                android:textSize="18sp"
+                android:textColor="#4f4f4f"/>
+
+        <ImageView
+                android:visibility="gone"
+                android:id="@+id/rv_feed_item_iv_category_indicator"
+                android:layout_width="6dp"
+                android:layout_height="6dp"
+                android:src="@drawable/circle_656ef0"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@+id/rv_feed_item_tv_title"/>
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_feed_item_rv_feeds"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_below="@+id/rv_feed_item_rl_title"
+            replaceAll="@{feedCategory.feedList}"/>
+
+    <LinearLayout
+            android:id="@+id/rv_feed_item_ll_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rv_feed_item_rv_feeds"
+            android:layout_alignParentRight="true">
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="더보기"
+                android:fontFamily="@font/noto_sans_kr_regular"
+                android:textSize="12sp"
+                android:lineHeight="12sp"
+                android:textColor="#656ef0"
+                android:layout_gravity="center_vertical"/>
+        <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/small_4"/>
+    </LinearLayout>
+
+
+</RelativeLayout>
+</layout>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/img_intro_3">
+    <RelativeLayout
+            android:layout_weight="6"
+            android:clickable="false"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+    </RelativeLayout>
+
+    <RelativeLayout
+            android:layout_weight="4"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="#80656ef0">
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_centerHorizontal="true"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="29dp">
+
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/intro_title_3"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:fontFamily="@font/noto_sans_kr_medium"
+                    android:textSize="14sp"
+                    android:textColor="#f2f2f2"
+                    android:textAlignment="center"
+                    android:text="먼저 활동했던 친구/선배들의 후기를\n한 곳에 모아서 보여드릴게요."/>
+            <LinearLayout
+                    android:id="@+id/frag_third_info_ll_start"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="30dp"
+                    android:gravity="center_vertical">
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/noto_sans_kr_medium"
+                        android:textSize="16sp"
+                        android:textColor="@color/white"
+                        android:text="슥삭 시작하기"/>
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_arrow_next_white"
+                        android:layout_marginStart="4dp"/>
+            </LinearLayout>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+</LinearLayout>

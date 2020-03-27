@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+                name="vm"
+                type="com.icoo.ssgsag_android.ui.login.LoginViewModel" />
+    </data>
+
+<RelativeLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+    <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/bg_splash"/>
+    <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ssgsag_logo"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="260dp"/>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="24dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="24dp">
+
+        <androidx.cardview.widget.CardView
+                android:id="@+id/act_login_cv_naver"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                app:cardBackgroundColor="#1ec800"
+                app:cardCornerRadius="4dp"
+                android:layout_marginTop="10dp"
+                android:clickable="true">
+
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/logo_naver"
+                    android:layout_marginLeft="12dp"
+                    android:layout_gravity="center_vertical"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="네이버 계정으로 로그인"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/noto_sans_kr_regular"
+                    android:textSize="14sp"
+                    android:layout_gravity="center"/>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+                android:id="@+id/act_login_cv_kakao"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                app:cardBackgroundColor="#ffe600"
+                app:cardCornerRadius="4dp"
+                android:layout_marginTop="10dp"
+                android:clickable="true">
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/logo_kakao"
+                    android:layout_marginLeft="12dp"
+                    android:layout_gravity="center_vertical"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="카카오 계정으로 로그인"
+                    android:textColor="#3b1e1e"
+                    android:fontFamily="@font/noto_sans_kr_regular"
+                    android:textSize="14sp"
+                    android:layout_gravity="center"/>
+
+        </androidx.cardview.widget.CardView>
+
+        <com.nhn.android.naverlogin.ui.view.OAuthLoginButton
+                android:visibility="gone"
+                android:id="@+id/act_login_btn_naver"
+                android:adjustViewBounds="true"
+                android:layout_width="match_parent"
+                android:layout_marginBottom="10dp"
+                android:scaleType="fitXY"
+                android:layout_height="wrap_content"/>
+
+        <com.kakao.usermgmt.LoginButton
+                android:visibility="gone"
+                android:id="@+id/act_login_btn_kakao"
+                android:layout_marginBottom="33dp"
+                android:layout_width="match_parent"
+                android:scaleType="fitXY"
+                android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+</RelativeLayout>
+</layout>

@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+                name="vm"
+                type="com.icoo.ssgsag_android.ui.main.review.club.write.ClubReviewWriteViewModel" />
+    </data>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:elevation="0dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/toolbar_height">
+        <ImageView
+                android:id="@+id/frag_write_review_simple_iv_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/back"
+                android:layout_marginStart="12dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+        <TextView
+                android:id="@+id/frag_review_write_simple_tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#444444"
+                android:fontFamily="@font/noto_sans_kr_bold"
+                android:textSize="16sp"
+                android:lineHeight="28sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.core.widget.NestedScrollView
+            android:id="@+id/frag_review_write_simple_nsv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:overScrollMode="never"
+            android:fillViewport="true">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:layout_marginHorizontal="24dp">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/simple_rating_1"
+                        android:fontFamily="@font/noto_sans_kr_bold"
+                        android:textSize="18sp"
+                        android:textColor="#333333"
+                        android:layout_marginTop="32dp" />
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="58dp">
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="한줄평(20자 이내)"
+                            android:fontFamily="@font/noto_sans_kr_regular"
+                            android:textSize="12sp"
+                            android:textColor="@color/black_1"
+                            />
+
+                    <EditText
+                            android:id="@+id/frag_write_review_simple_et_one_line"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/noto_sans_kr_regular"
+                            android:imeOptions="actionNext"
+                            android:singleLine="true"
+                            android:textSize="14sp"
+                            android:hint="이 동아리를 한줄로 표현하자면?"
+                            android:textColorHint="@color/grey_2"
+                            android:textColor="@color/black_1"
+                            android:layout_marginTop="4dp"
+                            android:maxLength="20"
+                            android:layout_marginLeft="-5dp"
+                            style="@style/EditTheme"/>
+                </LinearLayout>
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="32dp">
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="장점(20자 이상)"
+                            android:fontFamily="@font/noto_sans_kr_regular"
+                            android:textSize="12sp"
+                            android:textColor="@color/black_1"
+                            />
+
+                    <EditText
+                            android:id="@+id/frag_review_write_simple_et_advantage"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textMultiLine|textNoSuggestions"
+                            android:layout_marginTop="4dp"
+                            android:background="@drawable/border_eeeeee_4"
+                            android:hint="어떤 점이 좋았는지 알려주세요.\n구체적인 사례를 들어주면 더 좋아요 :)"
+                            android:gravity="top"
+                            android:paddingVertical="8dp"
+                            android:paddingHorizontal="10dp"
+                            android:fontFamily="@font/noto_sans_kr_regular"
+                            android:textSize="12sp"
+                            android:textColorHint="@color/grey_2"
+                            android:textColor="@color/black_1"
+                            android:scrollbars="vertical"
+                            android:lines="4"
+                            />
+                </LinearLayout>
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="32dp">
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="단점(20자 이상)"
+                            android:fontFamily="@font/noto_sans_kr_regular"
+                            android:textSize="12sp"
+                            android:textColor="@color/black_1"
+                            />
+
+                    <EditText
+                            android:id="@+id/frag_review_write_simple_et_disadvantage"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textMultiLine|textNoSuggestions"
+                            android:layout_marginTop="4dp"
+                            android:background="@drawable/border_eeeeee_4"
+                            android:hint="어떤 점이 아쉬웠는지 얘기해주세요.\n구체적일수록 좋아요!"
+                            android:gravity="top"
+                            android:paddingVertical="8dp"
+                            android:paddingHorizontal="10dp"
+                            android:fontFamily="@font/noto_sans_kr_regular"
+                            android:textSize="12sp"
+                            android:textColorHint="@color/grey_2"
+                            android:textColor="@color/black_1"
+                            android:scrollbars="vertical"
+                            android:lines="4"
+                            />
+                </LinearLayout>
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="32dp">
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="꿀팁(선택)"
+                            android:fontFamily="@font/noto_sans_kr_regular"
+                            android:textSize="12sp"
+                            android:textColor="@color/black_1"
+                            />
+
+                    <EditText
+                            android:id="@+id/frag_write_review_simple_et_tip"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textMultiLine|textNoSuggestions"
+                            android:layout_marginTop="4dp"
+                            android:background="@drawable/border_eeeeee_4"
+                            android:hint="합격 꿀팁, 활동 꿀팁 등을 알려주세요~!"
+                            android:gravity="top"
+                            android:paddingVertical="8dp"
+                            android:paddingHorizontal="10dp"
+                            android:fontFamily="@font/noto_sans_kr_regular"
+                            android:textSize="12sp"
+                            android:textColorHint="@color/grey_2"
+                            android:textColor="@color/black_1"
+                            android:scrollbars="vertical"
+                            android:lines="4"
+                            />
+                </LinearLayout>
+            </LinearLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/frag_review_write_simple_cl_done"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/bottom_btn_height"
+                    android:background="@color/grey_2"
+                    android:layout_marginTop="80dp">
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="제출하기"
+                        android:fontFamily="@font/noto_sans_kr_medium"
+                        android:textSize="16sp"
+                        android:textColor="@color/white"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>
+</layout>

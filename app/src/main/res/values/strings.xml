@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+
+<resources>
+
+        <string name="app_name">슥삭</string>
+
+        <string name="out_activity_contents">동아리, 서포터즈, 봉사활동 등\n본인이 했던 대외활동에 대한 구체적인 내용을 작성해보세요!</string>
+
+
+        -<string name="login_dialog_contents">
+        소셜로그인으로\n
+        <b>간편하게 슥삭 시작</b>
+        하기
+    </string>
+
+
+        -<string name="sign_up_profile_service">
+
+        <u>서비스 이용약관</u>
+        및
+    </string>
+
+
+        -<string name="sign_up_profile_private_info">
+
+        <u>개인정보 취급 방침</u>
+        에 동의합니다.
+    </string>
+
+
+        -<string name="delete_withdrawal_contents">
+        회원탈퇴시\n
+        <b>\'슥삭\'</b>
+        의 맞춤 정보 제공 서비스를\n제공 받을 수 없습니다.\n\n그래도 탈퇴하시겠어요?
+    </string>
+
+        <!--MyPage text-->
+
+
+        <string name="my_page_major_grade_format">%s %s학년</string>
+
+
+    <!-- Review text -->
+    <string name="club_registration">동아리 등록</string>
+    <string name="club_registration_category">동아리\n소속을 선택해주세요!</string>
+    <string name="club_category_campus">🏫 교내 동아리</string>
+    <string name="club_category_union">🎓 연합 동아리</string>
+
+    <string name="club_registration_1">첫번째,\n간단정보를 입력해주세요 🌘\n(1/3)</string>
+    <string name="club_registration_2">두번째,\n상세정보를 입력해주세요 🌗\n(2/3)</string>
+    <string name="club_registration_3">동아리 담당자 확인을 위해\n연락처를 입력해주세요 🌖\n(3/3)</string>
+
+    <string name="date_start">부터</string>
+    <string name="date_end">까지</string>
+
+    <string name="club_selection">동아리 선택</string>
+    <string name="review_write_start">내가 했던 동아리는 🦄이야~\n슨배님~ 이 동아리 어땠어요?</string>
+
+    <string name="score_rating_1">친구나 후배에게\n얼마나 추천🌟하나요?</string>
+
+    <string name="simple_rating_1">정성스런 후기는\n이공(20)들에게 큰 도움이 됩니다  ✍️ </string>
+
+    <string name="club_input">동아리 입력</string>
+    <string name="get_club_category">아직 등록되지 않은 동아리네요,\n어떤 분야의 동아리인가요?🧐\n(최대 3개)</string>
+
+    <string name="today_ssgsag">오늘의 슥삭</string>
+    <string name="today_ssg">오늘 슥 - 저장한 정보👆</string>
+    <string name="today_sag">오늘 삭- 삭제한 정보👇🏾</string>
+
+    <string name="ssgsag_end_ment">매일 점심시간\n오늘의 추천정보를 보내드릴게요🐥 </string>
+
+    <string name="review_event">후기 작성 이벤트</string>
+    <string name="review_event_ment">후기 작성하고🐵\n아이패드 받자!</string>
+
+    <string name="review_edit">후기 수정</string>
+    <string name="review_edit_info">동아리 활동 정보🦄</string>
+    <string name="review_edit_score">총 별점 추천🌟</string>
+    <string name="review_edit_simple">정성 후기 ✍️ </string>
+
+    <string name="review_edit_dialog">후기를 정말 수정하시겠습니까?</string>
+    <string name="review_edit_dialog_text">후기 수정 시 재승인이 필요합니다.\n신중히 결정해주세요 😭</string>
+
+    <string name="review_main_title">대학생활 후기</string>
+    <string name="review_main_ment">동아리 후기 작성하고\n아이패드/에어팟 받자 😎</string>
+    <string name="review_main_club">🕺 동아리 후기</string>
+    <string name="review_main_act">💃 대외활동 후기</string>
+    <string name="review_main_intern">👩‍💻 인턴 후기</string>
+
+</resources>

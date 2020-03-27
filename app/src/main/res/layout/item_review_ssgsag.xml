@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+                name="ssgsagReview"
+                type="com.icoo.ssgsag_android.data.model.review.club.ClubPost" />
+    </data>
+<LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        >
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingVertical="18sp"
+            android:paddingHorizontal="24dp">
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{ssgsagReview.userNickname}"
+                    android:fontFamily="@font/noto_sans_kr_regular"
+                    android:textSize="10sp"
+                    android:textColor="#aaaaaa"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/noto_sans_kr_regular"
+                    android:textSize="10sp"
+                    android:text=" | "
+                    android:textColor="#aaaaaa"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="2019년 활동"
+                    android:fontFamily="@font/noto_sans_kr_regular"
+                    android:textSize="10sp"
+                    clubActDate ="@{ssgsagReview.clubEndDate}"
+                    android:textColor="#aaaaaa"/>
+
+            <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="승인대기 중인 리뷰입니다"
+                    android:fontFamily="@font/noto_sans_kr_regular"
+                    android:textSize="10sp"
+                    tvVisibilityByInt="@{ssgsagReview.adminAccept}"
+                    android:textColor="@color/grey_2"
+                    android:layout_gravity="center_vertical"
+                    />
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_waiting"
+                    ivVisibilityByInt="@{ssgsagReview.adminAccept}"
+                    android:layout_gravity="center_vertical" />
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="3dp">
+            <TextView
+                    android:id="@+id/item_review_ssgsag_tv_oneline"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/noto_sans_kr_medium"
+                    android:textSize="16sp"
+                    android:textColor="#444444"
+                    tools:text="후기 제목"
+                    android:singleLine="true"
+                    android:ellipsize="none"
+                    android:layout_marginRight="30dp"
+                    android:text="@{ssgsagReview.oneLine}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/item_review_ssgsag_iv_edit"
+                    app:layout_constraintTop_toTopOf="parent"/>
+            <ImageView
+                    android:id="@+id/item_review_ssgsag_iv_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/edit_list"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+            <RatingBar
+                    android:id="@+id/item_review_ssgsag_rb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/reviewRatingBar"
+                    android:isIndicator="true"
+                    android:numStars="5"
+                    android:stepSize="0.5"
+                    android:rating="@{ssgsagReview.score0}"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="10dp"
+                        android:fontFamily="@font/noto_sans_kr_regular"
+                        android:textColor="#aaaaaa"
+                        android:textSize="8sp"
+                        reviewGrade="@{ssgsagReview.score0}"
+                        tools:text="별점 4.0" />
+        </LinearLayout>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="장점"
+                android:fontFamily="@font/noto_sans_kr_medium"
+                android:textSize="12sp"
+                android:textColor="@color/deep_sky_blue"
+                android:layout_marginTop="12sp" />
+        <TextView
+                android:id="@+id/item_review_ssgsag_tv_advantage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="개발, 디자인, 기획 파트로 나누어져 있어서 협업 경험하는데 큰 도움 됨. 특히 방학에 앱잼이라는 3주짜리 해커톤을 하는데 너무 맘에 들었음 ㅎㅎ IT쪽에 충분히 관심있고 개발 욕심있다면 짱짱맨이니"
+                android:text="@{ssgsagReview.advantage}"
+                android:maxLines="3"
+                android:ellipsize="end"
+                android:fontFamily="@font/noto_sans_kr_regular"
+                android:textSize="12sp"
+                android:textColor="#444444"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="단점"
+                android:fontFamily="@font/noto_sans_kr_medium"
+                android:textSize="12sp"
+                android:textColor="@color/reddish_pink"
+                android:layout_marginTop="12sp" />
+        <TextView
+                android:id="@+id/item_review_ssgsag_tv_disadvantage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:fontFamily="@font/noto_sans_kr_regular"
+                android:maxLines="2"
+                android:textColor="#444444"
+                android:textSize="12sp"
+                android:text="@{ssgsagReview.disadvantage}"
+                tools:text="개발, 디자인, 기획 파트로 나누어져 있어서 협업 경험하는데 큰 도움 됨. 특히 방학에 앱잼이라는 3주짜리 해커톤을 하는데 너무 맘에 들었음 ㅎㅎ IT쪽에 충분히 관심있고 개발 욕심있다면 짱짱맨이니" />
+        <LinearLayout
+                android:id="@+id/item_review_ssgsag_ll_tip"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="12sp">
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="꿀팁"
+                    android:fontFamily="@font/noto_sans_kr_medium"
+                    android:textSize="12sp"
+                    android:textColor="#444444" />
+            <TextView
+                    android:id="@+id/item_review_ssgsag_tv_tip"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/noto_sans_kr_regular"
+                    android:maxLines="2"
+                    android:textColor="#444444"
+                    android:textSize="12sp"
+                    android:text="@{ssgsagReview.honeyTip}"
+                    tools:text="개발, 디자인, 기획 파트로 나누어져 있어서 협업 경험하는데 큰 도움 됨. 특히 방학에 앱잼이라는 3주짜리 해커톤을 하는데 너무 맘에 들었음 ㅎㅎ IT쪽에 충분히 관심있고 개발 욕심있다면 짱짱맨이니" />
+
+        </LinearLayout>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16sp">
+            <TextView
+                    android:id="@+id/item_review_ssgsag_tv_more"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/noto_sans_kr_regular"
+                    android:textSize="12sp"
+                    android:textColor="#aaaaaa"
+                    android:text="더보기"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+            <androidx.cardview.widget.CardView
+                    android:id="@+id/item_review_ssgsag_cl_help"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    ssgsagReviewHelpBg="@{ssgsagReview.isLike}"
+                    app:cardCornerRadius="5dp"
+                    android:paddingVertical="1dp"
+                    app:cardElevation="0dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent">
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginLeft="11dp"
+                        android:layout_marginRight="8dp">
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            tools:text="도움돼요 3개"
+                            android:paddingTop="4dp"
+                            android:paddingBottom="5dp"
+                            reviewHelp="@{ssgsagReview.likeNum}"
+                            android:fontFamily="@font/noto_sans_kr_regular"
+                            android:textSize="10sp"
+                            ssgsagReviewHelpText="@{ssgsagReview.isLike}"/>
+
+                    <ImageView
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            ssgsagReviewHelpImg="@{ssgsagReview.isLike}"/>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#0c000000"/>
+</LinearLayout>
+</layout>

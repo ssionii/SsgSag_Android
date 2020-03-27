@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Space-->
+
+    <dimen name="main_navi_height">48dp</dimen>
+    <dimen name="toolbar_height">48dp</dimen>
+    <dimen name="bottom_btn_height">56dp</dimen>
+
+</resources>

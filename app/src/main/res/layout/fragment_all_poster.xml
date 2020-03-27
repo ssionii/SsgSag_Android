@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+                name="vm"
+                type="com.icoo.ssgsag_android.ui.main.allPosters.AllPostersViewModel"/>
+    </data>
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:layout_marginBottom="@dimen/main_navi_height">
+        <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="30dp">
+
+            <LinearLayout
+                    android:id="@+id/frag_all_poster_ll_club_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="30dp">
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="동아리 뭐 하지?"
+                        android:textColor="#444444"
+                        android:textSize="20sp"
+                        android:fontFamily="@font/noto_sans_kr_bold"
+                        android:layout_marginLeft="26dp"
+                        android:layout_weight="1"
+                        />
+
+                <LinearLayout
+                        android:id="@+id/frag_all_poster_ll_club_more"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_marginRight="30dp"
+                        android:gravity="center_vertical"
+                        >
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="더보기"
+                            android:textSize="13sp"
+                            android:textColor="#656ef0"
+                            android:fontFamily="@font/noto_sans_kr_regular"/>
+                    <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/small_3"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/frag_all_poster_vp_club"
+                    android:layout_width="match_parent"
+                    android:layout_height="280dp"
+                    android:layout_marginTop="16dp"
+                    android:saveEnabled="false"/>
+            <LinearLayout
+                    android:id="@+id/frag_all_poster_ll_act_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="30dp">
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="대외활동 뭐 하지?"
+                        android:textColor="#444444"
+                        android:textSize="20sp"
+                        android:fontFamily="@font/noto_sans_kr_bold"
+                        android:layout_marginLeft="26dp"
+                        android:layout_weight="1"
+                        />
+
+                <LinearLayout
+                        android:id="@+id/frag_all_poster_ll_act_more"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_marginRight="30dp"
+                        android:gravity="center_vertical"
+                        >
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="더보기"
+                            android:textSize="13sp"
+                            android:textColor="#656ef0"
+                            android:fontFamily="@font/noto_sans_kr_regular"/>
+                    <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/small_3"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/frag_all_poster_vp_act"
+                    android:layout_width="match_parent"
+                    android:layout_height="280dp"
+                    android:layout_marginTop="16dp"
+                    android:saveEnabled="false"/>
+
+            <LinearLayout
+                    android:id="@+id/frag_all_poster_ll_contest_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="30dp">
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="공모전 뭐 하지?"
+                        android:textColor="#444444"
+                        android:textSize="20sp"
+                        android:fontFamily="@font/noto_sans_kr_bold"
+                        android:layout_marginLeft="26dp"
+                        android:layout_weight="1"
+                        />
+
+                <LinearLayout
+                        android:id="@+id/frag_all_poster_ll_contest_more"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_marginRight="30dp"
+                        android:gravity="center_vertical"
+                        >
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="더보기"
+                            android:textSize="13sp"
+                            android:textColor="#656ef0"
+                            android:fontFamily="@font/noto_sans_kr_regular"/>
+                    <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/small_3"/>
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/frag_all_poster_vp_contest"
+                    android:layout_width="match_parent"
+                    android:layout_height="280dp"
+                    android:layout_marginTop="16dp"
+                    android:saveEnabled="false"/>
+
+            <LinearLayout
+                    android:id="@+id/frag_all_poster_ll_intern_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="30dp">
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="인턴 뭐 하지?"
+                        android:textColor="#444444"
+                        android:textSize="20sp"
+                        android:fontFamily="@font/noto_sans_kr_bold"
+                        android:layout_marginLeft="26dp"
+                        android:layout_weight="1"
+                        />
+
+                <LinearLayout
+                        android:id="@+id/frag_all_poster_ll_intern_more"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_marginRight="30dp"
+                        android:gravity="center_vertical"
+                        >
+                    <TextView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="더보기"
+                            android:textSize="13sp"
+                            android:textColor="#656ef0"
+                            android:fontFamily="@font/noto_sans_kr_regular"/>
+                    <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/small_3"/>
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/frag_all_poster_vp_intern"
+                    android:layout_width="match_parent"
+                    android:layout_height="280dp"
+                    android:layout_marginTop="16dp"
+                    android:saveEnabled="false"/>
+
+            <LinearLayout
+                    android:id="@+id/frag_all_poster_ll_education_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="30dp">
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="교육/강연 뭐 듣지?"
+                        android:textColor="#444444"
+                        android:textSize="20sp"
+                        android:fontFamily="@font/noto_sans_kr_bold"
+                        android:layout_marginLeft="26dp"
+                        android:layout_weight="1"
+                        />
+
+                <LinearLayout
+                        android:id="@+id/frag_all_poster_ll_education_more"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_marginRight="30dp"
+                        android:gravity="center_vertical"
+                        >
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="더보기"
+                            android:textSize="13sp"
+                            android:textColor="#656ef0"
+                            android:fontFamily="@font/noto_sans_kr_regular"/>
+                    <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/small_3"/>
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/frag_all_poster_vp_education"
+                    android:layout_width="match_parent"
+                    android:layout_height="280dp"
+                    android:layout_marginTop="16dp"
+                    android:saveEnabled="false"/>
+
+            <LinearLayout
+                    android:id="@+id/frag_all_poster_ll_etc_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="30dp">
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="또 뭐 하지?"
+                            android:textColor="#444444"
+                            android:textSize="20sp"
+                            android:fontFamily="@font/noto_sans_kr_bold"
+                            android:layout_marginLeft="26dp"
+                            android:layout_weight="1"
+                            />
+
+                    <LinearLayout
+                            android:id="@+id/frag_all_poster_ll_etc_more"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            android:layout_marginRight="30dp"
+                            android:gravity="center_vertical"
+                            >
+                        <TextView
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="더보기"
+                                android:textSize="13sp"
+                                android:textColor="#656ef0"
+                                android:fontFamily="@font/noto_sans_kr_regular"/>
+                        <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:src="@drawable/small_3"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+
+                <androidx.viewpager.widget.ViewPager
+                        android:id="@+id/frag_all_poster_vp_etc"
+                        android:layout_width="match_parent"
+                        android:layout_height="280dp"
+                        android:layout_marginTop="16dp"
+                        android:saveEnabled="false"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </LinearLayout>
+
+</layout>

@@ -1,0 +1,174 @@
+package com.icoo.ssgsag_android.data.local.pref
+
+import android.content.Context
+
+object SharedPreferenceController{
+    private val USER_NAME = "MYKEY"
+    private val myAuth = "myAuth"
+    private val walkthroughs = "walkthroughs"
+    private val signupType ="signupType"
+
+    private val coachMarker = "coachMarker"
+    private val coachFlow = "coachFlow"
+
+    private val receivableCard = "receivableCard"
+    private val receivableTodo = "receivableTodo"
+
+    private val isLogout ="isLogout"
+
+    private val isFirstReviewEventCount = "isFirstReviewEvenCount"
+    private val isFirstOpenEvent ="isFirstOpenEvent"
+
+    fun setAuthorization(context: Context, authorization : String)
+    {
+        val pref = context.getSharedPreferences(USER_NAME, Context.MODE_PRIVATE) //현재 내 기기에서만 볼수 있는 데이터
+        val editor = pref.edit()
+        editor.putString(myAuth, authorization)
+        editor.apply()
+    }
+
+    fun getAuthorization(context: Context) : String {
+        val pref = context.getSharedPreferences(USER_NAME, Context.MODE_PRIVATE) //현재 내 기기에서만 볼수 있는 데이터
+        return pref.getString(myAuth, "")!!
+    }
+
+    fun deleteAuthorization(context: Context) {
+        val pref = context.getSharedPreferences(USER_NAME, Context.MODE_PRIVATE) //현재 내 기기에서만 볼수 있는 데이터
+        val editor = pref.edit()
+        editor.remove(myAuth)
+        editor.apply()
+    }
+
+    fun setType(context : Context, type : String){
+        val pref = context.getSharedPreferences(signupType, Context.MODE_PRIVATE) //현재 내 기기에서만 볼수 있는 데이터
+        val editor = pref.edit()
+        editor.putString(signupType, type)
+        editor.apply()
+    }
+
+    fun getType(context: Context) : String {
+        val pref = context.getSharedPreferences(signupType, Context.MODE_PRIVATE) //현재 내 기기에서만 볼수 있는 데이터
+        return pref.getString(signupType, "user")!!
+    }
+
+    fun deleteType(context: Context) {
+        val pref = context.getSharedPreferences(signupType, Context.MODE_PRIVATE) //현재 내 기기에서만 볼수 있는 데이터
+        val editor = pref.edit()
+        editor.remove(signupType)
+        editor.apply()
+    }
+
+    fun setReceivableCard(context: Context, v : String)
+    {
+        val pref = context.getSharedPreferences(receivableCard, Context.MODE_PRIVATE) //현재 내 기기에서만 볼수 있는 데이터
+        val editor = pref.edit()
+        editor.putString(receivableCard, v)
+        editor.apply()
+    }
+
+    fun getReceivableCard(context: Context) : String {
+        val pref = context.getSharedPreferences(receivableCard, Context.MODE_PRIVATE) //현재 내 기기에서만 볼수 있는 데이터
+        return pref.getString(receivableCard, "true")!!
+    }
+
+    fun setReceivableTodo(context: Context, v : String)
+    {
+        val pref = context.getSharedPreferences(receivableTodo, Context.MODE_PRIVATE) //현재 내 기기에서만 볼수 있는 데이터
+        val editor = pref.edit()
+        editor.putString(receivableTodo, v)
+        editor.apply()
+    }
+
+    fun getReceivableTodo(context: Context) : String {
+        val pref = context.getSharedPreferences(receivableTodo, Context.MODE_PRIVATE) //현재 내 기기에서만 볼수 있는 데이터
+        return pref.getString(receivableTodo, "false")!!
+    }
+
+    fun setWalkthroughs(context: Context, v : String)
+    {
+        val pref = context.getSharedPreferences(walkthroughs, Context.MODE_PRIVATE) //현재 내 기기에서만 볼수 있는 데이터
+        val editor = pref.edit()
+        editor.putString(walkthroughs, v)
+        editor.apply()
+    }
+    fun getWalkthroughs(context: Context) : String {
+        val pref = context.getSharedPreferences(walkthroughs, Context.MODE_PRIVATE) //현재 내 기기에서만 볼수 있는 데이터
+        return pref.getString(walkthroughs, "false")!!
+    }
+
+    fun setCoachMarker(context: Context, v : Boolean)
+    {
+        val pref = context.getSharedPreferences(coachMarker, Context.MODE_PRIVATE) //현재 내 기기에서만 볼수 있는 데이터
+        val editor = pref.edit()
+        editor.putBoolean(coachMarker, v)
+        editor.apply()
+    }
+    fun getCoachMarker(context: Context) : Boolean {
+        val pref = context.getSharedPreferences(coachMarker, Context.MODE_PRIVATE) //현재 내 기기에서만 볼수 있는 데이터
+        return pref.getBoolean(coachMarker, false)
+    }
+
+    fun setCoachFlow(context: Context, v : Boolean)
+    {
+        val pref = context.getSharedPreferences(coachFlow, Context.MODE_PRIVATE) //현재 내 기기에서만 볼수 있는 데이터
+        val editor = pref.edit()
+        editor.putBoolean(coachFlow, v)
+        editor.apply()
+    }
+    fun getCoachFlow(context: Context) : Boolean {
+        val pref = context.getSharedPreferences(coachFlow, Context.MODE_PRIVATE) //현재 내 기기에서만 볼수 있는 데이터
+        return pref.getBoolean(coachFlow, false)
+    }
+
+    fun clearSPC(context: Context)
+    {
+        val pref = context.getSharedPreferences(USER_NAME, Context.MODE_PRIVATE) //현재 내 기기에서만 볼수 있는 데이터
+        val editor = pref.edit()
+        editor.clear()
+        editor.apply()
+    }
+
+
+    fun setIsLogout(context: Context, v : Boolean)
+    {
+        val pref = context.getSharedPreferences(isLogout, Context.MODE_PRIVATE) //현재 내 기기에서만 볼수 있는 데이터
+        val editor = pref.edit()
+        editor.putBoolean(isLogout, v)
+        editor.apply()
+    }
+
+    fun getIsLogout(context: Context) : Boolean {
+        val pref = context.getSharedPreferences(isLogout, Context.MODE_PRIVATE) //현재 내 기기에서만 볼수 있는 데이터
+        return pref.getBoolean(isLogout, false)
+    }
+
+
+    fun setIsFirstReview(context: Context, count : Int)
+    {
+        val pref = context.getSharedPreferences(isFirstReviewEventCount, Context.MODE_PRIVATE) //현재 내 기기에서만 볼수 있는 데이터
+        val editor = pref.edit()
+        editor.putInt(isFirstReviewEventCount, count)
+        editor.apply()
+    }
+
+    fun getIsFirstReview(context: Context) : Int {
+        val pref = context.getSharedPreferences(isFirstReviewEventCount, Context.MODE_PRIVATE) //현재 내 기기에서만 볼수 있는 데이터
+        return pref.getInt(isFirstReviewEventCount, 0)
+    }
+
+
+    fun setIsFirstOpen(context: Context, v : Boolean)
+    {
+        val pref = context.getSharedPreferences(isFirstOpenEvent, Context.MODE_PRIVATE) //현재 내 기기에서만 볼수 있는 데이터
+        val editor = pref.edit()
+        editor.putBoolean(isFirstOpenEvent, v)
+        editor.apply()
+    }
+
+    fun getIsFirstOpen(context: Context) : Boolean {
+        val pref = context.getSharedPreferences(isFirstOpenEvent, Context.MODE_PRIVATE) //현재 내 기기에서만 볼수 있는 데이터
+        return pref.getBoolean(isFirstOpenEvent, true)
+    }
+
+}
+

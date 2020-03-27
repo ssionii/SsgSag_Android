@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+        <variable
+                name="subscribe"
+                type="com.icoo.ssgsag_android.data.model.subscribe.Subscribe"/>
+
+    </data>
+
+    <androidx.cardview.widget.CardView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            app:cardCornerRadius="4dp"
+            app:cardElevation="0dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:background="@drawable/card_border"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <androidx.cardview.widget.CardView
+                    android:id="@+id/item_subscribe_cv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:cateCardBg="@{subscribe.interestIdx}"
+                    app:cardCornerRadius="6dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="13dp"
+                    app:cardElevation="0dp">
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{subscribe.interestName}"
+                        android:textSize="13sp"
+                        android:lineHeight="13sp"
+                        android:textAlignment="center"
+                        android:fontFamily="@font/noto_sans_kr_medium"
+                        tools:text="제목"
+                        app:textColorByCate="@{subscribe.interestIdx}"
+                        android:layout_marginHorizontal="6dp"
+                        android:layout_marginVertical="3dp"/>
+
+            </androidx.cardview.widget.CardView>
+
+
+            <TextView
+                    android:id="@+id/rv_interest_tv_tag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:textColor="@color/subscribe_active_tag"
+                    android:text="@{subscribe.interestDetail}"
+                    tools:text="#태그"
+                    android:layout_marginTop="1dp"
+                    android:layout_marginBottom="13dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/item_subscribe_cv_name"
+                    app:layout_constraintTop_toBottomOf="@+id/item_subscribe_cv_name"/>
+
+            <ImageView
+                    android:id="@+id/rv_interest_iv_follow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/bt_unfollow"
+                    android:layout_marginEnd="16dp"
+                    app:subscribeBtn="@{subscribe.userIdx}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</layout>

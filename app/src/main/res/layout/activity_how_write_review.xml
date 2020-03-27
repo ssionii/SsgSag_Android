@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/toolbar_height"
+            android:background="@color/white"
+            android:paddingHorizontal="12dp">
+
+        <ImageView
+                android:id="@+id/act_how_write_review_iv_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/cancel_grey"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+        <TextView
+                android:layout_gravity="center"
+                android:letterSpacing="-0.02"
+                android:textColor="#444444"
+                android:fontFamily="@font/noto_sans_kr_bold"
+                android:textSize="16sp"
+                android:text="후기 작성법"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="24dp"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/noto_sans_kr_bold"
+                android:text="클린🧼 후기를 위한\n3가지 당부"
+                android:textSize="18sp"
+                android:textColor="@color/black_1"
+                android:layout_marginTop="32dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="첫번째,\n본인이 직접 활동하면서 겪었던 경험을 작성해주세요."
+            android:fontFamily="@font/noto_sans_kr_medium"
+            android:textSize="14sp"
+            android:textColor="@color/black_1"
+            android:layout_marginTop="80dp"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="내가 겪은 얘기는 내가, 친구가 겪은 얘기는 친구가!"
+                android:fontFamily="@font/noto_sans_kr_medium"
+                android:textSize="12sp"
+                android:textColor="#777777"
+                android:layout_marginTop="2dp"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="두번째,\n구체적인 사례를 들어주면 더 좋아요."
+                android:fontFamily="@font/noto_sans_kr_medium"
+                android:textSize="14sp"
+                android:textColor="@color/black_1"
+                android:layout_marginTop="20dp"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="왜 좋았는지? 어떤 점이 아쉬웠는지? 등등"
+                android:fontFamily="@font/noto_sans_kr_medium"
+                android:textSize="12sp"
+                android:textColor="#777777"
+                android:layout_marginTop="2dp"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="세번째,\n욕설, 비방을 삼가해주세요."
+                android:fontFamily="@font/noto_sans_kr_medium"
+                android:textSize="14sp"
+                android:textColor="@color/black_1"
+                android:layout_marginTop="20dp"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="욕 안해도 충분히 다 알아들어요 ㅎ"
+                android:fontFamily="@font/noto_sans_kr_medium"
+                android:textSize="12sp"
+                android:textColor="#777777"
+                android:layout_marginTop="2dp"/>
+
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp"
+                android:gravity="center_vertical">
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_warning"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="거짓/허위사실 유포 시 앱 사용이 제한될 수 있습니다."
+                    android:fontFamily="@font/noto_sans_kr_regular"
+                    android:textSize="10sp"
+                    android:textColor="#777777"
+                    android:layout_marginStart="8dp"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#333333"
+            android:text="사실에 입각하여 리뷰를 작성할 것 이며, 진위 여부를 확인하기\n위한 자료를 요청할 경우 협조 하겠습니다."
+            android:textSize="12sp"
+            android:fontFamily="@font/noto_sans_kr_regular"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="36dp"
+            android:textAlignment="center"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/act_how_write_review_cl_done"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="@color/ssgsag">
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="동의"
+                android:fontFamily="@font/noto_sans_kr_medium"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</LinearLayout>

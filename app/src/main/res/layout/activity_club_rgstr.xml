@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+                name="vm"
+                type="com.icoo.ssgsag_android.ui.main.review.club.registration.ClubRgstrViewModel" />
+    </data>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/act_club_rgstr_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
+
+    <com.icoo.ssgsag_android.util.view.NonSwipeViewPager
+            android:id="@+id/act_club_rgstr_vp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:saveEnabled="false"/>
+</RelativeLayout>
+</layout>

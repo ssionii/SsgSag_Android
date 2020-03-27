@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.Toolbar
+            android:id="@+id/act_sign_up_profile_tb_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/white"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+    </androidx.appcompat.widget.Toolbar>
+
+
+    <ImageView
+            android:scaleType="fitXY"
+            android:src="@drawable/progressbar_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <ScrollView
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                <LinearLayout
+                        android:layout_marginTop="30dp"
+                        android:layout_marginHorizontal="20dp"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="편리한 서비스 제공을 위해 몇 가지 정보가 필요해요!"
+                            android:textColor="#656ef0"
+                            android:textSize="13sp"
+                            android:fontFamily="@font/noto_sans_kr_regular"/>
+
+
+                    <TextView
+                            android:layout_marginBottom="80dp"
+                            android:textSize="20sp"
+                            android:fontFamily="sans-serif"
+                            android:textStyle="bold"
+                            android:letterSpacing="-0.02"
+                            android:textColor="#000"
+                            android:text="프로필 정보를 입력해주세요"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <LinearLayout
+                            android:focusable="true"
+                            android:focusableInTouchMode="true"
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                        <EditText
+                                android:backgroundTint="#e0e0e0"
+                                android:singleLine="true"
+                                android:imeOptions="actionNext"
+                                android:id="@+id/act_sign_up_profile_et_name"
+                                android:hint="이름"
+                                android:letterSpacing="-0.02"
+                                android:textColor="#000"
+                                android:textStyle="normal"
+                                android:fontFamily="sans-serif"
+                                android:textSize="16sp"
+                                android:layout_marginBottom="40dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"/>
+
+                        <EditText
+                                android:maxLength="6"
+                                android:imeOptions="actionNext"
+                                android:backgroundTint="#e0e0e0"
+                                android:inputType="number"
+                                android:singleLine="true"
+                                android:id="@+id/act_sign_up_profile_et_birth"
+                                android:hint="생년월일 6자리 (예시: 980112)"
+                                android:letterSpacing="-0.02"
+                                android:textColor="#000"
+                                android:textStyle="normal"
+                                android:fontFamily="sans-serif"
+                                android:textSize="16sp"
+                                android:layout_marginBottom="40dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"/>
+
+                        <EditText
+                                android:imeOptions="actionDone"
+                                android:backgroundTint="#e0e0e0"
+                                android:inputType="text"
+                                android:singleLine="true"
+                                android:id="@+id/act_sign_up_profile_et_nickname"
+                                android:hint="닉네임"
+                                android:letterSpacing="-0.02"
+                                android:textColor="#000"
+                                android:textStyle="normal"
+                                android:fontFamily="sans-serif"
+                                android:textSize="16sp"
+                                android:layout_marginBottom="40dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                            android:layout_marginBottom="20dp"
+                            android:orientation="horizontal"
+                            android:weightSum="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                        <RelativeLayout
+                                android:layout_width="0dp"
+                                android:layout_weight="0.5"
+                                android:layout_height="wrap_content">
+
+                            <ImageView
+                                    android:adjustViewBounds="true"
+                                    android:id="@+id/act_sign_up_profile_iv_male"
+                                    android:scaleType="fitXY"
+                                    android:src="@drawable/bt_male_unactive"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"/>
+
+                            <TextView
+                                    android:id="@+id/act_sign_up_profile_tv_male"
+                                    android:layout_centerInParent="true"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/noto_sans_kr_medium"
+                                    android:textSize="15sp"
+                                    android:text="남자"
+                                    android:textColor="#9e9e9e"/>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                                android:layout_width="0dp"
+                                android:layout_weight="0.5"
+                                android:layout_height="wrap_content">
+
+                            <ImageView
+                                    android:adjustViewBounds="true"
+                                    android:id="@+id/act_sign_up_profile_iv_female"
+                                    android:scaleType="fitXY"
+                                    android:src="@drawable/bt_female_unactive"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"/>
+
+                            <TextView
+                                    android:id="@+id/act_sign_up_profile_tv_female"
+                                    android:layout_centerInParent="true"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/noto_sans_kr_medium"
+                                    android:textSize="15sp"
+                                    android:text="여자"
+                                    android:textColor="#9e9e9e"/>
+                        </RelativeLayout>
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                            android:paddingVertical="20dp"
+                            android:layout_marginBottom="25dp"
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                        <CheckBox
+                                android:paddingRight="8dp"
+                                android:id="@+id/act_sign_up_profile_cb_terms"
+                                android:button="@color/very_light_pink"
+                                android:background="@drawable/cb_selector"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+
+                        <LinearLayout
+                                android:orientation="horizontal"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+                            <TextView
+                                    android:id="@+id/act_sign_up_profile_tv_service"
+                                    android:text="@string/sign_up_profile_service"
+                                    android:letterSpacing="-0.02"
+                                    android:textColor="@color/brown_grey"
+                                    android:textStyle="normal"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:textSize="13sp"
+                                    android:layout_marginLeft="8dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"/>
+                            <TextView
+                                    android:id="@+id/act_sign_up_profile_tv_privacy"
+                                    android:text="@string/sign_up_profile_private_info"
+                                    android:letterSpacing="-0.02"
+                                    android:textColor="@color/brown_grey"
+                                    android:textStyle="normal"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:textSize="13sp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"/>
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </FrameLayout>
+
+        </ScrollView>
+
+
+        <ImageView
+                android:scaleType="fitXY"
+                android:src="@drawable/bt_next_unactive"
+                android:id="@+id/act_sign_up_profile_iv_next"
+                android:layout_gravity="bottom"
+                android:layout_width="match_parent"
+                android:adjustViewBounds="true"
+                android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+</LinearLayout>

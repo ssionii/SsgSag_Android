@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        tools:context=".ui.main.myPage.career.careerEdit.CareerEditActivity">
+
+    <androidx.appcompat.widget.Toolbar
+            android:id="@+id/act_career_detail_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/white"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+        <TextView
+                android:id="@+id/act_career_detail_tv_title"
+                android:layout_gravity="center"
+                android:letterSpacing="-0.02"
+                android:textColor="#000000"
+                android:textStyle="normal"
+                android:fontFamily="sans-serif-medium"
+                android:textSize="18sp"
+                android:text=""
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+    </androidx.appcompat.widget.Toolbar>
+
+
+    <ScrollView
+            android:layout_below="@+id/act_career_detail_toolbar"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <androidx.cardview.widget.CardView
+                        android:layout_marginTop="10dp"
+                        android:layout_marginHorizontal="10dp"
+                        card_view:cardCornerRadius="4dp"
+                        app:cardElevation="0dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                    <LinearLayout
+                            android:layout_marginHorizontal="20dp"
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                        <EditText
+                                android:singleLine="true"
+                                android:id="@+id/act_career_detail_et_title"
+                                android:letterSpacing="-0.02"
+                                android:textColor="#000"
+                                android:textStyle="bold"
+                                android:fontFamily="sans-serif"
+                                android:textSize="22sp"
+                                android:layout_marginTop="38dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"/>
+
+                        <FrameLayout
+                                android:layout_marginVertical="60dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                            <RelativeLayout
+                                    android:id="@+id/act_career_detail_rl_except_act"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
+
+                                <LinearLayout android:layout_width="wrap_content"
+                                              android:layout_height="wrap_content">
+                                    <TextView
+                                            android:id="@+id/act_career_detail_tv_year"
+                                            android:letterSpacing="-0.02"
+                                            android:textColor="#425ee5"
+                                            android:fontFamily="sans-serif-medium"
+                                            android:textSize="16sp"
+                                            android:text=""
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"/>
+                                    <TextView
+                                            android:letterSpacing="-0.02"
+                                            android:textColor="#425ee5"
+                                            android:fontFamily="sans-serif-medium"
+                                            android:textSize="16sp"
+                                            android:text="년월"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"/>
+
+                                </LinearLayout>
+
+                                <TextView
+                                        android:layout_alignParentRight="true"
+                                        android:id="@+id/act_career_detail_date_start_only"
+                                        android:letterSpacing="-0.01"
+                                        android:textColor="#000"
+                                        android:textStyle="normal"
+                                        android:fontFamily="sans-serif"
+                                        android:textSize="18sp"
+                                        android:text="2019년 01월 30일"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"/>
+
+
+                            </RelativeLayout>
+
+                            <LinearLayout
+                                    android:id="@+id/act_career_detail_ll_act"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
+
+                                <TextView
+                                        android:layout_marginBottom="16dp"
+                                        android:letterSpacing="-0.02"
+                                        android:textColor="#425ee5"
+                                        android:fontFamily="sans-serif-medium"
+                                        android:textSize="15sp"
+                                        android:text="날짜"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"/>
+
+                                <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content">
+                                    <LinearLayout
+                                            android:orientation="vertical"
+                                            android:layout_weight="1"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content">
+                                        <TextView
+                                                android:layout_marginBottom="5dp"
+                                                android:letterSpacing="-0.01"
+                                                android:textColor="#aeaeae"
+                                                android:textStyle="normal"
+                                                android:fontFamily="sans-serif"
+                                                android:textSize="15sp"
+                                                android:text="시작월"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"/>
+                                        <TextView
+                                                android:letterSpacing="-0.01"
+                                                android:textColor="#000"
+                                                android:fontFamily="sans-serif"
+                                                android:textStyle="normal"
+                                                android:textSize="18sp"
+                                                android:id="@+id/act_career_detail_date_start"
+                                                android:text="2018년 11월 25일"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"/>
+                                    </LinearLayout>
+
+                                    <ImageView
+                                            android:src="@drawable/ic_arrow_gradation"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"/>
+
+                                    <LinearLayout
+                                            android:layout_marginLeft="4dp"
+                                            android:orientation="vertical"
+                                            android:layout_weight="1"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content">
+                                        <TextView
+                                                android:layout_marginBottom="5dp"
+                                                android:letterSpacing="-0.01"
+                                                android:textColor="#aeaeae"
+                                                android:textStyle="normal"
+                                                android:fontFamily="sans-serif"
+                                                android:textSize="15sp"
+                                                android:text="종료월"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"/>
+                                        <TextView
+                                                android:letterSpacing="-0.01"
+                                                android:textColor="#000"
+                                                android:fontFamily="sans-serif"
+                                                android:textSize="18sp"
+                                                android:id="@+id/act_career_detail_date_end"
+                                                android:text="2019년 10월 28일"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"/>
+                                    </LinearLayout>
+
+                                </LinearLayout>
+                            </LinearLayout>
+
+
+                        </FrameLayout>
+
+
+                        <TextView
+                                android:id="@+id/act_career_detail_tv_content_title"
+                                android:layout_marginBottom="16dp"
+                                android:letterSpacing="-0.02"
+                                android:textColor="#425ee5"
+                                android:fontFamily="sans-serif-medium"
+                                android:textSize="15sp"
+                                android:layout_marginTop="32dp"
+                                android:text="메모"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+
+
+                        <EditText
+                                android:layout_marginBottom="96dp"
+                                android:textSize="16sp"
+                                android:fontFamily="sans-serif"
+                                android:textStyle="normal"
+                                android:textColor="#000"
+                                android:lineSpacingExtra="8sp"
+                                android:letterSpacing="-0.02"
+                                android:paddingVertical="10dp"
+                                android:paddingHorizontal="10dp"
+                                android:background="@drawable/edit_text_line"
+                                android:id="@+id/act_career_detail_et_note"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:lines="5"
+                                android:minLines="5"
+                                android:gravity="top"
+                                android:maxLines="10"/>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <ImageView
+                        android:id="@+id/act_career_detail_save_save"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="30dp"
+                        android:layout_marginTop="16dp"
+                        android:src="@drawable/bt_save_round"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+    </ScrollView>
+
+
+</RelativeLayout>

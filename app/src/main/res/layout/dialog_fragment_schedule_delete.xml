@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+
+    <data>
+        <variable
+                name="vm"
+                type="com.icoo.ssgsag_android.ui.main.calendar.calendarDialog.calendarDialogPage.CalendarDialogPageViewModel"/>
+    </data>
+
+    <RelativeLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:background="#80000000"
+            android:paddingHorizontal="14dp"
+    >
+
+        <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/white"
+                android:layout_centerVertical="true"
+                app:cardCornerRadius="8dp">
+
+
+            <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="20dp">
+
+                <TextView
+                        android:id="@+id/dialog_frag_schedule_delete_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#555555"
+                        android:textSize="16sp"
+                        android:textAlignment="center"
+                        android:lineHeight="20sp"
+                        android:fontFamily="@font/noto_sans_kr_medium"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="44dp"/>
+                <TextView
+                        android:id="@+id/dialog_frag_schedule_delete_ment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#555555"
+                        android:textSize="16sp"
+                        android:textAlignment="center"
+                        android:lineHeight="20sp"
+                        android:layout_below="@+id/dialog_frag_schedule_delete_name"
+                        android:fontFamily="@font/noto_sans_kr_regular"
+                        android:layout_centerHorizontal="true"/>
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="26dp"
+                        android:layout_below="@+id/dialog_frag_schedule_delete_ment">
+
+                    <TextView
+                            android:id="@+id/dialog_frag_schedule_delete_cancel"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="취소"
+                            android:textColor="#aaaaaa"
+                            android:textSize="16dp"
+                            android:fontFamily="@font/noto_sans_kr_regular"
+                            android:layout_weight="1"
+                            android:gravity="center"/>
+
+                    <TextView
+                            android:id="@+id/dialog_frag_schedule_delete_delete"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="삭제"
+                            android:textColor="#656ef0"
+                            android:textSize="16dp"
+                            android:fontFamily="@font/noto_sans_kr_medium"
+                            android:layout_weight="1"
+                            android:gravity="center"/>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+    </RelativeLayout>
+
+</layout>

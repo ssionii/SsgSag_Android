@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/img_intro_1">
+    <RelativeLayout
+            android:layout_weight="6"
+            android:clickable="false"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+    </RelativeLayout>
+
+    <RelativeLayout
+            android:layout_weight="4"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="#80656ef0">
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_centerHorizontal="true"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="29dp">
+
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/intro_title_1"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:fontFamily="@font/noto_sans_kr_medium"
+                    android:textSize="14sp"
+                    android:textColor="#f2f2f2"
+                    android:textAlignment="center"
+                    android:text="학교/학과, 관심분야만 선택하면\n슥삭이 알아서 찾아드릴게요."/>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+</LinearLayout>
