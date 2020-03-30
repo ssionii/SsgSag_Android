@@ -13,7 +13,6 @@ class ReviewViewModel(
     , private val schedulerProvider: SchedulerProvider
 ) : BaseViewModel() {
 
-
     private var _reviewList = MutableLiveData<ArrayList<ClubInfo>>()
     val reviewList : LiveData<ArrayList<ClubInfo>> get() = _reviewList
 

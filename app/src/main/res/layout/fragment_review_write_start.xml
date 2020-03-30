@@ -3,7 +3,7 @@
     <data>
         <variable
                 name="vm"
-                type="com.icoo.ssgsag_android.ui.main.review.club.write.ClubReviewWriteViewModel" />
+                type="com.icoo.ssgsag_android.ui.main.review.club.write.ReviewWriteViewModel" />
     </data>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"

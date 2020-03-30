@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.widget.EditText
@@ -14,9 +13,9 @@ import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseFragment
 import com.icoo.ssgsag_android.databinding.FragmentReviewWriteSimpleBinding
 import com.icoo.ssgsag_android.ui.main.review.ReviewDoneActivity
-import com.icoo.ssgsag_android.ui.main.review.club.write.ClubReviewWriteActivity
-import com.icoo.ssgsag_android.ui.main.review.club.write.ClubReviewWriteActivity.ClubReviewWriteData
-import com.icoo.ssgsag_android.ui.main.review.club.write.ClubReviewWriteViewModel
+import com.icoo.ssgsag_android.ui.main.review.club.write.ReviewWriteActivity
+import com.icoo.ssgsag_android.ui.main.review.club.write.ReviewWriteActivity.ClubReviewWriteData
+import com.icoo.ssgsag_android.ui.main.review.club.write.ReviewWriteViewModel
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import kotlinx.android.synthetic.main.fragment_review_write_simple.*
 import org.jetbrains.anko.backgroundColor
@@ -24,10 +23,10 @@ import org.jetbrains.anko.support.v4.toast
 import org.json.JSONObject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class ClubReviewWriteSimpleFragment :BaseFragment<FragmentReviewWriteSimpleBinding, ClubReviewWriteViewModel>(){
+class ReviewWriteSimpleFragment :BaseFragment<FragmentReviewWriteSimpleBinding, ReviewWriteViewModel>(){
     override val layoutResID: Int
         get() = R.layout.fragment_review_write_simple
-    override val viewModel: ClubReviewWriteViewModel by viewModel()
+    override val viewModel: ReviewWriteViewModel by viewModel()
 
     val position = 3
     var isDone = false
@@ -60,7 +59,7 @@ class ClubReviewWriteSimpleFragment :BaseFragment<FragmentReviewWriteSimpleBindi
     override fun onResume() {
         super.onResume()
 
-        (activity as ClubReviewWriteActivity).hideKeyboard(viewDataBinding.fragWriteReviewSimpleEtOneLine)
+        (activity as ReviewWriteActivity).hideKeyboard(viewDataBinding.fragWriteReviewSimpleEtOneLine)
     }
 
     private fun EditText.onTouch(){
@@ -109,8 +108,8 @@ class ClubReviewWriteSimpleFragment :BaseFragment<FragmentReviewWriteSimpleBindi
 
     private fun setButton(){
         viewDataBinding.fragWriteReviewSimpleIvBack.setSafeOnClickListener {
-            (activity as ClubReviewWriteActivity).hideKeyboard(viewDataBinding.fragWriteReviewSimpleEtOneLine)
-            (activity as ClubReviewWriteActivity).toPrevPage(position)
+            (activity as ReviewWriteActivity).hideKeyboard(viewDataBinding.fragWriteReviewSimpleEtOneLine)
+            (activity as ReviewWriteActivity).toPrevPage(position)
         }
 
         viewDataBinding.fragReviewWriteSimpleClDone.setSafeOnClickListener {
@@ -121,7 +120,7 @@ class ClubReviewWriteSimpleFragment :BaseFragment<FragmentReviewWriteSimpleBindi
                 else
                     postNonRgstrClubReview()
                 activity!!.finish()
-                (activity as ClubReviewWriteActivity).hideKeyboard(viewDataBinding.fragWriteReviewSimpleEtOneLine)
+                (activity as ReviewWriteActivity).hideKeyboard(viewDataBinding.fragWriteReviewSimpleEtOneLine)
             }else{
                 toast("20자 이상 입력해주세요")
             }

@@ -12,10 +12,8 @@ import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.icoo.ssgsag_android.databinding.ActivityClubManagerContactBinding
-import com.icoo.ssgsag_android.ui.main.review.club.write.ClubReviewWriteActivity
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import org.jetbrains.anko.backgroundColor
-import org.jetbrains.anko.toast
 import org.json.JSONObject
 import java.util.regex.Pattern
 

@@ -10,7 +10,7 @@ import com.icoo.ssgsag_android.base.BaseViewModel
 import com.icoo.ssgsag_android.data.model.review.club.ClubInfo
 import com.icoo.ssgsag_android.data.model.review.club.ClubReviewRepository
 import com.icoo.ssgsag_android.ui.main.calendar.calendarDetail.CalendarDetailActivity
-import com.icoo.ssgsag_android.ui.main.review.club.ClubReviewDetailActivity
+import com.icoo.ssgsag_android.ui.main.review.club.ReviewDetailActivity
 import com.icoo.ssgsag_android.util.scheduler.SchedulerProvider
 import kotlin.reflect.KClass
 
@@ -111,7 +111,7 @@ class SearchViewModel(
             val bundle = Bundle().apply {
                 putInt("clubIdx", idx)
             }
-            _activityToStart.postValue(Pair(ClubReviewDetailActivity::class, bundle))
+            _activityToStart.postValue(Pair(ReviewDetailActivity::class, bundle))
         }
     }
 

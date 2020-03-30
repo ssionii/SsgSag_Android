@@ -9,8 +9,8 @@ import com.icoo.ssgsag_android.base.BaseRecyclerViewAdapter
 import com.icoo.ssgsag_android.data.model.category.Category
 import com.icoo.ssgsag_android.databinding.ActivityNotRgstrClubBinding
 import com.icoo.ssgsag_android.databinding.ItemClubRgstrCategoryBinding
-import com.icoo.ssgsag_android.ui.main.review.club.write.ClubReviewWriteActivity
-import com.icoo.ssgsag_android.ui.main.review.club.write.ClubReviewWriteViewModel
+import com.icoo.ssgsag_android.ui.main.review.club.write.ReviewWriteActivity
+import com.icoo.ssgsag_android.ui.main.review.club.write.ReviewWriteViewModel
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import org.jetbrains.anko.backgroundColor
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -86,11 +86,11 @@ class NonRgstrClubActivity : BaseActivity<ActivityNotRgstrClubBinding, ClubRgstr
         }
 
         viewDataBinding.actNotRgstrClubClDone.setSafeOnClickListener {
-            ClubReviewWriteActivity.ClubReviewWriteData.categoryList = viewModel.selectedClubCategoryList
+            ReviewWriteActivity.ClubReviewWriteData.categoryList = viewModel.selectedClubCategoryList
 
             finish()
-            val clubReviewWriteVm : ClubReviewWriteViewModel by viewModel()
-            clubReviewWriteVm.setIsNotRgstr(true)
+            val reviewWriteVm : ReviewWriteViewModel by viewModel()
+            reviewWriteVm.setIsNotRgstr(true)
         }
     }
 }

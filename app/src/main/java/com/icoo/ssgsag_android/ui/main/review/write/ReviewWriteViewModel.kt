@@ -11,7 +11,7 @@ import com.icoo.ssgsag_android.data.model.review.club.ClubReviewRepository
 import com.icoo.ssgsag_android.util.scheduler.SchedulerProvider
 import org.json.JSONObject
 
-class ClubReviewWriteViewModel(
+class ReviewWriteViewModel(
     private val repository: ClubReviewRepository
 , private val schedulerProvider: SchedulerProvider
 ) : BaseViewModel(){

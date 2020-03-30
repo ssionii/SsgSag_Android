@@ -22,7 +22,7 @@ import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import com.icoo.ssgsag_android.util.view.WrapContentLinearLayoutManager
 
 
-class ClubReviewsFragment : BaseFragment<FragmentClubReviewsBinding, ReviewDetailViewModel>() {
+class ReviewsFragment : BaseFragment<FragmentClubReviewsBinding, ReviewDetailViewModel>() {
 
     override val layoutResID: Int
         get() = R.layout.fragment_club_reviews

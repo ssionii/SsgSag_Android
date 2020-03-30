@@ -2,7 +2,6 @@ package com.icoo.ssgsag_android.ui.main.review.club.write
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import com.icoo.ssgsag_android.R
@@ -10,7 +9,7 @@ import com.icoo.ssgsag_android.base.BaseActivity
 import com.icoo.ssgsag_android.databinding.ActivityClubReviewWriteBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class ClubReviewWriteActivity : BaseActivity<ActivityClubReviewWriteBinding, ClubReviewWriteViewModel>(){
+class ReviewWriteActivity : BaseActivity<ActivityClubReviewWriteBinding, ReviewWriteViewModel>(){
 
 
     object ClubReviewWriteData {
@@ -40,9 +39,9 @@ class ClubReviewWriteActivity : BaseActivity<ActivityClubReviewWriteBinding, Clu
 
     override val layoutResID: Int
         get() = R.layout.activity_club_review_write
-    override val viewModel: ClubReviewWriteViewModel by viewModel()
+    override val viewModel: ReviewWriteViewModel by viewModel()
 
-    lateinit var clubReviewWritePagerAdapter: ClubReviewWritePagerAdapter
+    lateinit var ReviewWritePagerAdapter: ReviewWritePagerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,9 +60,9 @@ class ClubReviewWriteActivity : BaseActivity<ActivityClubReviewWriteBinding, Clu
 
 
     private fun setVp(from: String){
-        clubReviewWritePagerAdapter = ClubReviewWritePagerAdapter(supportFragmentManager, 4, from)
+        ReviewWritePagerAdapter = ReviewWritePagerAdapter(supportFragmentManager, 4, from)
         viewDataBinding.actClubReviewWriteNvp.run{
-            adapter = clubReviewWritePagerAdapter
+            adapter = ReviewWritePagerAdapter
             currentItem = 0
             offscreenPageLimit = 4
 
@@ -71,7 +70,7 @@ class ClubReviewWriteActivity : BaseActivity<ActivityClubReviewWriteBinding, Clu
     }
 
     fun toNextPage(curPage :Int){
-        if(curPage < clubReviewWritePagerAdapter.fragmentCount - 1) {
+        if(curPage < ReviewWritePagerAdapter.fragmentCount - 1) {
             viewDataBinding.actClubReviewWriteNvp.setCurrentItem(curPage + 1)
         }
     }

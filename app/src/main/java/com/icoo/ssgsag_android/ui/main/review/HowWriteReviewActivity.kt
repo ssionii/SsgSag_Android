@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.icoo.ssgsag_android.R
-import com.icoo.ssgsag_android.ui.main.review.club.write.ClubReviewWriteActivity
+import com.icoo.ssgsag_android.ui.main.review.club.write.ReviewWriteActivity
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import kotlinx.android.synthetic.main.activity_how_write_review.*
 
@@ -20,7 +20,7 @@ class HowWriteReviewActivity :AppCompatActivity(){
         }
 
         act_how_write_review_cl_done.setSafeOnClickListener {
-            val reviewWriteIntent = Intent(this, ClubReviewWriteActivity::class.java)
+            val reviewWriteIntent = Intent(this, ReviewWriteActivity::class.java)
             reviewWriteIntent.apply {
                 putExtra("from", intent.getStringExtra("from"))
                 putExtra("clubName", intent.getStringExtra("clubName"))

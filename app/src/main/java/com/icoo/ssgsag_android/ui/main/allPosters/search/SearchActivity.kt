@@ -2,17 +2,12 @@ package com.icoo.ssgsag_android.ui.main.allPosters.search
 
 import android.content.Context
 import android.content.Intent
-import com.icoo.ssgsag_android.ui.main.allPosters.search.SearchViewModel
 import android.os.Bundle
-import android.util.Log
-import android.view.MenuItem
-import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
-import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
@@ -21,20 +16,14 @@ import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseActivity
 import com.icoo.ssgsag_android.base.BaseRecyclerViewAdapter
 import com.icoo.ssgsag_android.data.model.poster.posterDetail.PosterDetail
-import com.icoo.ssgsag_android.data.model.review.club.ClubInfo
-import com.icoo.ssgsag_android.data.model.subscribe.Subscribe
 import com.icoo.ssgsag_android.databinding.ActivitySearchBinding
 import com.icoo.ssgsag_android.databinding.ItemAllPostersBinding
-import com.icoo.ssgsag_android.databinding.ItemClubReviewBinding
-import com.icoo.ssgsag_android.ui.main.feed.category.ClubListRecyclerViewAdapter
+import com.icoo.ssgsag_android.ui.main.review.ReviewListRecyclerViewAdapter
 import com.icoo.ssgsag_android.ui.main.review.club.registration.ClubManagerCheckActivity
-import com.icoo.ssgsag_android.ui.main.review.club.registration.ClubManagerContactActivity
-import com.icoo.ssgsag_android.ui.main.review.club.registration.ClubRgstrActivity
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import com.icoo.ssgsag_android.util.view.WrapContentLinearLayoutManager
 import com.igaworks.v2.core.AdBrixRm
 import org.jetbrains.anko.startActivity
-import org.jetbrains.anko.toast
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(),
@@ -44,7 +33,7 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(),
         get() = R.layout.activity_search
     override val viewModel: SearchViewModel by viewModel()
 
-    private var ClubListRecyclerViewAdapter : ClubListRecyclerViewAdapter? = null
+    private var reviewListRecyclerViewAdapter : ReviewListRecyclerViewAdapter? = null
 
     private var curPage = 0
     private var from = "main"
@@ -83,7 +72,7 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(),
                     (adapter as BaseRecyclerViewAdapter<PosterDetail, ItemAllPostersBinding>).clearAll()
                     viewModel.getSearchedPosters(viewDataBinding.actSearchEtSearch.text.toString(), curPage)
                 }else if(from == "club"){
-                    ClubListRecyclerViewAdapter?.clearAll()
+                    reviewListRecyclerViewAdapter?.clearAll()
                     viewModel.getSearchedClubs(viewDataBinding.actSearchEtSearch.text.toString(), curPage)
                 }
             }
@@ -105,7 +94,7 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(),
                         (adapter as BaseRecyclerViewAdapter<PosterDetail, ItemAllPostersBinding>).clearAll()
                         viewModel.getSearchedPosters(viewDataBinding.actSearchEtSearch.text.toString(), curPage)
                     }else if(from == "club"){
-                        ClubListRecyclerViewAdapter?.clearAll()
+                        reviewListRecyclerViewAdapter?.clearAll()
                         viewModel.getSearchedClubs(viewDataBinding.actSearchEtSearch.text.toString(), curPage)
                     }
                 }
@@ -183,22 +172,22 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(),
     private fun setClubRv() {
         //RecyclerView
         viewModel.clubResult.observe(this, Observer { value ->
-            if (ClubListRecyclerViewAdapter != null) {
-                ClubListRecyclerViewAdapter!!.apply {
+            if (reviewListRecyclerViewAdapter != null) {
+                reviewListRecyclerViewAdapter!!.apply {
                     addItem(value)
                     notifyDataSetChanged()
 
                 }
             } else {
-                ClubListRecyclerViewAdapter =
-                    ClubListRecyclerViewAdapter(value)
-                ClubListRecyclerViewAdapter!!.run {
+                reviewListRecyclerViewAdapter =
+                    ReviewListRecyclerViewAdapter(value)
+                reviewListRecyclerViewAdapter!!.run {
                     setOnReviewClickListener(onReviewClickListener)
                     setHasStableIds(true)
                 }
 
                 viewDataBinding.actSearchRv.apply {
-                    adapter = ClubListRecyclerViewAdapter
+                    adapter = reviewListRecyclerViewAdapter
 
                     (itemAnimator as SimpleItemAnimator).run {
                         changeDuration = 0
@@ -253,7 +242,7 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(),
         )
     }
 
-    val onReviewClickListener = object : ClubListRecyclerViewAdapter.OnReviewClickListener{
+    val onReviewClickListener = object : ReviewListRecyclerViewAdapter.OnReviewClickListener{
         override fun onItemClickListener(clubIdx: Int) {
             viewModel.navigate(clubIdx, 0, from)
         }

@@ -6,17 +6,17 @@ import android.view.View.VISIBLE
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseFragment
 import com.icoo.ssgsag_android.databinding.FragmentReviewWriteScoreBinding
-import com.icoo.ssgsag_android.ui.main.review.club.write.ClubReviewWriteActivity
-import com.icoo.ssgsag_android.ui.main.review.club.write.ClubReviewWriteActivity.ClubReviewWriteData
-import com.icoo.ssgsag_android.ui.main.review.club.write.ClubReviewWriteViewModel
+import com.icoo.ssgsag_android.ui.main.review.club.write.ReviewWriteActivity
+import com.icoo.ssgsag_android.ui.main.review.club.write.ReviewWriteActivity.ClubReviewWriteData
+import com.icoo.ssgsag_android.ui.main.review.club.write.ReviewWriteViewModel
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import org.jetbrains.anko.backgroundColor
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class ClubReviewWriteScoreFragment :  BaseFragment<FragmentReviewWriteScoreBinding, ClubReviewWriteViewModel>() {
+class ReviewWriteScoreFragment :  BaseFragment<FragmentReviewWriteScoreBinding, ReviewWriteViewModel>() {
     override val layoutResID: Int
         get() = R.layout.fragment_review_write_score
-    override val viewModel: ClubReviewWriteViewModel by viewModel()
+    override val viewModel: ReviewWriteViewModel by viewModel()
 
     val position = 2
 
@@ -68,10 +68,10 @@ class ClubReviewWriteScoreFragment :  BaseFragment<FragmentReviewWriteScoreBindi
 
     private fun setButton(){
         viewDataBinding.fragReviewWriteScoreNext.setSafeOnClickListener {
-            (activity as ClubReviewWriteActivity).toNextPage(position)
+            (activity as ReviewWriteActivity).toNextPage(position)
         }
         viewDataBinding.fragWriteReviewScoreIvBack.setSafeOnClickListener {
-            (activity as ClubReviewWriteActivity).toPrevPage(position)
+            (activity as ReviewWriteActivity).toPrevPage(position)
         }
 
     }

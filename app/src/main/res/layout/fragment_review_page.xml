@@ -6,6 +6,9 @@
             <variable
                     name="vm"
                     type="com.icoo.ssgsag_android.ui.main.review.ReviewViewModel" />
+            <variable
+                    name="reviewListFragment"
+                    type="com.icoo.ssgsag_android.ui.main.review.ReviewListFragment" />
         </data>
     <RelativeLayout
             android:layout_width="match_parent"
@@ -16,7 +19,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:visibility="gone"
-                clVisibilityByInt = "@{vm.clubReviews.size()}">
+                clVisibilityByInt = "@{vm.reviewList.size()}">
             <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -36,7 +39,7 @@
                         android:fontFamily="@font/noto_sans_kr_regular"
                         android:textSize="12sp"
                         android:textColor="@color/grey_1"
-                        android:text="아직 교내 동아리의 후기가 없어요.\n후기를 등록해주세요 ㅠ-ㅠ"
+                        android:text="아직 후기가 없어요.\n후기를 등록해주세요 ㅠ-ㅠ"
                         android:textAlignment="center"
                         android:layout_marginTop="8dp"/>
 
@@ -51,7 +54,8 @@
                     android:id="@+id/frag_review_cl_regi_club"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
-                    android:background="@drawable/banner_1">
+                    android:background="@drawable/banner_1"
+                    clubBannerVisibility ="@{reviewListFragment.reviewType}">
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

@@ -1,6 +1,8 @@
 package com.icoo.ssgsag_android.ui.main.review
 
 import android.graphics.Color
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -64,10 +66,28 @@ fun setClubActDate(view: TextView, endDate: String?){
     view.text = endDate?.substring(0,4) +"년 활동"
 }
 
+
 @BindingAdapter("noClubIntroduce")
 fun setNoClubIntroduce(view: TextView, intro: String?){
     if(intro!! == "")
         view.text = "동아리 한줄 소개가 없습니다."
     else
         view.text = intro
+}
+
+@BindingAdapter("clubBannerVisibility")
+fun ConstraintLayout.setClubBannerVisibility(reviewType: Int){
+    when(reviewType){
+        0, 1 -> this.visibility = VISIBLE
+        else -> this.visibility = GONE
+    }
+}
+
+@BindingAdapter("reviewListTitle")
+fun TextView.setReviewListTitle(reviewType: Int){
+    when(reviewType){
+        0, 1 -> this.text = "동아리 후기"
+        2 -> this.text = "대외활동 후기"
+        3 -> this.text = "인턴 후기"
+    }
 }

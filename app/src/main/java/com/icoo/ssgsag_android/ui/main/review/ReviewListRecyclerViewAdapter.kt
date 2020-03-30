@@ -1,4 +1,4 @@
-package com.icoo.ssgsag_android.ui.main.feed.category
+package com.icoo.ssgsag_android.ui.main.review
 
 import android.view.LayoutInflater
 import android.view.View.VISIBLE
@@ -6,15 +6,14 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.icoo.ssgsag_android.R
-import com.icoo.ssgsag_android.data.model.feed.Feed
 import com.icoo.ssgsag_android.data.model.review.club.ClubInfo
 import com.icoo.ssgsag_android.databinding.ItemClubReviewBinding
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 
 
-class ClubListRecyclerViewAdapter(
+class ReviewListRecyclerViewAdapter(
     var itemList: ArrayList<ClubInfo>
-) : RecyclerView.Adapter<ClubListRecyclerViewAdapter.ViewHolder>(){
+) : RecyclerView.Adapter<ReviewListRecyclerViewAdapter.ViewHolder>(){
 
     private var listener: OnReviewClickListener? = null
 

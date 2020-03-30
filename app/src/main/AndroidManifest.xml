@@ -95,7 +95,7 @@
         </activity>
         <activity android:name=".ui.main.ssgSag.filter.SsgSagFilterActivity"/>
         <activity android:name=".ui.main.feed.bookmark.BookmarkedFeedActivity"/>
-        <activity android:name=".ui.main.review.club.ClubReviewDetailActivity"/>
+        <activity android:name=".ui.main.review.club.ReviewDetailActivity"/>
         <activity android:name=".ui.main.review.club.reviews.MoreReviewActivity"/>
         <activity android:name=".ui.main.review.club.registration.ClubManagerCheckActivity"/>
         <activity android:name=".ui.main.review.club.registration.ClubManagerContactActivity"
@@ -103,7 +103,7 @@
         <activity android:name=".ui.main.review.club.registration.ClubRgstrActivity"
                 android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".ui.main.review.HowWriteReviewActivity"/>
-        <activity android:name=".ui.main.review.club.write.ClubReviewWriteActivity"
+        <activity android:name=".ui.main.review.club.write.ReviewWriteActivity"
                 android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".ui.main.review.club.registration.NonRgstrClubActivity"/>
         <activity android:name=".ui.main.review.ReviewDoneActivity"/>

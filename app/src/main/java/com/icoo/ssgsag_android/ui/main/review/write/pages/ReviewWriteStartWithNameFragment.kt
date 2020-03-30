@@ -10,20 +10,20 @@ import android.widget.TextView
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseFragment
 import com.icoo.ssgsag_android.databinding.FragmentReviewWriteStartWithNameBinding
-import com.icoo.ssgsag_android.ui.main.review.club.write.ClubReviewWriteActivity
-import com.icoo.ssgsag_android.ui.main.review.club.write.ClubReviewWriteActivity.ClubReviewWriteData
-import com.icoo.ssgsag_android.ui.main.review.club.write.ClubReviewWriteViewModel
+import com.icoo.ssgsag_android.ui.main.review.club.write.ReviewWriteActivity
+import com.icoo.ssgsag_android.ui.main.review.club.write.ReviewWriteActivity.ClubReviewWriteData
+import com.icoo.ssgsag_android.ui.main.review.club.write.ReviewWriteViewModel
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import org.jetbrains.anko.backgroundColor
 import org.jetbrains.anko.support.v4.toast
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 
-class ClubReviewWriteStartWithNameFragment : BaseFragment<FragmentReviewWriteStartWithNameBinding, ClubReviewWriteViewModel>(){
+class ReviewWriteStartWithNameFragment : BaseFragment<FragmentReviewWriteStartWithNameBinding, ReviewWriteViewModel>(){
 
     override val layoutResID: Int
         get() = R.layout.fragment_review_write_start_with_name
-    override val viewModel: ClubReviewWriteViewModel by viewModel()
+    override val viewModel: ReviewWriteViewModel by viewModel()
 
     val position = 1
 
@@ -54,7 +54,7 @@ class ClubReviewWriteStartWithNameFragment : BaseFragment<FragmentReviewWriteSta
                 toast("활동시기 입력이 잘못되었습니다.")
             }else{
                 viewModel.isRgstrClub = true
-                (activity as ClubReviewWriteActivity).toNextPage(position)
+                (activity as ReviewWriteActivity).toNextPage(position)
             }
 
 

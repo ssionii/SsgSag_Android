@@ -31,26 +31,34 @@ class ReviewMainFragment : BaseFragment<FragmentReviewMainBinding, ReviewMainVie
 
         viewDataBinding.fragReviewMainRlClub.setSafeOnClickListener {
             clubReviewFragment = ReviewFragment()
-            clubReviewFragment.reviewType = "club"
+            clubReviewFragment.reviewType = 1
 
-            fragmentManager!!.beginTransaction().add(R.id.frag_review_main_fl_container, clubReviewFragment).commit()
+            fragmentManager!!.beginTransaction().add(R.id.frag_review_main_fl_container, clubReviewFragment, "club").commit()
             fragmentManager!!.beginTransaction().show(clubReviewFragment).commit()
         }
 
         viewDataBinding.fragReviewMainRlAct.setSafeOnClickListener {
             actReviewFragment = ReviewFragment()
-            actReviewFragment.reviewType = "act"
+            actReviewFragment.reviewType = 2
 
-            fragmentManager!!.beginTransaction().add(R.id.frag_review_main_fl_container, actReviewFragment).commit()
+            fragmentManager!!.beginTransaction().add(R.id.frag_review_main_fl_container, actReviewFragment, "act").commit()
             fragmentManager!!.beginTransaction().show(actReviewFragment).commit()
         }
 
         viewDataBinding.fragReviewMainRlIntern.setSafeOnClickListener {
             internReviewFragment = ReviewFragment()
-            internReviewFragment.reviewType = "intern"
+            internReviewFragment.reviewType = 3
 
-            fragmentManager!!.beginTransaction().add(R.id.frag_review_main_fl_container, internReviewFragment).commit()
+            fragmentManager!!.beginTransaction().add(R.id.frag_review_main_fl_container, internReviewFragment, "intern").commit()
             fragmentManager!!.beginTransaction().show(internReviewFragment).commit()
         }
+    }
+
+    fun removeFragment(tag: String){
+
+        fragmentManager!!.findFragmentByTag(tag)?.also {
+            fragmentManager!!.beginTransaction().remove(it)
+        }
+
     }
 }

@@ -24,10 +24,8 @@ import com.icoo.ssgsag_android.data.model.review.club.ClubPost
 import com.icoo.ssgsag_android.databinding.ActivityClubReviewEditBinding
 import com.icoo.ssgsag_android.ui.main.myPage.myReview.MyReviewViewModel
 import com.icoo.ssgsag_android.ui.main.review.ReviewDoneActivity
-import com.icoo.ssgsag_android.ui.main.review.club.write.ClubReviewWriteActivity
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import org.jetbrains.anko.backgroundColor
-import org.jetbrains.anko.support.v4.toast
 import org.jetbrains.anko.toast
 import org.json.JSONObject
 import org.koin.androidx.viewmodel.ext.android.viewModel

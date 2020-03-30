@@ -3,8 +3,6 @@ package com.icoo.ssgsag_android.ui.main.review.club
 import android.content.Intent
 import android.os.Bundle
 import android.view.Gravity
-import android.view.ViewGroup
-import androidx.cardview.widget.CardView
 import androidx.lifecycle.Observer
 import com.icoo.ssgsag_android.BR
 import com.icoo.ssgsag_android.R
@@ -16,7 +14,7 @@ import com.icoo.ssgsag_android.databinding.ItemReviewCategoryBinding
 import com.icoo.ssgsag_android.ui.main.review.HowWriteReviewActivity
 import com.icoo.ssgsag_android.ui.main.review.reviewDetail.ReviewDetailViewModel
 import com.icoo.ssgsag_android.ui.main.review.club.info.ClubInfoFragment
-import com.icoo.ssgsag_android.ui.main.review.club.reviews.ClubReviewsFragment
+import com.icoo.ssgsag_android.ui.main.review.club.reviews.ReviewsFragment
 import com.icoo.ssgsag_android.util.DialogPlusAdapter
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import com.orhanobut.dialogplus.DialogPlus
@@ -24,7 +22,7 @@ import com.orhanobut.dialogplus.ViewHolder
 import org.jetbrains.anko.toast
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class ClubReviewDetailActivity : BaseActivity<ActivityClubReviewDetailBinding, ReviewDetailViewModel>() {
+class ReviewDetailActivity : BaseActivity<ActivityClubReviewDetailBinding, ReviewDetailViewModel>() {
 
     override val layoutResID: Int
         get() = R.layout.activity_club_review_detail
@@ -72,7 +70,7 @@ class ClubReviewDetailActivity : BaseActivity<ActivityClubReviewDetailBinding, R
         viewDataBinding.actReviewDetailVp.run{
             adapter = BasePagerAdapter(supportFragmentManager).apply {
                 addFragment(ClubInfoFragment())
-                addFragment(ClubReviewsFragment())
+                addFragment(ReviewsFragment())
                 isSaveEnabled = false
             }
             currentItem = 0

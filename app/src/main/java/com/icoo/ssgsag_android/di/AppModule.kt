@@ -40,9 +40,8 @@ import com.icoo.ssgsag_android.ui.main.review.ReviewViewModel
 import com.icoo.ssgsag_android.ui.main.review.club.registration.ClubRgstrViewModel
 import com.icoo.ssgsag_android.ui.main.review.club.reviews.MoreReviewViewModel
 import com.icoo.ssgsag_android.ui.main.review.club.reviews.blogReview.BlogReviewViewModel
-import com.icoo.ssgsag_android.ui.main.review.club.write.ClubReviewWriteViewModel
+import com.icoo.ssgsag_android.ui.main.review.club.write.ReviewWriteViewModel
 import com.icoo.ssgsag_android.ui.main.review.event.ReviewEventViewModel
-import com.icoo.ssgsag_android.ui.main.review.main.ReviewMainFragment
 import com.icoo.ssgsag_android.ui.main.review.main.ReviewMainViewModel
 import com.icoo.ssgsag_android.ui.main.review.reviewDetail.ReviewDetailViewModel
 import com.icoo.ssgsag_android.ui.main.subscribe.SubscribeViewModel
@@ -159,11 +158,11 @@ val viewModule = module {
     viewModel { ReviewViewModel(get(), get()) }
     single { ReviewDetailViewModel( get(), get(), get()) }
     single { ClubRgstrViewModel(get(), get()) }
-    single { ClubReviewWriteViewModel(get(), get()) }
+    single { ReviewWriteViewModel(get(), get()) }
     viewModel { BlogReviewViewModel(get(), get()) }
     viewModel { MoreReviewViewModel(get(), get(), get()) }
     viewModel { ReviewEventViewModel(get(), get()) }
-    viewModel {ReviewMainViewModel(get(), get())}
+    viewModel { ReviewMainViewModel(get(), get()) }
 
 }
 

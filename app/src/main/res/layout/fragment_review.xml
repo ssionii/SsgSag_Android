@@ -4,6 +4,9 @@
         <variable
                 name="vm"
                 type="com.icoo.ssgsag_android.ui.main.review.ReviewViewModel" />
+        <variable
+                name="reviewFragment"
+                type="com.icoo.ssgsag_android.ui.main.review.ReviewFragment" />
     </data>
 
     <FrameLayout
@@ -26,19 +29,27 @@
                     android:layout_height="48dp"
                     android:paddingHorizontal="12dp">
 
-                <ImageView
-                        android:id="@+id/frag_review_iv_my_page"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/frag_review_cl_back"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
-                        android:src="@drawable/profile"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"/>
+                        app:layout_constraintTop_toTopOf="parent">
+                    <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_arrow_back"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            android:text="동아리 후기"
+                            reviewListTitle="@{reviewFragment.reviewType}"
                             android:textSize="16sp"
                             android:textColor="#444444"
                             android:fontFamily="@font/noto_sans_kr_bold"
