@@ -9,7 +9,9 @@ import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseActivity
 import com.icoo.ssgsag_android.base.BasePagerAdapter
 import com.icoo.ssgsag_android.base.BaseRecyclerViewAdapter
+import com.icoo.ssgsag_android.data.model.review.ReviewGrade
 import com.icoo.ssgsag_android.databinding.ActivityClubReviewDetailBinding
+import com.icoo.ssgsag_android.databinding.ItemClubReviewDetailGradeBinding
 import com.icoo.ssgsag_android.databinding.ItemReviewCategoryBinding
 import com.icoo.ssgsag_android.ui.main.review.HowWriteReviewActivity
 import com.icoo.ssgsag_android.ui.main.review.reviewDetail.ReviewDetailViewModel
@@ -32,16 +34,25 @@ class ReviewDetailActivity : BaseActivity<ActivityClubReviewDetailBinding, Revie
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewDataBinding.vm = viewModel
 
         viewModel.mClubIdx = intent.getIntExtra("clubIdx", 0)
+        viewModel.reviewType = intent.getStringExtra("reviewType")
+
+        viewDataBinding.vm = viewModel
+
+
         viewModel.getClubDetail()
         viewModel.getAlreadyWrite()
 
         setCategoryRv()
+        setGradeRv()
         setButton()
-        setVp()
-        setTab()
+
+        val reviewsFragment = ReviewsFragment()
+
+        supportFragmentManager!!.beginTransaction().add(R.id.act_review_detail_fl_bottom_container,reviewsFragment).commit()
+        supportFragmentManager!!.beginTransaction().show(reviewsFragment).commit()
+
     }
 
 
@@ -66,6 +77,21 @@ class ReviewDetailActivity : BaseActivity<ActivityClubReviewDetailBinding, Revie
         })
     }
 
+    private fun setGradeRv(){
+
+        viewDataBinding.actClubReviewDetailRvGrade.run{
+            adapter = object : BaseRecyclerViewAdapter<ReviewGrade,ItemClubReviewDetailGradeBinding>(){
+                override val layoutResID: Int
+                    get() = R.layout.item_club_review_detail_grade
+                override val bindingVariableId: Int
+                    get() = BR.reviewGrade
+                override val listener: OnItemClickListener?
+                    get() = null
+            }
+        }
+    }
+
+    /*
     private fun setVp(){
         viewDataBinding.actReviewDetailVp.run{
             adapter = BasePagerAdapter(supportFragmentManager).apply {
@@ -85,7 +111,7 @@ class ReviewDetailActivity : BaseActivity<ActivityClubReviewDetailBinding, Revie
             getTabAt(1)!!.text = "후기"
             setTabRippleColor(null)
         }
-    }
+    }*/
 
     private fun setButton(){
         viewDataBinding.actReviewDetailIvBack.setSafeOnClickListener {
@@ -99,6 +125,7 @@ class ReviewDetailActivity : BaseActivity<ActivityClubReviewDetailBinding, Revie
                 val intent = Intent(this, HowWriteReviewActivity::class.java)
                 intent.apply {
                     putExtra("from", "reviewDetail")
+                    putExtra("reviewType", viewModel.reviewType)
                     putExtra("clubName", viewModel.reviewDetail.value!!.clubName)
                     putExtra("clubIdx", viewModel.reviewDetail.value!!.clubIdx)
                 }

@@ -90,7 +90,7 @@
                             android:imeOptions="actionNext"
                             android:singleLine="true"
                             android:textSize="14sp"
-                            android:hint="이 동아리를 한줄로 표현하자면?"
+                            reviewWriteSimpleEditTextHint="@{vm.reviewType}"
                             android:textColorHint="@color/grey_2"
                             android:textColor="@color/black_1"
                             android:layout_marginTop="4dp"

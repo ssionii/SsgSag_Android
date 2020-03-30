@@ -4,7 +4,7 @@ import android.os.Bundle
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseFragment
 import com.icoo.ssgsag_android.databinding.FragmentReviewMainBinding
-import com.icoo.ssgsag_android.ui.main.review.ReviewFragment
+import com.icoo.ssgsag_android.ui.main.review.ReviewPageFragment
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -15,9 +15,9 @@ class ReviewMainFragment : BaseFragment<FragmentReviewMainBinding, ReviewMainVie
 
     override val viewModel: ReviewMainViewModel by viewModel()
 
-    lateinit var clubReviewFragment: ReviewFragment
-    lateinit var actReviewFragment: ReviewFragment
-    lateinit var internReviewFragment: ReviewFragment
+    lateinit var clubReviewPageFragment: ReviewPageFragment
+    lateinit var actReviewPageFragment: ReviewPageFragment
+    lateinit var internReviewPageFragment: ReviewPageFragment
 
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -30,27 +30,27 @@ class ReviewMainFragment : BaseFragment<FragmentReviewMainBinding, ReviewMainVie
     private fun setButton(){
 
         viewDataBinding.fragReviewMainRlClub.setSafeOnClickListener {
-            clubReviewFragment = ReviewFragment()
-            clubReviewFragment.reviewType = 1
+            clubReviewPageFragment = ReviewPageFragment()
+            clubReviewPageFragment.reviewType = 1
 
-            fragmentManager!!.beginTransaction().add(R.id.frag_review_main_fl_container, clubReviewFragment, "club").commit()
-            fragmentManager!!.beginTransaction().show(clubReviewFragment).commit()
+            fragmentManager!!.beginTransaction().add(R.id.frag_review_main_fl_container, clubReviewPageFragment, "club").commit()
+            fragmentManager!!.beginTransaction().show(clubReviewPageFragment).commit()
         }
 
         viewDataBinding.fragReviewMainRlAct.setSafeOnClickListener {
-            actReviewFragment = ReviewFragment()
-            actReviewFragment.reviewType = 2
+            actReviewPageFragment = ReviewPageFragment()
+            actReviewPageFragment.reviewType = 2
 
-            fragmentManager!!.beginTransaction().add(R.id.frag_review_main_fl_container, actReviewFragment, "act").commit()
-            fragmentManager!!.beginTransaction().show(actReviewFragment).commit()
+            fragmentManager!!.beginTransaction().add(R.id.frag_review_main_fl_container, actReviewPageFragment, "act").commit()
+            fragmentManager!!.beginTransaction().show(actReviewPageFragment).commit()
         }
 
         viewDataBinding.fragReviewMainRlIntern.setSafeOnClickListener {
-            internReviewFragment = ReviewFragment()
-            internReviewFragment.reviewType = 3
+            internReviewPageFragment = ReviewPageFragment()
+            internReviewPageFragment.reviewType = 3
 
-            fragmentManager!!.beginTransaction().add(R.id.frag_review_main_fl_container, internReviewFragment, "intern").commit()
-            fragmentManager!!.beginTransaction().show(internReviewFragment).commit()
+            fragmentManager!!.beginTransaction().add(R.id.frag_review_main_fl_container, internReviewPageFragment, "intern").commit()
+            fragmentManager!!.beginTransaction().show(internReviewPageFragment).commit()
         }
     }
 

@@ -131,8 +131,16 @@ class ReviewListFragment : BaseFragment<FragmentReviewPageBinding, ReviewViewMod
             = object : ReviewListRecyclerViewAdapter.OnReviewClickListener {
         override fun onItemClickListener(clubIdx: Int) {
 
+            var reviewTypeString = ""
+            when(reviewType){
+                0 -> reviewTypeString = "club"
+                1 -> reviewTypeString = "act"
+                2 -> reviewTypeString = "intern"
+            }
+
             val intent = Intent(activity!!, ReviewDetailActivity::class.java)
             intent.putExtra("clubIdx", clubIdx)
+            intent.putExtra("reviewType", reviewTypeString)
             startActivity(intent)
         }
     }

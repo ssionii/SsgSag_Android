@@ -153,16 +153,33 @@ class ReviewWriteSimpleFragment :BaseFragment<FragmentReviewWriteSimpleBinding, 
     // 등록되어 있지 않은 동아리의 후기 입력
     private fun postNonRgstrClubReview(){
         val jsonObject = JSONObject()
-        jsonObject.put("clubType", viewModel.clubType.value)
+        when(viewModel.reviewType){
+            "club" ->{
+                jsonObject.put("clubType", viewModel.clubType.value)
+            }
+            "act" ->{
+                jsonObject.put("clubType", 2)
+            }
+            "intern" ->{
+                jsonObject.put("clubType", 3)
+            }
+        }
+
+
         jsonObject.put("univOrLocation", ClubReviewWriteData.univOrLocation)
         jsonObject.put("clubName", ClubReviewWriteData.clubName)
-        ClubReviewWriteData.categoryList.let{
+
+
+        ClubReviewWriteData.categoryList.let {
             var categoryList = ""
-            for(i in 0.. it.size-2) {
-                categoryList += it[i]
-                categoryList += ","
+
+            if(it.isNotEmpty()) {
+                for (i in 0..it.size - 2) {
+                    categoryList += it[i]
+                    categoryList += ","
+                }
+                categoryList += it[it.size - 1]
             }
-            categoryList += it[it.size-1]
             jsonObject.put("categoryList", categoryList)
         }
 

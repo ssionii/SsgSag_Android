@@ -32,6 +32,7 @@ class MoreReviewActivity : BaseActivity<ActivityReviewMoreBinding, MoreReviewVie
     var ssgsagRvAdapter : SsgSagReviewRecyclerViewAdapter? = null
     var blogRvAdatper : BlogReviewRecyclerViewAdapter? = null
     private var curPage = 0
+    private var reviewType =""
     private var clubName = ""
     private var clubIdx = -1
 
@@ -61,6 +62,7 @@ class MoreReviewActivity : BaseActivity<ActivityReviewMoreBinding, MoreReviewVie
     }
 
     private fun init(){
+        reviewType = intent.getStringExtra("reviewType")
         clubIdx = intent.getIntExtra("clubIdx", -1)
         clubName =  intent.getStringExtra("clubName")
 
@@ -283,6 +285,7 @@ class MoreReviewActivity : BaseActivity<ActivityReviewMoreBinding, MoreReviewVie
                 val intent = Intent(this, HowWriteReviewActivity::class.java)
                 intent.apply {
                     putExtra("from", "reviewDetail")
+                    putExtra("reviewType", reviewType)
                     putExtra("clubName", clubName)
                     putExtra("clubIdx", clubIdx)
                     startActivity(intent)

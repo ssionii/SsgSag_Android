@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="basic_label">
+        <item name="basic_1">전혀</item>
+        <item name="basic_2">별로</item>
+        <item name="basic_3">쏘쏘</item>
+        <item name="basic_4">좋음</item>
+        <item name="basic_5">매우 좋음</item>
+    </string-array>
+
+    <string-array name="intense_label">
+        <item name="intense_1">사망</item>
+        <item name="intense_2">빡셈</item>
+        <item name="intense_3">쏘쏘</item>
+        <item name="intense_4">안빡셈</item>
+        <item name="intense_5">널널</item>
+    </string-array>
+
+    <string-array name="growth_label">
+        <item name="growth_1">전혀</item>
+        <item name="growth_2">별로</item>
+        <item name="growth_3">쏘쏘</item>
+        <item name="growth_4">성장</item>
+        <item name="growth_5">매우 성장</item>
+    </string-array>
+
+    <string-array name="fun_label">
+        <item name="fun_1">핵노잼</item>
+        <item name="fun_2">노잼</item>
+        <item name="fun_3">쏘쏘</item>
+        <item name="fun_4">꿀잼</item>
+        <item name="fun_5">개꿀잼</item>
+    </string-array>
+
+    <string-array name="degree_label">
+        <item name="degree_1">매우 낮음</item>
+        <item name="degree_2">낮음</item>
+        <item name="degree_3">쏘쏘</item>
+        <item name="degree_4">높음</item>
+        <item name="degree_5">매우 높음</item>
+    </string-array>
+</resources>
+
+
+
+
+
+
+
+
+

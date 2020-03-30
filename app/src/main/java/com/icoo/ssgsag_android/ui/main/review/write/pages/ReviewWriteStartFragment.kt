@@ -62,13 +62,13 @@ class ReviewWriteStartFragment :  BaseFragment<FragmentReviewWriteStartBinding, 
             }
         })
 
-
         setButton()
         getUnivList()
         getClubList()
         setActPlaceSpinner()
         setActDateSpinner()
-        setEditTextChange()
+        if(viewModel.reviewType == "club")
+            setEditTextChange()
 
     }
 
@@ -413,7 +413,7 @@ class ReviewWriteStartFragment :  BaseFragment<FragmentReviewWriteStartBinding, 
                         ReviewWriteActivity.ClubReviewWriteData.endMonth.length-1).toInt()))){
                     toast("활동시기 입력이 잘못되었습니다.")
                 }else {
-                    if (!viewModel.isRgstrClub) {
+                    if (!viewModel.isRgstrClub && viewModel.reviewType == "club") {
                         // 등록되어 있지 않는 동아리면 NonRgstrClubActivity 띄우기
                         val intent = Intent(activity, NonRgstrClubActivity::class.java)
                         intent.putExtra("clubName", this)
@@ -423,12 +423,15 @@ class ReviewWriteStartFragment :  BaseFragment<FragmentReviewWriteStartBinding, 
                     }
                 }
             }
-
         }
 
         viewDataBinding.fragWriteReviewStartIvBack.setSafeOnClickListener {
             (activity as ReviewWriteActivity).toPrevPage(position)
             (activity as ReviewWriteActivity).hideKeyboard(viewDataBinding.fragReviewWriteStartAtClubName)
+        }
+
+        viewDataBinding.fragWriteReviewStartIvCancel.setSafeOnClickListener {
+            activity!!.finish()
         }
     }
 

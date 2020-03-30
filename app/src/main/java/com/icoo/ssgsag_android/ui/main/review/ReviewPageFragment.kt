@@ -24,7 +24,7 @@ import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.support.v4.toast
 
 
-class ReviewFragment : BaseFragment<FragmentReviewBinding, ReviewViewModel>() {
+class ReviewPageFragment : BaseFragment<FragmentReviewBinding, ReviewViewModel>() {
 
     override val layoutResID: Int
         get() = R.layout.fragment_review
@@ -38,7 +38,7 @@ class ReviewFragment : BaseFragment<FragmentReviewBinding, ReviewViewModel>() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewDataBinding.vm = viewModel
-        viewDataBinding.reviewFragment = this
+        viewDataBinding.reviewPageFragment = this
 
         if(reviewType == 1){
             setViewPagerForClub()
@@ -135,9 +135,7 @@ class ReviewFragment : BaseFragment<FragmentReviewBinding, ReviewViewModel>() {
         }
 
         viewDataBinding.fragReviewCvWriteReview.setSafeOnClickListener {
-            val intent = Intent(activity!!, HowWriteReviewActivity::class.java)
-            intent.putExtra("from", "main")
-            startActivity(intent)
+            goToReviewWrite()
         }
     }
 
@@ -155,14 +153,11 @@ class ReviewFragment : BaseFragment<FragmentReviewBinding, ReviewViewModel>() {
             setOnClickListener { dialog, view ->
                 if(view.id == R.id.frag_review_main_popup_cv){
                     dialog.dismiss()
-                    val intent = Intent(activity!!, HowWriteReviewActivity::class.java)
-                    intent.putExtra("from", "main")
-                    startActivity(intent)
+                    goToReviewWrite()
                 }
                 else {
                     dialog.dismiss()
                 }
-
 
             }
             setAdapter(mAdapter)
@@ -186,6 +181,17 @@ class ReviewFragment : BaseFragment<FragmentReviewBinding, ReviewViewModel>() {
         }
         builder.create().show()
 
+    }
+
+    private fun goToReviewWrite(){
+        val intent = Intent(activity!!, HowWriteReviewActivity::class.java)
+        intent.putExtra("from", "main")
+        when(reviewType){
+            1 -> intent.putExtra("reviewType", "club")
+            2 -> intent.putExtra("reviewType", "act")
+            3 -> intent.putExtra("reviewType", "intern")
+        }
+        startActivity(intent)
     }
 
     private fun popupFirst(){

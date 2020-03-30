@@ -11,7 +11,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ReviewWriteActivity : BaseActivity<ActivityClubReviewWriteBinding, ReviewWriteViewModel>(){
 
-
     object ClubReviewWriteData {
         // 동아리 정보
         lateinit var clubName: String
@@ -46,6 +45,8 @@ class ReviewWriteActivity : BaseActivity<ActivityClubReviewWriteBinding, ReviewW
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        viewModel.reviewType = intent.getStringExtra("reviewType")
+
         viewDataBinding.vm = viewModel
 
         if(intent.getStringExtra("from") == "reviewDetail"){
@@ -60,7 +61,7 @@ class ReviewWriteActivity : BaseActivity<ActivityClubReviewWriteBinding, ReviewW
 
 
     private fun setVp(from: String){
-        ReviewWritePagerAdapter = ReviewWritePagerAdapter(supportFragmentManager, 4, from)
+        ReviewWritePagerAdapter = ReviewWritePagerAdapter(supportFragmentManager, 4, from, viewModel.reviewType)
         viewDataBinding.actClubReviewWriteNvp.run{
             adapter = ReviewWritePagerAdapter
             currentItem = 0

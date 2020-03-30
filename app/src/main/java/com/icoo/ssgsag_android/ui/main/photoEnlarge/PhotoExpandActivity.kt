@@ -33,8 +33,5 @@ class PhotoExpandActivity : AppCompatActivity() {
                 .into(act_poster_enlarge_pv_img)
         }
 
-        Log.e("width를 체크", act_poster_enlarge_pv_img.width.toString())
-        Log.e("hegith를 체크", act_poster_enlarge_pv_img.height.toString())
-
     }
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
                 name="vm"
@@ -7,7 +8,6 @@
     </data>
     <FrameLayout
             android:id="@+id/frag_review_main_fl_container"
-            xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingBottom="@dimen/main_navi_height"
@@ -16,15 +16,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:layout_height="match_parent">
                 <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/frag_review_main_rl_toolbar"
+                        android:id="@+id/frag_review_main_cl_toolbar"
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
-                        android:paddingHorizontal="12dp">
+                        android:paddingHorizontal="12dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
 
                     <ImageView
                             android:id="@+id/frag_review_main_iv_my_page"
@@ -58,74 +59,92 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <ImageView
+                        android:id="@+id/frag_review_main_iv_banner"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:src="@drawable/img_starbucks"
-                        android:adjustViewBounds="true"/>
+                        android:adjustViewBounds="true"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/frag_review_main_cl_toolbar"/>
 
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/review_main_ment"
-                        android:fontFamily="@font/noto_sans_kr_bold"
-                        android:textSize="20sp"
-                        android:textColor="@color/black_1"
                         android:layout_marginLeft="24dp"
-                        android:layout_marginTop="36dp"/>
+                        android:layout_marginTop="6dp"
+                        android:fontFamily="@font/noto_sans_kr_bold"
+                        android:text="@string/review_main_ment"
+                        android:textColor="@color/black_1"
+                        android:textSize="20sp"
+                        android:visibility="visible"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/frag_review_main_iv_banner"
+                        app:layout_constraintBottom_toTopOf="@+id/frag_review_main_ll_btns"/>
 
-                <RelativeLayout
-                        android:id="@+id/frag_review_main_rl_club"
+                <LinearLayout
+                        android:id="@+id/frag_review_main_ll_btns"
                         android:layout_width="match_parent"
-                        android:layout_height="80dp"
-                        android:layout_marginHorizontal="20dp"
-                        android:layout_marginTop="40dp"
-                        android:background="@drawable/border_eeeeee_8">
-                    <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/black_1"
-                            android:text="@string/review_main_club"
-                            android:textSize="16sp"
-                            android:fontFamily="@font/noto_sans_kr_medium"
-                            android:layout_centerInParent="true"
-                            />
-                </RelativeLayout>
-                <RelativeLayout
-                        android:id="@+id/frag_review_main_rl_act"
-                        android:layout_width="match_parent"
-                        android:layout_height="80dp"
-                        android:layout_marginHorizontal="20dp"
-                        android:layout_marginTop="12dp"
-                        android:background="@drawable/border_eeeeee_8">
-                    <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/black_1"
-                            android:text="@string/review_main_act"
-                            android:textSize="16sp"
-                            android:fontFamily="@font/noto_sans_kr_medium"
-                            android:layout_centerInParent="true"
-                            />
-                </RelativeLayout>
-                <RelativeLayout
-                        android:id="@+id/frag_review_main_rl_intern"
-                        android:layout_width="match_parent"
-                        android:layout_height="80dp"
-                        android:layout_marginHorizontal="20dp"
-                        android:layout_marginTop="12dp"
-                        android:background="@drawable/border_eeeeee_8">
-                    <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/black_1"
-                            android:text="@string/review_main_intern"
-                            android:textSize="16sp"
-                            android:fontFamily="@font/noto_sans_kr_medium"
-                            android:layout_centerInParent="true"
-                            />
-                </RelativeLayout>
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent">
+                    <RelativeLayout
+                            android:id="@+id/frag_review_main_rl_club"
+                            android:layout_width="match_parent"
+                            android:layout_height="80dp"
+                            android:layout_marginHorizontal="20dp"
+                            android:layout_marginTop="12dp"
+                            android:background="@drawable/border_eeeeee_8">
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/black_1"
+                                android:text="@string/review_main_club"
+                                android:textSize="16sp"
+                                android:fontFamily="@font/noto_sans_kr_medium"
+                                android:layout_centerInParent="true"
+                                />
+                    </RelativeLayout>
+                    <RelativeLayout
+                            android:id="@+id/frag_review_main_rl_act"
+                            android:layout_width="match_parent"
+                            android:layout_height="80dp"
+                            android:layout_marginHorizontal="20dp"
+                            android:layout_marginTop="12dp"
+                            android:background="@drawable/border_eeeeee_8">
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/black_1"
+                                android:text="@string/review_main_act"
+                                android:textSize="16sp"
+                                android:fontFamily="@font/noto_sans_kr_medium"
+                                android:layout_centerInParent="true"
+                                />
+                    </RelativeLayout>
+                    <RelativeLayout
+                            android:id="@+id/frag_review_main_rl_intern"
+                            android:layout_width="match_parent"
+                            android:layout_height="80dp"
+                            android:layout_marginHorizontal="20dp"
+                            android:layout_marginTop="12dp"
+                            android:layout_marginBottom="16dp"
+                            android:background="@drawable/border_eeeeee_8">
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/black_1"
+                                android:text="@string/review_main_intern"
+                                android:textSize="16sp"
+                                android:fontFamily="@font/noto_sans_kr_medium"
+                                android:layout_centerInParent="true"
+                                />
+                    </RelativeLayout>
+                </LinearLayout>
 
-            </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         </RelativeLayout>
     </FrameLayout>

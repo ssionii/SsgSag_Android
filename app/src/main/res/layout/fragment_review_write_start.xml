@@ -23,19 +23,44 @@
                 android:src="@drawable/back"
                 android:layout_marginStart="12dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
-        <TextView
+                app:layout_constraintTop_toTopOf="parent"
+                IvVisibilityByReviewType="@{vm.reviewType}"/>
+        <ImageView
+                android:id="@+id/frag_write_review_start_iv_cancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/club_selection"
-                android:textColor="#444444"
-                android:fontFamily="@font/noto_sans_kr_bold"
-                android:textSize="16sp"
-                android:lineHeight="28sp"
+                android:src="@drawable/cancel_grey"
+                android:layout_marginStart="12dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                IvVisibilityByReviewTypeR="@{vm.reviewType}"/>
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintBottom_toBottomOf="parent">
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    reviewTypeString="@{vm.reviewType}"
+                    android:textColor="#444444"
+                    android:fontFamily="@font/noto_sans_kr_bold"
+                    android:textSize="16sp"
+                    android:lineHeight="28sp"
+                   />
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="선택"
+                    android:textColor="#444444"
+                    android:fontFamily="@font/noto_sans_kr_bold"
+                    android:textSize="16sp"
+                    android:lineHeight="28sp" />
+        </LinearLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.core.widget.NestedScrollView
@@ -60,13 +85,14 @@
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/review_write_start"
+                        reviewWriteStartMent ="@{vm.reviewType}"
                         android:fontFamily="@font/noto_sans_kr_bold"
                         android:textSize="18sp"
                         android:textColor="#333333"
                         android:layout_marginTop="32dp" />
 
                 <LinearLayout
+                        android:visibility="gone"
                         android:id="@+id/frag_write_review_start_ll_univ"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -75,7 +101,7 @@
                     <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="소속 학교는"
+                            android:text="소속 학교"
                             android:fontFamily="@font/noto_sans_kr_regular"
                             android:textSize="12sp"
                             android:textColor="#333333"
@@ -102,7 +128,6 @@
 
                 <LinearLayout
                         android:id="@+id/frag_write_review_start_ll_act_place"
-                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
@@ -110,7 +135,7 @@
                     <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="활동 지역은"
+                            android:text="활동 지역"
                             android:fontFamily="@font/noto_sans_kr_regular"
                             android:textSize="12sp"
                             android:textColor="#333333"
@@ -137,14 +162,28 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:layout_marginTop="32dp">
-                    <TextView
+                    <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="동아리 이름은"
-                            android:fontFamily="@font/noto_sans_kr_regular"
-                            android:textSize="12sp"
-                            android:textColor="#333333"
-                            />
+                            android:orientation="horizontal">
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                reviewTypeString="@{vm.reviewType}"
+                                android:fontFamily="@font/noto_sans_kr_regular"
+                                android:textSize="12sp"
+                                android:textColor="#333333"
+                                />
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=" 이름"
+                                android:fontFamily="@font/noto_sans_kr_regular"
+                                android:textSize="12sp"
+                                android:textColor="#333333"
+                                />
+
+                    </LinearLayout>
 
                     <AutoCompleteTextView
                             android:completionThreshold="1"
@@ -177,7 +216,7 @@
                     <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="활동 시기는"
+                            android:text="활동 시기"
                             android:fontFamily="@font/noto_sans_kr_regular"
                             android:textSize="12sp"
                             android:textColor="#333333"/>
@@ -291,7 +330,7 @@
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="동아리 후기 작성"
+                        android:text="다음"
                         android:fontFamily="@font/noto_sans_kr_medium"
                         android:textSize="16sp"
                         android:textAlignment="center"

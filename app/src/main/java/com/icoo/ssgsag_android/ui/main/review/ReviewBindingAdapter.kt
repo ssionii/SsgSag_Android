@@ -3,6 +3,8 @@ package com.icoo.ssgsag_android.ui.main.review
 import android.graphics.Color
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -89,5 +91,79 @@ fun TextView.setReviewListTitle(reviewType: Int){
         0, 1 -> this.text = "동아리 후기"
         2 -> this.text = "대외활동 후기"
         3 -> this.text = "인턴 후기"
+    }
+}
+
+@BindingAdapter("IvVisibilityByReviewType")
+fun ImageView.setVisibilityByReviewType(reviewType: String){
+    when(reviewType){
+        "club" -> this.visibility = VISIBLE
+        else -> this.visibility = GONE
+    }
+}
+
+@BindingAdapter("IvVisibilityByReviewTypeR")
+fun ImageView.setVisibilityByReviewTypeR(reviewType: String){
+    when(reviewType){
+        "club" -> this.visibility = GONE
+        else -> this.visibility = VISIBLE
+    }
+}
+
+@BindingAdapter("reviewWriteStartMent")
+fun TextView.setReviewWriteStartMent(reviewType: String){
+
+    val strFront = "내가 했던 "
+    val strMiddle = " \uD83E\uDD84이야~\n슨배님~ 이 "
+    val strBack = "어땠어요?"
+
+    var clubFront =""
+    var clubBack =""
+    when(reviewType){
+        "club" -> {
+            clubFront = "동아리"
+            clubBack = "동아리는"
+        }
+        "act" ->{
+            clubFront = "대외활동"
+            clubBack = "대외활동은"
+        }
+        "intern" -> {
+            clubFront = "인턴"
+            clubBack = "인턴은"
+        }
+    }
+
+    this.text = strFront + clubFront + strMiddle + clubBack + strBack
+}
+
+@BindingAdapter("reviewTypeString")
+fun TextView.setReviewTypeString(reviewType: String){
+    when(reviewType){
+        "club" -> {
+           this.text = "동아리"
+        }
+        "act" ->{
+          this.text = "대외활동"
+        }
+        "intern" -> {
+            this.text = "인턴"
+        }
+    }
+}
+
+@BindingAdapter("reviewWriteSimpleEditTextHint")
+fun EditText.setReviewWriteSimpleEditTextHint(reviewType: String){
+
+    when(reviewType){
+        "club" -> {
+            this.hint = "이 동아리를 한줄로 표현하자면?"
+        }
+        "act" ->{
+            this.hint ="이 대외활동을 한줄로 표현하자면?"
+        }
+        "intern" -> {
+            this.hint = "이 인턴을 한줄로 표현하자면?"
+        }
     }
 }

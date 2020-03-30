@@ -41,8 +41,8 @@ fun setDetailReviewGrade(view: TextView, score: Double){
     else view.text="-"
 }
 
-@BindingAdapter( "detailReviewGradeScore", "detailReviewGradeCategory")
-fun setDetailReviewGradeScore(view: TextView, score: Double?, category: Int){
+@BindingAdapter( "detailReviewGradeScore", "detailReviewGradeCategory", "detailReviewType")
+fun setDetailReviewGradeScore(view: TextView, score: Double?, category: Int, reviewType: String){
 
     var text = ""
 

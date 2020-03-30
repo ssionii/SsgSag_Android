@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.icoo.ssgsag_android.base.BaseViewModel
+import com.icoo.ssgsag_android.data.model.review.ReviewGrade
 import com.icoo.ssgsag_android.data.model.review.ReviewRepository
 import com.icoo.ssgsag_android.data.model.review.club.BlogReview
 import com.icoo.ssgsag_android.data.model.review.club.ClubInfo
@@ -19,10 +20,14 @@ class ReviewDetailViewModel(
 
     var mClubIdx = 0
     var isAlreadyWrite = false
+    var reviewType = ""
 
     // 전체 정보
     private val _reviewDetail = MutableLiveData<ClubInfo>()
     val reviewDetail: LiveData<ClubInfo> get() = _reviewDetail
+
+    private val _reviewGradeList = MutableLiveData<ArrayList<ReviewGrade>>()
+    val reviewGradeList : LiveData<ArrayList<ReviewGrade>> get() = _reviewGradeList
 
     private val _clubCategory = MutableLiveData<List<String>>()
     val clubCategory: LiveData<List<String>> get() = _clubCategory
@@ -80,7 +85,6 @@ class ReviewDetailViewModel(
         )
     }
 
-
     fun clickLike(isLike: Int, idx: Int){
         if(isLike == 0){
             addDisposable(repository.likeReview(idx)
@@ -129,6 +133,19 @@ class ReviewDetailViewModel(
                 it.printStackTrace()
             })
         )
+    }
+
+    fun setReviewGradeList(){
+
+//        when(reviewType){
+//            "club" -> {
+//                ReviewGrade("전문성")
+//            }
+//        }
+//
+//        reviewDetail.value!!.apply{
+//            this.aveScore1.
+//        }
     }
 
 }

@@ -22,8 +22,10 @@ class ReviewWriteScoreFragment :  BaseFragment<FragmentReviewWriteScoreBinding, 
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
         viewDataBinding.vm = viewModel
 
+        viewModel.setScoreQuestion()
         setButton()
         setRatingBar()
 

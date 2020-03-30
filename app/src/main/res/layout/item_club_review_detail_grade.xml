@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+                name="reviewGrade"
+                type="com.icoo.ssgsag_android.data.model.review.ReviewGrade" />
+    </data>
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <LinearLayout
+            android:layout_width="36dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{reviewGrade.categoryName}"
+                android:fontFamily="@font/noto_sans_kr_regular"
+                android:textSize="8sp"
+                android:lineHeight="13sp"
+                android:textColor="@color/black_1"/>
+
+        <TextView
+                android:text="@{reviewGrade.score}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/noto_sans_kr_medium"
+                android:textColor="#444444"
+                android:textSize="16sp"
+                tools:text="B" />
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="매우 높음"
+                android:textAlignment="center"
+                android:maxLines="1"
+                android:fontFamily="@font/noto_sans_kr_regular"
+                android:textSize="8sp"
+                android:lineHeight="13sp"
+                android:textColor="#aaaaaa"
+                android:text="@{reviewGrade.label}"/>
+    </LinearLayout>
+
+</LinearLayout>
+</layout>

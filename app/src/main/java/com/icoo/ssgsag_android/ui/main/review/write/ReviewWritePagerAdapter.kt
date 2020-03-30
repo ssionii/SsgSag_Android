@@ -10,24 +10,33 @@ import com.icoo.ssgsag_android.ui.main.review.club.write.pages.ReviewWriteSimple
 import com.icoo.ssgsag_android.ui.main.review.club.write.pages.ReviewWriteStartFragment
 import com.icoo.ssgsag_android.ui.main.review.club.write.pages.ReviewWriteStartWithNameFragment
 
-class ReviewWritePagerAdapter(fm: FragmentManager, val fragmentCount : Int, val from: String?): FragmentStatePagerAdapter(fm){
+class ReviewWritePagerAdapter(fm: FragmentManager, val fragmentCount : Int, val from: String?, val reviewType : String): FragmentStatePagerAdapter(fm){
 
     override fun getItem(position: Int): Fragment {
 
         if (from == "main") {
-            when (position) {
-                0 -> return ClubCategoryFragment.newInstance("write")
-                1 -> return ReviewWriteStartFragment()
-                2 -> return ReviewWriteScoreFragment()
-                3 -> return ReviewWriteSimpleFragment()
-                else -> return ClubCategoryFragment.newInstance("write")
+            if(reviewType == "club"){
+                when (position) {
+                    0 -> return ClubCategoryFragment.newInstance("write")
+                    1 -> return ReviewWriteStartFragment()
+                    2 -> return ReviewWriteScoreFragment()
+                    3 -> return ReviewWriteSimpleFragment()
+                    else -> return ClubCategoryFragment.newInstance("write")
+                }
+            }else{
+                when (position) {
+                    1 -> return ReviewWriteStartFragment()
+                    2 -> return ReviewWriteScoreFragment()
+                    3 -> return ReviewWriteSimpleFragment()
+                    else -> return ReviewWriteStartFragment()
+                }
             }
         } else {
             when (position) {
                 0, 1 -> return ReviewWriteStartWithNameFragment()
                 2 -> return ReviewWriteScoreFragment()
                 3 -> return ReviewWriteSimpleFragment()
-                else -> return ClubCategoryFragment.newInstance("write")
+                else -> return ReviewWriteStartFragment()
             }
         }
     }

@@ -162,6 +162,7 @@ class ReviewsFragment : BaseFragment<FragmentClubReviewsBinding, ReviewDetailVie
             moreReviewIntent.putExtra("from", "ssgsag")
             viewModel.reviewDetail.value.let{
                 if(it != null) {
+                    moreReviewIntent.putExtra("reviewType", viewModel.reviewType)
                     moreReviewIntent.putExtra("clubName", viewModel.reviewDetail.value!!.clubName)
                     startActivity(moreReviewIntent)
                 }
@@ -183,6 +184,7 @@ class ReviewsFragment : BaseFragment<FragmentClubReviewsBinding, ReviewDetailVie
             val intent = Intent(activity!!, HowWriteReviewActivity::class.java)
             intent.apply {
                 putExtra("from", "reviewDetail")
+                putExtra("reviewType", viewModel.reviewType)
                 putExtra("clubName", viewModel.reviewDetail.value!!.clubName)
                 putExtra("clubIdx", viewModel.mClubIdx)
             }
