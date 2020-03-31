@@ -158,148 +158,21 @@
                         android:layout_marginTop="3dp"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-<!--                <LinearLayout-->
-<!--                        android:layout_width="36dp"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:orientation="vertical"-->
-<!--                        android:gravity="center">-->
-<!--                    <TextView-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:text="전문성"-->
-<!--                            android:fontFamily="@font/noto_sans_kr_regular"-->
-<!--                            android:textSize="8sp"-->
-<!--                            android:lineHeight="13sp"-->
-<!--                            android:textColor="@color/black_1"/>-->
-
-<!--                    <TextView-->
-<!--                            detailReviewGrade="@{vm.reviewDetail.aveScore1}"-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:fontFamily="@font/noto_sans_kr_medium"-->
-<!--                            android:textColor="#444444"-->
-<!--                            android:textSize="16sp"-->
-<!--                            tools:text="B" />-->
-<!--                    <TextView-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            tools:text="매우 높음"-->
-<!--                            android:textAlignment="center"-->
-<!--                            android:maxLines="1"-->
-<!--                            android:fontFamily="@font/noto_sans_kr_regular"-->
-<!--                            android:textSize="8sp"-->
-<!--                            android:lineHeight="13sp"-->
-<!--                            android:textColor="#aaaaaa"-->
-<!--                            app:detailReviewGradeScore="@{vm.reviewDetail.aveScore1}"-->
-<!--                            app:detailReviewGradeCategory="@{0}"/>-->
-<!--                </LinearLayout>-->
-<!--                <LinearLayout-->
-<!--                        android:layout_width="36dp"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:orientation="vertical"-->
-<!--                        android:gravity="center">-->
-<!--                    <TextView-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:text="재미"-->
-<!--                            android:fontFamily="@font/noto_sans_kr_regular"-->
-<!--                            android:textSize="8sp"-->
-<!--                            android:lineHeight="13sp"-->
-<!--                            android:textColor="@color/black_1"/>-->
-<!--                    <TextView-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:fontFamily="@font/noto_sans_kr_medium"-->
-<!--                            android:textSize="16sp"-->
-<!--                            android:textColor="#444444"-->
-<!--                            tools:text="B"-->
-<!--                            detailReviewGrade="@{vm.reviewDetail.aveScore2}"/>-->
-<!--                    <TextView-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:text="중간"-->
-<!--                            android:maxLines="1"-->
-<!--                            android:fontFamily="@font/noto_sans_kr_regular"-->
-<!--                            android:textSize="8sp"-->
-<!--                            android:lineHeight="13sp"-->
-<!--                            android:textColor="#aaaaaa"-->
-<!--                            app:detailReviewGradeScore="@{vm.reviewDetail.aveScore2}"-->
-<!--                            app:detailReviewGradeCategory="@{1}"/>-->
-<!--                </LinearLayout>-->
-<!--                <LinearLayout-->
-<!--                        android:layout_width="36dp"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:orientation="vertical"-->
-<!--                        android:gravity="center">-->
-<!--                    <TextView-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:text="강도"-->
-<!--                            android:fontFamily="@font/noto_sans_kr_regular"-->
-<!--                            android:textSize="8sp"-->
-<!--                            android:lineHeight="13sp"-->
-<!--                            android:textColor="@color/black_1"/>-->
-<!--                    <TextView-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:fontFamily="@font/noto_sans_kr_medium"-->
-<!--                            android:textSize="16sp"-->
-<!--                            android:textColor="#444444"-->
-<!--                            tools:text="B"-->
-<!--                            detailReviewGrade="@{vm.reviewDetail.aveScore3}"/>-->
-<!--                    <TextView-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            tools:text="중간"-->
-<!--                            android:maxLines="1"-->
-<!--                            android:fontFamily="@font/noto_sans_kr_regular"-->
-<!--                            android:textSize="8sp"-->
-<!--                            android:lineHeight="13sp"-->
-<!--                            android:textColor="#aaaaaa"-->
-<!--                            app:detailReviewGradeScore="@{vm.reviewDetail.aveScore3}"-->
-<!--                            app:detailReviewGradeCategory="@{2}"/>-->
-<!--                </LinearLayout>-->
-<!--                <LinearLayout-->
-<!--                        android:layout_width="36dp"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:orientation="vertical"-->
-<!--                        android:gravity="center">-->
-<!--                    <TextView-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:text="친목"-->
-<!--                            android:fontFamily="@font/noto_sans_kr_regular"-->
-<!--                            android:textSize="8sp"-->
-<!--                            android:lineHeight="13sp"-->
-<!--                            android:textColor="@color/black_1"/>-->
-<!--                    <TextView-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:fontFamily="@font/noto_sans_kr_medium"-->
-<!--                            android:textSize="16sp"-->
-<!--                            android:textColor="#444444"-->
-<!--                            tools:text="B"-->
-<!--                            detailReviewGrade="@{vm.reviewDetail.aveScore4}"/>-->
-<!--                    <TextView-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            tools:text="중간"-->
-<!--                            android:maxLines="1"-->
-<!--                            android:fontFamily="@font/noto_sans_kr_regular"-->
-<!--                            android:textSize="8sp"-->
-<!--                            android:lineHeight="13sp"-->
-<!--                            android:textColor="#aaaaaa"-->
-<!--                            app:detailReviewGradeScore="@{vm.reviewDetail.aveScore4}"-->
-<!--                            app:detailReviewGradeCategory="@{3}"/>-->
-<!--                </LinearLayout>-->
-
+            <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/act_club_review_detail_cl_grade"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
                 <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/act_club_review_detail_rv_grade"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:orientation="horizontal"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
         </LinearLayout>
     </LinearLayout>
     <View

@@ -2,8 +2,10 @@ package com.icoo.ssgsag_android.ui.main.review.club
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.RecyclerView
 import com.icoo.ssgsag_android.BR
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseActivity
@@ -19,6 +21,7 @@ import com.icoo.ssgsag_android.ui.main.review.club.info.ClubInfoFragment
 import com.icoo.ssgsag_android.ui.main.review.club.reviews.ReviewsFragment
 import com.icoo.ssgsag_android.util.DialogPlusAdapter
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
+import com.icoo.ssgsag_android.util.view.WrapContentLinearLayoutManager
 import com.orhanobut.dialogplus.DialogPlus
 import com.orhanobut.dialogplus.ViewHolder
 import org.jetbrains.anko.toast
@@ -41,8 +44,10 @@ class ReviewDetailActivity : BaseActivity<ActivityClubReviewDetailBinding, Revie
         viewDataBinding.vm = viewModel
 
 
-        viewModel.getClubDetail()
-        viewModel.getAlreadyWrite()
+        viewModel.run {
+            getClubDetail()
+            getAlreadyWrite()
+        }
 
         setCategoryRv()
         setGradeRv()
@@ -86,8 +91,25 @@ class ReviewDetailActivity : BaseActivity<ActivityClubReviewDetailBinding, Revie
                 override val bindingVariableId: Int
                     get() = BR.reviewGrade
                 override val listener: OnItemClickListener?
-                    get() = null
+                    get() = onItemClickListener
             }
+
+            layoutManager = WrapContentLinearLayoutManager(RecyclerView.HORIZONTAL)
+        }
+
+        viewModel.reviewGradeList.observe(this, Observer {
+            (viewDataBinding.actClubReviewDetailRvGrade.adapter as BaseRecyclerViewAdapter <ReviewGrade,ItemClubReviewDetailGradeBinding>).run{
+                replaceAll(it)
+                notifyDataSetChanged()
+
+                Log.e("reviewGradeList size", this.items[2].score.toString())
+            }
+        })
+    }
+
+    val onItemClickListener = object : BaseRecyclerViewAdapter.OnItemClickListener{
+        override fun onItemClicked(item: Any?, position: Int?) {
+            showDialog()
         }
     }
 
@@ -132,12 +154,9 @@ class ReviewDetailActivity : BaseActivity<ActivityClubReviewDetailBinding, Revie
 
                 startActivity(intent)
             }
-
-
-
         }
 
-        viewDataBinding.actClubReviewDetailLlGrade.setSafeOnClickListener {
+        viewDataBinding.actClubReviewDetailClGrade.setSafeOnClickListener {
             showDialog()
         }
     }

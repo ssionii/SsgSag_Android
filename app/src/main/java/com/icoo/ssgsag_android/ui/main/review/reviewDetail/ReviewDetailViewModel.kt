@@ -3,6 +3,7 @@ package com.icoo.ssgsag_android.ui.main.review.reviewDetail
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseViewModel
 import com.icoo.ssgsag_android.data.model.review.ReviewGrade
 import com.icoo.ssgsag_android.data.model.review.ReviewRepository
@@ -42,18 +43,24 @@ class ReviewDetailViewModel(
     private val _blogMainReviews = MutableLiveData<ArrayList<BlogReview>>()
     val blogMainReviews: LiveData<ArrayList<BlogReview>> get() = _blogMainReviews
 
+    init{
+
+    }
+
     fun getClubDetail(){
 
         addDisposable(repository.getClubDetail(mClubIdx)
             .subscribeOn(schedulerProvider.io())
             .observeOn(schedulerProvider.mainThread())
             .subscribe({
-                _reviewDetail.postValue(it)
+                _reviewDetail.setValue(it)
                 _ssgsagMainReviews.setValue(it.clubPostList)
                 _blogMainReviews.setValue(it.clubBlogList)
 
                 _photoList.postValue(it.clubPhotoUrlList?.split(",")?.toMutableList())
                 _clubCategory.postValue(it.categoryList.split(","))
+
+                setReviewGradeList()
 
             },{
                 it.printStackTrace()
@@ -137,15 +144,44 @@ class ReviewDetailViewModel(
 
     fun setReviewGradeList(){
 
-//        when(reviewType){
-//            "club" -> {
-//                ReviewGrade("전문성")
-//            }
-//        }
-//
-//        reviewDetail.value!!.apply{
-//            this.aveScore1.
-//        }
+
+        val reviewGradeTempList = arrayListOf(ReviewGrade(reviewType, "",0.0 ), ReviewGrade(reviewType, "",0.0 )
+            , ReviewGrade(reviewType, "",0.0), ReviewGrade(reviewType, "",0.0))
+
+        val clubCategory = arrayListOf("전문성", "재미", "강도", "친목")
+        val actCategory = arrayListOf("혜택", "재미", "강도", "친목")
+        val internCategory = arrayListOf("성장", "급여", "강도", "사내문화")
+
+        when(reviewType){
+            "club" -> {
+               for(i in 0 until reviewGradeTempList.size){
+                   reviewGradeTempList[i].categoryName = clubCategory[i]
+               }
+            }
+
+            "act" -> {
+                for(i in 0 until reviewGradeTempList.size){
+                    reviewGradeTempList[i].categoryName = actCategory[i]
+                }
+            }
+
+            "intern" ->{
+                for(i in 0 until reviewGradeTempList.size){
+                    reviewGradeTempList[i].categoryName = internCategory[i]
+                }
+            }
+        }
+
+        reviewDetail.value!!.apply{
+            reviewGradeTempList[0].score = this.aveScore1
+            reviewGradeTempList[1].score = this.aveScore2
+            reviewGradeTempList[2].score = this.aveScore3
+            reviewGradeTempList[3].score = this.aveScore4
+        }
+
+        _reviewGradeList.postValue(reviewGradeTempList)
+
+
     }
 
 }

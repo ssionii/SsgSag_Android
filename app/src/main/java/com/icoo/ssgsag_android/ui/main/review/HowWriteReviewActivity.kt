@@ -7,15 +7,12 @@ import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.ui.main.review.club.write.ReviewWriteActivity
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import kotlinx.android.synthetic.main.activity_how_write_review.*
-import org.jetbrains.anko.toast
 
 class HowWriteReviewActivity :AppCompatActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_how_write_review)
-
-        toast("ReviewType" +  intent.getStringExtra("reviewType"))
 
         act_how_write_review_iv_back.setSafeOnClickListener {
             finish()

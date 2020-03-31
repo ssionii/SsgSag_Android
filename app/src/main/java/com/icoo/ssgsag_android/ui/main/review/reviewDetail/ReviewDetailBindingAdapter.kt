@@ -11,6 +11,7 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.icoo.ssgsag_android.R
+import com.icoo.ssgsag_android.ui.main.feed.context
 import org.jetbrains.anko.textColor
 
 @BindingAdapter("clubType")
@@ -41,52 +42,38 @@ fun setDetailReviewGrade(view: TextView, score: Double){
     else view.text="-"
 }
 
-@BindingAdapter( "detailReviewGradeScore", "detailReviewGradeCategory", "detailReviewType")
-fun setDetailReviewGradeScore(view: TextView, score: Double?, category: Int, reviewType: String){
+@BindingAdapter( "detailReviewGradeScore", "detailReviewGradeCategory")
+fun setDetailReviewGradeScore(view: TextView, score: Double?, category: String){
 
     var text = ""
+    var gradeIdx = -1
 
     score?.let{
         if(it >= 4.3 && it <= 5.0) {
-            when(category){
-                0 -> text = "매우 높음"
-                1 -> text = "개꿀잼"
-                2 -> text = "널널"
-                3 -> text = "매우 좋음"
-            }
+            gradeIdx = 4
         } else if(it >= 3.5) {
-            when(category){
-                0 -> text = "높음"
-                1 -> text = "꿀잼"
-                2 -> text = "안빡셈"
-                3 -> text = "좋음"
-            }
+            gradeIdx = 3
         } else if(it >= 2.7) {
-            when(category){
-                0 -> text = "보통"
-                1 -> text = "보통"
-                2 -> text = "보통"
-                3 -> text = "보통"
-            }
+            gradeIdx = 2
         } else if(it >= 1.9) {
-            when(category){
-                0 -> text = "낮음"
-                1 -> text = "노잼"
-                2 -> text = "빡셈"
-                3 -> text = "안좋음"
-            }
+            gradeIdx = 1
         } else if(it > 0.0) {
-            when(category){
-                0 -> text = "매우 낮음"
-                1 -> text = "개노잼"
-                2 -> text = "개빡셈"
-                3 -> text = "최악"
-            }
+            gradeIdx = 0
         } else{
-           text = "-"
+            gradeIdx =-1
         }
     }
 
+    if(gradeIdx != -1) {
+        when (category) {
+            "친목", "혜택", "급여", "사내문화" -> text =
+                context.resources.getStringArray(R.array.basic_label)[gradeIdx]
+            "전문성" -> text = context.resources.getStringArray(R.array.degree_label)[gradeIdx]
+            "재미" -> text = context.resources.getStringArray(R.array.fun_label)[gradeIdx]
+            "강도" -> text = context.resources.getStringArray(R.array.intense_label)[gradeIdx]
+            "성장" -> text = context.resources.getStringArray(R.array.growth_label)[gradeIdx]
+        }
+    }
 
     view.text = text
 }

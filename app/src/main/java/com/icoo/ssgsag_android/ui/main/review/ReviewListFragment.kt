@@ -133,9 +133,9 @@ class ReviewListFragment : BaseFragment<FragmentReviewPageBinding, ReviewViewMod
 
             var reviewTypeString = ""
             when(reviewType){
-                0 -> reviewTypeString = "club"
-                1 -> reviewTypeString = "act"
-                2 -> reviewTypeString = "intern"
+                0,1 -> reviewTypeString = "club"
+                2 -> reviewTypeString = "act"
+                3 -> reviewTypeString = "intern"
             }
 
             val intent = Intent(activity!!, ReviewDetailActivity::class.java)
