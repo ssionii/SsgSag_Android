@@ -1,11 +1,15 @@
 package com.icoo.ssgsag_android.ui.main.review.main
 
+import android.app.Activity
 import android.os.Bundle
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseFragment
 import com.icoo.ssgsag_android.databinding.FragmentReviewMainBinding
+import com.icoo.ssgsag_android.ui.main.myPage.MyPageActivity
 import com.icoo.ssgsag_android.ui.main.review.ReviewPageFragment
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
+import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.support.v4.startActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ReviewMainFragment : BaseFragment<FragmentReviewMainBinding, ReviewMainViewModel>() {
@@ -51,6 +55,19 @@ class ReviewMainFragment : BaseFragment<FragmentReviewMainBinding, ReviewMainVie
 
             fragmentManager!!.beginTransaction().add(R.id.frag_review_main_fl_container, internReviewPageFragment, "intern").commit()
             fragmentManager!!.beginTransaction().show(internReviewPageFragment).commit()
+        }
+
+        viewDataBinding.fragReviewMainIvBanner.setSafeOnClickListener {
+            startActivity<ReviewMainEventActivity>()
+        }
+
+        viewDataBinding.fragReviewMainIvMyPage.setSafeOnClickListener {
+            view!!.context.startActivity<MyPageActivity>()
+            (view!!.context as Activity).overridePendingTransition(
+                R.anim.anim_slide_in_left,
+                R.anim.anim_not_move
+            )
+
         }
     }
 

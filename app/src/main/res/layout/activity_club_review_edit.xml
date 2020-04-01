@@ -410,82 +410,75 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="38dp"
                                 android:orientation="vertical">
-
                             <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:text="@{vm.questions[0]}"
                                     android:fontFamily="@font/noto_sans_kr_medium"
-                                    android:text="Q1. 동아리 활동이 얼마나 재미있었나요?"
-                                    android:textColor="@color/black_1"
-                                    android:textSize="14sp" />
+                                    android:textSize="14sp"
+                                    android:textColor="@color/black_1"/>
 
                             <me.zhanghai.android.materialratingbar.MaterialRatingBar
                                     android:id="@+id/act_club_review_edit_rb_1"
-                                    style="@style/writeReviewRatingBar"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginHorizontal="20dp"
-                                    android:layout_marginTop="32dp"
+                                    app:mrb_progressTint="#FFD026"
+                                    app:mrb_secondaryProgressTint="#FFD026"
                                     android:stepSize="1"
                                     android:rating="@{vm.myReviewDetail.score1}"
+                                    style="@style/writeReviewRatingBar"
                                     app:mrb_fillBackgroundStars="false"
-                                    app:mrb_progressTint="#FFD026"
-                                    app:mrb_secondaryProgressTint="#FFD026" />
-
+                                    android:layout_marginTop="32dp"/>
                             <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginHorizontal="20dp">
-
                                 <TextView
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
-                                        android:layout_weight="1"
+                                        android:text="@{vm.rateLabels[0][0]}"
                                         android:fontFamily="@font/noto_sans_kr_regular"
-                                        android:text="개노잼"
+                                        android:textSize="8sp"
                                         android:textAlignment="center"
-                                        android:textColor="@color/grey_1"
-                                        android:textSize="8sp" />
-
+                                        android:layout_weight="1"
+                                        android:textColor="@color/grey_1"/>
                                 <TextView
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
-                                        android:layout_weight="1"
+                                        android:text="@{vm.rateLabels[0][1]}"
                                         android:fontFamily="@font/noto_sans_kr_regular"
-                                        android:text="노잼"
+                                        android:textSize="8sp"
                                         android:textAlignment="center"
-                                        android:textColor="@color/grey_1"
-                                        android:textSize="8sp" />
-
+                                        android:layout_weight="1"
+                                        android:textColor="@color/grey_1"/>
                                 <TextView
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
-                                        android:layout_weight="1"
+                                        android:text="@{vm.rateLabels[0][2]}"
                                         android:fontFamily="@font/noto_sans_kr_regular"
-                                        android:text="보통"
+                                        android:textSize="8sp"
                                         android:textAlignment="center"
-                                        android:textColor="@color/grey_1"
-                                        android:textSize="8sp" />
-
+                                        android:layout_weight="1"
+                                        android:textColor="@color/grey_1"/>
                                 <TextView
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
-                                        android:layout_weight="1"
+                                        android:text="@{vm.rateLabels[0][3]}"
                                         android:fontFamily="@font/noto_sans_kr_regular"
-                                        android:text="꿀잼"
+                                        android:textSize="8sp"
                                         android:textAlignment="center"
-                                        android:textColor="@color/grey_1"
-                                        android:textSize="8sp" />
-
+                                        android:layout_weight="1"
+                                        android:textColor="@color/grey_1"/>
                                 <TextView
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
-                                        android:layout_weight="1"
+                                        android:text="@{vm.rateLabels[0][4]}"
                                         android:fontFamily="@font/noto_sans_kr_regular"
-                                        android:text="개꿀잼"
+                                        android:textSize="8sp"
                                         android:textAlignment="center"
-                                        android:textColor="@color/grey_1"
-                                        android:textSize="8sp" />
+                                        android:layout_weight="1"
+                                        android:textColor="@color/grey_1"/>
                             </LinearLayout>
                         </LinearLayout>
 
@@ -494,82 +487,75 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="38dp"
                                 android:orientation="vertical">
-
                             <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:text="@{vm.questions[1]}"
                                     android:fontFamily="@font/noto_sans_kr_medium"
-                                    android:text="Q2. 모임 주제에 대해 전문성이 있나요?"
-                                    android:textColor="@color/black_1"
-                                    android:textSize="14sp" />
+                                    android:textSize="14sp"
+                                    android:textColor="@color/black_1"/>
 
                             <me.zhanghai.android.materialratingbar.MaterialRatingBar
                                     android:id="@+id/act_club_review_edit_rb_2"
-                                    style="@style/writeReviewRatingBar"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginHorizontal="20dp"
-                                    android:layout_marginTop="32dp"
-                                    android:stepSize="1"
                                     android:rating="@{vm.myReviewDetail.score2}"
-                                    app:mrb_fillBackgroundStars="false"
                                     app:mrb_progressTint="#FFD026"
-                                    app:mrb_secondaryProgressTint="#FFD026" />
-
+                                    app:mrb_secondaryProgressTint="#FFD026"
+                                    android:stepSize="1"
+                                    style="@style/writeReviewRatingBar"
+                                    app:mrb_fillBackgroundStars="false"
+                                    android:layout_marginTop="32dp"/>
                             <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginHorizontal="20dp">
-
                                 <TextView
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
-                                        android:layout_weight="1"
+                                        android:text="@{vm.rateLabels[1][0]}"
                                         android:fontFamily="@font/noto_sans_kr_regular"
-                                        android:text="매우 낮음"
+                                        android:textSize="8sp"
                                         android:textAlignment="center"
-                                        android:textColor="@color/grey_1"
-                                        android:textSize="8sp" />
-
+                                        android:layout_weight="1"
+                                        android:textColor="@color/grey_1"/>
                                 <TextView
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
-                                        android:layout_weight="1"
+                                        android:text="@{vm.rateLabels[1][1]}"
                                         android:fontFamily="@font/noto_sans_kr_regular"
-                                        android:text="낮음"
+                                        android:textSize="8sp"
                                         android:textAlignment="center"
-                                        android:textColor="@color/grey_1"
-                                        android:textSize="8sp" />
-
+                                        android:layout_weight="1"
+                                        android:textColor="@color/grey_1"/>
                                 <TextView
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
-                                        android:layout_weight="1"
+                                        android:text="@{vm.rateLabels[1][2]}"
                                         android:fontFamily="@font/noto_sans_kr_regular"
-                                        android:text="보통"
+                                        android:textSize="8sp"
                                         android:textAlignment="center"
-                                        android:textColor="@color/grey_1"
-                                        android:textSize="8sp" />
-
+                                        android:layout_weight="1"
+                                        android:textColor="@color/grey_1"/>
                                 <TextView
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
-                                        android:layout_weight="1"
+                                        android:text="@{vm.rateLabels[1][3]}"
                                         android:fontFamily="@font/noto_sans_kr_regular"
-                                        android:text="높음"
+                                        android:textSize="8sp"
                                         android:textAlignment="center"
-                                        android:textColor="@color/grey_1"
-                                        android:textSize="8sp" />
-
+                                        android:layout_weight="1"
+                                        android:textColor="@color/grey_1"/>
                                 <TextView
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
-                                        android:layout_weight="1"
+                                        android:text="@{vm.rateLabels[1][4]}"
                                         android:fontFamily="@font/noto_sans_kr_regular"
-                                        android:text="최고에요"
+                                        android:textSize="8sp"
                                         android:textAlignment="center"
-                                        android:textColor="@color/grey_1"
-                                        android:textSize="8sp" />
+                                        android:layout_weight="1"
+                                        android:textColor="@color/grey_1"/>
                             </LinearLayout>
                         </LinearLayout>
 
@@ -578,82 +564,75 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="38dp"
                                 android:orientation="vertical">
-
                             <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:text="@{vm.questions[2]}"
                                     android:fontFamily="@font/noto_sans_kr_medium"
-                                    android:text="Q3. 동아리 활동 강도가 얼마나 빡센가요?"
-                                    android:textColor="@color/black_1"
-                                    android:textSize="14sp" />
+                                    android:textSize="14sp"
+                                    android:textColor="@color/black_1"/>
 
                             <me.zhanghai.android.materialratingbar.MaterialRatingBar
                                     android:id="@+id/act_club_review_edit_rb_3"
-                                    style="@style/writeReviewRatingBar"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginHorizontal="20dp"
-                                    android:layout_marginTop="32dp"
-                                    android:stepSize="1"
-                                    android:rating="@{vm.myReviewDetail.score3}"
-                                    app:mrb_fillBackgroundStars="false"
                                     app:mrb_progressTint="#FFD026"
-                                    app:mrb_secondaryProgressTint="#FFD026" />
-
+                                    app:mrb_secondaryProgressTint="#FFD026"
+                                    android:rating="@{vm.myReviewDetail.score3}"
+                                    android:stepSize="1"
+                                    style="@style/writeReviewRatingBar"
+                                    app:mrb_fillBackgroundStars="false"
+                                    android:layout_marginTop="32dp"/>
                             <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginHorizontal="20dp">
-
                                 <TextView
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
-                                        android:layout_weight="1"
+                                        android:text="@{vm.rateLabels[2][0]}"
                                         android:fontFamily="@font/noto_sans_kr_regular"
-                                        android:text="개빡셈"
+                                        android:textSize="8sp"
                                         android:textAlignment="center"
-                                        android:textColor="@color/grey_1"
-                                        android:textSize="8sp" />
-
+                                        android:layout_weight="1"
+                                        android:textColor="@color/grey_1"/>
                                 <TextView
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
-                                        android:layout_weight="1"
+                                        android:text="@{vm.rateLabels[2][1]}"
                                         android:fontFamily="@font/noto_sans_kr_regular"
-                                        android:text="빡셈"
+                                        android:textSize="8sp"
                                         android:textAlignment="center"
-                                        android:textColor="@color/grey_1"
-                                        android:textSize="8sp" />
-
+                                        android:layout_weight="1"
+                                        android:textColor="@color/grey_1"/>
                                 <TextView
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
-                                        android:layout_weight="1"
+                                        android:text="@{vm.rateLabels[2][2]}"
                                         android:fontFamily="@font/noto_sans_kr_regular"
-                                        android:text="보통"
+                                        android:textSize="8sp"
                                         android:textAlignment="center"
-                                        android:textColor="@color/grey_1"
-                                        android:textSize="8sp" />
-
+                                        android:layout_weight="1"
+                                        android:textColor="@color/grey_1"/>
                                 <TextView
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
-                                        android:layout_weight="1"
+                                        android:text="@{vm.rateLabels[2][3]}"
                                         android:fontFamily="@font/noto_sans_kr_regular"
-                                        android:text="안빡셈"
+                                        android:textSize="8sp"
                                         android:textAlignment="center"
-                                        android:textColor="@color/grey_1"
-                                        android:textSize="8sp" />
-
+                                        android:layout_weight="1"
+                                        android:textColor="@color/grey_1"/>
                                 <TextView
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
-                                        android:layout_weight="1"
+                                        android:text="@{vm.rateLabels[2][4]}"
                                         android:fontFamily="@font/noto_sans_kr_regular"
-                                        android:text="널널"
+                                        android:textSize="8sp"
                                         android:textAlignment="center"
-                                        android:textColor="@color/grey_1"
-                                        android:textSize="8sp" />
+                                        android:layout_weight="1"
+                                        android:textColor="@color/grey_1"/>
                             </LinearLayout>
                         </LinearLayout>
 
@@ -662,82 +641,75 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="38dp"
                                 android:orientation="vertical">
-
                             <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:text="@{vm.questions[3]}"
                                     android:fontFamily="@font/noto_sans_kr_medium"
-                                    android:text="Q4. 사람(친목)을 많이 얻을 수 있나요?"
-                                    android:textColor="@color/black_1"
-                                    android:textSize="14sp" />
+                                    android:textSize="14sp"
+                                    android:textColor="@color/black_1"/>
 
                             <me.zhanghai.android.materialratingbar.MaterialRatingBar
                                     android:id="@+id/act_club_review_edit_rb_4"
-                                    style="@style/writeReviewRatingBar"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginHorizontal="20dp"
-                                    android:layout_marginTop="32dp"
-                                    android:stepSize="1"
                                     android:rating="@{vm.myReviewDetail.score4}"
-                                    app:mrb_fillBackgroundStars="false"
                                     app:mrb_progressTint="#FFD026"
-                                    app:mrb_secondaryProgressTint="#FFD026" />
-
+                                    app:mrb_secondaryProgressTint="#FFD026"
+                                    android:stepSize="1"
+                                    style="@style/writeReviewRatingBar"
+                                    app:mrb_fillBackgroundStars="false"
+                                    android:layout_marginTop="32dp"/>
                             <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginHorizontal="20dp">
-
                                 <TextView
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
-                                        android:layout_weight="1"
+                                        android:text="@{vm.rateLabels[3][0]}"
                                         android:fontFamily="@font/noto_sans_kr_regular"
-                                        android:text="최악"
+                                        android:textSize="8sp"
                                         android:textAlignment="center"
-                                        android:textColor="@color/grey_1"
-                                        android:textSize="8sp" />
-
+                                        android:layout_weight="1"
+                                        android:textColor="@color/grey_1"/>
                                 <TextView
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
-                                        android:layout_weight="1"
+                                        android:text="@{vm.rateLabels[3][1]}"
                                         android:fontFamily="@font/noto_sans_kr_regular"
-                                        android:text="안좋음"
+                                        android:textSize="8sp"
                                         android:textAlignment="center"
-                                        android:textColor="@color/grey_1"
-                                        android:textSize="8sp" />
-
+                                        android:layout_weight="1"
+                                        android:textColor="@color/grey_1"/>
                                 <TextView
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
-                                        android:layout_weight="1"
+                                        android:text="@{vm.rateLabels[3][2]}"
                                         android:fontFamily="@font/noto_sans_kr_regular"
-                                        android:text="보통"
+                                        android:textSize="8sp"
                                         android:textAlignment="center"
-                                        android:textColor="@color/grey_1"
-                                        android:textSize="8sp" />
-
+                                        android:layout_weight="1"
+                                        android:textColor="@color/grey_1"/>
                                 <TextView
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
-                                        android:layout_weight="1"
+                                        android:text="@{vm.rateLabels[3][3]}"
                                         android:fontFamily="@font/noto_sans_kr_regular"
-                                        android:text="좋음"
+                                        android:textSize="8sp"
                                         android:textAlignment="center"
-                                        android:textColor="@color/grey_1"
-                                        android:textSize="8sp" />
-
+                                        android:layout_weight="1"
+                                        android:textColor="@color/grey_1"/>
                                 <TextView
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
-                                        android:layout_weight="1"
+                                        android:text="@{vm.rateLabels[3][4]}"
                                         android:fontFamily="@font/noto_sans_kr_regular"
-                                        android:text="매우 좋음"
+                                        android:textSize="8sp"
                                         android:textAlignment="center"
-                                        android:textColor="@color/grey_1"
-                                        android:textSize="8sp" />
+                                        android:layout_weight="1"
+                                        android:textColor="@color/grey_1"/>
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>

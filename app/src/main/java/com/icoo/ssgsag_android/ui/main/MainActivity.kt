@@ -24,6 +24,7 @@ import com.icoo.ssgsag_android.ui.main.coachmark.FilterCoachmarkDialogFragment
 import com.icoo.ssgsag_android.ui.main.feed.FeedFragment
 import com.icoo.ssgsag_android.ui.main.review.main.ReviewMainFragment
 import com.icoo.ssgsag_android.ui.main.ssgSag.SsgSagViewModel
+import com.icoo.ssgsag_android.util.listener.BackPressHandler
 import com.igaworks.v2.core.AdBrixRm
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -46,6 +47,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, SsgSagViewModel>() {
         fun onBack()
     }
 
+    lateinit var backPressHandler : BackPressHandler
+
     var mOnKeyBackPressedListener : onKeyBackPressedListener? = null
     var isSsgSaged = false
 
@@ -54,6 +57,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, SsgSagViewModel>() {
         viewDataBinding.vm = viewModel
 
         mainContext = this
+
+        backPressHandler = BackPressHandler(this)
 
         //myAuth를 원래 토큰으로 사용했는데 2.0버전은 실수로 TOKEN이라고 지음... 이미 TOKEN을 받아서 사용하는것도 많고 myAuth를 받아서 사용하는것도
         //많아가지고 일단 이렇게 했슴다... 점진적으로 다른 클래스에서 서버통신할때 토큰받아오는거 TOKEN으로 수정합시당
@@ -138,33 +143,15 @@ class MainActivity : BaseActivity<ActivityMainBinding, SsgSagViewModel>() {
             AdBrixRm.AttrModel().setAttrs("posterIdx",posterIdx.toLong()))
     }
 
-    /*
-    override fun onBackPressed() {
-        super.onBackPressed()
-
-        val fragmentList = supportFragmentManager.fragments
-        if (fragmentList != null) {
-            //TODO: Perform your logic to pass back press here
-            for (fragment in fragmentList) {
-                if (fragment is IOnBackPressedListener) {
-                    (fragment as IOnBackPressedListener).onBackPressed()
-                }
-            }
-        }
-    }*/
-
     fun setOnKeyBackPressedListener(listener: onKeyBackPressedListener?){
         if(listener != null) {
             mOnKeyBackPressedListener = listener
         }
     }
 
+
     override fun onBackPressed() {
-        if(mOnKeyBackPressedListener != null){
-            mOnKeyBackPressedListener!!.onBack()
-        }else {
-            super.onBackPressed()
-        }
+        backPressHandler.onBackPressed()
     }
 
     companion object {

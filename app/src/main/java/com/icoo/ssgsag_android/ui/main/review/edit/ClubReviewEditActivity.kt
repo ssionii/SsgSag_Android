@@ -52,6 +52,8 @@ class ClubReviewEditActivity : BaseActivity<ActivityClubReviewEditBinding,MyRevi
         super.onCreate(savedInstanceState)
 
         viewModel.setMyReviewDetail(intent.getSerializableExtra("clubReview") as ClubPost)
+        viewModel.setScoreQuestion()
+
         viewDataBinding.vm = viewModel
 
         setActDateSpinner()

@@ -121,16 +121,16 @@ fun TextView.setReviewWriteStartMent(reviewType: String){
     var clubBack =""
     when(reviewType){
         "club" -> {
-            clubFront = "동아리"
-            clubBack = "동아리는"
+            clubFront = "동아리는"
+            clubBack = "동아리 "
         }
         "act" ->{
-            clubFront = "대외활동"
-            clubBack = "대외활동은"
+            clubFront = "대외활동은"
+            clubBack = "대외활동 "
         }
         "intern" -> {
-            clubFront = "인턴"
-            clubBack = "인턴은"
+            clubFront = "인턴은"
+            clubBack = "인턴 "
         }
     }
 

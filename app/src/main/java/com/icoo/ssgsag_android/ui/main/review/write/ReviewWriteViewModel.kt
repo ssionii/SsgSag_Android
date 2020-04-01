@@ -121,8 +121,4 @@ class ReviewWriteViewModel(
         }
     }
 
-    fun setRateLabels(){
-
-    }
-
 }
