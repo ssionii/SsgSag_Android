@@ -1,8 +1,8 @@
 package com.icoo.ssgsag_android.di
 
 import com.icoo.ssgsag_android.data.local.pref.PreferenceManager
-import com.icoo.ssgsag_android.data.model.clickHistory.ClcikHistoyRepository
-import com.icoo.ssgsag_android.data.model.clickHistory.ClcikHistoyRepositoryImpl
+import com.icoo.ssgsag_android.data.model.clickHistory.UserLogRepository
+import com.icoo.ssgsag_android.data.model.clickHistory.UserLogRepositoryImpl
 import com.icoo.ssgsag_android.data.model.event.EventRepository
 import com.icoo.ssgsag_android.data.model.event.EventRepositoryImpl
 import com.icoo.ssgsag_android.data.model.feed.FeedRepository
@@ -91,8 +91,8 @@ val factoryModule = module {
             get(), get()
         )
     }
-    factory<ClcikHistoyRepository> {
-        ClcikHistoyRepositoryImpl(
+    factory<UserLogRepository> {
+        UserLogRepositoryImpl(
             get(), get()
         )
     }

@@ -84,7 +84,7 @@
                             android:id="@+id/frag_all_category_iv_v"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/v_check"
+                            imgResId="@drawable/v_check"
                             android:layout_centerVertical="true"/>
 
                     <TextView
@@ -126,7 +126,7 @@
                 <ImageView
                         android:layout_width="186dp"
                         android:layout_height="186dp"
-                        android:src="@drawable/img_empty"/>
+                        imgResId="@drawable/img_empty"/>
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

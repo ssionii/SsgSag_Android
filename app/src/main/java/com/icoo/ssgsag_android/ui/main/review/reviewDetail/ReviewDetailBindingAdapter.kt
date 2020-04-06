@@ -2,6 +2,8 @@ package com.icoo.ssgsag_android.ui.main.review.reviewDetail
 
 import android.graphics.Color
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -139,5 +141,21 @@ fun setSsgsagReviewHelp(view: ImageView, isHelp: Int){
         view.setImageResource(R.drawable.ic_helpful_active)
     }else{
         view.setImageResource(R.drawable.ic_helpful)
+    }
+}
+
+@BindingAdapter("llTopBoxVisibility")
+fun setLLTopBoxVisibility(layout: LinearLayout, reviewType: String){
+      when(reviewType){
+          "club" ->layout.visibility = VISIBLE
+          else -> layout.visibility = GONE
+      }
+}
+
+@BindingAdapter("vTopBoxVisibility")
+fun setvTopBoxVisibility(view: View, reviewType: String){
+    when(reviewType){
+        "club" ->view.visibility = GONE
+        else -> view.visibility = VISIBLE
     }
 }

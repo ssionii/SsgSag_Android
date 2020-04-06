@@ -225,16 +225,7 @@ interface NetworkService {
     ): Call<NoticeResponse>
 
     //endregion
-    //region 투두리스트 클릭 기록
-    //투두리스트 클릭 기록
-    @POST("/todo/click/{posterIdx}/{type}")
-    fun postTodoClickResponse(
-        @Header("Authorization") token: String,
-        @Path("posterIdx") posterIdx: Int,
-        @Path("type") type: Int
-    ): Call<StringResponse>
 
-    //endregion
     //업데이트 조회
     @GET("/update")
     fun getUpdateResponse(

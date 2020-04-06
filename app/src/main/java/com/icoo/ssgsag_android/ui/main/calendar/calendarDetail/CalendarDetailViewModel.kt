@@ -6,14 +6,11 @@ import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.github.mikephil.charting.data.PieEntry
-import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import com.icoo.ssgsag_android.SsgSagApplication
 import com.icoo.ssgsag_android.base.BaseViewModel
-import com.icoo.ssgsag_android.data.model.clickHistory.ClcikHistoyRepository
-import com.icoo.ssgsag_android.data.model.item.ItemBase
+import com.icoo.ssgsag_android.data.model.clickHistory.UserLogRepository
 import com.icoo.ssgsag_android.data.model.poster.PosterRepository
 import com.icoo.ssgsag_android.data.model.poster.posterDetail.PosterDetail
 import com.icoo.ssgsag_android.data.model.poster.posterDetail.analytics.Analytics
@@ -22,7 +19,6 @@ import com.icoo.ssgsag_android.ui.main.feed.context
 import com.icoo.ssgsag_android.util.scheduler.SchedulerProvider
 import com.igaworks.v2.core.AdBrixRm
 import io.reactivex.Single
-import org.jetbrains.anko.db.StringParser
 import org.json.JSONArray
 import org.json.JSONObject
 import kotlin.reflect.KClass
@@ -30,7 +26,7 @@ import kotlin.reflect.KClass
 class CalendarDetailViewModel(
     private val posterRepository: PosterRepository,
     private val scheduleRepository: ScheduleRepository,
-    private val clickHistoryRepository: ClcikHistoyRepository,
+    private val clickHistoryRepository: UserLogRepository,
     private val schedulerProvider: SchedulerProvider
 ) : BaseViewModel() {
 
@@ -78,8 +74,13 @@ class CalendarDetailViewModel(
     }
 
 
-    fun recordClickHistory(posterIdx: Int, type: Int) {
-        addDisposable(clickHistoryRepository.recordClickHistory(posterIdx, type)
+    fun recordClickHistory(posterIdx: Int) {
+        val jsonObject = JSONObject()
+        jsonObject.put("objectType", 1)
+        jsonObject.put("objectIdx", posterIdx)
+        val body = JsonParser().parse(jsonObject.toString()) as JsonObject
+
+        addDisposable(clickHistoryRepository.posterDetailWebSiteClick(body)
             .subscribeOn(schedulerProvider.io())
             .observeOn(schedulerProvider.mainThread())
             .doOnSubscribe { showProgress() }
@@ -87,7 +88,7 @@ class CalendarDetailViewModel(
             .subscribe({
                 Log.d(TAG, it.toString())
             }, {
-
+                it.printStackTrace()
             })
         )
     }

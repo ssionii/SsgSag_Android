@@ -16,7 +16,16 @@ class ReviewViewModel(
     private var _reviewList = MutableLiveData<ArrayList<ClubInfo>>()
     val reviewList : LiveData<ArrayList<ClubInfo>> get() = _reviewList
 
+    private var _isEmpty = MutableLiveData<Boolean>()
+    val isEmpty : LiveData<Boolean> get() = _isEmpty
+
+    init {
+        _isEmpty.value = false
+    }
+
+
     fun getClubReviews(curPage: Int, clubType : Int){
+
 
         addDisposable(repository.getClubList(curPage, clubType)
             .subscribeOn(schedulerProvider.io())
@@ -24,31 +33,9 @@ class ReviewViewModel(
             .subscribe({
                 _reviewList.postValue(it)
 
-            }, {
-                it.printStackTrace()
-            })
-        )
-    }
-
-    fun getActReviews(curPage: Int){
-        addDisposable(repository.getClubList(curPage, 0)
-            .subscribeOn(schedulerProvider.io())
-            .observeOn(schedulerProvider.mainThread())
-            .subscribe({
-                _reviewList.postValue(it)
-
-            }, {
-                it.printStackTrace()
-            })
-        )
-    }
-
-    fun getInternReviews(curPage: Int){
-        addDisposable(repository.getClubList(curPage, 0)
-            .subscribeOn(schedulerProvider.io())
-            .observeOn(schedulerProvider.mainThread())
-            .subscribe({
-                _reviewList.postValue(it)
+                if(curPage == 0 && it.size == 0){
+                    _isEmpty.value = true
+                }
 
             }, {
                 it.printStackTrace()

@@ -62,8 +62,8 @@ class ClubReviewRepositoryImpl (val api: NetworkService, val pref: PreferenceMan
         .searchClub(pref.findPreference("TOKEN", ""), clubType, univOrLocation, keyword, curPage)
         .map { it.data }
 
-    override fun searchClubName(keyword: String, curPage: Int): Single<ArrayList<ClubInfo>> = api
-        .searchClubName(pref.findPreference("TOKEN", ""),keyword, curPage)
+    override fun searchClubName(clubType: Int, keyword: String, curPage: Int): Single<ArrayList<ClubInfo>> = api
+        .searchClubName(pref.findPreference("TOKEN", ""), clubType, keyword, curPage)
         .map { it.data }
 
 }

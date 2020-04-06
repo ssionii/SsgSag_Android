@@ -1,5 +1,7 @@
 package com.icoo.ssgsag_android.util.dataBinding
 
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.util.Log
 import android.view.View
@@ -10,9 +12,11 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.graphics.drawable.toDrawable
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.Resource
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.request.RequestOptions
 import com.icoo.ssgsag_android.R
@@ -27,6 +31,7 @@ import org.jetbrains.anko.matchParent
 import org.jetbrains.anko.textColor
 import org.w3c.dom.Text
 import java.io.File
+import java.lang.ref.Reference
 
 //View BindingAdapter
 @Suppress("UNCHECKED_CAST")
@@ -70,6 +75,15 @@ fun setGlideImg(view: ImageView, imgUrl: String?) {
         .placeholder(R.drawable.img_default)
         .thumbnail(0.1f)
         .error(R.drawable.img_default) //에러시 나올 이미지 적용
+        .into(view)
+}
+
+@BindingAdapter("imgResId")
+fun setImgResId(view: ImageView, resId: Reference<Any>) {
+
+    Log.e("imgResId", resId.toString())
+    Glide.with(view.context)
+        .load(resId)
         .into(view)
 }
 
@@ -271,9 +285,9 @@ fun setImageViewVisibility(view: ImageView, num: Int){
         view.visibility = GONE
 }
 
-@BindingAdapter("clVisibilityByInt")
-fun setConstraintLayoutVisibility(layout: ConstraintLayout, num: Int?){
-    if(num == null || num == 0)
+@BindingAdapter("clVisibilityByBool")
+fun setConstraintLayoutVisibility(layout: ConstraintLayout, bool: Boolean){
+    if(bool)
         layout.visibility = VISIBLE
     else
         layout.visibility = GONE

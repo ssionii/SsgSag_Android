@@ -39,7 +39,6 @@ class ReviewDetailActivity : BaseActivity<ActivityClubReviewDetailBinding, Revie
         super.onCreate(savedInstanceState)
 
         viewModel.mClubIdx = intent.getIntExtra("clubIdx", 0)
-        viewModel.reviewType = intent.getStringExtra("reviewType")
 
         viewDataBinding.vm = viewModel
 

@@ -25,5 +25,5 @@ interface ClubReviewRepository {
     fun getBlogReviews(clubIdx:Int, curPage: Int) : Single<ArrayList<BlogReview>>
 
     fun searchClub(clubType: Int, univOrLocation: String, keyword: String, curPage: Int) : Single<ArrayList<ClubInfo>>
-    fun searchClubName(keyword: String, curPage: Int): Single<ArrayList<ClubInfo>>
+    fun searchClubName(clubType: Int, keyword: String, curPage: Int): Single<ArrayList<ClubInfo>>
 }

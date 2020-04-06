@@ -314,7 +314,7 @@ class CalendarDetailActivity : BaseActivity<ActivityCalendarDetailBinding, Calen
     private fun moveWebSite() {
         viewDataBinding.actCalDetailTvGoWebsite.setSafeOnClickListener {
             viewModel.webUrl.value?.let {
-                viewModel.recordClickHistory(posterIdx, 0)
+                viewModel.recordClickHistory(posterIdx)
                 AdBrixRm.event(
                     "touchUp_MoveToWebsite",
                     AdBrixRm.AttrModel().setAttrs("posterIdx", posterIdx.toLong())
@@ -342,64 +342,6 @@ class CalendarDetailActivity : BaseActivity<ActivityCalendarDetailBinding, Calen
     }
 
     private fun share(){
-
-        /*
-        viewDataBinding.actCalDetailIvShare.setSafeOnClickListener {
-
-            AdBrixRm.AttrModel().setAttrs("adv_keyword",posterIdx.toString())
-
-            // 현재 화면 스크린샷
-            var container: View = viewDataBinding.actCalDetailLlContents
-
-            container.isDrawingCacheEnabled = true
-            container.buildDrawingCache(true)
-
-            var captureView = Bitmap.createBitmap(container.measuredWidth, container.measuredHeight, Bitmap.Config.ARGB_8888)
-            val screenShotCanvas = Canvas(captureView)
-
-            container.draw(screenShotCanvas)
-
-            // 화면 저장
-            var storeAddress : String = Environment.getExternalStorageDirectory().absolutePath + "/Android/data/com.icoo.ssgsag_android/files" + "/capture.jpeg"
-            lateinit var fos : FileOutputStream
-
-            try{
-                fos = FileOutputStream(storeAddress)
-                captureView.compress(Bitmap.CompressFormat.JPEG, 100, fos)
-            }catch (e : FileNotFoundException){
-                e.printStackTrace()
-            }
-
-            // Intent로 공유
-            val shareIntent = Intent(Intent.ACTION_SEND)
-            shareIntent.setType("image/*")
-            shareIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-            shareIntent.setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
-
-            shareIntent.putExtra(Intent.EXTRA_STREAM, FileProvider.getUriForFile(SsgSagApplication.getGlobalApplicationContext(),
-                BuildConfig.APPLICATION_ID, File(storeAddress)
-            ))
-
-            //shareIntent.putExtra(Intent.EXTRA_TEXT, "https://UBVFGgtRykabVMFEdAlL0w.adtouch.adbrix.io/api/v1/click/hHoncJVZYU6hKkJ7w3BS0g?adv_keyword={adv_keyword}")
-
-            //shareIntent.putExtra(Intent.EXTRA_TEXT, "슥삭 다운로드 바로가기\nhttps://ssgsag.page.link/install")
-
-            shareIntent.putExtra(Intent.EXTRA_TEXT, "포스터 보러가기\nhttps://applinktest.appspot.com/app-link.html?clubWebsite=ssgsag%3A%2F%2Fposter%2F" +
-                    posterIdx + "&packageId=com.icoo.ssgsag_android")
-
-
-            startActivity(Intent.createChooser(shareIntent, "포스터 공유"))
-
-
-            // adbrix
-            AdBrixRm.event("touchUp_Share",AdBrixRm.AttrModel()
-                .setAttrs("posterIdx",posterIdx.toLong()))
-
-
-        }
-        */
-         */
-
         viewDataBinding.actCalDetailIvShare.setSafeOnClickListener {
 
             AdBrixRm.AttrModel().setAttrs("adv_keyword", posterIdx.toString())
@@ -482,7 +424,6 @@ class CalendarDetailActivity : BaseActivity<ActivityCalendarDetailBinding, Calen
                 viewDataBinding.actCalDetailTvMajorRate1.setText(viewModel.analytics.value!!.majorCategoryRate[0].toString() + "%")
 
 
-                Log.e("majorCategorySize", majorCategorySize.toString())
                 if (majorCategorySize > 1) {
                     viewDataBinding.major2.apply {
                         visibility = VISIBLE

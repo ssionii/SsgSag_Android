@@ -115,6 +115,16 @@ interface NetworkService {
         @Header("Content-Type") content_type: String,
         @Body() body: JsonObject
     ): Single<NullDataResponse>
+
+    //region 유저 로그 수집
+    //포스터 상세보기에서 웹사이트 버튼 클릭
+    @POST("/user/log")
+    fun recordClickHistory(
+        @Header("Authorization") token: String,
+        @Header("Content-Type") content_type: String,
+        @Body() body: JsonObject
+    ): Single<NullDataResponse>
+    //endregion
    //endregion
 
     //region 포스터
@@ -234,16 +244,6 @@ interface NetworkService {
 
     //region 공지사항
     //공지사항 조회
-    //endregion
-
-    //region 투두리스트 클릭 기록
-    //투두리스트 클릭 기록
-    @POST("/todo/click/{posterIdx}/{type}")
-    fun recordClickHistory(
-        @Header("Authorization") token: String,
-        @Path("posterIdx") posterIdx: Int,
-        @Path("type") type: Int
-    ): Single<NullDataResponse>
     //endregion
 
     //region 업데이트
@@ -401,7 +401,7 @@ interface NetworkService {
         @Body() body: JsonObject
     ): Single<PostReviewResponse>
 
-    // 동아리 검색
+    // 동아리 clubTpye, 대학교 또는 지역, 검색어로 검색
     @GET("/club/search")
     fun searchClub(
         @Header("Authorization") token: String,
@@ -411,10 +411,11 @@ interface NetworkService {
         @Query("curPage") curPage: Int
     ): Single<ClubsResponse>
 
-    // 동아리 이름으로만 검색
+    // 동아리 clubType과 검색어로 검색
     @GET("/club/search")
     fun searchClubName(
         @Header("Authorization") token: String,
+        @Query("clubType") clubType: Int,
         @Query("keyword") keyword: String,
         @Query("curPage") curPage: Int
     ): Single<ClubsResponse>

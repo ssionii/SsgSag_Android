@@ -34,23 +34,14 @@ class ReviewListFragment : BaseFragment<FragmentReviewPageBinding, ReviewViewMod
             reviewType = this
         }
 
+        viewModel.getClubReviews(curPage, reviewType)
+
         viewDataBinding.vm = viewModel
         viewDataBinding.reviewListFragment = this
 
-        viewModel.getClubReviews(curPage, reviewType)
-
-        setButton()
         setRv()
 
         // navigator()
-    }
-
-
-    private fun setButton() {
-        viewDataBinding.fragReviewClRegiClub.setSafeOnClickListener {
-            val intent = Intent(activity!!, ClubManagerCheckActivity::class.java)
-            startActivity(intent)
-        }
     }
 
     private fun setRv() {
@@ -60,7 +51,6 @@ class ReviewListFragment : BaseFragment<FragmentReviewPageBinding, ReviewViewMod
                 ReviewListRecyclerViewAdapter!!.apply {
                     addItem(value)
                     notifyDataSetChanged()
-
                 }
             } else {
                 ReviewListRecyclerViewAdapter =
@@ -131,16 +121,8 @@ class ReviewListFragment : BaseFragment<FragmentReviewPageBinding, ReviewViewMod
             = object : ReviewListRecyclerViewAdapter.OnReviewClickListener {
         override fun onItemClickListener(clubIdx: Int) {
 
-            var reviewTypeString = ""
-            when(reviewType){
-                0,1 -> reviewTypeString = "club"
-                2 -> reviewTypeString = "act"
-                3 -> reviewTypeString = "intern"
-            }
-
             val intent = Intent(activity!!, ReviewDetailActivity::class.java)
             intent.putExtra("clubIdx", clubIdx)
-            intent.putExtra("reviewType", reviewTypeString)
             startActivity(intent)
         }
     }

@@ -42,11 +42,16 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
 
-        <ImageView
+        <TextView
                 android:id="@+id/act_review_detail_iv_write"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/write_review"
+                android:layout_height="match_parent"
+                android:textSize="12sp"
+                android:textColor="@color/ssgsag"
+                android:text="후기작성"
+                android:layout_marginRight="6dp"
+                android:gravity="center"
+                android:fontFamily="@font/noto_sans_kr_regular"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>
@@ -58,7 +63,14 @@
             android:layout_height="wrap_content"
             android:paddingHorizontal="24dp"
             android:orientation="vertical">
+        <View
+                vTopBoxVisibility = "@{vm.reviewType}"
+                android:id="@+id/act_club_review_detail_v_top_box"
+                android:layout_width="match_parent"
+                android:layout_height="16dp"/>
         <LinearLayout
+                android:id="@+id/activity_club_review_detail_ll_top_box"
+                llTopBoxVisibility = "@{vm.reviewType}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"

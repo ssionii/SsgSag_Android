@@ -1,6 +1,8 @@
 package com.icoo.ssgsag_android.ui.main.review
 
 import android.graphics.Color
+import android.util.Log
+import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.EditText
@@ -165,5 +167,14 @@ fun EditText.setReviewWriteSimpleEditTextHint(reviewType: String){
         "intern" -> {
             this.hint = "이 인턴을 한줄로 표현하자면?"
         }
+    }
+}
+
+
+@BindingAdapter("vVisibilityByClubType")
+fun View.setVVisivility(clubType: Int){
+    when(clubType){
+        0,1 -> this.visibility = GONE
+        2,3 -> this.visibility = VISIBLE
     }
 }

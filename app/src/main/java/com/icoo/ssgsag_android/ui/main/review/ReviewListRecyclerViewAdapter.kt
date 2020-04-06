@@ -1,13 +1,14 @@
 package com.icoo.ssgsag_android.ui.main.review
 
 import android.view.LayoutInflater
+import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.data.model.review.club.ClubInfo
-import com.icoo.ssgsag_android.databinding.ItemClubReviewBinding
+import com.icoo.ssgsag_android.databinding.ItemReviewBinding
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 
 
@@ -45,9 +46,9 @@ class ReviewListRecyclerViewAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val viewDataBinding = DataBindingUtil.inflate<ItemClubReviewBinding>(
+        val viewDataBinding = DataBindingUtil.inflate<ItemReviewBinding>(
             LayoutInflater.from(parent.context),
-            R.layout.item_club_review, parent, false
+            R.layout.item_review, parent, false
         )
 
         return ViewHolder(viewDataBinding)
@@ -57,9 +58,10 @@ class ReviewListRecyclerViewAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.dataBinding.clubInfo = itemList[position]
-//        holder.dataBinding.itemReviewLlContainer.setSafeOnClickListener {
-//            listener?.onItemClickListener(itemList[position].clubIdx)
-//        }
+
+        if(itemList[position].clubType != 0 && itemList[position].clubType != 1){
+            holder.dataBinding.itemReviewLlBox.visibility = GONE
+        }
 
         val categoryList = itemList[position].categoryList.split(",")
         for(i in 0.. categoryList.size - 1){
@@ -84,7 +86,7 @@ class ReviewListRecyclerViewAdapter(
         return itemList[position].clubIdx.toLong()
     }
 
-    inner class ViewHolder(val dataBinding: ItemClubReviewBinding) :
+    inner class ViewHolder(val dataBinding: ItemReviewBinding) :
         RecyclerView.ViewHolder(dataBinding.root){
         init {
             dataBinding.root.setSafeOnClickListener {

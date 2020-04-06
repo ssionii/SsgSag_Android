@@ -874,7 +874,6 @@
                 android:orientation="horizontal">
 
             <ImageView
-                    tools:visibility="gone"
                     android:id="@+id/act_cal_detail_iv_bookmark"
                     android:background="#656ef0"
                     android:layout_width="wrap_content"
@@ -907,6 +906,7 @@
                     android:textColor="#33ffffff"
                     android:gravity="center"/>
             <RelativeLayout
+                    android:visibility="gone"
                     android:id="@+id/act_cal_detail_rl_store"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
