@@ -78,7 +78,7 @@ class SearchViewModel(
         )
     }
 
-    fun getSearchedClubs(clubType: Int, keyword: String, curPage: Int){
+    fun getSearchedClubs( keyword: String,clubType: Int, curPage: Int){
         addDisposable(reviewRepository.searchClubName(clubType, keyword, curPage)
             .subscribeOn(schedulerProvider.io())
             .observeOn(schedulerProvider.mainThread())

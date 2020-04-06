@@ -37,6 +37,7 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(),
 
     private var curPage = 0
     private var from = "main"
+    private var clubType = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +45,7 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(),
         viewDataBinding.vm = viewModel
 
         from = intent.getStringExtra("from")
+        clubType = intent.getIntExtra("clubType", -1)
 
         setButton()
         if(from == "main"){
@@ -73,7 +75,7 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(),
                     viewModel.getSearchedPosters(viewDataBinding.actSearchEtSearch.text.toString(), curPage)
                 }else if(from == "club"){
                     reviewListRecyclerViewAdapter?.clearAll()
-                    viewModel.getSearchedClubs(viewDataBinding.actSearchEtSearch.text.toString(), curPage)
+                    viewModel.getSearchedClubs(viewDataBinding.actSearchEtSearch.text.toString(), clubType, curPage)
                 }
             }
 
@@ -95,7 +97,7 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(),
                         viewModel.getSearchedPosters(viewDataBinding.actSearchEtSearch.text.toString(), curPage)
                     }else if(from == "club"){
                         reviewListRecyclerViewAdapter?.clearAll()
-                        viewModel.getSearchedClubs(viewDataBinding.actSearchEtSearch.text.toString(), curPage)
+                        viewModel.getSearchedClubs(viewDataBinding.actSearchEtSearch.text.toString(), clubType, curPage)
                     }
                 }
 
@@ -219,7 +221,7 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(),
 
                             if (itemCount > 0 && (10 * (curPage+1) - 2 < position)) {
                                 curPage = (position + 1) / 10
-                                viewModel.getSearchedClubs(viewDataBinding.actSearchEtSearch.text.toString(), curPage)
+                                viewModel.getSearchedClubs(viewDataBinding.actSearchEtSearch.text.toString(), clubType, curPage)
                             }
                             notifyDataSetChanged()
                         }

@@ -145,17 +145,17 @@ fun setSsgsagReviewHelp(view: ImageView, isHelp: Int){
 }
 
 @BindingAdapter("llTopBoxVisibility")
-fun setLLTopBoxVisibility(layout: LinearLayout, reviewType: String){
-      when(reviewType){
-          "club" ->layout.visibility = VISIBLE
+fun setLLTopBoxVisibility(layout: LinearLayout, clubType: Int){
+      when(clubType){
+          0,1 ->layout.visibility = VISIBLE
           else -> layout.visibility = GONE
       }
 }
 
 @BindingAdapter("vTopBoxVisibility")
-fun setvTopBoxVisibility(view: View, reviewType: String){
-    when(reviewType){
-        "club" ->view.visibility = GONE
-        else -> view.visibility = VISIBLE
+fun setvTopBoxVisibility(view: View,  clubType: Int){
+    when(clubType){
+        0,1 ->view.visibility = VISIBLE
+        else -> view.visibility = GONE
     }
 }

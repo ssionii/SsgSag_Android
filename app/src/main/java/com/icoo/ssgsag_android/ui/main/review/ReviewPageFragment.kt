@@ -43,10 +43,13 @@ class ReviewPageFragment : BaseFragment<FragmentReviewBinding, ReviewViewModel>(
         if(reviewType == 1){
             setViewPagerForClub()
             setTabLayout()
+            tabLayoutClickListener()
         }else{
             setViewPager(reviewType)
             viewDataBinding.fragReviewTlCategory.visibility = GONE
         }
+
+
 
         setButton()
 
@@ -97,31 +100,21 @@ class ReviewPageFragment : BaseFragment<FragmentReviewBinding, ReviewViewModel>(
 
     }
 
-    private fun setTabLayoutEnable() {
+    private fun tabLayoutClickListener() {
         val tabStrip = viewDataBinding.fragReviewTlCategory.getChildAt(0) as LinearLayout
-        for (i in 1..2) {
+        for (i in 0..1) {
             tabStrip.getChildAt(i).setOnTouchListener(View.OnTouchListener { v, event ->
                 if (event?.action == MotionEvent.ACTION_UP) {
 
-                    val toast = Toast.makeText(context, "2월 말 출시 예정이니 조금만 \n" +
-                            "기다려주세요 :)", Toast.LENGTH_SHORT)
-                    val group = toast.view as ViewGroup
-                    group.getChildAt(0).textAlignment = View.TEXT_ALIGNMENT_CENTER
-                    toast.show()
+                    if(i == 1) reviewType = 0
+                    else reviewType = 1
                 }
-                true
+                false
             })
         }
     }
 
     private fun setButton(){
-//        viewDataBinding.fragReviewIvMyPage.setSafeOnClickListener {
-//            view!!.context.startActivity<MyPageActivity>()
-//            (view!!.context as Activity).overridePendingTransition(
-//                R.anim.anim_slide_in_left,
-//                R.anim.anim_not_move
-//            )
-//        }
 
         viewDataBinding.fragReviewClBack.setSafeOnClickListener {
 
@@ -131,6 +124,7 @@ class ReviewPageFragment : BaseFragment<FragmentReviewBinding, ReviewViewModel>(
         viewDataBinding.fragReviewIvSearch.setSafeOnClickListener {
             val intent = Intent(activity!!, SearchActivity::class.java)
             intent.putExtra("from", "club")
+            intent.putExtra("clubType", reviewType)
             startActivity(intent)
         }
 
@@ -187,7 +181,7 @@ class ReviewPageFragment : BaseFragment<FragmentReviewBinding, ReviewViewModel>(
         val intent = Intent(activity!!, HowWriteReviewActivity::class.java)
         intent.putExtra("from", "main")
         when(reviewType){
-            1 -> intent.putExtra("reviewType", "club")
+            0,1 -> intent.putExtra("reviewType", "club")
             2 -> intent.putExtra("reviewType", "act")
             3 -> intent.putExtra("reviewType", "intern")
         }

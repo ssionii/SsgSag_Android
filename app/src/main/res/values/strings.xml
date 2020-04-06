@@ -67,7 +67,7 @@
     <string name="today_ssg">오늘 슥 - 저장한 정보👆</string>
     <string name="today_sag">오늘 삭- 삭제한 정보👇🏾</string>
 
-    <string name="ssgsag_end_ment">매일 점심시간\n오늘의 추천정보를 보내드릴게요🐥 </string>
+    <string name="ssgsag_end_ment">매주 월, 수, 금 점심시간\n오늘의 추천정보를 보내드릴게요🐥 </string>
 
     <string name="review_event">후기 작성 이벤트</string>
     <string name="review_event_ment">후기 작성하고🐵\n아이패드 받자!</string>

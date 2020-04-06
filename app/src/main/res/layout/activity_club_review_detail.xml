@@ -64,13 +64,13 @@
             android:paddingHorizontal="24dp"
             android:orientation="vertical">
         <View
-                vTopBoxVisibility = "@{vm.reviewType}"
+                vTopBoxVisibility = "@{vm.reviewDetail.clubType}"
                 android:id="@+id/act_club_review_detail_v_top_box"
                 android:layout_width="match_parent"
                 android:layout_height="16dp"/>
         <LinearLayout
                 android:id="@+id/activity_club_review_detail_ll_top_box"
-                llTopBoxVisibility = "@{vm.reviewType}"
+                llTopBoxVisibility = "@{vm.reviewDetail.clubType}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"

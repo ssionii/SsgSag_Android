@@ -144,10 +144,11 @@ class ReviewDetailViewModel(
 
     fun setReviewGradeList(){
 
+        var reviewType = ""
         when(reviewDetail.value!!.clubType){
             0,1 -> reviewType = "club"
-            2 -> reviewType = "act"
-            3 -> reviewType = "intern"
+            2 -> reviewType ="act"
+            3 -> reviewType ="intern"
         }
 
         val reviewGradeTempList = arrayListOf(ReviewGrade(reviewType, "",0.0 ), ReviewGrade(reviewType, "",0.0 )
