@@ -75,7 +75,7 @@ class BlogReviewRecyclerViewAdapter(
             holder.dataBinding.blogReview = itemList!![position]
 
             holder.dataBinding.root.setSafeOnClickListener {
-                listener?.onItemClickListener(itemList!![position].blogUrl)
+                listener?.onItemClickListener(itemList!![position].blogUrl, itemList!![position].blogTitle)
             }
 
 
@@ -94,7 +94,7 @@ class BlogReviewRecyclerViewAdapter(
         RecyclerView.ViewHolder(dataBinding.root)
 
     interface OnBlogReviewClickListener {
-        fun onItemClickListener(url: String)
+        fun onItemClickListener(url: String, title : String)
     }
 
 }

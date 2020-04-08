@@ -1,5 +1,6 @@
 package com.icoo.ssgsag_android.data.remote.api
 
+import com.google.android.gms.common.internal.safeparcel.SafeParcelable
 import com.google.gson.JsonObject
 import com.icoo.ssgsag_android.SsgSagApplication.Companion.globalApplication
 import com.icoo.ssgsag_android.R
@@ -160,7 +161,8 @@ interface NetworkService {
     @GET("/poster/{posterIdx}")
     fun posterDetailResponse(
         @Header("Authorization") token: String,
-        @Path("posterIdx") posterIdx : Int
+        @Path("posterIdx") posterIdx : Int,
+        @Query("curPage") type: Int
     ): Single<PosterDetailResponse>
     //포스터 좋아요/싫어요
     @POST("/poster/like")

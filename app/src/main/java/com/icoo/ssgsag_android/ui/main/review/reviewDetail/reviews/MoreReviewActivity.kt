@@ -265,9 +265,10 @@ class MoreReviewActivity : BaseActivity<ActivityReviewMoreBinding, MoreReviewVie
     private var onBlogReviewClickListener
             = object :
         BlogReviewRecyclerViewAdapter.OnBlogReviewClickListener {
-        override fun onItemClickListener(url: String) {
+        override fun onItemClickListener(url: String, title: String) {
             val intent = Intent(this@MoreReviewActivity, FeedWebActivity::class.java)
             intent.putExtra("clubWebsite", url)
+            intent.putExtra("title", title)
             intent.putExtra("from", "review")
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)

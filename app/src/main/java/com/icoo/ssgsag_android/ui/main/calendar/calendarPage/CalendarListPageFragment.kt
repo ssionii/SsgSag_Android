@@ -227,11 +227,9 @@ class CalendarListPageFragment : BaseFragment<FragmentCalendarListPageBinding, C
 
     override fun onBack() {
 
-        android.os.Process.killProcess((android.os.Process.myPid()))
-
         val activity = activity as MainActivity
-        activity!!.setOnKeyBackPressedListener(null)
-        activity!!.onBackPressed()
+        activity.setOnKeyBackPressedListener(null)
+        activity.onBackPressed()
     }
 
     override fun onAttach(context: Context) {

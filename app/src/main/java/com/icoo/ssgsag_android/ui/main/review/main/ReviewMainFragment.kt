@@ -37,7 +37,9 @@ class ReviewMainFragment : BaseFragment<FragmentReviewMainBinding, ReviewMainVie
             clubReviewPageFragment = ReviewPageFragment()
             clubReviewPageFragment.reviewType = 1
 
-            fragmentManager!!.beginTransaction().add(R.id.frag_review_main_fl_container, clubReviewPageFragment, "club").commit()
+            fragmentManager!!.beginTransaction().add(R.id.frag_review_main_fl_container, clubReviewPageFragment, "club").addToBackStack(null).commit()
+
+
             fragmentManager!!.beginTransaction().show(clubReviewPageFragment).commit()
         }
 
@@ -45,7 +47,7 @@ class ReviewMainFragment : BaseFragment<FragmentReviewMainBinding, ReviewMainVie
             actReviewPageFragment = ReviewPageFragment()
             actReviewPageFragment.reviewType = 2
 
-            fragmentManager!!.beginTransaction().add(R.id.frag_review_main_fl_container, actReviewPageFragment, "act").commit()
+            fragmentManager!!.beginTransaction().add(R.id.frag_review_main_fl_container, actReviewPageFragment, "act").addToBackStack(null).commit()
             fragmentManager!!.beginTransaction().show(actReviewPageFragment).commit()
         }
 
@@ -53,7 +55,7 @@ class ReviewMainFragment : BaseFragment<FragmentReviewMainBinding, ReviewMainVie
             internReviewPageFragment = ReviewPageFragment()
             internReviewPageFragment.reviewType = 3
 
-            fragmentManager!!.beginTransaction().add(R.id.frag_review_main_fl_container, internReviewPageFragment, "intern").commit()
+            fragmentManager!!.beginTransaction().add(R.id.frag_review_main_fl_container, internReviewPageFragment, "intern").addToBackStack(null).commit()
             fragmentManager!!.beginTransaction().show(internReviewPageFragment).commit()
         }
 

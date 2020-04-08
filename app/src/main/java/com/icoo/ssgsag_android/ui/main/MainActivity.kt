@@ -3,6 +3,7 @@ package com.icoo.ssgsag_android.ui.main
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -144,14 +145,21 @@ class MainActivity : BaseActivity<ActivityMainBinding, SsgSagViewModel>() {
     }
 
     fun setOnKeyBackPressedListener(listener: onKeyBackPressedListener?){
-        if(listener != null) {
-            mOnKeyBackPressedListener = listener
-        }
+
+        mOnKeyBackPressedListener = listener
+
     }
 
 
     override fun onBackPressed() {
-        backPressHandler.onBackPressed()
+       // backPressHandler.onBackPressed()
+
+        if(mOnKeyBackPressedListener != null){
+            mOnKeyBackPressedListener!!.onBack()
+            mOnKeyBackPressedListener = null
+        }else{
+            backPressHandler.onBackPressed()
+        }
     }
 
     companion object {

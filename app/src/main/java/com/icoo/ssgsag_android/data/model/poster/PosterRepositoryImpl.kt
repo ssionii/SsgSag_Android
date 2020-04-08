@@ -40,7 +40,7 @@ class PosterRepositoryImpl(val api: NetworkService, val pref: PreferenceManager)
         .map { it.status }
 
     override fun getPoster(posterIdx: Int): Single<PosterDetail> = api
-        .posterDetailResponse(pref.findPreference("TOKEN", ""), posterIdx)
+        .posterDetailResponse(pref.findPreference("TOKEN", ""), posterIdx, 2)
         .map { it.data }
 
     override fun getSearchPosters(keyword: String, curPage: Int): Single<ArrayList<PosterDetail>> = api

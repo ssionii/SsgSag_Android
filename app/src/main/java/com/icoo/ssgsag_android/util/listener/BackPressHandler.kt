@@ -13,11 +13,8 @@ class BackPressHandler(val activity: Activity) {
             backKeyPressedTime = System.currentTimeMillis()
             showGuide(msg)
 
-            Log.e("백버튼 누름","ㅓㅗ")
-
             return
         }else if(System.currentTimeMillis() <= backKeyPressedTime + 2000){
-            Log.e("백버튼 누름","ㄹㅇ")
 
             activity.finish()
             toast.cancel()

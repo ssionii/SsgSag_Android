@@ -42,6 +42,12 @@ class ReviewDoneActivity : AppCompatActivity(){
 
         act_review_done_iv_cancel.setSafeOnClickListener {
             finish()
+
+            if(showEvent) {
+                val intent = Intent(this, ReviewEventActivity::class.java)
+                intent.putExtra("clubIdx", clubIdx)
+                startActivity(intent)
+            }
         }
 
         act_review_done_cl_done.setSafeOnClickListener {

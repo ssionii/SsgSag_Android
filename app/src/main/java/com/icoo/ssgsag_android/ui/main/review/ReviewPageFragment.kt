@@ -1,8 +1,10 @@
 package com.icoo.ssgsag_android.ui.main.review
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.view.View.GONE
 import com.icoo.ssgsag_android.R
@@ -13,6 +15,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import android.widget.LinearLayout
 import android.widget.Toast
 import com.icoo.ssgsag_android.data.local.pref.SharedPreferenceController
+import com.icoo.ssgsag_android.ui.main.MainActivity
 import com.icoo.ssgsag_android.ui.main.allPosters.search.SearchActivity
 import com.icoo.ssgsag_android.ui.main.myPage.MyPageActivity
 import com.icoo.ssgsag_android.ui.main.review.main.ReviewMainFragment
@@ -24,7 +27,7 @@ import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.support.v4.toast
 
 
-class ReviewPageFragment : BaseFragment<FragmentReviewBinding, ReviewViewModel>() {
+class ReviewPageFragment : BaseFragment<FragmentReviewBinding, ReviewViewModel>(), MainActivity.onKeyBackPressedListener {
 
     override val layoutResID: Int
         get() = R.layout.fragment_review
@@ -194,6 +197,22 @@ class ReviewPageFragment : BaseFragment<FragmentReviewBinding, ReviewViewModel>(
             SharedPreferenceController.setIsFirstReview(activity!!, SharedPreferenceController.getIsFirstReview(activity!!)+1)
             isReviewOpend = true
         }
+    }
+
+    override fun onBack() {
+
+        val activity = activity as MainActivity
+        activity.setOnKeyBackPressedListener(this)
+
+        Log.e("hello", "it's me")
+        fragmentManager!!.popBackStack()
+
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        (context as MainActivity).setOnKeyBackPressedListener(this)
     }
 
 }
