@@ -105,11 +105,6 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(),
             }else
                 false
         }
-
-        viewDataBinding.actSearchLlRgstrClub.setSafeOnClickListener {
-            finish()
-            startActivity<ClubManagerCheckActivity>()
-        }
     }
 
     private fun setPosterRv() {
@@ -199,12 +194,6 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(),
                     layoutManager = WrapContentLinearLayoutManager()
                 }
             }
-
-            if(value.size == 0)
-                viewDataBinding.actSearchLlRgstrClub.visibility = VISIBLE
-            else
-                viewDataBinding.actSearchLlRgstrClub.visibility = GONE
-
         })
 
         viewDataBinding.actSearchRv.apply{

@@ -28,13 +28,15 @@ class ReviewWriteSimpleFragment :BaseFragment<FragmentReviewWriteSimpleBinding, 
         get() = R.layout.fragment_review_write_simple
     override val viewModel: ReviewWriteViewModel by viewModel()
 
-    val position = 3
+    var position = -1
     var isDone = false
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewDataBinding.vm = viewModel
+
+        position = arguments!!.getInt("position", -1)
 
         setEditTextTouch()
         setEditTextChange()
@@ -170,18 +172,18 @@ class ReviewWriteSimpleFragment :BaseFragment<FragmentReviewWriteSimpleBinding, 
         jsonObject.put("clubName", ClubReviewWriteData.clubName)
 
 
-        ClubReviewWriteData.categoryList.let {
-            var categoryList = ""
-
-            if(it.isNotEmpty()) {
-                for (i in 0..it.size - 2) {
-                    categoryList += it[i]
-                    categoryList += ","
-                }
-                categoryList += it[it.size - 1]
-            }
-            jsonObject.put("categoryList", categoryList)
-        }
+//        ClubReviewWriteData.categoryList.let {
+//            var categoryList = ""
+//
+//            if(it.isNotEmpty()) {
+//                for (i in 0..it.size - 2) {
+//                    categoryList += it[i]
+//                    categoryList += ","
+//                }
+//                categoryList += it[it.size - 1]
+//            }
+//            jsonObject.put("categoryList", categoryList)
+//        }
 
         // 날짜
         var clubStartDate = "20" + ClubReviewWriteData.startYear.substring(0,2) + "-"
@@ -204,6 +206,11 @@ class ReviewWriteSimpleFragment :BaseFragment<FragmentReviewWriteSimpleBinding, 
             }
         }
         jsonObject.put("clubEndDate", clubEndDate)
+
+        // 인턴 직무
+        if(ClubReviewWriteData.fieldName != "")
+            jsonObject.put("fieldName", ClubReviewWriteData.fieldName)
+
 
         // 평점
         jsonObject.put("score0", ClubReviewWriteData.score0)
@@ -245,6 +252,11 @@ class ReviewWriteSimpleFragment :BaseFragment<FragmentReviewWriteSimpleBinding, 
         }
         jsonObject.put("clubEndDate", clubEndDate)
 
+        // 인턴 직무
+        if(ClubReviewWriteData.fieldName != "")
+            jsonObject.put("fieldName", ClubReviewWriteData.fieldName)
+
+
         // 평점
         jsonObject.put("score0", ClubReviewWriteData.score0)
         jsonObject.put("score1", ClubReviewWriteData.score1)
@@ -272,5 +284,15 @@ class ReviewWriteSimpleFragment :BaseFragment<FragmentReviewWriteSimpleBinding, 
         intent.putExtra("clubIdx", viewModel.clubIdx)
 
         startActivity(intent)
+    }
+
+    companion object {
+        fun newInstance(position: Int): ReviewWriteSimpleFragment {
+            val fragment = ReviewWriteSimpleFragment()
+            val bundle = Bundle()
+            bundle.putInt("position", position)
+            fragment.arguments = bundle
+            return fragment
+        }
     }
 }

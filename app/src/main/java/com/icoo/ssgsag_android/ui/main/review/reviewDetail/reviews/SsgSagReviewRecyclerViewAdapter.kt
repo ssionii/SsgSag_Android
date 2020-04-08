@@ -81,8 +81,10 @@ class SsgSagReviewRecyclerViewAdapter(
         if(itemList != null) {
             holder.dataBinding.ssgsagReview = itemList!![position]
 
+            if(isMore) holder.dataBinding.itemReviewSsgsagLlUserInfo.visibility = VISIBLE
+
             var moreVisi = false
-            // 더보기, 물퍼짐 처리
+            // 더보기와 물퍼짐 효과가 필요한 경우 (확장 해야 하는 경우)
             if(holder.dataBinding.itemReviewSsgsagTvAdvantage.lineCount > 3
                 || holder.dataBinding.itemReviewSsgsagTvDisadvantage.lineCount > 2
                 || itemList!![position].honeyTip != ""){
@@ -94,6 +96,7 @@ class SsgSagReviewRecyclerViewAdapter(
             }else{
                 moreVisi = false
                 holder.dataBinding.itemReviewSsgsagTvMore.visibility = GONE
+                holder.dataBinding.itemReviewSsgsagLlUserInfo.visibility = VISIBLE
             }
 
             // 펼쳐진 상태에서 좋아요 눌렀을 때 '더보기'가 나오는 것 방지
@@ -104,22 +107,28 @@ class SsgSagReviewRecyclerViewAdapter(
                     if (!isExtend) {
                         holder.dataBinding.itemReviewSsgsagTvAdvantage.maxLines = 100
                         holder.dataBinding.itemReviewSsgsagTvDisadvantage.maxLines = 100
-                        if(holder.dataBinding.itemReviewSsgsagTvTip.text != "")
+
+                        if(holder.dataBinding.itemReviewSsgsagTvTip.text != "") {
                             holder.dataBinding.itemReviewSsgsagLlTip.visibility = VISIBLE
+                        }
 
                         holder.dataBinding.itemReviewSsgsagTvMore.visibility = GONE
+                        holder.dataBinding.itemReviewSsgsagLlUserInfo.visibility = VISIBLE
 
                         isExtend = true
                     }else {
                         holder.dataBinding.itemReviewSsgsagTvAdvantage.maxLines = 3
                         holder.dataBinding.itemReviewSsgsagTvDisadvantage.maxLines = 2
                         holder.dataBinding.itemReviewSsgsagLlTip.visibility = GONE
+                        holder.dataBinding.itemReviewSsgsagLlUserInfo.visibility = GONE
 
-                        if(moreVisi)
+                        if(moreVisi) {
                             holder.dataBinding.itemReviewSsgsagTvMore.visibility = VISIBLE
-                        else
+                            holder.dataBinding.itemReviewSsgsagLlUserInfo.visibility = GONE
+                        }else {
                             holder.dataBinding.itemReviewSsgsagTvMore.visibility = GONE
-
+                            holder.dataBinding.itemReviewSsgsagLlUserInfo.visibility = VISIBLE
+                        }
                         isExtend = false
                     }
                 }

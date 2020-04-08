@@ -1,8 +1,4 @@
 package com.icoo.ssgsag_android.util.dataBinding
-
-import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
-import android.net.Uri
 import android.util.Log
 import android.view.View
 import android.view.View.GONE
@@ -260,6 +256,14 @@ fun setConstraintLayoutVisibilityR(layout: ConstraintLayout, string: String?){
 @BindingAdapter("tvVisibilityByInt")
 fun setTextViewVisibility(view: TextView, num: Int){
     if(num == 1)
+        view.visibility = GONE
+    else
+        view.visibility = VISIBLE
+}
+
+@BindingAdapter("tvVisibilityByString")
+fun setTextviewVisivility(view: TextView, str: String?){
+    if(str == null || str == "")
         view.visibility = GONE
     else
         view.visibility = VISIBLE

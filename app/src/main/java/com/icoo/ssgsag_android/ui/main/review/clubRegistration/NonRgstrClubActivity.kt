@@ -86,7 +86,8 @@ class NonRgstrClubActivity : BaseActivity<ActivityNotRgstrClubBinding, ClubRgstr
         }
 
         viewDataBinding.actNotRgstrClubClDone.setSafeOnClickListener {
-            ReviewWriteActivity.ClubReviewWriteData.categoryList = viewModel.selectedClubCategoryList
+//            ReviewWriteActivity.ClubReviewWriteData.
+//                categoryList = viewModel.selectedClubCategoryList
 
             finish()
             val reviewWriteVm : ReviewWriteViewModel by viewModel()

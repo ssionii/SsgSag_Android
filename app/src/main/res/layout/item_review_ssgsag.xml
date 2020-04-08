@@ -19,60 +19,24 @@
             android:orientation="vertical"
             android:paddingVertical="18sp"
             android:paddingHorizontal="24dp">
-        <LinearLayout
+
+        <TextView
+                android:id="@+id/item_review_ssgsag_tv_field_name"
+                tvVisibilityByString="@{ssgsagReview.fieldName}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{ssgsagReview.userNickname}"
-                    android:fontFamily="@font/noto_sans_kr_regular"
-                    android:textSize="10sp"
-                    android:textColor="#aaaaaa"/>
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/noto_sans_kr_regular"
-                    android:textSize="10sp"
-                    android:text=" | "
-                    android:textColor="#aaaaaa"/>
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    tools:text="2019년 활동"
-                    android:fontFamily="@font/noto_sans_kr_regular"
-                    android:textSize="10sp"
-                    clubActDate ="@{ssgsagReview.clubEndDate}"
-                    android:textColor="#aaaaaa"/>
-
-            <View
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"/>
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="승인대기 중인 리뷰입니다"
-                    android:fontFamily="@font/noto_sans_kr_regular"
-                    android:textSize="10sp"
-                    tvVisibilityByInt="@{ssgsagReview.adminAccept}"
-                    android:textColor="@color/grey_2"
-                    android:layout_gravity="center_vertical"
-                    />
-            <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_waiting"
-                    ivVisibilityByInt="@{ssgsagReview.adminAccept}"
-                    android:layout_gravity="center_vertical" />
-        </LinearLayout>
+                android:layout_marginTop="2dp"
+                android:fontFamily="@font/noto_sans_kr_regular"
+                android:text="@{ssgsagReview.fieldName}"
+                android:textColor="@color/ssgsag"
+                android:textSize="10sp"
+                tools:text="부서/직무명" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="3dp">
+                android:layout_marginTop="2dp">
             <TextView
                     android:id="@+id/item_review_ssgsag_tv_oneline"
                     android:layout_width="match_parent"
@@ -99,7 +63,7 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:orientation="horizontal">
@@ -123,6 +87,27 @@
                         android:textSize="8sp"
                         reviewGrade="@{ssgsagReview.score0}"
                         tools:text="별점 4.0" />
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="승인대기 중인 리뷰입니다"
+                        android:fontFamily="@font/noto_sans_kr_regular"
+                        android:textSize="10sp"
+                        tvVisibilityByInt="@{ssgsagReview.adminAccept}"
+                        android:textColor="@color/grey_2"
+                        android:layout_gravity="center_vertical"
+                        />
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_waiting"
+                        ivVisibilityByInt="@{ssgsagReview.adminAccept}"
+                        android:layout_gravity="center_vertical" />
         </LinearLayout>
 
         <TextView
@@ -207,6 +192,39 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <LinearLayout
+                    android:visibility="gone"
+                    android:id="@+id/item_review_ssgsag_ll_user_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent">
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{ssgsagReview.userNickname}"
+                        android:fontFamily="@font/noto_sans_kr_regular"
+                        android:textSize="10sp"
+                        android:textColor="#aaaaaa"/>
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/noto_sans_kr_regular"
+                        android:textSize="10sp"
+                        android:text=" | "
+                        android:textColor="#aaaaaa"/>
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="2019년 활동"
+                        android:fontFamily="@font/noto_sans_kr_regular"
+                        android:textSize="10sp"
+                        clubActDate ="@{ssgsagReview.clubEndDate}"
+                        android:textColor="#aaaaaa"/>
+            </LinearLayout>
             <androidx.cardview.widget.CardView
                     android:id="@+id/item_review_ssgsag_cl_help"
                     android:layout_width="wrap_content"

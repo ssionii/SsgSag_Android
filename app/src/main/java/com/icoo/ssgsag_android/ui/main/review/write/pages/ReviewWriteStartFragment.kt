@@ -31,7 +31,7 @@ class ReviewWriteStartFragment :  BaseFragment<FragmentReviewWriteStartBinding, 
         get() = R.layout.fragment_review_write_start
     override val viewModel: ReviewWriteViewModel by viewModel()
 
-    val position = 1
+    var position = -1
 
     private val univList = ArrayList<String>()
     private val actPlaceList = ArrayList<String>()
@@ -44,6 +44,8 @@ class ReviewWriteStartFragment :  BaseFragment<FragmentReviewWriteStartBinding, 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewDataBinding.vm = viewModel
+
+        position = arguments!!.getInt("position", -1)
 
         viewModel.clubType.observe(this, Observer { value ->
             if (value == 1) {
@@ -432,6 +434,16 @@ class ReviewWriteStartFragment :  BaseFragment<FragmentReviewWriteStartBinding, 
 
         viewDataBinding.fragWriteReviewStartIvCancel.setSafeOnClickListener {
             activity!!.finish()
+        }
+    }
+
+    companion object {
+        fun newInstance(position: Int): ReviewWriteStartFragment {
+            val fragment = ReviewWriteStartFragment()
+            val bundle = Bundle()
+            bundle.putInt("position", position)
+            fragment.arguments = bundle
+            return fragment
         }
     }
 

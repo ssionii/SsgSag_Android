@@ -25,7 +25,7 @@ class ReviewWriteStartWithNameFragment : BaseFragment<FragmentReviewWriteStartWi
         get() = R.layout.fragment_review_write_start_with_name
     override val viewModel: ReviewWriteViewModel by viewModel()
 
-    val position = 1
+    var position = -1
 
     private val yearList = ArrayList<String>()
     private val monthList = ArrayList<String>()
@@ -33,6 +33,8 @@ class ReviewWriteStartWithNameFragment : BaseFragment<FragmentReviewWriteStartWi
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewDataBinding.vm = viewModel
+
+        position = arguments!!.getInt("position", -1)
 
         setButton()
         setActDateSpinner()
@@ -202,6 +204,16 @@ class ReviewWriteStartWithNameFragment : BaseFragment<FragmentReviewWriteStartWi
 
         override fun getCount(): Int {
             return super.getCount() - 1
+        }
+    }
+
+    companion object {
+        fun newInstance(position: Int): ReviewWriteStartWithNameFragment {
+            val fragment = ReviewWriteStartWithNameFragment()
+            val bundle = Bundle()
+            bundle.putInt("position", position)
+            fragment.arguments = bundle
+            return fragment
         }
     }
 

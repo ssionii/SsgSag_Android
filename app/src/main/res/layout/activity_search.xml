@@ -61,32 +61,6 @@
                 android:layout_marginTop="14dp"/>
 
 
-        <LinearLayout
-                android:id="@+id/act_search_ll_rgstr_club"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:paddingHorizontal="24dp"
-                android:layout_marginTop="50dp"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:visibility="gone">
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/noto_sans_kr_bold"
-                    android:textSize="14sp"
-                    android:textColor="@color/ssgsag"
-                    clubRgstr = "@{vm.keyword}"
-                    tools:text="'뜨끈한 국밥' 동아리 등록하러 가기"
-                    />
-            <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_arrow_next_active"
-                    android:layout_marginLeft="4dp"/>
-        </LinearLayout>
-
-
         <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/act_search_rv"
                 android:layout_width="match_parent"

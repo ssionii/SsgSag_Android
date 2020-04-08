@@ -18,12 +18,14 @@ class ReviewWriteScoreFragment :  BaseFragment<FragmentReviewWriteScoreBinding, 
         get() = R.layout.fragment_review_write_score
     override val viewModel: ReviewWriteViewModel by viewModel()
 
-    val position = 2
+    var position = -1
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
         viewDataBinding.vm = viewModel
+
+        position = arguments!!.getInt("position", -1)
 
         viewModel.setScoreQuestion()
         setButton()
@@ -90,6 +92,15 @@ class ReviewWriteScoreFragment :  BaseFragment<FragmentReviewWriteScoreBinding, 
                 isClickable = true
                 backgroundColor = context.resources.getColor(R.color.ssgsag)
             }
+        }
+    }
+    companion object {
+        fun newInstance(position: Int): ReviewWriteScoreFragment {
+            val fragment = ReviewWriteScoreFragment()
+            val bundle = Bundle()
+            bundle.putInt("position", position)
+            fragment.arguments = bundle
+            return fragment
         }
     }
 }

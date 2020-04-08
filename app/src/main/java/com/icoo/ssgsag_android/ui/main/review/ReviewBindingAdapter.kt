@@ -149,7 +149,7 @@ fun TextView.setReviewTypeString(reviewType: String){
           this.text = "대외활동"
         }
         "intern" -> {
-            this.text = "인턴"
+            this.text = "인턴십"
         }
     }
 }

@@ -29,7 +29,6 @@ class ClubContactFragment : BaseFragment<FragmentClubContactBinding, ClubRgstrVi
     val position = 3
 
 
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewDataBinding.vm = viewModel

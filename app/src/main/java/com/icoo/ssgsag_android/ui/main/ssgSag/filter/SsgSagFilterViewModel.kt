@@ -33,7 +33,7 @@ class SsgSagFilterViewModel(
         Category(217, false, "#스포츠/레저"),
         Category(206, false, "#영상/컨텐츠"),
         Category(204, false, "#문학/시나리오"),
-        Category(252, false, "#봉사활동"),
+        Category(218, false, "#봉사활동"),
         Category(253, false, "#해외탐방")
 
     )

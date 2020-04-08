@@ -22,6 +22,7 @@ data class ClubPost(
     val likeNum: Int,
     val userNickname: String,
     val adminAccept: Int,
+    val fieldName: String,
 
     var clubIdx: Int?,
     var clubName: String?,

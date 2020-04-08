@@ -15,7 +15,9 @@ class ReviewWriteActivity : BaseActivity<ActivityClubReviewWriteBinding, ReviewW
         // 동아리 정보
         lateinit var clubName: String
         var univOrLocation = ""
-        var categoryList = mutableListOf<String>()
+        //var categoryList = mutableListOf<String>()
+
+        var fieldName = ""
 
         var startYear = ""
         var startMonth = ""
