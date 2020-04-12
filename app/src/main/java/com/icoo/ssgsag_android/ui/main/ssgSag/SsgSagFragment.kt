@@ -4,8 +4,10 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import android.view.View.*
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.Observer
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseFragment
@@ -23,12 +25,9 @@ import androidx.recyclerview.widget.SimpleItemAnimator
 import com.adjust.sdk.Adjust
 import com.adjust.sdk.AdjustEvent
 import com.icoo.ssgsag_android.SsgSagApplication
-import com.icoo.ssgsag_android.ui.main.ssgSag.filter.SsgSagFilterActivity
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
-import com.igaworks.v2.core.AdBrixRm
 import com.facebook.appevents.AppEventsLogger
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.icoo.ssgsag_android.data.model.poster.TodaySsgSag
 import com.icoo.ssgsag_android.ui.main.ssgSag.todaySwipePoster.TodaySwipePosterActivity
 import com.icoo.ssgsag_android.ui.main.ssgSag.todaySwipePoster.TodaySwipePosterViewModel
 
@@ -62,6 +61,9 @@ class SsgSagFragment : BaseFragment<FragmentSsgSagBinding, SsgSagViewModel>() {
         setEndPage()
         setButton()
         setTodaySwipePosterBtn()
+
+        if(!SharedPreferenceController.getSsgSagCoachMark(activity!!))
+            setCoachMark()
     }
 
     override fun onResume() {
@@ -171,7 +173,6 @@ class SsgSagFragment : BaseFragment<FragmentSsgSagBinding, SsgSagViewModel>() {
 
                 viewModel.getUserCnt()
 
-                if ((value + viewModel.userCnt.value!!) > 0) AdBrixRm.event("swipe_PosterComplete")
             }else if(viewDataBinding.fragSsgSagRlEnd.visibility == VISIBLE && viewModel.posterCount.value!! != 0) {
                 viewDataBinding.fragSsgSagRlEnd.visibility = GONE
                 viewDataBinding.fragSsgSagRlCount.visibility = VISIBLE
@@ -190,6 +191,44 @@ class SsgSagFragment : BaseFragment<FragmentSsgSagBinding, SsgSagViewModel>() {
                 viewDataBinding.fragSsgSagCvGoTodaySsgsag.isClickable = false
             }
         })
+    }
+
+
+    private fun setCoachMark(){
+
+        viewDataBinding.fragSsgsagClCoachmarkContainer.visibility = View.VISIBLE
+
+        var isShown = false
+
+        viewModel.posterCount.observe(this, Observer {
+            if(it > 0 && !isShown) {
+                viewDataBinding.fragSsgsagClCoachmarkContainer.visibility = VISIBLE
+                isShown = true
+            }
+
+        })
+
+        viewDataBinding.fragSsgsagClCoachmarkContainer.setOnTouchListener( object : View.OnTouchListener{
+            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+                viewDataBinding.fragSsgsagClCoachmarkContainer.visibility = GONE
+                viewDataBinding.fragSsgsagClCoachmark2Container.visibility = VISIBLE
+                return false
+            }
+        })
+
+
+        viewDataBinding.fragSsgsagClCoachmark2Container.setOnTouchListener( object : View.OnTouchListener{
+            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+               return true
+            }
+        })
+
+        viewDataBinding.fragSsgsagClCoachmark2.setOnClickListener {
+            viewDataBinding.fragSsgsagClCoachmark2Container.visibility = View.GONE
+
+            SharedPreferenceController.setSsgSagCoachMark(activity!!, true)
+        }
+
     }
 
     private fun logEVENT_NAME_SWIPE_SUCCESSEvent() {

@@ -186,7 +186,34 @@
                 android:layout_centerInParent="true"/>
 
         </RelativeLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:visibility="gone"
+                android:id="@+id/frag_feed_page_cl_coachmark_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clickable="false">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/frag_feed_page_cl_coachmark"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginBottom="13dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/img_coachmark_feed"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </RelativeLayout>
+
+
 
 
 

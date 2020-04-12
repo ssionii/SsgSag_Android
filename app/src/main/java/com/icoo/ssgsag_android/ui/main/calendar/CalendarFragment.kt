@@ -9,10 +9,12 @@ import android.os.Handler
 import android.os.HandlerThread
 import android.util.Log
 import android.view.MenuItem
+import android.view.MotionEvent
 import android.view.View
 import android.view.View.*
 import android.widget.Toast
 import androidx.appcompat.widget.PopupMenu
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.FileProvider
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
@@ -30,12 +32,14 @@ import com.icoo.ssgsag_android.databinding.ItemCalSortBinding
 import com.icoo.ssgsag_android.ui.main.MainActivity
 import com.icoo.ssgsag_android.ui.main.calendar.calendarPage.CalendarListPageFragment
 import com.icoo.ssgsag_android.ui.main.calendar.calendarPage.CalendarListPageRecyclerViewAdapter
+import com.icoo.ssgsag_android.ui.main.feed.FeedFragment
 import com.icoo.ssgsag_android.ui.main.myPage.MyPageActivity
 import com.icoo.ssgsag_android.ui.splash.SplashActivity
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import kotlinx.coroutines.*
 import okhttp3.Dispatcher
 import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.verticalMargin
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.File
 import java.io.FileNotFoundException
@@ -73,6 +77,8 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding, CalendarViewModel
         setFirstButton()
         setButton()
         setHeaderDate()
+        if(!SharedPreferenceController.getCalendarCoachMark(activity!!))
+            setCoachMark()
 
         viewModel.categorySort.observe(this, androidx.lifecycle.Observer {
             viewDataBinding.fragCalendarRvSort.adapter!!.notifyDataSetChanged()
@@ -293,6 +299,40 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding, CalendarViewModel
                     viewDataBinding.fragCalTvDay.text = temp
                 }
         })
+    }
+
+    private fun setCoachMark(){
+
+        viewDataBinding.fragCalendarClCoachmarkContainer.visibility = VISIBLE
+
+        SharedPreferenceController.setCalendarCoachMark(activity!!, true)
+
+        val d = resources.displayMetrics.density
+        val widthPx = MainActivity.GetWidth.windowWidth / 8 * 3
+
+        val rightDpValue = widthPx / d - 84
+        val bottomDpValue = 13
+
+        val rightMargin = (rightDpValue * d).toInt()
+        val bottomMargin = (bottomDpValue * d).toInt()
+
+        (viewDataBinding.fragCalendarClCoachmark.layoutParams as ConstraintLayout.LayoutParams).apply{
+            marginEnd = rightMargin
+            verticalMargin = bottomMargin
+        }
+
+        viewDataBinding.fragCalendarClCoachmarkContainer.setOnTouchListener( object : View.OnTouchListener{
+            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+                return true
+            }
+        })
+
+        viewDataBinding.fragCalendarClCoachmark.setOnClickListener {
+            viewDataBinding.fragCalendarClCoachmarkContainer.visibility = GONE
+
+
+        }
+
     }
 
     companion object {

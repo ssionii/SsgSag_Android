@@ -13,6 +13,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.SsgSagApplication
 import com.icoo.ssgsag_android.ui.login.LoginActivity
+import com.icoo.ssgsag_android.ui.main.MainActivity
 import jp.wasabeef.glide.transformations.CropTransformation
 import org.jetbrains.anko.textColor
 import java.text.DecimalFormat
@@ -23,7 +24,7 @@ val context = SsgSagApplication.getGlobalApplicationContext()
 fun setPreviewImg(view: ImageView, imgUrl: String?) {
 
     Glide.with(view.context).load(imgUrl)
-        .apply(RequestOptions.bitmapTransform(CropTransformation(FeedFragment.GetWidth.windowWidth, 450, CropTransformation.CropType.TOP)))
+        .apply(RequestOptions.bitmapTransform(CropTransformation(MainActivity.GetWidth.windowWidth, 450, CropTransformation.CropType.TOP)))
         //.error(R.drawable.img_poster) //에러시 나올 이미지 적용
         .into(view)
 }

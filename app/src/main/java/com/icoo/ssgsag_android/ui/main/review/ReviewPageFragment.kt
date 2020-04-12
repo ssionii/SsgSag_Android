@@ -52,8 +52,6 @@ class ReviewPageFragment : BaseFragment<FragmentReviewBinding, ReviewViewModel>(
             viewDataBinding.fragReviewTlCategory.visibility = GONE
         }
 
-
-
         setButton()
 
     }

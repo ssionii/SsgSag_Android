@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Point
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.widget.Toast
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseFragment
@@ -15,13 +16,17 @@ import org.jetbrains.anko.startActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import android.view.Display
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.View.*
 import android.widget.RelativeLayout
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.marginLeft
 import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.icoo.ssgsag_android.ui.login.LoginActivity
+import com.icoo.ssgsag_android.ui.main.MainActivity
 import com.icoo.ssgsag_android.ui.main.feed.adapter.FeedAnchorRecyclerViewAdapter
 import com.icoo.ssgsag_android.ui.main.feed.adapter.FeedBestCardViewPagerAdapter
 import com.icoo.ssgsag_android.ui.main.feed.adapter.FeedCareerViewPagerAdapter
@@ -34,6 +39,7 @@ import com.icoo.ssgsag_android.ui.main.feed.category.FeedCategoryFragment
 import com.icoo.ssgsag_android.ui.main.feed.category.FeedCategoryRecyclerViewAdapter
 import com.icoo.ssgsag_android.util.view.NonScrollLinearLayoutManager
 import org.jetbrains.anko.support.v4.toast
+import org.jetbrains.anko.verticalMargin
 
 
 class FeedFragment : BaseFragment<FragmentFeedPageBinding, FeedViewModel>(){
@@ -41,11 +47,6 @@ class FeedFragment : BaseFragment<FragmentFeedPageBinding, FeedViewModel>(){
     override val layoutResID: Int
         get() = R.layout.fragment_feed_page
     override val viewModel: FeedViewModel by viewModel()
-
-
-    object GetWidth {
-        var windowWidth = 0
-    }
 
     private var feedAnchorRecyclerViewAdapter : FeedAnchorRecyclerViewAdapter? = null
     private var feedCategoryRecyclerViewAdapter: FeedCategoryRecyclerViewAdapter? = null
@@ -60,13 +61,15 @@ class FeedFragment : BaseFragment<FragmentFeedPageBinding, FeedViewModel>(){
         super.onActivityCreated(savedInstanceState)
         viewDataBinding.vm = viewModel
 
-        getWindowWidth()
         setAnchorRv()
         setBestViewPager()
         setContentsRv()
         setCareerViewPager()
         setButton()
         navigator()
+
+        if(!SharedPreferenceController.getFeedCoachMark(activity!!))
+            setCoachMark()
     }
 
     override fun onResume() {
@@ -265,23 +268,44 @@ class FeedFragment : BaseFragment<FragmentFeedPageBinding, FeedViewModel>(){
         })
     }
 
-    private fun getWindowWidth() {
+    private fun setCoachMark(){
 
-        val display: Display = activity!!.windowManager.defaultDisplay
-        val size = Point()
-        display.getSize(size)
+        viewDataBinding.fragFeedPageClCoachmarkContainer.visibility = VISIBLE
 
-        GetWidth.windowWidth = size.x
+        val d = resources.displayMetrics.density
+        val widthPx = MainActivity.GetWidth.windowWidth / 8
 
-    }
+        val leftDpValue = widthPx / d - 30
+        val bottomDpValue = 13
 
-    private fun setIndicatorVisibility(position : Int){
-        viewDataBinding.fragFeedPageIvBestIndicator
+        val leftMargin = (leftDpValue * d).toInt()
+        val bottomMargin = (bottomDpValue * d).toInt()
 
-        for(i in 0 .. 3){
+        (viewDataBinding.fragFeedPageClCoachmark.layoutParams as ConstraintLayout.LayoutParams).apply{
+            marginStart = leftMargin
+            verticalMargin = bottomMargin
+        }
+
+        viewDataBinding.fragFeedPageClCoachmarkContainer.setOnTouchListener( object : View.OnTouchListener{
+            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+                return true
+            }
+        })
+
+        viewDataBinding.fragFeedPageClCoachmarkContainer.visibility = VISIBLE
+
+        viewDataBinding.fragFeedPageClCoachmark.setOnClickListener {
+            viewDataBinding.fragFeedPageClCoachmarkContainer.visibility = GONE
+            SharedPreferenceController.setFeedCoachMark(activity!!, true)
 
         }
+
+
+
+
+
     }
+
     companion object {
         private val TAG = "FeedFragment"
     }

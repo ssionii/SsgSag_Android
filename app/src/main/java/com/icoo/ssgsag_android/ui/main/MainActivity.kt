@@ -2,12 +2,10 @@ package com.icoo.ssgsag_android.ui.main
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Point
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.MotionEvent
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.Toast
@@ -44,6 +42,11 @@ class MainActivity : BaseActivity<ActivityMainBinding, SsgSagViewModel>() {
         lateinit var mainContext: Context
     }
 
+    object GetWidth {
+        var windowWidth = 0
+    }
+
+
     interface onKeyBackPressedListener{
         fun onBack()
     }
@@ -67,6 +70,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, SsgSagViewModel>() {
 
         setViewPager()
         setTabLayout()
+        getWindowWidth()
 
         if(intent.getStringExtra("param")!=null)
             goToCalendarDetail(intent.getStringExtra("param"))
@@ -143,6 +147,17 @@ class MainActivity : BaseActivity<ActivityMainBinding, SsgSagViewModel>() {
         AdBrixRm.event("touchUp_PosterDetail",
             AdBrixRm.AttrModel().setAttrs("posterIdx",posterIdx.toLong()))
     }
+
+    private fun getWindowWidth() {
+
+        val display: Display = this.windowManager.defaultDisplay
+        val size = Point()
+        display.getSize(size)
+
+       GetWidth.windowWidth = size.x
+
+    }
+
 
     fun setOnKeyBackPressedListener(listener: onKeyBackPressedListener?){
 

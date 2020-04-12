@@ -19,6 +19,12 @@ object SharedPreferenceController{
     private val isFirstReviewEventCount = "isFirstReviewEvenCount"
     private val isFirstOpenEvent ="isFirstOpenEvent"
 
+    private val seeFeedCoachMark = "feedCoachMark"
+    private val seeSsgSagCoachMark = "ssgSagCoachMark"
+    private val seeCalendarCoachMark = "calendarCoachMark"
+    private val seeReviewCoachMark = "reviewCoachMark"
+
+
     fun setAuthorization(context: Context, authorization : String)
     {
         val pref = context.getSharedPreferences(USER_NAME, Context.MODE_PRIVATE) //현재 내 기기에서만 볼수 있는 데이터
@@ -168,6 +174,60 @@ object SharedPreferenceController{
     fun getIsFirstOpen(context: Context) : Boolean {
         val pref = context.getSharedPreferences(isFirstOpenEvent, Context.MODE_PRIVATE) //현재 내 기기에서만 볼수 있는 데이터
         return pref.getBoolean(isFirstOpenEvent, true)
+    }
+
+
+    /* coach mark */
+    fun setFeedCoachMark(context: Context, v : Boolean)
+    {
+        val pref = context.getSharedPreferences(seeFeedCoachMark, Context.MODE_PRIVATE) //현재 내 기기에서만 볼수 있는 데이터
+        val editor = pref.edit()
+        editor.putBoolean(seeFeedCoachMark, v)
+        editor.apply()
+    }
+
+    fun getFeedCoachMark(context: Context) : Boolean {
+        val pref = context.getSharedPreferences(seeFeedCoachMark, Context.MODE_PRIVATE) //현재 내 기기에서만 볼수 있는 데이터
+        return pref.getBoolean(seeFeedCoachMark, true)
+    }
+
+    fun setSsgSagCoachMark(context: Context, v : Boolean)
+    {
+        val pref = context.getSharedPreferences(seeSsgSagCoachMark, Context.MODE_PRIVATE) //현재 내 기기에서만 볼수 있는 데이터
+        val editor = pref.edit()
+        editor.putBoolean(seeSsgSagCoachMark, v)
+        editor.apply()
+    }
+
+    fun getSsgSagCoachMark(context: Context) : Boolean {
+        val pref = context.getSharedPreferences(seeSsgSagCoachMark, Context.MODE_PRIVATE) //현재 내 기기에서만 볼수 있는 데이터
+        return pref.getBoolean(seeSsgSagCoachMark, true)
+    }
+
+    fun setCalendarCoachMark(context: Context, v : Boolean)
+    {
+        val pref = context.getSharedPreferences(seeCalendarCoachMark, Context.MODE_PRIVATE) //현재 내 기기에서만 볼수 있는 데이터
+        val editor = pref.edit()
+        editor.putBoolean(seeCalendarCoachMark, v)
+        editor.apply()
+    }
+
+    fun getCalendarCoachMark(context: Context) : Boolean {
+        val pref = context.getSharedPreferences(seeCalendarCoachMark, Context.MODE_PRIVATE) //현재 내 기기에서만 볼수 있는 데이터
+        return pref.getBoolean(seeCalendarCoachMark, true)
+    }
+
+    fun setReviewCoachMark(context: Context, v : Boolean)
+    {
+        val pref = context.getSharedPreferences(seeReviewCoachMark, Context.MODE_PRIVATE) //현재 내 기기에서만 볼수 있는 데이터
+        val editor = pref.edit()
+        editor.putBoolean(seeReviewCoachMark, v)
+        editor.apply()
+    }
+
+    fun getReviewCoachMark(context: Context) : Boolean {
+        val pref = context.getSharedPreferences(seeReviewCoachMark, Context.MODE_PRIVATE) //현재 내 기기에서만 볼수 있는 데이터
+        return pref.getBoolean(seeReviewCoachMark, true)
     }
 
 }
