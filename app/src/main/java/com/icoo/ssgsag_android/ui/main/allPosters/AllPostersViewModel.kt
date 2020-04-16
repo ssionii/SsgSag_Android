@@ -238,6 +238,7 @@ class AllPostersViewModel(
         val bundle = Bundle().apply {
             putInt("Idx", idx)
             putString("from","main")
+            putString("from","what")
         }
         _activityToStart.postValue(Pair(CalendarDetailActivity::class, bundle))
     }

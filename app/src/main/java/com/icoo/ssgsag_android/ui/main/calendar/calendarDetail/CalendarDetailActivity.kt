@@ -104,6 +104,7 @@ class CalendarDetailActivity : BaseActivity<ActivityCalendarDetailBinding, Calen
 
     private var posterIdx: Int = 0
     private var from: String = "calendar"
+    private var fromDetail : String = ""
     private var param: String = ""
 
 
@@ -122,12 +123,22 @@ class CalendarDetailActivity : BaseActivity<ActivityCalendarDetailBinding, Calen
         else
             posterIdx = param.toInt()
 
-        if(intent.getStringExtra("from") != null)
+        if(intent.getStringExtra("from") != null) {
             from = intent.getStringExtra("from")
+            if(intent.getStringExtra("fromDetail") != null)
+                fromDetail = intent.getStringExtra("fromDetail")
+        }
 
-        viewModel.getPosterDetail(posterIdx)
-        viewModel.getAnalytics(posterIdx)
+        if(from == "main"){
+            when(fromDetail){
+                "what" ->  viewModel.getPosterDetailFromMain(posterIdx, 2)
+                "all" ->  viewModel.getPosterDetailFromMain(posterIdx, 3)
+                else-> viewModel.getPosterDetail(posterIdx)
+            }
+        }else {
+            viewModel.getPosterDetail(posterIdx)
 
+        }
         //ui
         setToolbar()
         setEnlargeClicked()

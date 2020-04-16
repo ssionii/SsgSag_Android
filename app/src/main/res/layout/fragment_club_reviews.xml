@@ -101,7 +101,7 @@
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="동아리 후기가 없어요ㅠㅠ\n20학번 새내기들을 위해 동아리 후기를 작성해 주세요 👇"
+                    android:text="후기가 없어요ㅠㅠ\n20학번 새내기들을 위해 후기를 작성해 주세요 👇"
                     android:textAlignment="center"
                     android:layout_marginTop="12dp"
                     android:fontFamily="@font/noto_sans_kr_regular"

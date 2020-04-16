@@ -85,16 +85,14 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, LoginViewModel>() {
                 try {
                     if(!(mBackgroundThread!!.isInterrupted())) {
                         deviceVersion = packageManager.getPackageInfo(packageName, 0).versionName
-                        Log.e("while 안", "이다")
                     }
-                    Log.e("while 밖", "이다")
                 } catch (e: InterruptedException){
                     mBackgroundThread!!.interrupt()
                 } catch (e: PackageManager.NameNotFoundException) {
                     e.printStackTrace()
 
                 } finally {
-                    Log.e("Thread is dead!", "haha")
+
                 }
 
 
@@ -158,8 +156,6 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, LoginViewModel>() {
 
     private fun navigator() {
         viewModel.activityToStart.observe(this@SplashActivity, Observer { value ->
-
-            Log.e("activityToStart", value.first.toString())
 
             val intent = Intent(this, value.first.java)
             value.second?.let {

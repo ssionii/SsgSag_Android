@@ -78,7 +78,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(){
 
             Log.e("get uuid", uuid)
         }else{
-            toast("해당 앱을 이용할 수 없는 기기입니다.")
+//            toast("해당 앱을 이용할 수 없는 기기입니다.")
 
         }
 

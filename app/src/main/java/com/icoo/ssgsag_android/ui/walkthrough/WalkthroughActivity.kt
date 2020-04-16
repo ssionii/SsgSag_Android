@@ -11,8 +11,6 @@ import com.airbnb.lottie.LottieAnimationView
 
 class WalkthroughActivity : AppCompatActivity() {
 
-    var lottieAnimationView:LottieAnimationView ? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_walkthrough)

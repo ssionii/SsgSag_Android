@@ -358,6 +358,10 @@ class ClubReviewEditActivity : BaseActivity<ActivityClubReviewEditBinding,MyRevi
         }else
             jsonObject.put("honeyTip", "")
 
+        if(viewDataBinding.actClubReviewEditEtFieldName.text.isNotEmpty()){
+            jsonObject.put("fieldName", viewDataBinding.actClubReviewEditEtFieldName.text.toString())
+        }
+
         val body = JsonParser().parse(jsonObject.toString()) as JsonObject
 
         viewModel.updateReview(body)

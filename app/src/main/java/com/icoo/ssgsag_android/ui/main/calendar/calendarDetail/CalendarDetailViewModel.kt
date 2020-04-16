@@ -57,6 +57,34 @@ class CalendarDetailViewModel(
                 it.run {
                     _posterDetail.setValue(this)
                     _webUrl.setValue(this.posterWebSite)
+                    _analytics.postValue(this.analyticsJson)
+
+                    if(this.photoUrl2.equals(null) || this.photoUrl2 == "") {
+                        if(this.categoryIdx == 4){
+                            _detailImage.postValue("intern")
+                        }else
+                            _detailImage.postValue(this.photoUrl)
+                    }else{
+                        _detailImage.postValue(this.photoUrl2)
+                    }
+                }
+            }, {
+
+            })
+        )
+    }
+
+    fun getPosterDetailFromMain(posterIdx: Int, type: Int) {
+        addDisposable(posterRepository.getPosterFromMain(posterIdx, type)
+            .subscribeOn(schedulerProvider.io())
+            .observeOn(schedulerProvider.mainThread())
+            .doOnSubscribe { showProgress() }
+            .doOnTerminate { hideProgress() }
+            .subscribe({
+                it.run {
+                    _posterDetail.setValue(this)
+                    _webUrl.setValue(this.posterWebSite)
+                    _analytics.postValue(this.analyticsJson)
 
                     if(this.photoUrl2.equals(null) || this.photoUrl2 == "") {
                         if(this.categoryIdx == 4){
@@ -89,22 +117,6 @@ class CalendarDetailViewModel(
                 Log.d(TAG, it.toString())
             }, {
                 it.printStackTrace()
-            })
-        )
-    }
-
-    fun getAnalytics(posterIdx: Int){
-        addDisposable(posterRepository.getPoster(posterIdx)
-            .subscribeOn(schedulerProvider.io())
-            .observeOn(schedulerProvider.mainThread())
-            .doOnSubscribe { showProgress() }
-            .doOnTerminate { hideProgress() }
-            .subscribe({
-                it.run {
-                    _analytics.postValue(this.analyticsJson)
-                }
-            }, {
-
             })
         )
     }

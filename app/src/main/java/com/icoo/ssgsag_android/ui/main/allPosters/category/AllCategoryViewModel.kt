@@ -149,7 +149,7 @@ class AllCategoryViewModel(
     }
 
     fun getRefreshedPoster(){
-        addDisposable(repository.getPoster(refreshedPosterIdx)
+        addDisposable(repository.getPosterFromMain(refreshedPosterIdx, 3)
             .subscribeOn(schedulerProvider.io())
             .observeOn(schedulerProvider.mainThread())
             .subscribe({
@@ -183,6 +183,7 @@ class AllCategoryViewModel(
         val bundle = Bundle().apply {
             putInt("Idx", idx)
             putString("from","main")
+            putString("fromDetail", "all")
         }
         _activityToStart.postValue(Pair(CalendarDetailActivity::class, bundle))
         refreshedPosterPosition = position

@@ -7,6 +7,7 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -176,5 +177,13 @@ fun View.setVVisivility(clubType: Int){
     when(clubType){
         0,1 -> this.visibility = GONE
         2,3 -> this.visibility = VISIBLE
+    }
+}
+
+@BindingAdapter("llVisibilityByReviewType")
+fun LinearLayout.setVisibilityByReviewType(reviewType: String){
+    when(reviewType){
+        "intern" -> this.visibility = VISIBLE
+        else -> this.visibility = GONE
     }
 }

@@ -162,7 +162,13 @@ interface NetworkService {
     fun posterDetailResponse(
         @Header("Authorization") token: String,
         @Path("posterIdx") posterIdx : Int,
-        @Query("curPage") type: Int
+        @Query("type") type: Int
+    ): Single<PosterDetailResponse>
+    //포스터 상세 정보 조회
+    @GET("/poster/{posterIdx}")
+    fun posterDetailResponseEtc(
+        @Header("Authorization") token: String,
+        @Path("posterIdx") posterIdx : Int
     ): Single<PosterDetailResponse>
     //포스터 좋아요/싫어요
     @POST("/poster/like")

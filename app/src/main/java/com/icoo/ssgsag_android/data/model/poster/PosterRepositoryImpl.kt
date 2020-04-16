@@ -39,9 +39,15 @@ class PosterRepositoryImpl(val api: NetworkService, val pref: PreferenceManager)
         .posterSsgSagResponse(pref.findPreference("TOKEN", ""), posterIdx, like)
         .map { it.status }
 
-    override fun getPoster(posterIdx: Int): Single<PosterDetail> = api
-        .posterDetailResponse(pref.findPreference("TOKEN", ""), posterIdx, 2)
+    // 포스터 상세 조회
+    override fun getPosterFromMain(posterIdx: Int, type: Int): Single<PosterDetail> = api
+        .posterDetailResponse(pref.findPreference("TOKEN", ""), posterIdx, type)
         .map { it.data }
+
+    override fun getPoster(posterIdx: Int): Single<PosterDetail> = api
+        .posterDetailResponseEtc(pref.findPreference("TOKEN", ""), posterIdx)
+        .map { it.data }
+
 
     override fun getSearchPosters(keyword: String, curPage: Int): Single<ArrayList<PosterDetail>> = api
         .posterSearchResponse(pref.findPreference("TOKEN", ""), keyword, curPage)
