@@ -153,7 +153,6 @@ class MoreReviewActivity : BaseActivity<ActivityReviewMoreBinding, MoreReviewVie
             viewModel.clickLike(isLike, idx, position)
         }
         override fun onCautionClicked(commentIdx: Int) {
-
             toast("준비중인 기능입니다.")
         }
 

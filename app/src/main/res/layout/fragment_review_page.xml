@@ -14,16 +14,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#f2f2f2">
-        <View
-                android:id="@+id/frag_review_page_v"
-                tools:visibility="gone"
-                vVisibilityByClubType="@{reviewListFragment.reviewType}"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/grey_4"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_below="@+id/frag_review_page_v"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 clVisibilityByBool="@{vm.isEmpty()}">

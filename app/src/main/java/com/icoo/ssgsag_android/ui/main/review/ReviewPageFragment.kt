@@ -201,8 +201,6 @@ class ReviewPageFragment : BaseFragment<FragmentReviewBinding, ReviewViewModel>(
 
         val activity = activity as MainActivity
         activity.setOnKeyBackPressedListener(this)
-
-        Log.e("hello", "it's me")
         fragmentManager!!.popBackStack()
 
     }

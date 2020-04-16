@@ -1,5 +1,6 @@
 package com.icoo.ssgsag_android.ui.main.ssgSag.filter
 
+import android.content.Context
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
@@ -16,8 +17,11 @@ import com.adjust.sdk.Adjust
 import com.adjust.sdk.AdjustEvent
 import com.facebook.appevents.AppEventsLogger
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.icoo.ssgsag_android.data.local.pref.SharedPreferenceController
 import com.icoo.ssgsag_android.data.model.category.Category
 import com.icoo.ssgsag_android.databinding.ItemClubRgstrCategoryBinding
+import com.icoo.ssgsag_android.ui.main.MainActivity
+import com.icoo.ssgsag_android.util.listener.BackPressHandler
 import com.icoo.ssgsag_android.util.view.NonScrollLinearLayoutManager
 import com.icoo.ssgsag_android.util.view.WrapContentLinearLayoutManager
 
@@ -29,6 +33,8 @@ class SsgSagFilterActivity : BaseActivity<ActivitySsgsagFilterBinding, SsgSagFil
     override val viewModel: SsgSagFilterViewModel by viewModel()
 
     lateinit var firebaseAnalytics : FirebaseAnalytics
+
+    lateinit var backPressHandler : BackPressHandler
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,8 +57,11 @@ class SsgSagFilterActivity : BaseActivity<ActivitySsgsagFilterBinding, SsgSagFil
     }
 
     private fun setButton(){
-        viewDataBinding.actSsgsagFilterIvBack.setSafeOnClickListener {
-            finish()
+
+        if(!SharedPreferenceController.getIsFirstOpen( this)) {
+            viewDataBinding.actSsgsagFilterIvBack.setSafeOnClickListener {
+                finish()
+            }
         }
 
         viewDataBinding.actSsgsagFilterRlDone.setSafeOnClickListener {
@@ -61,6 +70,7 @@ class SsgSagFilterActivity : BaseActivity<ActivitySsgsagFilterBinding, SsgSagFil
             else {
                 viewModel.combineInterest()
                 logEVENT_NAME_CUSTOMIZED_FILTEREvent()
+                SharedPreferenceController.setIsFirstOpen( this, false)
                 finish()
 
             }
@@ -174,6 +184,13 @@ class SsgSagFilterActivity : BaseActivity<ActivitySsgsagFilterBinding, SsgSagFil
 
         val adjustEvent = AdjustEvent("i499qb")
         Adjust.trackEvent(adjustEvent)
+    }
+
+    override fun onBackPressed() {
+        if(SharedPreferenceController.getIsFirstOpen( this))
+            backPressHandler.onBackPressed()
+
+
     }
 
     companion object {

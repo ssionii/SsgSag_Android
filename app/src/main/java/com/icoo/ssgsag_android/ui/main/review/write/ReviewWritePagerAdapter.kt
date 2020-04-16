@@ -41,11 +41,21 @@ class ReviewWritePagerAdapter(fm: FragmentManager, val fragmentCount : Int, val 
                 }
             }
         } else {
-            when (position) {
-                0 -> return ReviewWriteStartWithNameFragment.newInstance(0)
-                1 -> return ReviewWriteScoreFragment.newInstance(1)
-                2 -> return ReviewWriteSimpleFragment.newInstance(2)
-                else -> return ReviewWriteStartFragment.newInstance(3)
+            if(reviewType == "intern"){
+                when (position) {
+                    0 -> return ReviewWriteStartWithNameFragment.newInstance(0)
+                    1 -> return ReviewWriteInternFieldFragment.newInstance(1)
+                    2 -> return ReviewWriteScoreFragment.newInstance(2)
+                    3 -> return ReviewWriteSimpleFragment.newInstance(3)
+                    else -> return ReviewWriteStartFragment.newInstance(0)
+                }
+            }else {
+                when (position) {
+                    0 -> return ReviewWriteStartWithNameFragment.newInstance(0)
+                    1 -> return ReviewWriteScoreFragment.newInstance(1)
+                    2 -> return ReviewWriteSimpleFragment.newInstance(2)
+                    else -> return ReviewWriteStartFragment.newInstance(3)
+                }
             }
         }
     }

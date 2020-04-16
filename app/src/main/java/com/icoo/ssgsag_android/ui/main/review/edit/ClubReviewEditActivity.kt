@@ -62,16 +62,6 @@ class ClubReviewEditActivity : BaseActivity<ActivityClubReviewEditBinding,MyRevi
         setEditTextChange()
         setButton()
 
-        viewModel.myReviewDetail.observe(this, androidx.lifecycle.Observer {
-            if(it.clubType == 0){
-                viewDataBinding.actClubReviewEditLlActPlace.visibility = VISIBLE
-                viewDataBinding.actClubReviewEditLlUniv.visibility = GONE
-            }else{
-                viewDataBinding.actClubReviewEditLlActPlace.visibility = GONE
-                viewDataBinding.actClubReviewEditLlUniv.visibility = VISIBLE
-            }
-        })
-
         viewModel.updateStatus.observe(this, androidx.lifecycle.Observer {
             if(it == 200){
                 val intent = Intent(this@ClubReviewEditActivity, ReviewDoneActivity::class.java)

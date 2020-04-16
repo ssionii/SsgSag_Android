@@ -20,6 +20,7 @@ import com.icoo.ssgsag_android.ui.main.review.reviewDetail.BlogReviewRecyclerVie
 import com.icoo.ssgsag_android.ui.main.review.reviewDetail.SsgSagReviewRecyclerViewAdapter
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import com.icoo.ssgsag_android.util.view.WrapContentLinearLayoutManager
+import org.jetbrains.anko.support.v4.toast
 
 
 class ReviewsFragment : BaseFragment<FragmentClubReviewsBinding, ReviewDetailViewModel>() {
@@ -74,7 +75,7 @@ class ReviewsFragment : BaseFragment<FragmentClubReviewsBinding, ReviewDetailVie
             viewModel.clickLike(isLike, idx)
         }
         override fun onCautionClicked(commentIdx: Int) {
-
+            toast("준비중인 기능입니다.")
         }
 
         override fun onDeleteClicked(idx: Int, position: Int) {

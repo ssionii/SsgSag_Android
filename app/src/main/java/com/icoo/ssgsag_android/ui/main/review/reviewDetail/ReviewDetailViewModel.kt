@@ -144,7 +144,6 @@ class ReviewDetailViewModel(
 
     fun setReviewGradeList(){
 
-        var reviewType = ""
         when(reviewDetail.value!!.clubType){
             0,1 -> reviewType = "club"
             2 -> reviewType ="act"

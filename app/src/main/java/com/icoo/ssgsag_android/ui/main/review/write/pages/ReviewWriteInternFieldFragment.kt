@@ -77,10 +77,12 @@ class ReviewWriteInternFieldFragment : BaseFragment<FragmentReviewWriteInternFie
     private fun setButton(){
         viewDataBinding.fragReviewWriteInternFieldIvBack.setSafeOnClickListener {
             (activity as ReviewWriteActivity).toPrevPage(position)
+            (activity as ReviewWriteActivity).hideKeyboard(viewDataBinding.fragReviewWriteInternFieldEtFiled)
         }
 
         viewDataBinding.fragReviewWriteInternFieldClNext.setSafeOnClickListener {
             (activity as ReviewWriteActivity).toNextPage(position)
+            (activity as ReviewWriteActivity).hideKeyboard(viewDataBinding.fragReviewWriteInternFieldEtFiled)
         }
     }
 

@@ -148,7 +148,7 @@ val viewModule = module {
     viewModel { AllPostersViewModel(get(), get()) }
     viewModel { AllCategoryViewModel(get(), get()) }
     viewModel { SearchViewModel(get(), get(), get()) }
-    viewModel {TodaySwipePosterViewModel(get(), get())}
+    viewModel { TodaySwipePosterViewModel(get(), get()) }
     //Schedule
     single { CalendarViewModel(get(), get()) }
     viewModel { CalendarDialogViewModel() }

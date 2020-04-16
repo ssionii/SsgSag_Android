@@ -63,48 +63,29 @@
                         android:layout_marginHorizontal="24dp"
                         android:layout_weight="1"
                         android:orientation="vertical">
-
-                    <TextView
+                    <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="32dp"
-                            android:fontFamily="@font/noto_sans_kr_bold"
-                            android:text="@string/review_edit_info"
-                            android:textColor="@color/black_1"
-                            android:textSize="18sp" />
-
-                    <LinearLayout
-                            android:id="@+id/act_club_review_edit_ll_univ"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="36dp"
-                            android:orientation="vertical">
+                            android:orientation="horizontal"
+                            android:layout_marginTop="32dp">
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/noto_sans_kr_bold"
+                                reviewTypeString="@{vm.reviewType}"
+                                android:textColor="@color/black_1"
+                                android:textSize="18sp" />
 
                         <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/noto_sans_kr_regular"
-                                android:text="소속 학교는"
+                                android:fontFamily="@font/noto_sans_kr_bold"
+                                android:text=" 활동 정보"
                                 android:textColor="@color/black_1"
-                                android:textSize="12sp" />
+                                android:textSize="18sp" />
 
-                        <TextView
-                                android:id="@+id/act_club_review_edit_tv_univ"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginVertical="4dp"
-                                android:fontFamily="@font/noto_sans_kr_regular"
-                                android:text="@{vm.myReviewDetail.univOrLocation}"
-                                android:imeOptions="actionNext"
-                                android:singleLine="true"
-                                android:textColor="@color/grey_1"
-                                android:textSize="14sp" />
-
-                        <View
-                                android:layout_width="match_parent"
-                                android:layout_height="1dp"
-                                android:background="@color/grey_4" />
                     </LinearLayout>
+
 
                     <LinearLayout
                             android:id="@+id/act_club_review_edit_ll_act_place"
@@ -153,13 +134,26 @@
                             android:layout_marginTop="32dp"
                             android:orientation="vertical">
 
-                        <TextView
+                        <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/noto_sans_kr_regular"
-                                android:text="동아리 이름은"
-                                android:textColor="#333333"
-                                android:textSize="12sp" />
+                                android:orientation="horizontal">
+                            <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/noto_sans_kr_regular"
+                                    android:textColor="@color/grey_2"
+                                    reviewTypeString="@{vm.reviewType}"
+                                    android:textSize="12sp" />
+                            <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/noto_sans_kr_regular"
+                                    android:text=" 이름"
+                                    android:textColor="@color/grey_2"
+                                    android:textSize="12sp" />
+
+                        </LinearLayout>
 
                         <TextView
                                 android:id="@+id/act_club_review_edit_tv_club_name"
@@ -170,7 +164,7 @@
                                 android:text="@{vm.myReviewDetail.clubName}"
                                 android:imeOptions="actionNext"
                                 android:singleLine="true"
-                                android:textColor="@color/grey_1"
+                                android:textColor="@color/grey_2"
                                 android:textSize="14sp" />
 
                         <View

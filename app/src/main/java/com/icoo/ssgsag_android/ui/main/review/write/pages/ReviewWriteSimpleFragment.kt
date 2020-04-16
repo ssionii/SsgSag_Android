@@ -172,19 +172,6 @@ class ReviewWriteSimpleFragment :BaseFragment<FragmentReviewWriteSimpleBinding, 
         jsonObject.put("clubName", ClubReviewWriteData.clubName)
 
 
-//        ClubReviewWriteData.categoryList.let {
-//            var categoryList = ""
-//
-//            if(it.isNotEmpty()) {
-//                for (i in 0..it.size - 2) {
-//                    categoryList += it[i]
-//                    categoryList += ","
-//                }
-//                categoryList += it[it.size - 1]
-//            }
-//            jsonObject.put("categoryList", categoryList)
-//        }
-
         // 날짜
         var clubStartDate = "20" + ClubReviewWriteData.startYear.substring(0,2) + "-"
         ClubReviewWriteData.startMonth.let {

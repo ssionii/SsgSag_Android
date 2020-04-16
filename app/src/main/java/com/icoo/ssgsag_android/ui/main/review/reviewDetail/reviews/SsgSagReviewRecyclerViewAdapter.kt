@@ -83,6 +83,10 @@ class SsgSagReviewRecyclerViewAdapter(
 
             if(isMore) holder.dataBinding.itemReviewSsgsagLlUserInfo.visibility = VISIBLE
 
+            if(holder.dataBinding.itemReviewSsgsagTvMore.visibility == VISIBLE){
+                holder.dataBinding.itemReviewSsgsagLlUserInfo.visibility = GONE
+            }
+
             var moreVisi = false
             // 더보기와 물퍼짐 효과가 필요한 경우 (확장 해야 하는 경우)
             if(holder.dataBinding.itemReviewSsgsagTvAdvantage.lineCount > 3

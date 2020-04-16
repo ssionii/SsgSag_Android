@@ -1,19 +1,22 @@
 package com.icoo.ssgsag_android.ui.main.coachmark
 
+import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
 import android.view.KeyEvent
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseDialogFragment
 import com.icoo.ssgsag_android.data.local.pref.SharedPreferenceController
 import com.icoo.ssgsag_android.databinding.DialogFragmentCoachmarkFilterBinding
+import com.icoo.ssgsag_android.ui.main.MainActivity
 import com.icoo.ssgsag_android.ui.main.ssgSag.SsgSagViewModel
 import com.icoo.ssgsag_android.ui.main.ssgSag.filter.SsgSagFilterActivity
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import org.jetbrains.anko.support.v4.startActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class FilterCoachmarkDialogFragment : BaseDialogFragment<DialogFragmentCoachmarkFilterBinding, SsgSagViewModel>() {
+class FilterCoachmarkDialogFragment : BaseDialogFragment<DialogFragmentCoachmarkFilterBinding, SsgSagViewModel>(){
 
     override val layoutResID: Int
     get() = R.layout.dialog_fragment_coachmark_filter
@@ -21,7 +24,6 @@ class FilterCoachmarkDialogFragment : BaseDialogFragment<DialogFragmentCoachmark
 
     override fun dismiss() {
         super.dismiss()
-        SharedPreferenceController.setIsFirstOpen(activity!!, false)
     }
 
     override fun onResume() {
@@ -36,9 +38,14 @@ class FilterCoachmarkDialogFragment : BaseDialogFragment<DialogFragmentCoachmark
                 return if (keyCode == KeyEvent.KEYCODE_BACK) {
                     //This is the filter
                     if (event.action != KeyEvent.ACTION_DOWN)
+
                         true
                     else {
-                        dismiss()
+
+                        val activity = activity as MainActivity
+                        activity.setOnKeyBackPressedListener(null)
+                        activity.onBackPressed()
+
                         true // pretend we've processed it
                     }
                 } else
@@ -51,9 +58,6 @@ class FilterCoachmarkDialogFragment : BaseDialogFragment<DialogFragmentCoachmark
         super.onActivityCreated(savedInstanceState)
         viewDataBinding.vm = viewModel
 
-//        viewDataBinding.dialogFragCoachmarkFilterRl.setSafeOnClickListener {
-//            dismiss()
-//        }
 
         viewDataBinding.dialogFragCoachmarkFilterIv.setSafeOnClickListener {
             startActivity<SsgSagFilterActivity>()

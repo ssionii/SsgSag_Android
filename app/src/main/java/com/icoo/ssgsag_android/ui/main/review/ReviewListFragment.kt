@@ -36,6 +36,7 @@ class ReviewListFragment : BaseFragment<FragmentReviewPageBinding, ReviewViewMod
 
         viewModel.getClubReviews(curPage, reviewType)
 
+
         viewDataBinding.vm = viewModel
         viewDataBinding.reviewListFragment = this
 
@@ -43,6 +44,7 @@ class ReviewListFragment : BaseFragment<FragmentReviewPageBinding, ReviewViewMod
 
         // navigator()
     }
+
 
     private fun setRv() {
 
