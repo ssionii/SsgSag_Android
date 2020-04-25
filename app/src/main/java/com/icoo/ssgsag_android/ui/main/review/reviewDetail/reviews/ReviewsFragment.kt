@@ -4,6 +4,7 @@ package com.icoo.ssgsag_android.ui.main.review.club.reviews
 import android.content.Intent
 import android.graphics.Point
 import android.os.Bundle
+import android.util.Log
 import androidx.lifecycle.Observer
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseFragment
@@ -164,6 +165,7 @@ class ReviewsFragment : BaseFragment<FragmentClubReviewsBinding, ReviewDetailVie
             moreReviewIntent.putExtra("from", "ssgsag")
             viewModel.reviewDetail.value.let{
                 if(it != null) {
+
                     moreReviewIntent.putExtra("reviewType", viewModel.reviewType)
                     moreReviewIntent.putExtra("clubName", viewModel.reviewDetail.value!!.clubName)
                     startActivity(moreReviewIntent)
@@ -176,6 +178,7 @@ class ReviewsFragment : BaseFragment<FragmentClubReviewsBinding, ReviewDetailVie
             moreReviewIntent.putExtra("from", "blog")
             viewModel.reviewDetail.value.let{
                 if(it != null) {
+                    moreReviewIntent.putExtra("reviewType", viewModel.reviewType)
                     moreReviewIntent.putExtra("clubName", viewModel.reviewDetail.value!!.clubName)
                     startActivity(moreReviewIntent)
                 }

@@ -185,12 +185,14 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, LoginViewModel>() {
 
 
     private fun update(){
-        var isNecessary = SsgSagApplication.isRequiredUpdate
+        val isNecessary = SsgSagApplication.isRequiredUpdate
+        Log.e("isnecessary", isNecessary.toString())
 
         mAdapter = DialogPlusAdapter(this, false, 0, 0, -1)
         val builder =  DialogPlus.newDialog(this)
 
         if(isNecessary){
+
             builder.apply {
 
                 setContentHolder(ViewHolder(R.layout.dialog_fragment_required_update))
@@ -218,6 +220,9 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, LoginViewModel>() {
                 setOnClickListener { dialog, view ->
                     if (view.id == R.id.dialog_frag_selective_update_cv_later) {
                         dialog.dismiss()
+
+                        mBackgroundThread = BackgroundThread()
+                        mBackgroundThread!!.start()
                     }else if(view.id == R.id.dialog_frag_selective_update_cv_update) {
                         dialog.dismiss()
 

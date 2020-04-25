@@ -220,6 +220,7 @@ class MoreReviewActivity : BaseActivity<ActivityReviewMoreBinding, MoreReviewVie
                 blogRvAdatper?.run {
                     setOnBlogReviewClickListener(onBlogReviewClickListener)
                     setHasStableIds(true)
+                    isMore = true
                 }
                 viewDataBinding.actReviewMoreRv.run {
                     adapter = blogRvAdatper

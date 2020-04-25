@@ -17,6 +17,7 @@ class BlogReviewRecyclerViewAdapter(
 
     private var listener: OnBlogReviewClickListener? = null
     private var size = 0
+    var isMore = false
 
     fun setOnBlogReviewClickListener(listener: OnBlogReviewClickListener) {
         this.listener = listener
@@ -64,7 +65,7 @@ class BlogReviewRecyclerViewAdapter(
     override fun getItemCount() : Int {
         if(itemList == null)
             return 0
-        else if(itemList!!.size < 3)
+        else if(itemList!!.size < 3 || isMore)
             return itemList!!.size
         else
             return 3
