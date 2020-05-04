@@ -34,7 +34,7 @@ class SsgSagFilterActivity : BaseActivity<ActivitySsgsagFilterBinding, SsgSagFil
 
     lateinit var firebaseAnalytics : FirebaseAnalytics
 
-    lateinit var backPressHandler : BackPressHandler
+    var backPressHandler = BackPressHandler(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,7 +70,8 @@ class SsgSagFilterActivity : BaseActivity<ActivitySsgsagFilterBinding, SsgSagFil
             else {
                 viewModel.combineInterest()
                 logEVENT_NAME_CUSTOMIZED_FILTEREvent()
-                SharedPreferenceController.setIsFirstOpen( this, false)
+                if(SharedPreferenceController.getIsFirstOpen(this))
+                    SharedPreferenceController.setIsFirstOpen( this, false)
                 finish()
 
             }

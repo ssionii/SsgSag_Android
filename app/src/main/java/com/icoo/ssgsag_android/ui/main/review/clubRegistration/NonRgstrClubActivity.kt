@@ -13,6 +13,7 @@ import com.icoo.ssgsag_android.ui.main.review.club.write.ReviewWriteActivity
 import com.icoo.ssgsag_android.ui.main.review.club.write.ReviewWriteViewModel
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import org.jetbrains.anko.backgroundColor
+import org.jetbrains.anko.toast
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class NonRgstrClubActivity : BaseActivity<ActivityNotRgstrClubBinding, ClubRgstrViewModel>(){
@@ -22,6 +23,8 @@ class NonRgstrClubActivity : BaseActivity<ActivityNotRgstrClubBinding, ClubRgstr
 
     override val viewModel: ClubRgstrViewModel by viewModel()
 
+    private var isDone = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -29,6 +32,7 @@ class NonRgstrClubActivity : BaseActivity<ActivityNotRgstrClubBinding, ClubRgstr
         setButton()
         setRv()
         refreshRv()
+        onDataCheck()
     }
 
     private fun setRv(){
@@ -68,12 +72,15 @@ class NonRgstrClubActivity : BaseActivity<ActivityNotRgstrClubBinding, ClubRgstr
         if(viewModel.selectedClubCategoryList.size != 0){
             viewDataBinding.actNotRgstrClubClDone.apply{
                 backgroundColor = resources.getColor(R.color.ssgsag)
-                isClickable = true
+//                isClickable = true
+
+                isDone = true
             }
         }else{
             viewDataBinding.actNotRgstrClubClDone.apply{
                 backgroundColor = resources.getColor(R.color.grey_2)
-                isClickable = false
+//                isClickable = false
+                isDone = false
             }
         }
     }
@@ -89,9 +96,13 @@ class NonRgstrClubActivity : BaseActivity<ActivityNotRgstrClubBinding, ClubRgstr
 //            ReviewWriteActivity.ClubReviewWriteData.
 //                categoryList = viewModel.selectedClubCategoryList
 
-            finish()
-            val reviewWriteVm : ReviewWriteViewModel by viewModel()
-            reviewWriteVm.setIsNotRgstr(true)
+            if(isDone) {
+                finish()
+                val reviewWriteVm: ReviewWriteViewModel by viewModel()
+                reviewWriteVm.setIsNotRgstr(true)
+            }else{
+                toast("카테고리를 1개 이상 선택해주세요.")
+            }
         }
     }
 }

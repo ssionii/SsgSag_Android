@@ -30,12 +30,12 @@ class ReviewsFragment : BaseFragment<FragmentClubReviewsBinding, ReviewDetailVie
         get() = R.layout.fragment_club_reviews
     override val viewModel: ReviewDetailViewModel by viewModel()
 
-    private var ssgsagRvAdapter : SsgSagReviewRecyclerViewAdapter? = null
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewDataBinding.vm = viewModel
 
+       // viewModel.getSsgSagMainReviews()
         setSsgSagReviewRv()
         setBlogReviewRv()
         setButton()
@@ -51,18 +51,19 @@ class ReviewsFragment : BaseFragment<FragmentClubReviewsBinding, ReviewDetailVie
     private fun setSsgSagReviewRv(){
 
         viewModel.ssgSagMainReviews.observe(this, Observer { value ->
-            if(ssgsagRvAdapter != null){
-                ssgsagRvAdapter!!.apply{
-                    replaceAll(value)
-                    notifyDataSetChanged()
-                }
-            }else{
-                ssgsagRvAdapter = SsgSagReviewRecyclerViewAdapter(value)
-                ssgsagRvAdapter!!.setOnSsgSagReviewClickListener(onSsgSagReviewClickListener)
 
-                viewDataBinding.fragReviewDetailReviewRvSsgsag.run {
-                    adapter = ssgsagRvAdapter
+            viewDataBinding.fragReviewDetailReviewRvSsgsag.run{
+                if(adapter != null){
+                    (adapter as SsgSagReviewRecyclerViewAdapter).apply{
+                        replaceAll(value)
+                        notifyDataSetChanged()
+                    }
+                }else{
+                    adapter = SsgSagReviewRecyclerViewAdapter(value)
+                    (adapter as SsgSagReviewRecyclerViewAdapter).setOnSsgSagReviewClickListener(onSsgSagReviewClickListener)
+
                     layoutManager = WrapContentLinearLayoutManager()
+
                 }
             }
 

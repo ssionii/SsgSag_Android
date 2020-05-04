@@ -69,8 +69,7 @@ class ReviewWriteStartFragment :  BaseFragment<FragmentReviewWriteStartBinding, 
         getClubList()
         setActPlaceSpinner()
         setActDateSpinner()
-        if(viewModel.reviewType == "club")
-            setEditTextChange()
+        setEditTextChange()
 
     }
 
@@ -129,15 +128,13 @@ class ReviewWriteStartFragment :  BaseFragment<FragmentReviewWriteStartBinding, 
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if(ReviewWriteActivity.ClubReviewWriteData.univOrLocation.isNotEmpty()
-                    && this@onChange == viewDataBinding.fragReviewWriteStartAtClubName)
-                    viewModel.searchClub(ReviewWriteActivity.ClubReviewWriteData.univOrLocation, s.toString())
+                if(this@onChange == viewDataBinding.fragReviewWriteStartAtClubName)
+                    viewModel.searchClub(s.toString())
                 else if(this@onChange == viewDataBinding.fragReviewWriteStartAtUniv){
                     val text = s.toString()
                     isDone = false
                     if (checkUnivValidate(text))
                         isDone = true
-                    Log.e("checkUnivValidate", isDone.toString())
                 }
             }
         })

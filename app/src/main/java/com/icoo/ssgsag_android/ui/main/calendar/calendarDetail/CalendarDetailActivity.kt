@@ -230,6 +230,7 @@ class CalendarDetailActivity : BaseActivity<ActivityCalendarDetailBinding, Calen
         }else{
             viewDataBinding.actCalDetailIvBookmark.visibility = GONE
             viewDataBinding.actCalDetailTvApply.visibility = GONE
+            viewDataBinding.actCalDetailRlStore.visibility = VISIBLE
 
             viewDataBinding.actCalDetailRlStore.setSafeOnClickListener {
                 viewModel.managePoster(posterIdx)

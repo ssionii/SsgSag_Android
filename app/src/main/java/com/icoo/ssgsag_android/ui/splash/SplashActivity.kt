@@ -1,5 +1,6 @@
 package com.icoo.ssgsag_android.ui.splash
 
+import android.animation.Animator
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -19,6 +20,8 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Message
 import android.view.Gravity
+import android.view.View.GONE
+import android.view.View.INVISIBLE
 import androidx.lifecycle.Observer
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseActivity
@@ -60,6 +63,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, LoginViewModel>() {
         //adbrix
         onNewIntent(this.intent)
 
+        setLottie()
         logoutFirstTimeVersion231()
 
 //        SharedPreferenceController.setAuthorization(this, "")
@@ -272,6 +276,28 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, LoginViewModel>() {
 
         }
         return null
+    }
+
+    private fun setLottie(){
+        viewDataBinding.actSplashLav.run{
+            this.addAnimatorListener(object : Animator.AnimatorListener{
+                override fun onAnimationCancel(animation: Animator?) {
+
+                }
+
+                override fun onAnimationEnd(animation: Animator?) {
+                    this@run.visibility = INVISIBLE
+                }
+
+                override fun onAnimationRepeat(animation: Animator?) {
+
+                }
+
+                override fun onAnimationStart(animation: Animator?) {
+
+                }
+            })
+        }
     }
 
     override fun onNewIntent(intent: Intent?) {

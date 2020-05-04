@@ -47,6 +47,10 @@ class ReviewWriteActivity : BaseActivity<ActivityClubReviewWriteBinding, ReviewW
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        when(intent.getStringExtra("reviewType")){
+            "act" -> viewModel.setClubType(2)
+            "intern" -> viewModel.setClubType(3)
+        }
         viewModel.reviewType = intent.getStringExtra("reviewType")
 
         viewDataBinding.vm = viewModel

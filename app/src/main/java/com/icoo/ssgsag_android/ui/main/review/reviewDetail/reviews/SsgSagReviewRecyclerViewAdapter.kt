@@ -81,11 +81,8 @@ class SsgSagReviewRecyclerViewAdapter(
         if(itemList != null) {
             holder.dataBinding.ssgsagReview = itemList!![position]
 
-            if(isMore) holder.dataBinding.itemReviewSsgsagLlUserInfo.visibility = VISIBLE
-
-            if(holder.dataBinding.itemReviewSsgsagTvMore.visibility == VISIBLE){
-                holder.dataBinding.itemReviewSsgsagLlUserInfo.visibility = GONE
-            }
+            holder.dataBinding.itemReviewSsgsagTvAdvantage.maxLines = 100
+            holder.dataBinding.itemReviewSsgsagTvDisadvantage.maxLines = 100
 
             var moreVisi = false
             // 더보기와 물퍼짐 효과가 필요한 경우 (확장 해야 하는 경우)
@@ -93,18 +90,25 @@ class SsgSagReviewRecyclerViewAdapter(
                 || holder.dataBinding.itemReviewSsgsagTvDisadvantage.lineCount > 2
                 || itemList!![position].honeyTip != ""){
                 moreVisi = true
-                if(holder.dataBinding.itemReviewSsgsagLlTip.visibility == GONE) {
-                    holder.dataBinding.itemReviewSsgsagTvMore.visibility = VISIBLE
-                }else
+
+                holder.dataBinding.itemReviewSsgsagTvAdvantage.maxLines = 3
+                holder.dataBinding.itemReviewSsgsagTvDisadvantage.maxLines = 2
+
+                holder.dataBinding.itemReviewSsgsagTvMore.visibility = VISIBLE
+                if(holder.dataBinding.itemReviewSsgsagLlTip.visibility == VISIBLE){
                     isExtend = true
+                }
             }else{
                 moreVisi = false
                 holder.dataBinding.itemReviewSsgsagTvMore.visibility = GONE
                 holder.dataBinding.itemReviewSsgsagLlUserInfo.visibility = VISIBLE
             }
 
-            // 펼쳐진 상태에서 좋아요 눌렀을 때 '더보기'가 나오는 것 방지
+            if(holder.dataBinding.itemReviewSsgsagTvMore.visibility == VISIBLE){
+                holder.dataBinding.itemReviewSsgsagLlUserInfo.visibility = GONE
+            }
 
+            if(isMore) holder.dataBinding.itemReviewSsgsagLlUserInfo.visibility = VISIBLE
 
             holder.dataBinding.root.setOnClickListener {
                 if(!isMore) {

@@ -907,6 +907,7 @@
                     android:gravity="center"/>
             <RelativeLayout
                     android:visibility="gone"
+                    tools:visibility="visible"
                     android:id="@+id/act_cal_detail_rl_store"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"

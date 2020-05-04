@@ -76,7 +76,6 @@ class LoginViewModel (
                 _activityToStart.postValue(Pair(MainActivity::class, null))
             }) {
                 Toast.makeText(context, "서버 점검 중입니다.",Toast.LENGTH_SHORT).show()
-                Log.e("login error", it.message)
             })
     }
 

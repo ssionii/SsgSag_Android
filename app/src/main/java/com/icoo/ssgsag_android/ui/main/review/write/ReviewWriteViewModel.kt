@@ -84,13 +84,13 @@ class ReviewWriteViewModel(
         )
     }
 
-    fun searchClub(univOrLocation: String, keyword: String){
-        addDisposable(repository.searchClub(clubType.value!!, univOrLocation, keyword, 0)
+    fun searchClub(keyword: String){
+
+        addDisposable(repository.searchClubName(clubType.value!!, keyword, 0)
             .subscribeOn(schedulerProvider.io())
             .observeOn(schedulerProvider.mainThread())
             .subscribe({
                 _clubSearchResult.postValue(it)
-                Log.e("search club status", it.toString())
             }, {
                 it.printStackTrace()
             })

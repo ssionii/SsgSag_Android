@@ -103,6 +103,7 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>() {
                 if(fragmentManager!!.findFragmentByTag("all") != null)
                     fragmentManager!!.beginTransaction().hide(fragmentManager!!.findFragmentByTag("all")!!).commit()
 
+                viewDataBinding.fragMainIvFilter.visibility = VISIBLE
                 viewDataBinding.fragMainIvSearch.visibility = GONE
             }
             "all" ->{
