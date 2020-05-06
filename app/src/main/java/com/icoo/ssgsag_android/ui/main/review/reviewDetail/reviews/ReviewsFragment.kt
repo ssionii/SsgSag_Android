@@ -35,7 +35,7 @@ class ReviewsFragment : BaseFragment<FragmentClubReviewsBinding, ReviewDetailVie
         super.onActivityCreated(savedInstanceState)
         viewDataBinding.vm = viewModel
 
-       // viewModel.getSsgSagMainReviews()
+        viewModel.getSsgSagMainReviews()
         setSsgSagReviewRv()
         setBlogReviewRv()
         setButton()
@@ -44,7 +44,7 @@ class ReviewsFragment : BaseFragment<FragmentClubReviewsBinding, ReviewDetailVie
 
     override fun onResume() {
         super.onResume()
-        viewModel.getSsgSagMainReviews()
+       // viewModel.getSsgSagMainReviews()
         viewModel.getBlogReviews()
     }
 

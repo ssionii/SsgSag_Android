@@ -21,7 +21,7 @@ import com.icoo.ssgsag_android.util.view.NonScrollLinearLayoutManager
 import com.icoo.ssgsag_android.util.view.WrapContentLinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class FeedCategoryFragment() : BaseFragment<FragmentCategoryFeedBinding, FeedViewModel>(){
+class FeedCategoryFragment : BaseFragment<FragmentCategoryFeedBinding, FeedViewModel>(){
 
     override val layoutResID: Int
         get() = R.layout.fragment_category_feed

@@ -39,13 +39,22 @@
 
         <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:overScrollMode="never">
+                android:layout_height="wrap_content"
+                android:overScrollMode="never"
+                android:layout_weight="1"
+                android:fillViewport="true">
             <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginTop="32dp">
+                    android:orientation="vertical">
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="32dp"
+                        android:layout_weight="1">
+
 
                 <LinearLayout
                         android:layout_width="match_parent"
@@ -144,6 +153,7 @@
                             app:fastScrollEnabled="false"
                             replaceAll="@{vm.jobFilter"/>
                 </LinearLayout>
+                </LinearLayout>
                 <RelativeLayout
                         android:id="@+id/act_ssgsag_filter_rl_done"
                         android:layout_width="match_parent"
@@ -160,7 +170,6 @@
                             android:layout_centerInParent="true"/>
                 </RelativeLayout>
             </LinearLayout>
-
         </androidx.core.widget.NestedScrollView>
     </LinearLayout>
 </layout>

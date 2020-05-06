@@ -54,7 +54,7 @@ class ReviewDetailViewModel(
             .observeOn(schedulerProvider.mainThread())
             .subscribe({
                 _reviewDetail.setValue(it)
-//                _ssgsagMainReviews.postValue(it.clubPostList)
+                //_ssgsagMainReviews.postValue(it.clubPostList)
                 _blogMainReviews.setValue(it.clubBlogList)
 
                 _photoList.postValue(it.clubPhotoUrlList?.split(",")?.toMutableList())
@@ -73,6 +73,9 @@ class ReviewDetailViewModel(
             .subscribeOn(schedulerProvider.io())
             .observeOn(schedulerProvider.mainThread())
             .subscribe({
+
+                Log.e("ssgsagMainReviews", it.clubPostList.toString())
+
                 _ssgsagMainReviews.postValue(it.clubPostList)
             },{
                 it.printStackTrace()

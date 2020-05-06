@@ -50,11 +50,11 @@ fun setClubRgstrButton(layout: ConstraintLayout, isClickable: Boolean){
 }
 
 @BindingAdapter("clubRgstrCategoryBg")
-fun setClubRgstrCategoryBg(view: CardView, isSelected: Boolean){
+fun setClubRgstrCategoryBg(layout: ConstraintLayout, isSelected: Boolean){
     if(isSelected)
-        view.setCardBackgroundColor(Color.parseColor("#26656ef0"))
+        layout.setBackgroundResource(R.drawable.border_656ef0_4)
     else
-        view.setCardBackgroundColor(context.resources.getColor(R.color.grey_4))
+        layout.setBackgroundColor(context.resources.getColor(R.color.grey_4))
 
 }
 
@@ -65,6 +65,7 @@ fun setClubRgstrCategoryText(view: TextView, isSelected: Boolean){
     else
         view.textColor = context.resources.getColor(R.color.grey_2)
 }
+
 
 @BindingAdapter("clubActDate")
 fun setClubActDate(view: TextView, endDate: String?){

@@ -114,7 +114,7 @@ class LoginViewModel (
             .doOnSubscribe { showProgress() }
             .doOnTerminate { hideProgress() }
             .doOnError {
-                Toast.makeText(context, "서버 점검 중입니다.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "네트워크 상태를 확인해주세요.", Toast.LENGTH_SHORT).show()
                 _isUpdated.setValue(2)
             }
             .subscribe({

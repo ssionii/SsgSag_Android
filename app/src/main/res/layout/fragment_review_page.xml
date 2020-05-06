@@ -60,7 +60,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:overScrollMode="never" />
+                        android:overScrollMode="never"
+                        android:paddingBottom="100dp"
+                        android:clipToPadding="false"
+                        android:background="#f2f2f2"/>
             </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
         </LinearLayout>
     </RelativeLayout>

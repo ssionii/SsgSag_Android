@@ -2,6 +2,9 @@ package com.icoo.ssgsag_android.ui.main.feed
 
 import android.graphics.Color
 import android.graphics.Typeface
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
+import android.util.Log
 import android.view.View.*
 import android.widget.ImageView
 import android.widget.TextView
@@ -9,6 +12,9 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.SsgSagApplication
@@ -138,8 +144,11 @@ fun setGlideTopCropImg(view: ImageView, imgUrl: String?) {
 
 @BindingAdapter("glideTopCropFeedImg")
 fun setGlideTopFeedImg(view: ImageView, imgUrl: String?) {
+
+
     Glide.with(view.context)
         .load(imgUrl)
+        .listener(createLoggerListener("피드 아이템"))
         .apply(RequestOptions.bitmapTransform(CropTransformation(381, 273, CropTransformation.CropType.TOP)))
         .into(view)
 }
@@ -148,4 +157,32 @@ fun setGlideTopFeedImg(view: ImageView, imgUrl: String?) {
 fun setFeedShowNum(view: TextView, showNum: Int?) {
 
     view.text = showNum.toString()
+}
+
+private fun createLoggerListener(name: String): RequestListener<Drawable> {
+    return object : RequestListener<Drawable> {
+        override fun onLoadFailed(e: GlideException?,
+                                  model: Any?,
+                                  target: com.bumptech.glide.request.target.Target<Drawable>?,
+                                  isFirstResource: Boolean): Boolean {
+            return false
+        }
+
+        override fun onResourceReady(resource: Drawable?,
+                                     model: Any?,
+                                     target: com.bumptech.glide.request.target.Target<Drawable>?,
+                                     dataSource: DataSource?,
+                                     isFirstResource: Boolean): Boolean {
+            if (resource is BitmapDrawable) {
+                val bitmap = resource.bitmap
+                Log.d("GlideApp",
+                    String.format("Ready %s bitmap %,d bytes, size: %d x %d",
+                        name,
+                        bitmap.byteCount,
+                        bitmap.width,
+                        bitmap.height))
+            }
+            return false
+        }
+    }
 }

@@ -11,23 +11,32 @@
         android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        clubRgstrCategoryBg="@{category.checked}"
         app:cardCornerRadius="4dp"
         app:cardElevation="0dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp">
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="스터디/학회"
-            android:text="@{category.categoryName}"
-            clubRgstrCategoryText="@{category.checked}"
-            android:layout_marginHorizontal="8dp"
-            android:layout_marginVertical="7dp"
-            android:fontFamily="@font/noto_sans_kr_regular"
-            android:textSize="12sp"
-            android:textColor="@color/grey_1"
-            />
+            clubRgstrCategoryBg="@{category.checked}">
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="스터디/학회"
+                android:text="@{category.categoryName}"
+                clubRgstrCategoryText="@{category.checked}"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginVertical="7dp"
+                android:fontFamily="@font/noto_sans_kr_regular"
+                android:textSize="12sp"
+                android:textColor="@color/grey_1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </androidx.cardview.widget.CardView>
 </layout>
