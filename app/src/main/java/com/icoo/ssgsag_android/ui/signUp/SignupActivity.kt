@@ -50,7 +50,7 @@ class SignupActivity : BaseActivity<ActivitySignupBinding, SignupViewModel>() {
 
     object GetSignupProfile {
         lateinit var nickname: String
-        var gender: String = "female"
+        var gender: String = "male"
         lateinit var birth: String
         lateinit var school: String
         lateinit var stduentNumber: String

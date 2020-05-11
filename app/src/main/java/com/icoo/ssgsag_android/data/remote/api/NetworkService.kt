@@ -18,6 +18,7 @@ import com.icoo.ssgsag_android.data.model.schedule.ScheduleResponse
 import com.icoo.ssgsag_android.data.model.poster.PosterResponse
 import com.icoo.ssgsag_android.data.model.poster.TodaySsgSagResponse
 import com.icoo.ssgsag_android.data.model.poster.posterDetail.PosterDetailResponse
+import com.icoo.ssgsag_android.data.model.review.AdsDataResponse
 import com.icoo.ssgsag_android.data.model.review.club.response.*
 import com.icoo.ssgsag_android.data.model.signUp.SignUpResponse
 import com.icoo.ssgsag_android.data.model.subscribe.SubscribeResponse
@@ -488,6 +489,12 @@ interface NetworkService {
         @Path("clubPostIdx") clubPostIdx: Int
     ): Single<NullDataResponse>
 
+
+    // 광고
+    @GET("/ads")
+    fun getAds(
+        @Query("viewName") viewName: String
+    ): Single<AdsDataResponse>
 
     companion object {
         fun create(): NetworkService {

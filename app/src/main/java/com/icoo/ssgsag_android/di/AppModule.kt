@@ -156,7 +156,7 @@ val viewModule = module {
     viewModel { CalendarDetailViewModel(get(), get(), get(), get()) }
     // review
     viewModel { ReviewViewModel(get(), get()) }
-    single { ReviewDetailViewModel( get(), get(), get()) }
+    viewModel { ReviewDetailViewModel( get(), get(), get()) }
     single { ClubRgstrViewModel(get(), get()) }
     single { ReviewWriteViewModel(get(), get()) }
     viewModel { BlogReviewViewModel(get(), get()) }

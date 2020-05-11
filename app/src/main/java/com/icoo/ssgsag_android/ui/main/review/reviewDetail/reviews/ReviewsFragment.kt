@@ -30,12 +30,18 @@ class ReviewsFragment : BaseFragment<FragmentClubReviewsBinding, ReviewDetailVie
         get() = R.layout.fragment_club_reviews
     override val viewModel: ReviewDetailViewModel by viewModel()
 
+    private var mClubIdx = 0
+    private var reviewType = ""
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewDataBinding.vm = viewModel
 
-        viewModel.getSsgSagMainReviews()
+        viewModel.mClubIdx = this.mClubIdx
+        viewModel.reviewType = this.reviewType
+
+        viewModel.getClubDetail()
+        //viewModel.getSsgSagMainReviews()
         setSsgSagReviewRv()
         setBlogReviewRv()
         setButton()
@@ -44,8 +50,16 @@ class ReviewsFragment : BaseFragment<FragmentClubReviewsBinding, ReviewDetailVie
 
     override fun onResume() {
         super.onResume()
-       // viewModel.getSsgSagMainReviews()
+        viewModel.getSsgSagMainReviews()
         viewModel.getBlogReviews()
+    }
+
+    fun setClubIdx(clubIdx: Int){
+        mClubIdx = clubIdx
+    }
+
+    fun setReviewType(reviewType: String){
+        this.reviewType = reviewType
     }
 
     private fun setSsgSagReviewRv(){
@@ -166,7 +180,6 @@ class ReviewsFragment : BaseFragment<FragmentClubReviewsBinding, ReviewDetailVie
             moreReviewIntent.putExtra("from", "ssgsag")
             viewModel.reviewDetail.value.let{
                 if(it != null) {
-
                     moreReviewIntent.putExtra("reviewType", viewModel.reviewType)
                     moreReviewIntent.putExtra("clubName", viewModel.reviewDetail.value!!.clubName)
                     startActivity(moreReviewIntent)

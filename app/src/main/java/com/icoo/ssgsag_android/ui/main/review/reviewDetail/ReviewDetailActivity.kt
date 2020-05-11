@@ -53,6 +53,8 @@ class ReviewDetailActivity : BaseActivity<ActivityClubReviewDetailBinding, Revie
         setButton()
 
         val reviewsFragment = ReviewsFragment()
+        reviewsFragment.setClubIdx(viewModel.mClubIdx)
+        reviewsFragment.setReviewType(viewModel.reviewType)
 
         supportFragmentManager!!.beginTransaction().add(R.id.act_review_detail_fl_bottom_container,reviewsFragment).commit()
         supportFragmentManager!!.beginTransaction().show(reviewsFragment).commit()

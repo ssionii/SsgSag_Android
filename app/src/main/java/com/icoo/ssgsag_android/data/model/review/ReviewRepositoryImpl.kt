@@ -21,4 +21,8 @@ class ReviewRepositoryImpl(val api: NetworkService, val pref: PreferenceManager)
         .deleteReview(pref.findPreference("TOKEN", ""), clubPostIdx)
         .map { it.status }
 
+    override fun getAds(): Single<ArrayList<Banner>> = api
+        .getAds("review-00")
+        .map { it.data }
+
 }

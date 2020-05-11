@@ -71,7 +71,6 @@ class FeedWebActivity : BaseActivity<ActivityFeedWebDetailBinding, FeedViewModel
         if(intent.getStringExtra("from") == "review") {
             viewDataBinding.actFeedWebDetailIvBookmark.visibility = INVISIBLE
             viewDataBinding.actFeedWebDetailTvName.text = intent.getStringExtra("title")
-
         }else {
             viewModel.getFeed(intent.getIntExtra("idx", 0))
         }

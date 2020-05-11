@@ -136,8 +136,6 @@ class AllPostersFragment : BaseFragment<FragmentAllPosterBinding, AllPostersView
             var cardViewPagerAdapter = CardViewPagerAdapter(activity!!, value)
             cardViewPagerAdapter.setOnItemClickListener(this)
 
-            Log.e("clubPoster size", value.size.toString())
-
             if(value.size > 0) {
                 viewDataBinding.fragAllPosterVpClub.run {
 

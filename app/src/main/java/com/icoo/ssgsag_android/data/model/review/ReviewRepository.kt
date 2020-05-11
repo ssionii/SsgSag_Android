@@ -10,4 +10,6 @@ interface ReviewRepository {
 
     fun updateReview(body: JsonObject, clubPostIdx: Int) : Single<Int>
     fun deleteReview(clubPostIdx: Int) : Single<Int>
+
+    fun getAds() : Single<ArrayList<Banner>>
 }

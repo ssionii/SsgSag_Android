@@ -24,8 +24,8 @@ android {
         applicationId "com.icoo.ssgsag_android"
         minSdkVersion 23
         targetSdkVersion 28
-        versionCode 47 // application에 adjust environment 바꾸기!
-        versionName "3.2.3.0"
+        versionCode 48 // application에 adjust environment 바꾸기!
+        versionName "3.2.4.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -130,6 +130,8 @@ dependencies {
     implementation 'android.arch.paging:runtime:1.0.1'
     // photo picker
     implementation 'com.droidninja:filepicker:2.2.1'
+    // rolling banner
+    implementation 'com.github.pzienowicz:androidx-auto-scroll-view-pager:1.1.0'
 
 
     //test

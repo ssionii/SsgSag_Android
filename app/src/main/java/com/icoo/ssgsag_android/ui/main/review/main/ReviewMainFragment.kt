@@ -1,20 +1,29 @@
 package com.icoo.ssgsag_android.ui.main.review.main
 
 import android.app.Activity
+import android.content.Intent
+import android.graphics.Point
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.lifecycle.Observer
+import androidx.viewpager.widget.PagerAdapter
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseFragment
+import com.icoo.ssgsag_android.base.BasePagerAdapter
 import com.icoo.ssgsag_android.data.local.pref.SharedPreferenceController
 import com.icoo.ssgsag_android.databinding.FragmentReviewMainBinding
 import com.icoo.ssgsag_android.ui.main.MainActivity
+import com.icoo.ssgsag_android.ui.main.calendar.calendarPage.setHeight
+import com.icoo.ssgsag_android.ui.main.feed.FeedWebActivity
 import com.icoo.ssgsag_android.ui.main.myPage.MyPageActivity
 import com.icoo.ssgsag_android.ui.main.review.ReviewPageFragment
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.support.v4.startActivity
+import org.jetbrains.anko.support.v4.toast
 import org.jetbrains.anko.verticalMargin
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -35,6 +44,7 @@ class ReviewMainFragment : BaseFragment<FragmentReviewMainBinding, ReviewMainVie
         viewDataBinding.vm = viewModel
 
         setButton()
+        setRollingViewPager()
         if(!SharedPreferenceController.getReviewCoachMark(activity!!))
             setCoachMark()
     }
@@ -67,10 +77,6 @@ class ReviewMainFragment : BaseFragment<FragmentReviewMainBinding, ReviewMainVie
             fragmentManager!!.beginTransaction().show(internReviewPageFragment).commit()
         }
 
-        viewDataBinding.fragReviewMainIvBanner.setSafeOnClickListener {
-            startActivity<ReviewMainEventActivity>()
-        }
-
         viewDataBinding.fragReviewMainIvMyPage.setSafeOnClickListener {
             view!!.context.startActivity<MyPageActivity>()
             (view!!.context as Activity).overridePendingTransition(
@@ -81,12 +87,56 @@ class ReviewMainFragment : BaseFragment<FragmentReviewMainBinding, ReviewMainVie
         }
     }
 
-    fun removeFragment(tag: String){
+    private fun setRollingViewPager(){
 
-        fragmentManager!!.findFragmentByTag(tag)?.also {
-            fragmentManager!!.beginTransaction().remove(it)
+        // UI
+        val display = activity!!.windowManager.defaultDisplay
+        val size = Point()
+        display.getSize(size)
+        val width =size.x
+
+        viewDataBinding.fragReviewMainClBanner.apply{
+            layoutParams.height = width/2;
+            requestLayout()
+
         }
 
+        viewDataBinding.fragReviewMainAsvpBanner.apply{
+            val autoScrollAdapter = AutoScrollAdapter(activity!!)
+            autoScrollAdapter.setOnItemClickListener(onBannerItemClickListener)
+            adapter = autoScrollAdapter
+            setInterval(3000)
+        }
+
+
+
+        //data
+        viewModel.adList.observe(this, Observer {
+            (viewDataBinding.fragReviewMainAsvpBanner.adapter as AutoScrollAdapter).apply{
+                replaceAll(it)
+                notifyDataSetChanged()
+            }
+
+            viewDataBinding.fragReviewMainAsvpBanner.startAutoScroll()
+        })
+
+    }
+
+    val onBannerItemClickListener
+            = object : AutoScrollAdapter.OnItemClickListener{
+        override fun onItemClick(url: String?) {
+
+            if(url != "") {
+                val intent = Intent(activity!!, FeedWebActivity::class.java)
+                intent.putExtra("clubWebsite", url)
+                intent.putExtra("title", "")
+                intent.putExtra("from", "review")
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+                startActivity(intent)
+            }
+
+        }
     }
 
     private fun setCoachMark(){

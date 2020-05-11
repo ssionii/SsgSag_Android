@@ -54,7 +54,7 @@ class ReviewDetailViewModel(
             .observeOn(schedulerProvider.mainThread())
             .subscribe({
                 _reviewDetail.setValue(it)
-                //_ssgsagMainReviews.postValue(it.clubPostList)
+                _ssgsagMainReviews.postValue(it.clubPostList)
                 _blogMainReviews.setValue(it.clubBlogList)
 
                 _photoList.postValue(it.clubPhotoUrlList?.split(",")?.toMutableList())
