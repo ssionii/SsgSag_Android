@@ -67,8 +67,12 @@ class ReviewListRecyclerViewAdapter(
         for(i in 0.. categoryList.size - 1){
             when(i){
                 0 ->{
-                    holder.dataBinding.itemClubReviewCvCategory1.visibility = VISIBLE
-                    holder.dataBinding.itemClubReviewTvCategory1.text = categoryList[i]
+                    if(categoryList[i] != "") {
+                        holder.dataBinding.itemClubReviewCvCategory1.visibility = VISIBLE
+                        holder.dataBinding.itemClubReviewTvCategory1.text = categoryList[i]
+                    }else{
+                        holder.dataBinding.itemClubReviewCvCategory1.visibility = GONE
+                    }
                 }
                 1 ->{
                     holder.dataBinding.itemClubReviewCvCategory2.visibility = VISIBLE

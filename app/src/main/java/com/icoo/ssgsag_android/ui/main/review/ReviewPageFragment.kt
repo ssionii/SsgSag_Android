@@ -56,13 +56,6 @@ class ReviewPageFragment : BaseFragment<FragmentReviewBinding, ReviewViewModel>(
 
     }
 
-    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
-        super.setUserVisibleHint(isVisibleToUser)
-        if(isVisibleToUser) {
-            popupFirst()
-        }
-    }
-
 
     private fun setViewPagerForClub() {
 
@@ -134,50 +127,6 @@ class ReviewPageFragment : BaseFragment<FragmentReviewBinding, ReviewViewModel>(
         }
     }
 
-    private fun showDialog(){
-
-        mAdapter = DialogPlusAdapter(activity!!, false, 0, 0, -1)
-
-
-        val builder = DialogPlus.newDialog(activity!!).apply {
-
-            setContentHolder(ViewHolder(R.layout.fragment_review_main_popup))
-            setCancelable(true)
-            setGravity(Gravity.BOTTOM)
-
-            setOnClickListener { dialog, view ->
-                if(view.id == R.id.frag_review_main_popup_cv){
-                    dialog.dismiss()
-                    goToReviewWrite()
-                }
-                else {
-                    dialog.dismiss()
-                }
-
-            }
-            setAdapter(mAdapter)
-            //setContentHeight(ViewGroup.LayoutParams.WRAP_CONTENT)
-            setContentWidth(ViewGroup.LayoutParams.MATCH_PARENT)
-            setOverlayBackgroundResource(R.color.dialog_background)
-            setContentBackgroundResource(R.drawable.header_dialog_plus_radius)
-
-//            val horizontalDpValue = 32
-//            val topDpValue = 69
-            val horizontalDpValue = 0
-            val topDpValue = 39
-            val bottomDpValue = 48
-            val d = resources.displayMetrics.density
-            val horizontalMargin = (horizontalDpValue * d).toInt()
-            val topMargin = (topDpValue * d).toInt()
-            val bottomMargin = (bottomDpValue * d).toInt()
-
-            setPadding(horizontalMargin, topMargin, horizontalMargin, bottomMargin)
-
-        }
-        builder.create().show()
-
-    }
-
     private fun goToReviewWrite(){
         val intent = Intent(activity!!, HowWriteReviewActivity::class.java)
         intent.putExtra("from", "main")
@@ -187,14 +136,6 @@ class ReviewPageFragment : BaseFragment<FragmentReviewBinding, ReviewViewModel>(
             3 -> intent.putExtra("reviewType", "intern")
         }
         startActivity(intent)
-    }
-
-    private fun popupFirst(){
-        if(SharedPreferenceController.getIsFirstReview(activity!!) < 5 && !isReviewOpend){
-            showDialog()
-            SharedPreferenceController.setIsFirstReview(activity!!, SharedPreferenceController.getIsFirstReview(activity!!)+1)
-            isReviewOpend = true
-        }
     }
 
     override fun onBack() {

@@ -5,8 +5,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.core.app.ActivityCompat.finishAffinity
-import org.jetbrains.anko.startActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.JsonObject
@@ -18,7 +16,6 @@ import com.icoo.ssgsag_android.data.local.pref.SharedPreferenceController
 import com.icoo.ssgsag_android.data.model.login.LoginRepository
 import com.icoo.ssgsag_android.ui.main.MainActivity
 import com.icoo.ssgsag_android.ui.signUp.SignupActivity
-import com.icoo.ssgsag_android.ui.signUp.profile.SignUpProfileActivity
 import com.icoo.ssgsag_android.util.scheduler.SchedulerProvider
 import com.igaworks.v2.core.AdBrixRm
 import io.reactivex.Observable
@@ -126,10 +123,6 @@ class LoginViewModel (
                         _isUpdated.setValue(1)
                     }else if(this.data == 2) {
                         Toast.makeText(context, "업데이트 중입니다. 잠시만 기다려주세요.", Toast.LENGTH_SHORT).show()
-                        _isUpdated.setValue(2)
-                    }
-                    else {
-                        Toast.makeText(context, "네트워크 상태를 확인해주세요.", Toast.LENGTH_SHORT).show()
                         _isUpdated.setValue(2)
                     }
                 }

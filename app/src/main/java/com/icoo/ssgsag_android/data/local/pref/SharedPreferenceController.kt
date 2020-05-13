@@ -16,7 +16,6 @@ object SharedPreferenceController{
 
     private val isLogout ="isLogout"
 
-    private val isFirstReviewEventCount = "isFirstReviewEvenCount"
     private val isFirstOpenEvent ="isFirstOpenEvent"
 
     private val seeFeedCoachMark = "feedCoachMark"
@@ -146,20 +145,6 @@ object SharedPreferenceController{
     fun getIsLogout(context: Context) : Boolean {
         val pref = context.getSharedPreferences(isLogout, Context.MODE_PRIVATE) //현재 내 기기에서만 볼수 있는 데이터
         return pref.getBoolean(isLogout, false)
-    }
-
-
-    fun setIsFirstReview(context: Context, count : Int)
-    {
-        val pref = context.getSharedPreferences(isFirstReviewEventCount, Context.MODE_PRIVATE) //현재 내 기기에서만 볼수 있는 데이터
-        val editor = pref.edit()
-        editor.putInt(isFirstReviewEventCount, count)
-        editor.apply()
-    }
-
-    fun getIsFirstReview(context: Context) : Int {
-        val pref = context.getSharedPreferences(isFirstReviewEventCount, Context.MODE_PRIVATE) //현재 내 기기에서만 볼수 있는 데이터
-        return pref.getInt(isFirstReviewEventCount, 0)
     }
 
 

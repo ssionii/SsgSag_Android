@@ -286,7 +286,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, LoginViewModel>() {
                 }
 
                 override fun onAnimationEnd(animation: Animator?) {
-                    this@run.visibility = INVISIBLE
+                    this@run.pauseAnimation()
                 }
 
                 override fun onAnimationRepeat(animation: Animator?) {
