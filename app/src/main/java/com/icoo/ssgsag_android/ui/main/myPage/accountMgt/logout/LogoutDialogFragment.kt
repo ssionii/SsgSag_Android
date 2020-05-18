@@ -2,6 +2,7 @@ package com.icoo.ssgsag_android.ui.main.myPage.accountMgt.logout
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.DialogFragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,9 +11,11 @@ import androidx.core.app.ActivityCompat
 import com.icoo.ssgsag_android.ui.login.LoginActivity
 import com.icoo.ssgsag_android.data.local.pref.SharedPreferenceController
 import com.icoo.ssgsag_android.R
+import com.icoo.ssgsag_android.data.model.user.DeviceInfo
 import com.icoo.ssgsag_android.ui.main.MainActivity
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import com.igaworks.v2.core.AdBrixRm
+import io.realm.Realm
 import kotlinx.android.synthetic.main.fragment_logout.*
 
 class LogoutDialogFragment: androidx.fragment.app.DialogFragment(){
@@ -27,7 +30,6 @@ class LogoutDialogFragment: androidx.fragment.app.DialogFragment(){
 
         frag_logout_tv_yes.setSafeOnClickListener {
             SharedPreferenceController.setAuthorization(activity!!, "")
-            SharedPreferenceController.setCoachMarker(activity!!, false)
             SharedPreferenceController.deleteType(activity!!)
 
             AdBrixRm.login("")

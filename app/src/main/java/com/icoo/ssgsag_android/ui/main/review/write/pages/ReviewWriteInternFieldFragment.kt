@@ -7,12 +7,14 @@ import android.text.TextWatcher
 import android.widget.EditText
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseFragment
+import com.icoo.ssgsag_android.data.model.review.ReviewWriteRelam
 import com.icoo.ssgsag_android.databinding.FragmentReviewWriteInternFieldBinding
 import com.icoo.ssgsag_android.ui.main.review.club.registration.ClubRgstrActivity
 import com.icoo.ssgsag_android.ui.main.review.club.write.ReviewWriteActivity
 import com.icoo.ssgsag_android.ui.main.review.club.write.ReviewWriteViewModel
 import com.icoo.ssgsag_android.ui.main.review.club.write.pages.ReviewWriteSimpleFragment
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
+import io.realm.Realm
 import org.jetbrains.anko.backgroundColor
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -23,6 +25,9 @@ class ReviewWriteInternFieldFragment : BaseFragment<FragmentReviewWriteInternFie
 
     override val viewModel: ReviewWriteViewModel by viewModel()
 
+    val realm = Realm.getDefaultInstance()
+    lateinit var reviewWriteRealm : ReviewWriteRelam
+
     var position = -1
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -30,6 +35,9 @@ class ReviewWriteInternFieldFragment : BaseFragment<FragmentReviewWriteInternFie
         viewDataBinding.vm = viewModel
 
         position = arguments!!.getInt("position", -1)
+
+        reviewWriteRealm = realm.where(ReviewWriteRelam::class.java).equalTo("id", 1 as Int).findFirst()!!
+
 
         setEditTextChange()
         setButton()
@@ -53,13 +61,13 @@ class ReviewWriteInternFieldFragment : BaseFragment<FragmentReviewWriteInternFie
     }
 
     private fun getEditText() {
-        ReviewWriteActivity.ClubReviewWriteData.fieldName = viewDataBinding.fragReviewWriteInternFieldEtFiled.text.toString()
+        (activity as ReviewWriteActivity).setReviewWriteStringRealm("fieldName", viewDataBinding.fragReviewWriteInternFieldEtFiled.text.toString())
     }
 
     private fun onDataCheck() {
         getEditText()
 
-        if(ReviewWriteActivity.ClubReviewWriteData.fieldName.isEmpty()){
+        if(reviewWriteRealm.fieldName.isEmpty()){
             // todo: viewModel로 해결하는 방법 찾기
             viewDataBinding.fragReviewWriteInternFieldClNext.apply{
                 backgroundColor = Color.parseColor("#aaaaaa")

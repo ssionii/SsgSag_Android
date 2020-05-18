@@ -12,6 +12,7 @@ interface PosterRepository {
     fun getAllPostersField(category: Int, interestNum:String, sortType:Int, curPage: Int): Single<ArrayList<PosterDetail>>
     fun getAllPosters(): Single<Poster>
     fun ssgSag(posterIdx: Int, like: Int): Single<Int>
+    fun saveAtPosterDetail(posterIdx: Int) :Single<Int>
     fun getPosterFromMain(posterIdx: Int, type: Int): Single<PosterDetail>
     fun getPoster(posterIdx: Int): Single<PosterDetail>
     fun getSearchPosters(keyword: String, curPage: Int): Single<ArrayList<PosterDetail>>

@@ -101,30 +101,6 @@ object SharedPreferenceController{
         return pref.getString(walkthroughs, "false")!!
     }
 
-    fun setCoachMarker(context: Context, v : Boolean)
-    {
-        val pref = context.getSharedPreferences(coachMarker, Context.MODE_PRIVATE) //현재 내 기기에서만 볼수 있는 데이터
-        val editor = pref.edit()
-        editor.putBoolean(coachMarker, v)
-        editor.apply()
-    }
-    fun getCoachMarker(context: Context) : Boolean {
-        val pref = context.getSharedPreferences(coachMarker, Context.MODE_PRIVATE) //현재 내 기기에서만 볼수 있는 데이터
-        return pref.getBoolean(coachMarker, false)
-    }
-
-    fun setCoachFlow(context: Context, v : Boolean)
-    {
-        val pref = context.getSharedPreferences(coachFlow, Context.MODE_PRIVATE) //현재 내 기기에서만 볼수 있는 데이터
-        val editor = pref.edit()
-        editor.putBoolean(coachFlow, v)
-        editor.apply()
-    }
-    fun getCoachFlow(context: Context) : Boolean {
-        val pref = context.getSharedPreferences(coachFlow, Context.MODE_PRIVATE) //현재 내 기기에서만 볼수 있는 데이터
-        return pref.getBoolean(coachFlow, false)
-    }
-
     fun clearSPC(context: Context)
     {
         val pref = context.getSharedPreferences(USER_NAME, Context.MODE_PRIVATE) //현재 내 기기에서만 볼수 있는 데이터

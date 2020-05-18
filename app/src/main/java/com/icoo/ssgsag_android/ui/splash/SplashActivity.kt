@@ -65,11 +65,6 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, LoginViewModel>() {
 
         setLottie()
         logoutFirstTimeVersion231()
-
-//        SharedPreferenceController.setAuthorization(this, "")
-        //이건 무시하센... 코치마커 관련해서 작업하다가 결국 코치마커 안넣고 업뎃하느라... true로 둘다 설정하면 코치마커 작동안할꺼임
-        SharedPreferenceController.setCoachMarker(this, true)
-        SharedPreferenceController.setCoachFlow(this, true)
         getUpdateResponse()
         navigator()
     }
@@ -309,7 +304,6 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, LoginViewModel>() {
     private fun logoutFirstTimeVersion231(){
         if(!SharedPreferenceController.getIsLogout(thisActivity)){
             SharedPreferenceController.setAuthorization(thisActivity, "")
-            SharedPreferenceController.setCoachMarker(thisActivity, false)
             SharedPreferenceController.deleteType(thisActivity)
 
             SharedPreferenceController.setIsLogout(thisActivity, true)

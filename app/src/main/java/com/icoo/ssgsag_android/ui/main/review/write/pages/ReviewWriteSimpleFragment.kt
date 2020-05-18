@@ -11,12 +11,13 @@ import android.widget.EditText
 import androidx.lifecycle.Observer
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseFragment
+import com.icoo.ssgsag_android.data.model.review.ReviewWriteRelam
 import com.icoo.ssgsag_android.databinding.FragmentReviewWriteSimpleBinding
 import com.icoo.ssgsag_android.ui.main.review.ReviewDoneActivity
 import com.icoo.ssgsag_android.ui.main.review.club.write.ReviewWriteActivity
-import com.icoo.ssgsag_android.ui.main.review.club.write.ReviewWriteActivity.ClubReviewWriteData
 import com.icoo.ssgsag_android.ui.main.review.club.write.ReviewWriteViewModel
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
+import io.realm.Realm
 import kotlinx.android.synthetic.main.fragment_review_write_simple.*
 import org.jetbrains.anko.backgroundColor
 import org.jetbrains.anko.support.v4.toast
@@ -28,6 +29,9 @@ class ReviewWriteSimpleFragment :BaseFragment<FragmentReviewWriteSimpleBinding, 
         get() = R.layout.fragment_review_write_simple
     override val viewModel: ReviewWriteViewModel by viewModel()
 
+    val realm = Realm.getDefaultInstance()
+    lateinit var reviewWriteRealm : ReviewWriteRelam
+
     var position = -1
     var isDone = false
 
@@ -37,6 +41,8 @@ class ReviewWriteSimpleFragment :BaseFragment<FragmentReviewWriteSimpleBinding, 
         viewDataBinding.vm = viewModel
 
         position = arguments!!.getInt("position", -1)
+
+        reviewWriteRealm = realm.where(ReviewWriteRelam::class.java).equalTo("id", 1 as Int).findFirst()!!
 
         setEditTextTouch()
         setEditTextChange()
@@ -55,7 +61,7 @@ class ReviewWriteSimpleFragment :BaseFragment<FragmentReviewWriteSimpleBinding, 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
         if(isVisibleToUser)
-            viewDataBinding.fragReviewWriteSimpleTvTitle.text = ClubReviewWriteData.clubName
+            viewDataBinding.fragReviewWriteSimpleTvTitle.text = reviewWriteRealm.clubName
     }
 
     override fun onResume() {
@@ -130,16 +136,16 @@ class ReviewWriteSimpleFragment :BaseFragment<FragmentReviewWriteSimpleBinding, 
     }
 
     private fun getEditText() {
-        ClubReviewWriteData.oneLine = viewDataBinding.fragWriteReviewSimpleEtOneLine.text.toString()
-        ClubReviewWriteData.advantage = viewDataBinding.fragReviewWriteSimpleEtAdvantage.text.toString()
-        ClubReviewWriteData.disadvantage = viewDataBinding.fragReviewWriteSimpleEtDisadvantage.text.toString()
-        ClubReviewWriteData.honeyTip = viewDataBinding.fragWriteReviewSimpleEtTip.text.toString()
+        (activity as ReviewWriteActivity).setReviewWriteStringRealm("oneLine", viewDataBinding.fragWriteReviewSimpleEtOneLine.text.toString())
+        (activity as ReviewWriteActivity).setReviewWriteStringRealm("advantage", viewDataBinding.fragReviewWriteSimpleEtAdvantage.text.toString())
+        (activity as ReviewWriteActivity).setReviewWriteStringRealm("disadvantage", viewDataBinding.fragReviewWriteSimpleEtDisadvantage.text.toString())
+        (activity as ReviewWriteActivity).setReviewWriteStringRealm("honeyTip", viewDataBinding.fragWriteReviewSimpleEtTip.text.toString())
     }
 
     private fun onDataCheck() {
         getEditText()
 
-        if(ClubReviewWriteData.oneLine.isEmpty() || ClubReviewWriteData.advantage.length < 20 || ClubReviewWriteData.disadvantage.length < 20){
+        if(reviewWriteRealm.oneLine.isEmpty() || reviewWriteRealm.advantage.length < 20 || reviewWriteRealm.disadvantage.length < 20){
             viewDataBinding.fragReviewWriteSimpleClDone.apply{
                 backgroundColor = resources.getColor(R.color.grey_2)
                 isDone = false
@@ -157,13 +163,13 @@ class ReviewWriteSimpleFragment :BaseFragment<FragmentReviewWriteSimpleBinding, 
         val jsonObject = JSONObject()
 
         jsonObject.put("clubType", viewModel.clubType.value)
-        jsonObject.put("univOrLocation", ClubReviewWriteData.univOrLocation)
-        jsonObject.put("clubName", ClubReviewWriteData.clubName)
+        jsonObject.put("univOrLocation", reviewWriteRealm.univOrLocation)
+        jsonObject.put("clubName", reviewWriteRealm.clubName)
 
 
         // 날짜
-        var clubStartDate = "20" + ClubReviewWriteData.startYear.substring(0,2) + "-"
-        ClubReviewWriteData.startMonth.let {
+        var clubStartDate = "20" + reviewWriteRealm.startYear.substring(0,2) + "-"
+        reviewWriteRealm.startMonth.let {
             if(it.length == 2){
                 clubStartDate += "0" + it.substring(0,1)
             }else{
@@ -173,8 +179,8 @@ class ReviewWriteSimpleFragment :BaseFragment<FragmentReviewWriteSimpleBinding, 
         jsonObject.put("clubStartDate", clubStartDate)
 
 
-        var clubEndDate ="20" + ClubReviewWriteData.endYear.substring(0,2) + "-"
-        ClubReviewWriteData.endMonth.let {
+        var clubEndDate ="20" + reviewWriteRealm.endYear.substring(0,2) + "-"
+        reviewWriteRealm.endMonth.let {
             if(it.length == 2){
                 clubEndDate += "0" + it.substring(0,1)
             }else{
@@ -184,22 +190,26 @@ class ReviewWriteSimpleFragment :BaseFragment<FragmentReviewWriteSimpleBinding, 
         jsonObject.put("clubEndDate", clubEndDate)
 
         // 인턴 직무
-        if(ClubReviewWriteData.fieldName != "")
-            jsonObject.put("fieldName", ClubReviewWriteData.fieldName)
+        if(reviewWriteRealm.fieldName != "")
+            jsonObject.put("fieldName", reviewWriteRealm.fieldName)
+
+        if(reviewWriteRealm.categoryList != ""){
+            jsonObject.put("categoryList", reviewWriteRealm.categoryList)
+        }
 
 
         // 평점
-        jsonObject.put("score0", ClubReviewWriteData.score0)
-        jsonObject.put("score1", ClubReviewWriteData.score1)
-        jsonObject.put("score2", ClubReviewWriteData.score2)
-        jsonObject.put("score3", ClubReviewWriteData.score3)
-        jsonObject.put("score4", ClubReviewWriteData.score4)
+        jsonObject.put("score0", reviewWriteRealm.score0)
+        jsonObject.put("score1", reviewWriteRealm.score1)
+        jsonObject.put("score2", reviewWriteRealm.score2)
+        jsonObject.put("score3", reviewWriteRealm.score3)
+        jsonObject.put("score4", reviewWriteRealm.score4)
 
-        jsonObject.put("oneLine", ClubReviewWriteData.oneLine)
-        jsonObject.put("advantage", ClubReviewWriteData.advantage)
-        jsonObject.put("disadvantage", ClubReviewWriteData.disadvantage)
-        if(ClubReviewWriteData.honeyTip != "")
-            jsonObject.put("honeyTip", ClubReviewWriteData.honeyTip)
+        jsonObject.put("oneLine", reviewWriteRealm.oneLine)
+        jsonObject.put("advantage", reviewWriteRealm.advantage)
+        jsonObject.put("disadvantage", reviewWriteRealm.disadvantage)
+        if(reviewWriteRealm.honeyTip != "")
+            jsonObject.put("honeyTip", reviewWriteRealm.honeyTip)
 
         viewModel.postClubReview(jsonObject)
     }
@@ -207,8 +217,8 @@ class ReviewWriteSimpleFragment :BaseFragment<FragmentReviewWriteSimpleBinding, 
     // 등록되어 있는 동아리의 후기를 입력할 때
     private fun postRgstrClubReview(){
         val jsonObject = JSONObject()
-        var clubStartDate = "20" + ClubReviewWriteData.startYear.substring(0,2) + "-"
-        ClubReviewWriteData.startMonth.let {
+        var clubStartDate = "20" + reviewWriteRealm.startYear.substring(0,2) + "-"
+        reviewWriteRealm.startMonth.let {
             if(it.length == 2){
                 clubStartDate += "0" + it.substring(0,1)
             }else{
@@ -218,8 +228,8 @@ class ReviewWriteSimpleFragment :BaseFragment<FragmentReviewWriteSimpleBinding, 
         jsonObject.put("clubStartDate", clubStartDate)
 
 
-        var clubEndDate ="20" + ClubReviewWriteData.endYear.substring(0,2) + "-"
-        ClubReviewWriteData.endMonth.let {
+        var clubEndDate ="20" + reviewWriteRealm.endYear.substring(0,2) + "-"
+        reviewWriteRealm.endMonth.let {
             if(it.length == 2){
                 clubEndDate += "0" + it.substring(0,1)
             }else{
@@ -229,22 +239,22 @@ class ReviewWriteSimpleFragment :BaseFragment<FragmentReviewWriteSimpleBinding, 
         jsonObject.put("clubEndDate", clubEndDate)
 
         // 인턴 직무
-        if(ClubReviewWriteData.fieldName != "")
-            jsonObject.put("fieldName", ClubReviewWriteData.fieldName)
+        if(reviewWriteRealm.fieldName != "")
+            jsonObject.put("fieldName", reviewWriteRealm.fieldName)
 
 
         // 평점
-        jsonObject.put("score0", ClubReviewWriteData.score0)
-        jsonObject.put("score1", ClubReviewWriteData.score1)
-        jsonObject.put("score2", ClubReviewWriteData.score2)
-        jsonObject.put("score3", ClubReviewWriteData.score3)
-        jsonObject.put("score4", ClubReviewWriteData.score4)
+        jsonObject.put("score0", reviewWriteRealm.score0)
+        jsonObject.put("score1", reviewWriteRealm.score1)
+        jsonObject.put("score2", reviewWriteRealm.score2)
+        jsonObject.put("score3", reviewWriteRealm.score3)
+        jsonObject.put("score4", reviewWriteRealm.score4)
 
-        jsonObject.put("oneLine", ClubReviewWriteData.oneLine)
-        jsonObject.put("advantage", ClubReviewWriteData.advantage)
-        jsonObject.put("disadvantage", ClubReviewWriteData.disadvantage)
-        if(ClubReviewWriteData.honeyTip != "") {
-            jsonObject.put("honeyTip", ClubReviewWriteData.honeyTip)
+        jsonObject.put("oneLine", reviewWriteRealm.oneLine)
+        jsonObject.put("advantage", reviewWriteRealm.advantage)
+        jsonObject.put("disadvantage", reviewWriteRealm.disadvantage)
+        if(reviewWriteRealm.honeyTip != "") {
+            jsonObject.put("honeyTip", reviewWriteRealm.honeyTip)
         }
 
         jsonObject.put("clubIdx", viewModel.clubIdx)

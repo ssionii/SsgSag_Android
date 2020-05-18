@@ -2,41 +2,44 @@ package com.icoo.ssgsag_android.ui.main.review.club.write
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseActivity
+import com.icoo.ssgsag_android.data.model.review.ReviewWriteRelam
 import com.icoo.ssgsag_android.databinding.ActivityClubReviewWriteBinding
+import io.realm.Realm
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ReviewWriteActivity : BaseActivity<ActivityClubReviewWriteBinding, ReviewWriteViewModel>(){
 
-    object ClubReviewWriteData {
-        // 동아리 정보
-        lateinit var clubName: String
-        var univOrLocation = ""
-        //var categoryList = mutableListOf<String>()
-
-        var fieldName = ""
-
-        var startYear = ""
-        var startMonth = ""
-        var endYear =""
-        var endMonth =""
-
-        // 점수 평가
-        var score0 = 0
-        var score1 = 0
-        var score2 = 0
-        var score3 = 0
-        var score4 = 0
-
-        // 간단 평가
-        lateinit var oneLine: String
-        lateinit var advantage: String
-        lateinit var disadvantage: String
-        var honeyTip =""
-    }
+//    object ClubReviewWriteData {
+//        // 동아리 정보
+//        lateinit var clubName: String
+//        var univOrLocation = ""
+//        //var categoryList = mutableListOf<String>()
+//
+//        var fieldName = ""
+//
+//        var startYear = ""
+//        var startMonth = ""
+//        var endYear =""
+//        var endMonth =""
+//
+//        // 점수 평가
+//        var score0 = 0
+//        var score1 = 0
+//        var score2 = 0
+//        var score3 = 0
+//        var score4 = 0
+//
+//        // 간단 평가
+//        lateinit var oneLine: String
+//        lateinit var advantage: String
+//        lateinit var disadvantage: String
+//        var honeyTip =""
+//    }
 
     override val layoutResID: Int
         get() = R.layout.activity_club_review_write
@@ -44,8 +47,17 @@ class ReviewWriteActivity : BaseActivity<ActivityClubReviewWriteBinding, ReviewW
 
     lateinit var ReviewWritePagerAdapter: ReviewWritePagerAdapter
 
+    val realm = Realm.getDefaultInstance()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        realm.beginTransaction()
+        val realmObject = realm.createObject(ReviewWriteRelam::class.java)
+        realmObject.apply {
+            this.id = 1
+        }
+        realm.commitTransaction()
 
         when(intent.getStringExtra("reviewType")){
             "act" -> viewModel.setClubType(2)
@@ -56,7 +68,8 @@ class ReviewWriteActivity : BaseActivity<ActivityClubReviewWriteBinding, ReviewW
         viewDataBinding.vm = viewModel
 
         if(intent.getStringExtra("from") == "reviewDetail"){
-            ClubReviewWriteData.clubName = intent.getStringExtra("clubName")
+            setReviewWriteStringRealm("clubName", intent.getStringExtra("clubName"))
+//            ClubReviewWriteData.clubName = intent.getStringExtra("clubName")
             viewModel.clubIdx = intent.getIntExtra("clubIdx", -1)
         }
 
@@ -94,29 +107,58 @@ class ReviewWriteActivity : BaseActivity<ActivityClubReviewWriteBinding, ReviewW
 
     }
 
+    fun setReviewWriteStringRealm(type: String, input : String){
+        realm.beginTransaction()
+        val reviewWriteRealm = realm.where(ReviewWriteRelam::class.java).equalTo("id", 1 as Int).findFirst()
+        if(reviewWriteRealm != null){
+            when(type){
+                "clubName"-> reviewWriteRealm.clubName = input
+                "univOrLocation"-> reviewWriteRealm.univOrLocation = input
+                "fieldName"-> reviewWriteRealm.fieldName = input
+                "startYear"-> reviewWriteRealm.startYear = input
+                "startMonth"-> reviewWriteRealm.startMonth = input
+                "endYear"-> reviewWriteRealm.endYear = input
+                "endMonth"-> reviewWriteRealm.endMonth = input
+                "oneLine"-> reviewWriteRealm.oneLine = input
+                "advantage"-> reviewWriteRealm.advantage = input
+                "disadvantage"-> reviewWriteRealm.disadvantage = input
+                "honeyTip"-> reviewWriteRealm.honeyTip = input
+                "categoryList" -> reviewWriteRealm.categoryList = input
+                else -> Log.e("setReviewWSRealm", "parameter 오류")
+            }
+        }
+        realm.commitTransaction()
+    }
+
+    fun setReviewWriteIntRealm(type: Int, input : Int){
+        realm.beginTransaction()
+        val reviewWriteRealm = realm.where(ReviewWriteRelam::class.java).equalTo("id", 1 as Int).findFirst()
+        if(reviewWriteRealm != null){
+            when(type){
+                0-> reviewWriteRealm.score0 = input
+                1-> reviewWriteRealm.score1 = input
+                2-> reviewWriteRealm.score2 = input
+                3-> reviewWriteRealm.score3 = input
+                4-> reviewWriteRealm.score4 = input
+                else -> Log.e("setReviewWIRealm", "parameter 오류")
+
+            }
+        }else{
+
+            Log.e("Realm review score","realm 객체 없음")
+        }
+        realm.commitTransaction()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         viewModel.iniPostStatus()
-        // 초기화
-        ClubReviewWriteData.apply{
-            clubName = ""
-            univOrLocation =""
-            startYear = ""
-            startMonth = ""
-            endYear =""
-            endMonth =""
 
-            score0 = 0
-            score1 = 0
-            score2 = 0
-            score3 = 0
-            score4 = 0
+        realm.beginTransaction()
+        val reviewWriteRealm = realm.where(ReviewWriteRelam::class.java).findAll()
+        reviewWriteRealm.deleteAllFromRealm()
+        realm.commitTransaction()
 
-            oneLine = ""
-            advantage =""
-            disadvantage = ""
-            honeyTip =""
-        }
 
     }
 }

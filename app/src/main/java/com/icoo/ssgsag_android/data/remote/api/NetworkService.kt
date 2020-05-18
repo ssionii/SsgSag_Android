@@ -176,7 +176,8 @@ interface NetworkService {
     fun posterSsgSagResponse(
         @Header("Authorization") token: String,
         @Query("posterIdx") posterIdx: Int,
-        @Query("like") like: Int
+        @Query("like") like: Int,
+        @Query("type") type: Int
     ): Single<IntResponse>
     // 포스터 검색
     @GET("/poster/search")

@@ -114,28 +114,6 @@ class ReviewDetailActivity : BaseActivity<ActivityClubReviewDetailBinding, Revie
         }
     }
 
-    /*
-    private fun setVp(){
-        viewDataBinding.actReviewDetailVp.run{
-            adapter = BasePagerAdapter(supportFragmentManager).apply {
-                addFragment(ClubInfoFragment())
-                addFragment(ReviewsFragment())
-                isSaveEnabled = false
-            }
-            currentItem = 0
-            offscreenPageLimit = 1
-        }
-    }
-
-    private fun setTab(){
-        viewDataBinding.actReviewDetailTl.run{
-            setupWithViewPager(viewDataBinding.actReviewDetailVp)
-            getTabAt(0)!!.text = "정보"
-            getTabAt(1)!!.text = "후기"
-            setTabRippleColor(null)
-        }
-    }*/
-
     private fun setButton(){
         viewDataBinding.actReviewDetailIvBack.setSafeOnClickListener {
             finish()

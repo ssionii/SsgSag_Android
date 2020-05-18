@@ -246,7 +246,7 @@ class CalendarDetailViewModel(
     fun managePoster(posterIdx: Int) {
         if(posterDetail.value?.isSave == 0) {
             addDisposable(
-                posterRepository.ssgSag(posterIdx, 1)
+                posterRepository.saveAtPosterDetail(posterIdx)
                     .subscribeOn(schedulerProvider.io())
                     .observeOn(schedulerProvider.mainThread())
                     .subscribe({

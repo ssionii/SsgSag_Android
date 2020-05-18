@@ -22,7 +22,6 @@ class LoginRepositoryImpl (val api: NetworkService, val pref: PreferenceManager)
         .map { it }
 
     override fun autoLogin(): Single<Int> {
-
         Log.e("TOKEN", pref.findPreference("TOKEN", ""))
 
         return api

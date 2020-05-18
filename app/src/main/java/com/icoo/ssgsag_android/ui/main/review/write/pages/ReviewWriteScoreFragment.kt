@@ -5,11 +5,12 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseFragment
+import com.icoo.ssgsag_android.data.model.review.ReviewWriteRelam
 import com.icoo.ssgsag_android.databinding.FragmentReviewWriteScoreBinding
 import com.icoo.ssgsag_android.ui.main.review.club.write.ReviewWriteActivity
-import com.icoo.ssgsag_android.ui.main.review.club.write.ReviewWriteActivity.ClubReviewWriteData
 import com.icoo.ssgsag_android.ui.main.review.club.write.ReviewWriteViewModel
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
+import io.realm.Realm
 import org.jetbrains.anko.backgroundColor
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -18,12 +19,17 @@ class ReviewWriteScoreFragment :  BaseFragment<FragmentReviewWriteScoreBinding, 
         get() = R.layout.fragment_review_write_score
     override val viewModel: ReviewWriteViewModel by viewModel()
 
+    val realm = Realm.getDefaultInstance()
+    lateinit var reviewWriteRealm : ReviewWriteRelam
+
     var position = -1
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
         viewDataBinding.vm = viewModel
+
+        reviewWriteRealm = realm.where(ReviewWriteRelam::class.java).equalTo("id", 1 as Int).findFirst()!!
 
         position = arguments!!.getInt("position", -1)
 
@@ -36,7 +42,7 @@ class ReviewWriteScoreFragment :  BaseFragment<FragmentReviewWriteScoreBinding, 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
         if(isVisibleToUser)
-            viewDataBinding.fragReviewWriteScoreTvTitle.text = ClubReviewWriteData.clubName
+            viewDataBinding.fragReviewWriteScoreTvTitle.text = reviewWriteRealm.clubName
     }
 
 
@@ -47,25 +53,25 @@ class ReviewWriteScoreFragment :  BaseFragment<FragmentReviewWriteScoreBinding, 
                 if(this.visibility == GONE)
                     visibility = VISIBLE
             }
-            ClubReviewWriteData.score0 = rating.toInt()
+            (activity as ReviewWriteActivity).setReviewWriteIntRealm(0, rating.toInt())
             onDataCheck()
         }
 
         viewDataBinding.fragReviewWriteScoreRb1.setOnRatingChangeListener { ratingBar, rating ->
-            ClubReviewWriteData.score1 = rating.toInt()
+            (activity as ReviewWriteActivity).setReviewWriteIntRealm(1, rating.toInt())
             onDataCheck()
         }
 
         viewDataBinding.fragReviewWriteScoreRb2.setOnRatingChangeListener { ratingBar, rating ->
-            ClubReviewWriteData.score2 = rating.toInt()
+            (activity as ReviewWriteActivity).setReviewWriteIntRealm(2, rating.toInt())
             onDataCheck()
         }
         viewDataBinding.fragReviewWriteScoreRb3.setOnRatingChangeListener { ratingBar, rating ->
-            ClubReviewWriteData.score3 = rating.toInt()
+            (activity as ReviewWriteActivity).setReviewWriteIntRealm(3, rating.toInt())
             onDataCheck()
         }
         viewDataBinding.fragReviewWriteScoreRb4.setOnRatingChangeListener { ratingBar, rating ->
-            ClubReviewWriteData.score4 = rating.toInt()
+            (activity as ReviewWriteActivity).setReviewWriteIntRealm(4, rating.toInt())
             onDataCheck()
         }
     }
@@ -81,8 +87,8 @@ class ReviewWriteScoreFragment :  BaseFragment<FragmentReviewWriteScoreBinding, 
     }
 
     private fun onDataCheck(){
-        if(ClubReviewWriteData.score0 == 0 || ClubReviewWriteData.score1 == 0
-            || ClubReviewWriteData.score2 == 0 || ClubReviewWriteData.score3 == 0 ||ClubReviewWriteData.score4 == 0){
+        if(reviewWriteRealm.score0 == 0 || reviewWriteRealm.score1 == 0
+            || reviewWriteRealm.score2 == 0 || reviewWriteRealm.score3 == 0 ||reviewWriteRealm.score4 == 0){
             viewDataBinding.fragReviewWriteScoreNext.apply{
                 isClickable = false
                 backgroundColor = context.resources.getColor(R.color.grey_2)

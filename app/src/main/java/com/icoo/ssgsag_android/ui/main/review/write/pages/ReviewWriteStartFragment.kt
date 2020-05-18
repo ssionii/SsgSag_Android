@@ -12,11 +12,14 @@ import android.widget.*
 import androidx.lifecycle.Observer
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseFragment
+import com.icoo.ssgsag_android.data.model.review.ReviewWriteRelam
 import com.icoo.ssgsag_android.databinding.FragmentReviewWriteStartBinding
 import com.icoo.ssgsag_android.ui.main.review.club.registration.NonRgstrClubActivity
 import com.icoo.ssgsag_android.ui.main.review.club.write.ReviewWriteActivity
 import com.icoo.ssgsag_android.ui.main.review.club.write.ReviewWriteViewModel
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
+import io.realm.Realm
+import io.realm.RealmChangeListener
 import org.jetbrains.anko.backgroundColor
 import org.json.JSONObject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -30,6 +33,11 @@ class ReviewWriteStartFragment :  BaseFragment<FragmentReviewWriteStartBinding, 
     override val layoutResID: Int
         get() = R.layout.fragment_review_write_start
     override val viewModel: ReviewWriteViewModel by viewModel()
+
+    val realm = Realm.getDefaultInstance()
+    var reviewWriteRealm : ReviewWriteRelam? = null
+
+    var setButton = false
 
     var position = -1
 
@@ -64,7 +72,18 @@ class ReviewWriteStartFragment :  BaseFragment<FragmentReviewWriteStartBinding, 
             }
         })
 
-        setButton()
+        reviewWriteRealm = realm.where(ReviewWriteRelam::class.java).equalTo("id", 1 as Int).findFirst()
+        reviewWriteRealm?.addChangeListener(object : RealmChangeListener<ReviewWriteRelam>{
+            override fun onChange(t: ReviewWriteRelam) {
+                if(reviewWriteRealm != null  && !setButton){
+                    setButton()
+                    onDataCheck()
+                    setButton = true
+                    Log.e("reviewWriteStartFrag", "setButton() 실행")
+                }
+            }
+        })
+
         getUnivList()
         getClubList()
         setActPlaceSpinner()
@@ -75,7 +94,7 @@ class ReviewWriteStartFragment :  BaseFragment<FragmentReviewWriteStartBinding, 
 
     override fun onResume() {
         super.onResume()
-        onDataCheck()
+
 
         (activity as ReviewWriteActivity).hideKeyboard(viewDataBinding.fragReviewWriteStartAtClubName)
     }
@@ -99,7 +118,7 @@ class ReviewWriteStartFragment :  BaseFragment<FragmentReviewWriteStartBinding, 
                         position: Int,
                         id: Long
                     ) {
-                        ReviewWriteActivity.ClubReviewWriteData.clubName = clubNameList[position]
+                        (activity as ReviewWriteActivity).setReviewWriteStringRealm("clubName", clubNameList[position])
                         viewModel.isRgstrClub = true
                         viewModel.clubIdx = value[position].clubIdx
                         onDataCheck()
@@ -202,8 +221,7 @@ class ReviewWriteStartFragment :  BaseFragment<FragmentReviewWriteStartBinding, 
                         id: Long
                     ) {
                         if(position != actPlaceList.size -1) {
-                            ReviewWriteActivity.ClubReviewWriteData.univOrLocation =
-                                actPlaceList[position]
+                            (activity as ReviewWriteActivity).setReviewWriteStringRealm("univOrLocation",  actPlaceList[position])
 
                             isDone = true
                         }
@@ -249,8 +267,8 @@ class ReviewWriteStartFragment :  BaseFragment<FragmentReviewWriteStartBinding, 
                         id: Long
                     ) {
                         if(position != yearList.size -1) {
-                            ReviewWriteActivity.ClubReviewWriteData.startYear =
-                                yearList[position]
+                            (activity as ReviewWriteActivity).setReviewWriteStringRealm("startYear", yearList[position])
+
 
                             Log.e("start year 클릭", "!")
                         }
@@ -273,7 +291,7 @@ class ReviewWriteStartFragment :  BaseFragment<FragmentReviewWriteStartBinding, 
                         id: Long
                     ) {
                         if(position != yearList.size -1)
-                            ReviewWriteActivity.ClubReviewWriteData.endYear = yearList[position]
+                            (activity as ReviewWriteActivity).setReviewWriteStringRealm("endYear", yearList[position])
                         onDataCheck()
                     }
                 }
@@ -297,7 +315,7 @@ class ReviewWriteStartFragment :  BaseFragment<FragmentReviewWriteStartBinding, 
                         id: Long
                     ) {
                         if(position != monthList.size -1)
-                            ReviewWriteActivity.ClubReviewWriteData.startMonth = monthList[position]
+                            (activity as ReviewWriteActivity).setReviewWriteStringRealm("startMonth", monthList[position])
                         onDataCheck()
                     }
                 }
@@ -317,7 +335,7 @@ class ReviewWriteStartFragment :  BaseFragment<FragmentReviewWriteStartBinding, 
                         id: Long
                     ) {
                         if(position != monthList.size -1)
-                            ReviewWriteActivity.ClubReviewWriteData.endMonth = monthList[position]
+                            (activity as ReviewWriteActivity).setReviewWriteStringRealm("endMonth", monthList[position])
                         onDataCheck()
                     }
                 }
@@ -372,19 +390,17 @@ class ReviewWriteStartFragment :  BaseFragment<FragmentReviewWriteStartBinding, 
 
     private fun getEditText() {
         if(viewModel.clubType.value == 1){
-            ReviewWriteActivity.ClubReviewWriteData.univOrLocation = viewDataBinding.fragReviewWriteStartAtUniv.text.toString()
+            (activity as ReviewWriteActivity).setReviewWriteStringRealm("univOrLocation", viewDataBinding.fragReviewWriteStartAtUniv.text.toString())
         }
-        ReviewWriteActivity.ClubReviewWriteData.clubName = viewDataBinding.fragReviewWriteStartAtClubName.text.toString()
-
-
+        (activity as ReviewWriteActivity).setReviewWriteStringRealm("clubName", viewDataBinding.fragReviewWriteStartAtClubName.text.toString())
     }
 
     private fun onDataCheck() {
         getEditText()
 
-       if(ReviewWriteActivity.ClubReviewWriteData.univOrLocation.isEmpty()
-            || ReviewWriteActivity.ClubReviewWriteData.clubName.isEmpty() || ReviewWriteActivity.ClubReviewWriteData.startYear.isEmpty() || ReviewWriteActivity.ClubReviewWriteData.startMonth.isEmpty()
-            || ReviewWriteActivity.ClubReviewWriteData.endYear.isEmpty() || ReviewWriteActivity.ClubReviewWriteData.endMonth.isEmpty()
+       if(reviewWriteRealm!!.univOrLocation.isEmpty()
+            || reviewWriteRealm!!.clubName.isEmpty() || reviewWriteRealm!!.startYear.isEmpty() || reviewWriteRealm!!.startMonth.isEmpty()
+            || reviewWriteRealm!!.endYear.isEmpty() || reviewWriteRealm!!.endMonth.isEmpty()
             || !isDone){
 
             viewDataBinding.fragWriteReviewStartClDone.apply{
@@ -403,22 +419,23 @@ class ReviewWriteStartFragment :  BaseFragment<FragmentReviewWriteStartBinding, 
         viewDataBinding.fragWriteReviewStartClDone.setSafeOnClickListener {
             (activity as ReviewWriteActivity).hideKeyboard(viewDataBinding.fragReviewWriteStartAtClubName)
 
-            ReviewWriteActivity.ClubReviewWriteData.clubName.run {
-
-                if((ReviewWriteActivity.ClubReviewWriteData.startYear.substring(0,2).toInt() > ReviewWriteActivity.ClubReviewWriteData.endYear.substring(0,2).toInt())
-                    || ((ReviewWriteActivity.ClubReviewWriteData.startYear.substring(0,2).toInt() == ReviewWriteActivity.ClubReviewWriteData.endYear.substring(0,2).toInt())
-                            && (ReviewWriteActivity.ClubReviewWriteData.startMonth.substring(0,
-                        ReviewWriteActivity.ClubReviewWriteData.startMonth.length-1).toInt() > ReviewWriteActivity.ClubReviewWriteData.endMonth.substring(0,
-                        ReviewWriteActivity.ClubReviewWriteData.endMonth.length-1).toInt()))){
-                    toast("활동시기 입력이 잘못되었습니다.")
-                }else {
-                    if (!viewModel.isRgstrClub && viewModel.reviewType == "club") {
-                        // 등록되어 있지 않는 동아리면 NonRgstrClubActivity 띄우기
-                        val intent = Intent(activity, NonRgstrClubActivity::class.java)
-                        intent.putExtra("clubName", this)
-                        startActivity(intent)
-                    } else {
-                        (activity as ReviewWriteActivity).toNextPage(position)
+            if(reviewWriteRealm != null){
+                with(reviewWriteRealm!!){
+                    if((this.startYear.substring(0,2).toInt() > this.endYear.substring(0,2).toInt())
+                        || ((this.startYear.substring(0,2).toInt() == this.endYear.substring(0,2).toInt())
+                                && (this.startMonth.substring(0,
+                            this.startMonth.length-1).toInt() > this.endMonth.substring(0,
+                            this.endMonth.length-1).toInt()))){
+                        toast("활동시기 입력이 잘못되었습니다.")
+                    }else {
+                        if (!viewModel.isRgstrClub && viewModel.reviewType == "club") {
+                            // 등록되어 있지 않는 동아리면 NonRgstrClubActivity 띄우기
+                            val intent = Intent(activity, NonRgstrClubActivity::class.java)
+                            intent.putExtra("clubName", this.clubName)
+                            startActivity(intent)
+                        } else {
+                            (activity as ReviewWriteActivity).toNextPage(position)
+                        }
                     }
                 }
             }
