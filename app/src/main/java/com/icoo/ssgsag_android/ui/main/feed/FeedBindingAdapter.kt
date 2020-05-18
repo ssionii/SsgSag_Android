@@ -145,10 +145,11 @@ fun setGlideTopCropImg(view: ImageView, imgUrl: String?) {
 @BindingAdapter("glideTopCropFeedImg")
 fun setGlideTopFeedImg(view: ImageView, imgUrl: String?) {
 
-
     Glide.with(view.context)
         .load(imgUrl)
-        .listener(createLoggerListener("피드 아이템"))
+        .placeholder(R.drawable.img_default)
+        .thumbnail(0.1f)
+        .error(R.drawable.img_default) //에러시 나올 이미지 적용
         .apply(RequestOptions.bitmapTransform(CropTransformation(381, 273, CropTransformation.CropType.TOP)))
         .into(view)
 }

@@ -14,9 +14,7 @@ class PosterRepositoryImpl(val api: NetworkService, val pref: PreferenceManager)
         .doOnError { throwable ->
             Log.e("error : ", throwable.message)
         }
-        .map {
-            Log.e("get all posters status", it.status.toString())
-            it.data}
+        .map { it.data}
 
     override fun getAllPostersField( category: Int, interestNum: String, sortType: Int, curPage: Int): Single<ArrayList<PosterDetail>>  = api
         .allPosterFieldResponse(pref.findPreference("TOKEN", ""), category, interestNum, sortType, curPage)

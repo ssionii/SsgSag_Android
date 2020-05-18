@@ -19,6 +19,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 import android.app.Activity
 import android.os.Bundle
 import com.adjust.sdk.LogLevel
+import io.realm.Realm
+import io.realm.RealmConfiguration
 
 
 class SsgSagApplication : Application() {
@@ -67,17 +69,15 @@ class SsgSagApplication : Application() {
 
         initAdjustSetting()
 
-        // realm
-        /*
+
         Realm.init(this)
         val config : RealmConfiguration = RealmConfiguration.Builder()
-            .clubName("MyPosterㅗㅑ.realm")
-            .schemaVersion(0)
+            .name("appdb.realm")
+            .deleteRealmIfMigrationNeeded()
             .build()
 
         Realm.setDefaultConfiguration(config)
 
-         */
     }
 
     private fun initAdjustSetting(){

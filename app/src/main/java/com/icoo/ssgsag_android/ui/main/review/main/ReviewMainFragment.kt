@@ -3,6 +3,7 @@ package com.icoo.ssgsag_android.ui.main.review.main
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Point
+import android.net.Uri
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
@@ -127,12 +128,7 @@ class ReviewMainFragment : BaseFragment<FragmentReviewMainBinding, ReviewMainVie
         override fun onItemClick(url: String?) {
 
             if(url != "") {
-                val intent = Intent(activity!!, FeedWebActivity::class.java)
-                intent.putExtra("clubWebsite", url)
-                intent.putExtra("title", "")
-                intent.putExtra("from", "review")
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
                 startActivity(intent)
             }
 

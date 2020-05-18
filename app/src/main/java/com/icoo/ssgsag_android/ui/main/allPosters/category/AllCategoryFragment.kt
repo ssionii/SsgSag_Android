@@ -88,12 +88,12 @@ class AllCategoryFragment() : BaseFragment<FragmentAllCategoryBinding, AllCatego
                     curPage = 0
                     viewModel.getAllPosterField(field, curPage, category, isEnterprise)
 
-                    Log.e("field != 0", "getAllCategoryRv")
                     if(viewModel.posters.value != null)
                         notifyDataSetChanged()
                 }
             }
         })
+
 
         viewModel.refreshedPoster.observe(this, Observer { value ->
             (viewDataBinding.fragAllCategoryRv.adapter as? BaseRecyclerViewAdapter<Any, *>)?.run {
@@ -150,11 +150,9 @@ class AllCategoryFragment() : BaseFragment<FragmentAllCategoryBinding, AllCatego
                                 curPage = (position + 1) / 10
                                 if(field == 0) {
                                     viewModel.getAllPosterCategory(curPage)
-                                    Log.e("field == 0", "getAllPosterCategory")
                                 }
                                 else {
                                     viewModel.getAllPosterField(field, curPage, category, isEnterprise)
-                                    Log.e("field != 0", "getAllCategoryRv")
                                 }
                             }
                             if(viewModel.posters.value != null)
@@ -168,6 +166,7 @@ class AllCategoryFragment() : BaseFragment<FragmentAllCategoryBinding, AllCatego
 
             layoutManager = WrapContentLinearLayoutManager()
         }
+
     }
 
     override fun onItemClicked(item: Any?, position: Int?) {

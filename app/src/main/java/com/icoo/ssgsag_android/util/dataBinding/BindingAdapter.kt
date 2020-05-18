@@ -12,6 +12,7 @@ import androidx.core.graphics.drawable.toDrawable
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.Resource
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.request.RequestOptions
@@ -66,11 +67,17 @@ fun setNoDataDirective(view: TextView, data: List<Any>?) {
 
 @BindingAdapter("glideImg")
 fun setGlideImg(view: ImageView, imgUrl: String?) {
+
+    val requestOptions = RequestOptions
+        .skipMemoryCacheOf(false)//memory cache 사용
+        .diskCacheStrategy(DiskCacheStrategy.NONE)//disk cache 사용하지 않음
+
     Glide.with(view.context)
         .load(imgUrl)
         .placeholder(R.drawable.img_default)
         .thumbnail(0.1f)
         .error(R.drawable.img_default) //에러시 나올 이미지 적용
+        .apply(requestOptions)
         .into(view)
 }
 

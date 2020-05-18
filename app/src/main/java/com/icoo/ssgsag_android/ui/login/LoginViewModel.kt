@@ -44,8 +44,7 @@ class LoginViewModel (
         jsonObject.put("accessToken", accessToken)
         jsonObject.put("loginType", loginType)
         jsonObject.put("osType", 0)
-        jsonObject.put("uuid", LoginActivity.GetLogin.uuid)
-        Log.e("uuid", LoginActivity.GetLogin.uuid)
+//        jsonObject.put("uuid", LoginActivity.GetLogin.uuid)
 
         val body = JsonParser().parse(jsonObject.toString()) as JsonObject
 

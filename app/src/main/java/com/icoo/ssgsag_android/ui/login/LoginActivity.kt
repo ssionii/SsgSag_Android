@@ -19,6 +19,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseActivity
+import com.icoo.ssgsag_android.data.model.user.DeviceInfo
 import com.icoo.ssgsag_android.databinding.ActivityLoginBinding
 import com.kakao.auth.ISessionCallback
 import com.kakao.auth.Session
@@ -32,6 +33,7 @@ import com.nhn.android.naverlogin.OAuthLogin
 import com.nhn.android.naverlogin.OAuthLoginHandler
 import com.nhn.android.naverlogin.ui.view.OAuthLoginButton
 import io.reactivex.disposables.CompositeDisposable
+import io.realm.Realm
 import org.jetbrains.anko.toast
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -41,6 +43,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(){
     override val viewModel: LoginViewModel by viewModel()
 
     internal val disposable = CompositeDisposable()
+    val realm = Realm.getDefaultInstance()
 
     override fun onStop() {
         super.onStop()
@@ -48,12 +51,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(){
     }
 
     val RECORD_REQUEST_CODE = 1000
-
-    object GetLogin {
-        var token =""
-        var loginType: Int = 0 // 카카오: 0, 네이버: 1
-        var uuid =""
-    }
 
     // client 정보
     private val OAUTH_CLIENT_ID = "jsLE7cET_smOvsjkJYSc"
@@ -74,12 +71,12 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(){
 
         var uuid = getUuid()
         if(uuid != "") { // 권한을 받은 경우
-            GetLogin.uuid = uuid
 
-            Log.e("get uuid", uuid)
+            val _uuid = uuid
+            setDeviceInfoUuid(_uuid)
         }else{
-//            toast("해당 앱을 이용할 수 없는 기기입니다.")
 
+//            toast("해당 앱을 이용할 수 없는 기기입니다.")
         }
 
         // naver
@@ -126,11 +123,13 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(){
                 }
 
                 override fun onSuccess(response: MeV2Response) {
-                    GetLogin.token = Session.getCurrentSession().accessToken
-                    GetLogin.loginType = 0
-                    Log.e("KAKAOTOKEN", "" + Session.getCurrentSession().accessToken)
 
-                    viewModel.login(GetLogin.token, GetLogin.loginType)
+                    setDeviceInfoToken(Session.getCurrentSession().accessToken)
+                    setDeviceInfoLoginType(0)
+
+                    val realmDeviceInfo = realm.where(DeviceInfo::class.java).equalTo("id", 1 as Int).findFirst()
+                    viewModel.login(realmDeviceInfo!!.token, realmDeviceInfo!!.loginType)
+
                 }
             })
         }
@@ -225,14 +224,12 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(){
     object : OAuthLoginHandler() {
         override fun run(success: Boolean) {
             if (success) {
-                GetLogin.token = naverOAuthLoginInstance!!.getAccessToken(naverContext)
-                Log.e("naver login token", GetLogin.token)
-//                val refreshToken = mOAuthLoginInstance!!.getRefreshToken(mContext)
-//                val expiresAt = mOAuthLoginInstance!!.getExpiresAt(mContext)
-//                val tokenType = mOAuthLoginInstance!!.getTokenType(mContext)
-                Log.d("NAVER!", "" + GetLogin.token)
-                GetLogin.loginType =1
-                viewModel.login(GetLogin.token, GetLogin.loginType)
+                setDeviceInfoToken(naverOAuthLoginInstance!!.getAccessToken(naverContext))
+                setDeviceInfoLoginType(1)
+
+                val realmDeviceInfo = realm.where(DeviceInfo::class.java).equalTo("id", 1 as Int).findFirst()
+
+               viewModel.login(realmDeviceInfo!!.token, realmDeviceInfo!!.loginType)
             } else {
                 val errorCode = naverOAuthLoginInstance!!.getLastErrorCode(naverContext).code
                 val errorDesc = naverOAuthLoginInstance!!.getLastErrorDesc(naverContext)
@@ -266,5 +263,44 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(){
             startActivity(intent)
             finishAffinity()
         })
+    }
+
+    fun setDeviceInfoToken(token: String){
+        realm.beginTransaction()
+        val realmDeviceInfo = realm.where(DeviceInfo::class.java).equalTo("id", 1 as Int).findFirst()
+        if(realmDeviceInfo != null){
+            realmDeviceInfo.token = token
+        }else{
+            Log.e("Realm setToken error","id가 1인 realmDeviceInfo가 없습니다.")
+        }
+        realm.commitTransaction()
+    }
+
+    fun setDeviceInfoLoginType(loginType: Int){
+        realm.beginTransaction()
+        val realmDeviceInfo = realm.where(DeviceInfo::class.java).equalTo("id", 1 as Int).findFirst()
+        if(realmDeviceInfo != null){
+            realmDeviceInfo.loginType = loginType
+        }else{
+            Log.e("Realm loginType error","id가 1인 realmDeviceInfo가 없습니다.")
+        }
+        realm.commitTransaction()
+    }
+
+    fun setDeviceInfoUuid(uuid : String){
+        realm.beginTransaction()
+        val realmDeviceInfo = realm.where(DeviceInfo::class.java).equalTo("id", 1 as Int).findFirst()
+        if(realmDeviceInfo != null){
+            realmDeviceInfo.uuid = uuid
+        }else{
+            val realmObject = realm.createObject(DeviceInfo::class.java)
+            realmObject.apply{
+                this.id = 1
+                this.uuid = uuid
+            }
+
+            Log.e("Realm uuid","realm 객체 새로 생성")
+        }
+        realm.commitTransaction()
     }
 }

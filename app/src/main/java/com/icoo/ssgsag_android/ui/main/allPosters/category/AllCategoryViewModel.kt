@@ -60,11 +60,12 @@ class AllCategoryViewModel(
             .observeOn(schedulerProvider.mainThread())
             .subscribe({
                 it.run {
-                    _posters.setValue(this)
                     if(this.size == 0){
                         _empty.setValue(true)
-                    }else
+                    }else {
                         _empty.setValue(false)
+                        _posters.setValue(this)
+                    }
                 }
             }, {
                 _empty.postValue(false)

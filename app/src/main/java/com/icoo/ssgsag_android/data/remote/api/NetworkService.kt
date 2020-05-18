@@ -214,7 +214,6 @@ interface NetworkService {
     ): Single<ScheduleResponse>
     //일정 지원 완료
     //일정 삭제
-
     @HTTP(method = "DELETE",path ="/todo", hasBody = true)
     fun deletePoster(
         @Header("Authorization") token: String,

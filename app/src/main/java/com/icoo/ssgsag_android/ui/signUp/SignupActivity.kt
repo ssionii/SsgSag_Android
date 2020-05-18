@@ -25,6 +25,7 @@ import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseActivity
+import com.icoo.ssgsag_android.data.model.user.DeviceInfo
 import com.icoo.ssgsag_android.databinding.ActivitySignupBinding
 import com.icoo.ssgsag_android.ui.login.LoginActivity
 import com.icoo.ssgsag_android.ui.main.myPage.serviceInfo.privacy.PrivacyActivity
@@ -34,6 +35,8 @@ import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import com.igaworks.v2.abxExtensionApi.AbxCommon
 import com.igaworks.v2.core.AdBrixRm
 import io.reactivex.disposables.CompositeDisposable
+import io.realm.Realm
+import io.realm.RealmObject
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 import org.json.JSONObject
@@ -77,6 +80,9 @@ class SignupActivity : BaseActivity<ActivitySignupBinding, SignupViewModel>() {
 
     internal val disposable = CompositeDisposable()
 
+    val realm = Realm.getDefaultInstance()
+    lateinit var realmDeviceInfo : DeviceInfo
+
     override fun onStop() {
         super.onStop()
         disposable.clear()
@@ -87,6 +93,8 @@ class SignupActivity : BaseActivity<ActivitySignupBinding, SignupViewModel>() {
         viewDataBinding.vm = viewModel
 
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
+
+        realmDeviceInfo = realm.where(DeviceInfo::class.java).equalTo("id", 1 as Int).findFirst()!!
 
         setButton()
         checkNicknameValidate()
@@ -307,18 +315,8 @@ class SignupActivity : BaseActivity<ActivitySignupBinding, SignupViewModel>() {
             toast("생년월일을 6자리로 입력해주세요")
         }
 
-        /*
-        if (patternNickName.matcher(GetSignupProfile.nickname).matches()) {
-            checkNickName = true
-        } else {
-            checkNickName = false
-            toast("닉네임은 2자에서 10자 사이로 한글, 영문, 숫자로만 입력해주세요")
-        }*/
-
-
         for (schoolName in univList) {
             if (schoolName == GetSignupProfile.school) {
-                Log.d("리스트에학교이름체크", "" + schoolName)
                 checkSchoolList = true
                 break
             } else
@@ -507,9 +505,9 @@ class SignupActivity : BaseActivity<ActivitySignupBinding, SignupViewModel>() {
         val jsonObject = JSONObject()
 
         jsonObject.put("userNickname", GetSignupProfile.nickname)
-        jsonObject.put("signupType", LoginActivity.GetLogin.loginType)
-        jsonObject.put("accessToken", LoginActivity.GetLogin.token)
-        jsonObject.put("uuid", LoginActivity.GetLogin.uuid)
+        jsonObject.put("signupType", realmDeviceInfo.loginType)
+        jsonObject.put("accessToken", realmDeviceInfo.token)
+        jsonObject.put("uuid", realmDeviceInfo.uuid)
         jsonObject.put("userUniv", GetSignupProfile.school)
         jsonObject.put("userMajor", GetSignupProfile.major)
         jsonObject.put("userStudentNum", GetSignupProfile.stduentNumber)
@@ -525,8 +523,8 @@ class SignupActivity : BaseActivity<ActivitySignupBinding, SignupViewModel>() {
 
         viewModel.loginToken.observe(this, androidx.lifecycle.Observer {
             viewModel.login(
-                LoginActivity.GetLogin.token,
-                LoginActivity.GetLogin.loginType
+                realmDeviceInfo.token,
+                realmDeviceInfo.loginType
             )
 
             //adbrix
@@ -534,8 +532,8 @@ class SignupActivity : BaseActivity<ActivitySignupBinding, SignupViewModel>() {
                 // 회원가입 이벤트 추가 정보를 설정합니다.
                 val signUpAttr = AdBrixRm.AttrModel()
                     .setAttrs("userNickname",GetSignupProfile.nickname)
-                    .setAttrs("accessToken",LoginActivity.GetLogin.token )
-                    .setAttrs("uuid", LoginActivity.GetLogin.uuid)
+                    .setAttrs("accessToken",realmDeviceInfo.token )
+                    .setAttrs("uuid", realmDeviceInfo.uuid)
                     .setAttrs("userUniv", GetSignupProfile.school)
                     .setAttrs("userMajor", GetSignupProfile.major)
                     .setAttrs("userStudentNum", GetSignupProfile.stduentNumber)

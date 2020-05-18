@@ -18,7 +18,6 @@ interface PosterRepository {
     fun getTodaySsgSag(): Single<TodaySsgSag>
     fun getUserCnt():Single<Int>
 
-
     //comment
     fun writeComment(body: JsonObject): Single<Int>
     fun editComment(body: JsonObject): Single<Int>
