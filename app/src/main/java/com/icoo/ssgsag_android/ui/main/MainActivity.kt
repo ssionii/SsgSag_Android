@@ -26,17 +26,16 @@ import com.icoo.ssgsag_android.ui.main.ssgSag.SsgSagViewModel
 import com.icoo.ssgsag_android.util.listener.BackPressHandler
 import com.igaworks.v2.core.AdBrixRm
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import android.app.AlarmManager
+import android.app.PendingIntent
+
+
 
 class MainActivity : BaseActivity<ActivityMainBinding, SsgSagViewModel>() {
 
     override val layoutResID: Int
         get() = R.layout.activity_main
     override val viewModel: SsgSagViewModel by viewModel()
-
-    object mainActivityFragment {
-        var mainFragment = MainFragment()
-        lateinit var categoryFragment: AllCategoryFragment
-    }
 
     object mainActivityContext {
         lateinit var mainContext: Context
@@ -92,14 +91,13 @@ class MainActivity : BaseActivity<ActivityMainBinding, SsgSagViewModel>() {
         viewDataBinding.actMainVp.run {
             adapter = BasePagerAdapter(supportFragmentManager).apply {
                 addFragment(FeedFragment())
-                addFragment(mainActivityFragment.mainFragment)
+                addFragment(MainFragment())
                 addFragment(CalendarFragment())
                 addFragment(ReviewMainFragment())
                 isSaveEnabled = false
             }
             currentItem = 1
             offscreenPageLimit = 3
-            // todo: review 추가하면 3으로 늘리기
         }
     }
 
@@ -175,6 +173,24 @@ class MainActivity : BaseActivity<ActivityMainBinding, SsgSagViewModel>() {
         }else{
             backPressHandler.onBackPressed()
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        // 백그라운드로 가면 아예 프로세스 다시 시작
+//        val mStartActivity = Intent(this, MainActivity::class.java)
+//        val mPendingIntentId = 123456
+//        val mPendingIntent = PendingIntent.getActivity(
+//            this,
+//            mPendingIntentId,
+//            mStartActivity,
+//            PendingIntent.FLAG_CANCEL_CURRENT
+//        )
+//        val mgr = this.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+//        mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent)
+//        System.exit(0)
+
     }
 
     companion object {

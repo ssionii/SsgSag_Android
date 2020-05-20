@@ -5,25 +5,34 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.view.View.*
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 
 import androidx.fragment.app.FragmentTransaction
+import androidx.viewpager.widget.ViewPager
 import com.google.android.material.color.MaterialColors.getColor
+import com.google.android.material.tabs.TabLayout
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseFragment
+import com.icoo.ssgsag_android.base.BasePagerAdapter
 import com.icoo.ssgsag_android.data.local.pref.SharedPreferenceController
 import com.icoo.ssgsag_android.databinding.FragmentMainBinding
 import com.icoo.ssgsag_android.ui.login.LoginActivity
 import com.icoo.ssgsag_android.ui.main.allPosters.AllPostersFragment
 import com.icoo.ssgsag_android.ui.main.allPosters.search.SearchActivity
+import com.icoo.ssgsag_android.ui.main.calendar.CalendarFragment
+import com.icoo.ssgsag_android.ui.main.feed.FeedFragment
 import com.icoo.ssgsag_android.ui.main.myPage.MyPageActivity
+import com.icoo.ssgsag_android.ui.main.review.main.ReviewMainFragment
 import com.icoo.ssgsag_android.ui.main.ssgSag.SsgSagFragment
 import com.icoo.ssgsag_android.ui.main.ssgSag.filter.SsgSagFilterActivity
 import com.icoo.ssgsag_android.ui.main.subscribe.SubscribeActivity
 import com.icoo.ssgsag_android.ui.signUp.SignupActivity
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
+import com.icoo.ssgsag_android.util.view.NonSwipeViewPager
 import org.jetbrains.anko.backgroundColor
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.support.v4.startActivity
@@ -38,35 +47,58 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>() {
         get() = R.layout.fragment_main
     override val viewModel: MainViewModel by viewModel()
 
-    object mainFragment {
-        lateinit var ssgSagFragment: SsgSagFragment
-        lateinit var allPostersFragment : AllPostersFragment
-    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewDataBinding.vm = viewModel
 
-        changeFragment("ssgsag")
-        viewModel.setIsSsgSagFragment(true)
-
+        setVp()
+        setTabLayout()
         setButton()
     }
 
+    private fun setVp(){
+
+        viewDataBinding.fragMainVp.run {
+            adapter = BasePagerAdapter(fragmentManager!!).apply {
+                addFragment(AllPostersFragment())
+                addFragment(SsgSagFragment())
+                isSaveEnabled = false
+            }
+            currentItem = 1
+            offscreenPageLimit = 1
+
+            addOnPageChangeListener(object: ViewPager.OnPageChangeListener{
+                override fun onPageScrollStateChanged(state: Int) {
+
+                }
+
+                override fun onPageScrolled(
+                    position: Int,
+                    positionOffset: Float,
+                    positionOffsetPixels: Int
+                ) {
+
+                }
+
+                override fun onPageSelected(position: Int) {
+                    when(position){
+                        0 ->{
+                            viewDataBinding.fragMainIvFilter.visibility = GONE
+                            viewDataBinding.fragMainIvSearch.visibility = VISIBLE
+                        }
+                        else ->{
+                            viewDataBinding.fragMainIvFilter.visibility = VISIBLE
+                            viewDataBinding.fragMainIvSearch.visibility = GONE
+                        }
+                    }
+                }
+            })
+        }
+
+    }
+
     private fun setButton(){
-
-        // 전체
-        viewDataBinding.fragMainTvAll.setSafeOnClickListener {
-            changeFragment("all")
-            viewModel.setIsSsgSagFragment(false)
-
-        }
-
-        // 추천
-        viewDataBinding.fragMainTvRecommend.setSafeOnClickListener {
-            changeFragment("ssgsag")
-            viewModel.setIsSsgSagFragment(true)
-        }
 
         // 마이페이지
         viewDataBinding.fragMainIvMypage.setSafeOnClickListener {
@@ -91,34 +123,18 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>() {
         }
     }
 
-    private fun changeFragment(f: String){
-        when(f){
-            "ssgsag" -> {
-                if(fragmentManager!!.findFragmentByTag(f) != null)
-                    fragmentManager!!.beginTransaction().show(fragmentManager!!.findFragmentByTag(f)!!).commit()
-                else {
-                    mainFragment.ssgSagFragment = SsgSagFragment()
-                    fragmentManager!!.beginTransaction().add(R.id.frag_main_fl, mainFragment.ssgSagFragment , f).commit()
-                }
-                if(fragmentManager!!.findFragmentByTag("all") != null)
-                    fragmentManager!!.beginTransaction().hide(fragmentManager!!.findFragmentByTag("all")!!).commit()
+    private fun setTabLayout() {
+        //TabLayout
+        val bottomNavigationLayout: View =
+            LayoutInflater.from(activity!!).inflate(R.layout.navigation_ssgsag, null)
 
-                viewDataBinding.fragMainIvFilter.visibility = VISIBLE
-                viewDataBinding.fragMainIvSearch.visibility = GONE
-            }
-            "all" ->{
-                if(fragmentManager!!.findFragmentByTag(f) != null)
-                    fragmentManager!!.beginTransaction().show(fragmentManager!!.findFragmentByTag(f)!!).commit()
-                else {
-                    mainFragment.allPostersFragment = AllPostersFragment()
-                    fragmentManager!!.beginTransaction().add(R.id.frag_main_fl, mainFragment.allPostersFragment, f).commit()
-                }
-                if(fragmentManager!!.findFragmentByTag("ssgsag") != null)
-                    fragmentManager!!.beginTransaction().hide(fragmentManager!!.findFragmentByTag("ssgsag")!!).commit()
-
-                viewDataBinding.fragMainIvFilter.visibility = GONE
-                viewDataBinding.fragMainIvSearch.visibility = VISIBLE
-            }
+        viewDataBinding.fragMainTl.run {
+            setupWithViewPager(viewDataBinding.fragMainVp)
+            getTabAt(0)!!.customView =
+                bottomNavigationLayout.findViewById(R.id.navi_ssgsag_cl_all) as ConstraintLayout
+            getTabAt(1)!!.customView =
+                bottomNavigationLayout.findViewById(R.id.navi_ssgsag_cl_ssgsag) as ConstraintLayout
+            setTabRippleColor(null)
         }
     }
 }

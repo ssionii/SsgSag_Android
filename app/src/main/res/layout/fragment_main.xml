@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-        <RelativeLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/frag_main_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
@@ -29,52 +29,19 @@
                     android:id="@+id/frag_main_iv_mypage"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:src="@drawable/profile"/>
+                    android:src="@drawable/profile"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
 
-            <RelativeLayout
+            <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/frag_main_tl"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true">
-
-                <TextView
-                        android:id="@+id/frag_main_tv_all"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="전체"
-                        android:textColor="#aaaaaa"
-                        android:textSize="14sp"
-                        android:textAlignment="center"
-                        android:fontFamily="@font/noto_sans_kr_medium"
-                        android:layout_centerVertical="true"
-                        android:layout_marginHorizontal="15dp"
-                        android:layout_gravity="center"
-                        android:letterSpacing="0.1"
-                        tabType="@{!vm.isSsgSagFragment.booleanValue()}"/>
-                <View
-                        android:layout_width="1dp"
-                        android:layout_height="17dp"
-                        android:background="#dddddd"
-                        android:layout_centerInParent="true"/>
-
-                <TextView
-                        android:id="@+id/frag_main_tv_recommend"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:layout_centerHorizontal="true"
-                        android:layout_toRightOf="@+id/frag_main_tv_all"
-                        android:layout_marginLeft="10dp"
-                        android:text="추천"
-                        android:textColor="#656ef0"
-                        android:textSize="14sp"
-                        android:textAlignment="center"
-                        android:fontFamily="@font/noto_sans_kr_medium"
-                        android:layout_centerVertical="true"
-                        android:layout_marginHorizontal="18dp"
-                        android:letterSpacing="0.1"
-                        android:layout_gravity="center"
-                        tabType="@{vm.isSsgSagFragment.booleanValue()}"/>
-            </RelativeLayout>
+                    android:layout_height="@dimen/main_navi_height"
+                    app:tabIndicator="@null"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
 
             <ImageView
                     android:id="@+id/frag_main_iv_filter"
@@ -82,22 +49,32 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/filter"
                     android:layout_alignParentRight="true"
-                    android:layout_marginRight="4dp"/>
+                    android:layout_marginRight="4dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
 
             <ImageView
+                    android:visibility="gone"
                     android:id="@+id/frag_main_iv_search"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/search_gray"
                     android:layout_alignParentRight="true"
-                    android:layout_marginRight="4dp"/>
+                    android:layout_marginRight="4dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
 
-        </RelativeLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <FrameLayout
-                android:id="@+id/frag_main_fl"
+        <com.icoo.ssgsag_android.util.view.NonSwipeViewPager
+                android:id="@+id/frag_main_vp"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"/>
+
+<!--        <FrameLayout-->
+<!--                android:id="@+id/frag_main_fl"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent" />-->
     </LinearLayout>
 
 
