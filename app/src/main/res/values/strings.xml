@@ -81,7 +81,7 @@
     <string name="review_edit_dialog_text">후기 수정 시 재승인이 필요합니다.\n신중히 결정해주세요 😭</string>
 
     <string name="review_main_title">대학생활 후기</string>
-    <string name="review_main_ment">후기 작성하고\n아이패드/에어팟 받자 😎</string>
+    <string name="review_main_ment">📝 활동후기 보러가기</string>
     <string name="review_main_club">🕺 동아리 후기</string>
     <string name="review_main_act">💃 대외활동 후기</string>
     <string name="review_main_intern">👩‍💻 인턴 후기</string>

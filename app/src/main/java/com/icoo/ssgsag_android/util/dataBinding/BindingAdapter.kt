@@ -1,4 +1,6 @@
 package com.icoo.ssgsag_android.util.dataBinding
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.util.Log
 import android.view.View
 import android.view.View.GONE
@@ -12,9 +14,12 @@ import androidx.core.graphics.drawable.toDrawable
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.load.engine.Resource
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseRecyclerViewAdapter
@@ -79,6 +84,25 @@ fun setGlideImg(view: ImageView, imgUrl: String?) {
         .error(R.drawable.img_default) //에러시 나올 이미지 적용
         .apply(requestOptions)
         .into(view)
+
+}
+
+@BindingAdapter("allPosterCardGlideImg")
+fun setAllPosterCardGlideImg(view: ImageView, imgUrl: String?) {
+
+    val requestOptions = RequestOptions
+        .skipMemoryCacheOf(false)//memory cache 사용
+        .diskCacheStrategy(DiskCacheStrategy.NONE)//disk cache 사용하지 않음
+
+    Glide.with(view.context)
+        .load(imgUrl)
+        .placeholder(R.drawable.img_default)
+        .thumbnail(0.1f)
+        .error(R.drawable.img_default) //에러시 나올 이미지 적용
+        .listener(createLoggerListener("original"))
+        .apply(requestOptions)
+        .into(view)
+
 }
 
 @BindingAdapter("imgResId")
@@ -304,3 +328,31 @@ fun setConstraintLayoutVisibility(layout: ConstraintLayout, bool: Boolean){
         layout.visibility = GONE
 }
 
+
+private fun createLoggerListener(name: String): RequestListener<Drawable> {
+    return object : RequestListener<Drawable> {
+        override fun onLoadFailed(e: GlideException?,
+                                  model: Any?,
+                                  target: com.bumptech.glide.request.target.Target<Drawable>?,
+                                  isFirstResource: Boolean): Boolean {
+            return false
+        }
+
+        override fun onResourceReady(resource: Drawable?,
+                                     model: Any?,
+                                     target: com.bumptech.glide.request.target.Target<Drawable>?,
+                                     dataSource: DataSource?,
+                                     isFirstResource: Boolean): Boolean {
+            if (resource is BitmapDrawable) {
+                val bitmap = resource.bitmap
+                Log.d("GlideApp",
+                    String.format("Ready %s bitmap %,d bytes, size: %d x %d",
+                        name,
+                        bitmap.byteCount,
+                        bitmap.width,
+                        bitmap.height))
+            }
+            return false
+        }
+    }
+}

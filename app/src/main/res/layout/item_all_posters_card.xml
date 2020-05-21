@@ -31,8 +31,9 @@
                        android:layout_height="match_parent"
                        android:adjustViewBounds="true"
                        android:scaleType="centerCrop"
-                       app:glideImg="@{poster.thumbPhotoUrl}"
-                       tools:src="@drawable/img_poster" />
+                       app:allPosterCardGlideImg="@{poster.thumbPhotoUrl}"
+                       tools:src="@drawable/img_poster"
+                       />
            </androidx.cardview.widget.CardView>
 
            <androidx.cardview.widget.CardView
