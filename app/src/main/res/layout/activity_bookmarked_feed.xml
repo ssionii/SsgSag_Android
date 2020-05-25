@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
                 name="vm"
                 type="com.icoo.ssgsag_android.ui.main.feed.FeedViewModel" />
     </data>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white">
 
     <RelativeLayout
+            android:id="@+id/act_bookmarked_feed_rl_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="48dp">
+            android:layout_height="@dimen/toolbar_height"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -32,6 +36,8 @@
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
+            app:layout_constraintTop_toBottomOf="@id/act_bookmarked_feed_rl_toolbar"
+            app:layout_constraintStart_toStartOf="parent"
             android:id="@+id/act_bookmarked_feed_rv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -40,6 +46,36 @@
             android:clipToPadding="false"
             android:paddingTop="16dp"
             android:paddingBottom="16dp"/>
-</LinearLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/act_bookmarked_feed_cl_empty"
+            app:layout_constraintTop_toBottomOf="@id/act_bookmarked_feed_rl_toolbar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <LinearLayout
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/img_empty"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/grey_1"
+                    android:fontFamily="@font/noto_sans_kr_regular"
+                    android:textSize="12sp"
+                    android:text="북마크한 뉴스가 없습니다."
+                    android:layout_gravity="center"
+                    android:layout_marginTop="12dp"/>
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

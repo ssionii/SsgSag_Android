@@ -7,8 +7,6 @@ import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseActivity
 import com.icoo.ssgsag_android.databinding.ActivityMyPageBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import android.app.Activity
-import android.content.pm.ServiceInfo
 import com.icoo.ssgsag_android.ui.main.myPage.accountMgt.AccountMgtActivity
 import com.icoo.ssgsag_android.ui.main.myPage.career.CareerActivity
 import com.icoo.ssgsag_android.ui.main.myPage.contact.ContactActivity

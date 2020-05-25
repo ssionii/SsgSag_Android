@@ -46,7 +46,9 @@ class ReviewWriteViewModel(
     var reviewType = ""
     var clubIdx = -1
     var isRgstrClub = false
+    var isAlreadyWrite = false
     var showEvent = false
+
 
     init {
         _isNotRgstr.postValue(false)
@@ -92,6 +94,18 @@ class ReviewWriteViewModel(
             .subscribe({
                 _clubSearchResult.postValue(it)
             }, {
+                it.printStackTrace()
+            })
+        )
+    }
+
+    fun getAlreadyWrite(){
+        addDisposable(repository.getAlreadyWrite(clubIdx)
+            .subscribeOn(schedulerProvider.io())
+            .observeOn(schedulerProvider.mainThread())
+            .subscribe({
+                isAlreadyWrite = it
+            },{
                 it.printStackTrace()
             })
         )

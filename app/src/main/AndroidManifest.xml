@@ -101,6 +101,7 @@
                 android:windowSoftInputMode="adjustResize">
         </activity>
         <activity android:name=".ui.main.allPosters.category.AllCategoryActivity"/>
+        <activity android:name=".ui.main.feed.category.FeedCategoryActivity"/>
 
         <activity android:name=".ui.main.myPage.myReview.MyReviewActivity"/>
         <activity android:name=".ui.main.myPage.myReview.MyReviewDetailActivity"/>

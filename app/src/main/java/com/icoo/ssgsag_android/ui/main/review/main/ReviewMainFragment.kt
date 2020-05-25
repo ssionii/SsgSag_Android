@@ -53,32 +53,28 @@ class ReviewMainFragment : BaseFragment<FragmentReviewMainBinding, ReviewMainVie
 
     private fun setButton(){
 
-        Log.e("review main", "새로 호출")
-
         viewDataBinding.fragReviewMainRlClub.setSafeOnClickListener {
             clubReviewPageFragment = ReviewPageFragment()
             clubReviewPageFragment.reviewType = 1
 
-            fragmentManager!!.beginTransaction().add(R.id.frag_review_main_fl_container, clubReviewPageFragment, "club").addToBackStack(null).commit()
-
-
-            fragmentManager!!.beginTransaction().show(clubReviewPageFragment).commit()
+            childFragmentManager.beginTransaction().add(R.id.frag_review_main_fl_container, clubReviewPageFragment, "club").addToBackStack(null).commit()
+            childFragmentManager.beginTransaction().show(clubReviewPageFragment).commit()
         }
 
         viewDataBinding.fragReviewMainRlAct.setSafeOnClickListener {
             actReviewPageFragment = ReviewPageFragment()
             actReviewPageFragment.reviewType = 2
 
-            fragmentManager!!.beginTransaction().add(R.id.frag_review_main_fl_container, actReviewPageFragment, "act").addToBackStack(null).commit()
-            fragmentManager!!.beginTransaction().show(actReviewPageFragment).commit()
+            childFragmentManager.beginTransaction().add(R.id.frag_review_main_fl_container, actReviewPageFragment, "act").addToBackStack(null).commit()
+            childFragmentManager.beginTransaction().show(actReviewPageFragment).commit()
         }
 
         viewDataBinding.fragReviewMainRlIntern.setSafeOnClickListener {
             internReviewPageFragment = ReviewPageFragment()
             internReviewPageFragment.reviewType = 3
 
-            fragmentManager!!.beginTransaction().add(R.id.frag_review_main_fl_container, internReviewPageFragment, "intern").addToBackStack(null).commit()
-            fragmentManager!!.beginTransaction().show(internReviewPageFragment).commit()
+            childFragmentManager.beginTransaction().add(R.id.frag_review_main_fl_container, internReviewPageFragment, "intern").addToBackStack(null).commit()
+            childFragmentManager.beginTransaction().show(internReviewPageFragment).commit()
         }
 
         viewDataBinding.fragReviewMainIvMyPage.setSafeOnClickListener {
@@ -87,7 +83,6 @@ class ReviewMainFragment : BaseFragment<FragmentReviewMainBinding, ReviewMainVie
                 R.anim.anim_slide_in_left,
                 R.anim.anim_not_move
             )
-
         }
     }
 

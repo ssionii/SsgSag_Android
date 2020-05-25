@@ -121,7 +121,7 @@ class ReviewDetailActivity : BaseActivity<ActivityClubReviewDetailBinding, Revie
         viewDataBinding.actReviewDetailIvWrite.setSafeOnClickListener {
 
             if(viewModel.isAlreadyWrite){
-                toast("이미 후기를 작성하셨습니다.")
+                toast("이미 이 활동에 대해 후기를 하나 쓰셨네요! 새로운 후기를 남기시려면 기존 후기를 삭제해주세요 \uD83D\uDE02")
             }else {
                 val intent = Intent(this, HowWriteReviewActivity::class.java)
                 intent.apply {

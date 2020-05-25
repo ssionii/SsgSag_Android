@@ -2,6 +2,8 @@ package com.icoo.ssgsag_android.ui.main.feed.bookmark
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
@@ -66,6 +68,13 @@ class BookmarkedFeedActivity : BaseActivity<ActivityBookmarkedFeedBinding, FeedV
                     adapter = feedRecyclerViewAdapter
                     layoutManager = WrapContentLinearLayoutManager()
                 }
+            }
+
+
+            if(value.size == 0){
+                viewDataBinding.actBookmarkedFeedClEmpty.visibility = VISIBLE
+            }else{
+                viewDataBinding.actBookmarkedFeedClEmpty.visibility = GONE
             }
         })
 

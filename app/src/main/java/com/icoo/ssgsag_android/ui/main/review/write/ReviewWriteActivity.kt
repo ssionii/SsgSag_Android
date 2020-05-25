@@ -14,33 +14,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ReviewWriteActivity : BaseActivity<ActivityClubReviewWriteBinding, ReviewWriteViewModel>(){
 
-//    object ClubReviewWriteData {
-//        // 동아리 정보
-//        lateinit var clubName: String
-//        var univOrLocation = ""
-//        //var categoryList = mutableListOf<String>()
-//
-//        var fieldName = ""
-//
-//        var startYear = ""
-//        var startMonth = ""
-//        var endYear =""
-//        var endMonth =""
-//
-//        // 점수 평가
-//        var score0 = 0
-//        var score1 = 0
-//        var score2 = 0
-//        var score3 = 0
-//        var score4 = 0
-//
-//        // 간단 평가
-//        lateinit var oneLine: String
-//        lateinit var advantage: String
-//        lateinit var disadvantage: String
-//        var honeyTip =""
-//    }
-
     override val layoutResID: Int
         get() = R.layout.activity_club_review_write
     override val viewModel: ReviewWriteViewModel by viewModel()
@@ -69,7 +42,6 @@ class ReviewWriteActivity : BaseActivity<ActivityClubReviewWriteBinding, ReviewW
 
         if(intent.getStringExtra("from") == "reviewDetail"){
             setReviewWriteStringRealm("clubName", intent.getStringExtra("clubName"))
-//            ClubReviewWriteData.clubName = intent.getStringExtra("clubName")
             viewModel.clubIdx = intent.getIntExtra("clubIdx", -1)
         }
 

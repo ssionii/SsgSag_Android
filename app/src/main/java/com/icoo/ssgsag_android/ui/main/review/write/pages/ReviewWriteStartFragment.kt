@@ -27,6 +27,7 @@ import java.io.InputStream
 import java.util.*
 import kotlin.collections.ArrayList
 import org.jetbrains.anko.support.v4.toast
+import org.jetbrains.anko.toast
 
 
 class ReviewWriteStartFragment :  BaseFragment<FragmentReviewWriteStartBinding, ReviewWriteViewModel>() {
@@ -95,7 +96,6 @@ class ReviewWriteStartFragment :  BaseFragment<FragmentReviewWriteStartBinding, 
     override fun onResume() {
         super.onResume()
 
-
         (activity as ReviewWriteActivity).hideKeyboard(viewDataBinding.fragReviewWriteStartAtClubName)
     }
 
@@ -121,6 +121,7 @@ class ReviewWriteStartFragment :  BaseFragment<FragmentReviewWriteStartBinding, 
                         (activity as ReviewWriteActivity).setReviewWriteStringRealm("clubName", clubNameList[position])
                         viewModel.isRgstrClub = true
                         viewModel.clubIdx = value[position].clubIdx
+                        viewModel.getAlreadyWrite()
                         onDataCheck()
                     }
 
@@ -429,10 +430,13 @@ class ReviewWriteStartFragment :  BaseFragment<FragmentReviewWriteStartBinding, 
                         toast("활동시기 입력이 잘못되었습니다.")
                     }else {
                         if (!viewModel.isRgstrClub && viewModel.reviewType == "club") {
+
                             // 등록되어 있지 않는 동아리면 NonRgstrClubActivity 띄우기
                             val intent = Intent(activity, NonRgstrClubActivity::class.java)
                             intent.putExtra("clubName", this.clubName)
                             startActivity(intent)
+                        } else if(viewModel.isAlreadyWrite) {
+                            toast("이미 이 활동에 대해 후기를 하나 쓰셨네요! 새로운 후기를 남기시려면 기존 후기를 삭제해주세요 \uD83D\uDE02")
                         } else {
                             (activity as ReviewWriteActivity).toNextPage(position)
                         }

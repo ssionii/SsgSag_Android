@@ -21,7 +21,6 @@ class FeedViewModel(
     , private val schedulerProvider: SchedulerProvider
 ) : BaseViewModel() {
 
-
     private var categorySet = arrayListOf(
         Category(100, true, ""),
         Category(101, false, ""),
@@ -257,10 +256,8 @@ class FeedViewModel(
                             refreshedFeedPosition = position
                             refreshedFeedIdx = idx
                             refreshFeed()
-
-                            Log.e("position", position.toString())
-                            Log.e("refreshedFeedPosition", refreshedFeedPosition.toString())
                         }
+
                     }
 
                 }, {

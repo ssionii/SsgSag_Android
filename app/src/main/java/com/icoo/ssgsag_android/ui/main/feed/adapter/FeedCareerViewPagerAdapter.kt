@@ -8,18 +8,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat.startActivity
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.FragmentManager
 import androidx.viewpager.widget.PagerAdapter
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.data.model.feed.FeedCategory
 import com.icoo.ssgsag_android.databinding.RvFeedItemBinding
 import com.icoo.ssgsag_android.ui.main.feed.FeedViewModel
 import com.icoo.ssgsag_android.ui.main.feed.FeedWebActivity
-import com.icoo.ssgsag_android.ui.main.feed.category.FeedCategoryFragment
 import com.icoo.ssgsag_android.ui.main.feed.category.FeedCategoryRecyclerViewAdapter
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import com.icoo.ssgsag_android.util.view.NonScrollLinearLayoutManager
-import com.icoo.ssgsag_android.util.view.WrapContentLinearLayoutManager
 
 
 class FeedCareerViewPagerAdapter(

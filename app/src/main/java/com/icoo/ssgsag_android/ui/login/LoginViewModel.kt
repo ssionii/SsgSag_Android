@@ -42,12 +42,16 @@ class LoginViewModel (
     private val context = SsgSagApplication.getGlobalApplicationContext()
 
 
-    fun login(accessToken: String, loginType: Int, uuid: String){
+    fun login(accessToken: String, loginType: Int, uuid: String?){
         val jsonObject = JSONObject()
         jsonObject.put("accessToken", accessToken)
         jsonObject.put("loginType", loginType)
         jsonObject.put("osType", 0)
-        jsonObject.put("uuid",uuid)
+        if(uuid != null){
+            jsonObject.put("uuid",uuid)
+        }else{
+            jsonObject.put("uuid","")
+        }
 
         val body = JsonParser().parse(jsonObject.toString()) as JsonObject
 
@@ -94,9 +98,7 @@ class LoginViewModel (
                             val bundle = Bundle().apply { putString("param", param) }
                             _activityToStart.postValue(Pair(MainActivity::class, bundle))
                         }
-
-                    } else {
-                        Log.e("auto login fail", "fail!")
+                    } else if(this == 404){
                         SharedPreferenceController.setAuthorization(context, "")
                         _activityToStart.postValue(Pair(LoginActivity::class, null))
                     }

@@ -2,11 +2,8 @@ package com.icoo.ssgsag_android.ui.main.feed
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Point
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
-import android.widget.Toast
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseFragment
 import com.icoo.ssgsag_android.data.local.pref.SharedPreferenceController
@@ -14,31 +11,25 @@ import com.icoo.ssgsag_android.databinding.FragmentFeedPageBinding
 import com.icoo.ssgsag_android.ui.main.myPage.MyPageActivity
 import org.jetbrains.anko.startActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import android.view.Display
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.View.*
 import android.widget.RelativeLayout
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.marginLeft
 import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.SimpleItemAnimator
-import com.icoo.ssgsag_android.ui.login.LoginActivity
 import com.icoo.ssgsag_android.ui.main.MainActivity
 import com.icoo.ssgsag_android.ui.main.feed.adapter.FeedAnchorRecyclerViewAdapter
 import com.icoo.ssgsag_android.ui.main.feed.adapter.FeedBestCardViewPagerAdapter
 import com.icoo.ssgsag_android.ui.main.feed.adapter.FeedCareerViewPagerAdapter
-import com.icoo.ssgsag_android.ui.main.feed.adapter.FeedRecyclerViewAdapter
 import com.icoo.ssgsag_android.ui.main.feed.bookmark.BookmarkedFeedActivity
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import com.icoo.ssgsag_android.util.view.WrapContentLinearLayoutManager
 import org.jetbrains.anko.support.v4.startActivity
-import com.icoo.ssgsag_android.ui.main.feed.category.FeedCategoryFragment
+import com.icoo.ssgsag_android.ui.main.feed.category.FeedCategoryActivity
 import com.icoo.ssgsag_android.ui.main.feed.category.FeedCategoryRecyclerViewAdapter
-import com.icoo.ssgsag_android.util.view.NonScrollLinearLayoutManager
-import org.jetbrains.anko.support.v4.toast
 import org.jetbrains.anko.verticalMargin
 
 
@@ -52,7 +43,6 @@ class FeedFragment : BaseFragment<FragmentFeedPageBinding, FeedViewModel>(){
     private var feedCategoryRecyclerViewAdapter: FeedCategoryRecyclerViewAdapter? = null
     private var careerViewPagerAdapter : FeedCareerViewPagerAdapter? = null
 
-    lateinit var categoryFragment: FeedCategoryFragment
     private var viewTop = 0
 
 
@@ -224,11 +214,10 @@ class FeedFragment : BaseFragment<FragmentFeedPageBinding, FeedViewModel>(){
     private val onFeedCategoryClickListener =
         object : FeedCategoryRecyclerViewAdapter.OnFeedCategoryClickListener{
             override fun onMoreBtnClicked(categoryIdx: Int) {
-                categoryFragment = FeedCategoryFragment()
+                val intent = Intent(activity!!, FeedCategoryActivity::class.java)
+                intent.putExtra("categoryIdx", categoryIdx)
 
-                fragmentManager!!.beginTransaction().add(R.id.frag_feed_page_fl_container, categoryFragment).commit()
-                fragmentManager!!.beginTransaction().show(categoryFragment).commit()
-                categoryFragment.setCategoryIdx(categoryIdx)
+                startActivity(intent)
             }
         }
 

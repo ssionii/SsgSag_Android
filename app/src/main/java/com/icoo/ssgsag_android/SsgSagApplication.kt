@@ -36,7 +36,7 @@ class SsgSagApplication : Application() {
         val eduTitle = arrayListOf("주제","내용/커리큘럼","일정/기간")
         val scholarTitle = arrayListOf("인원/혜택", "대상 및 조건","기타사항")
 
-        var isRequiredUpdate = false
+        var isRequiredUpdate = true
 
         lateinit var instance: SsgSagApplication
 
@@ -45,7 +45,6 @@ class SsgSagApplication : Application() {
         }
 
     }
-
 
 
     override fun onCreate() {
