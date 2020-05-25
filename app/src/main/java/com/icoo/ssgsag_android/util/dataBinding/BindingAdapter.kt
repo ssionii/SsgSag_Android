@@ -99,7 +99,6 @@ fun setAllPosterCardGlideImg(view: ImageView, imgUrl: String?) {
         .placeholder(R.drawable.img_default)
         .thumbnail(0.1f)
         .error(R.drawable.img_default) //에러시 나올 이미지 적용
-        .listener(createLoggerListener("original"))
         .apply(requestOptions)
         .into(view)
 

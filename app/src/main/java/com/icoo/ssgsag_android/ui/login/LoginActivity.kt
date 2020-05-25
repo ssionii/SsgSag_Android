@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.os.Build
@@ -19,6 +20,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseActivity
+import com.icoo.ssgsag_android.data.local.pref.SharedPreferenceController
 import com.icoo.ssgsag_android.data.model.user.DeviceInfo
 import com.icoo.ssgsag_android.databinding.ActivityLoginBinding
 import com.kakao.auth.ISessionCallback
@@ -59,7 +61,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(){
 
     private var naverOAuthLoginInstance: OAuthLogin? = null
     private var naverContext: Context? = null
-    private var mOAuthLoginButton: OAuthLoginButton? = null
 
     private var kakaoCallback: SessionCallback? = null
 
@@ -69,9 +70,11 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(){
         viewDataBinding.vm = viewModel
         navigator()
 
+        Log.e("autoLoginFail", SharedPreferenceController.getAuthorization(this))
+
+
         var uuid = getUuid()
         if(uuid != "") { // 권한을 받은 경우
-
             val _uuid = uuid
             setDeviceInfoUuid(_uuid)
         }else{
@@ -128,7 +131,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(){
                     setDeviceInfoLoginType(0)
 
                     val realmDeviceInfo = realm.where(DeviceInfo::class.java).equalTo("id", 1 as Int).findFirst()
-                    viewModel.login(realmDeviceInfo!!.token, realmDeviceInfo!!.loginType)
+                    viewModel.login(realmDeviceInfo!!.token, realmDeviceInfo!!.loginType, realmDeviceInfo!!.uuid)
 
                 }
             })
@@ -145,7 +148,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(){
 
     // uuid 받아오기
     fun getUuid(): String {
-
         if (ContextCompat.checkSelfPermission(
                 this,
                 Manifest.permission.READ_PHONE_STATE
@@ -229,7 +231,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(){
 
                 val realmDeviceInfo = realm.where(DeviceInfo::class.java).equalTo("id", 1 as Int).findFirst()
 
-               viewModel.login(realmDeviceInfo!!.token, realmDeviceInfo!!.loginType)
+                viewModel.login(realmDeviceInfo!!.token, realmDeviceInfo!!.loginType, realmDeviceInfo!!.uuid)
             } else {
                 val errorCode = naverOAuthLoginInstance!!.getLastErrorCode(naverContext).code
                 val errorDesc = naverOAuthLoginInstance!!.getLastErrorDesc(naverContext)

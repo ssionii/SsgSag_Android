@@ -145,7 +145,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, LoginViewModel>() {
                 }else {
                     viewModel.autoLogin(intent.data.getQueryParameter("param"))
                 }
-            } // 로그인 페이지
+            }
             else {
                 startActivity<LoginActivity>()
                 finish()
@@ -236,12 +236,9 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, LoginViewModel>() {
 
         builder.apply{
             setAdapter(mAdapter)
-//            setContentWidth(ViewGroup.LayoutParams.MATCH_PARENT)
             setOverlayBackgroundResource(R.color.dialog_background)
             setContentBackgroundResource(R.drawable.header_dialog_plus_radius)
 
-//            val horizontalDpValue = 32
-//            val topDpValue = 69
             val horizontalDpValue = 32
             val topDpValue = 40
             val bottomDpValue = 48

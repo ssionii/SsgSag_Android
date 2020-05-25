@@ -55,14 +55,18 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>() {
         setVp()
         setTabLayout()
         setButton()
+
     }
 
     private fun setVp(){
 
         viewDataBinding.fragMainVp.run {
-            adapter = BasePagerAdapter(fragmentManager!!).apply {
-                addFragment(AllPostersFragment())
-                addFragment(SsgSagFragment())
+            adapter = BasePagerAdapter(childFragmentManager).apply {
+                val all = AllPostersFragment.newInstance()
+                val ssgsag = SsgSagFragment.newInstance()
+
+                addFragment(all)
+                addFragment(ssgsag)
                 isSaveEnabled = false
             }
             currentItem = 1

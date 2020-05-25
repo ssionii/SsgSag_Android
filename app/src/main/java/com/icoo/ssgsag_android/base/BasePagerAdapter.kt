@@ -4,7 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import android.os.Parcelable
-
+import android.util.Log
 
 
 class BasePagerAdapter(fm: FragmentManager): FragmentStatePagerAdapter(fm){

@@ -36,7 +36,7 @@ class SsgSagApplication : Application() {
         val eduTitle = arrayListOf("주제","내용/커리큘럼","일정/기간")
         val scholarTitle = arrayListOf("인원/혜택", "대상 및 조건","기타사항")
 
-        var isRequiredUpdate = true
+        var isRequiredUpdate = false
 
         lateinit var instance: SsgSagApplication
 
@@ -82,8 +82,8 @@ class SsgSagApplication : Application() {
 
     private fun initAdjustSetting(){
         val appToken = this.resources.getString(R.string.adjust_app_token)
-        val environment = AdjustConfig.ENVIRONMENT_SANDBOX
-        //val environment = AdjustConfig.ENVIRONMENT_PRODUCTION
+        // val environment = AdjustConfig.ENVIRONMENT_SANDBOX
+        val environment = AdjustConfig.ENVIRONMENT_PRODUCTION
         val config = AdjustConfig(this, appToken, environment)
         config.setAppSecret(2, 1858703771, 1353181520, 555890878, 1372324175)
         config.setLogLevel(LogLevel.WARN)

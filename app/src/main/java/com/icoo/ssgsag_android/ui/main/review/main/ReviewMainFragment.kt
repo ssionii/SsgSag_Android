@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Point
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.widget.Toast
@@ -51,6 +52,8 @@ class ReviewMainFragment : BaseFragment<FragmentReviewMainBinding, ReviewMainVie
     }
 
     private fun setButton(){
+
+        Log.e("review main", "새로 호출")
 
         viewDataBinding.fragReviewMainRlClub.setSafeOnClickListener {
             clubReviewPageFragment = ReviewPageFragment()

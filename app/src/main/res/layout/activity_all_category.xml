@@ -10,12 +10,11 @@
     </data>
 
     <LinearLayout
-            android:id="@+id/frag_all_category_ll_top_container"
+            android:id="@+id/act_all_category_ll_top_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:background="@color/white"
-            android:layout_marginBottom="@dimen/main_navi_height">
+            android:background="@color/white">
 
         <RelativeLayout
                 android:layout_width="match_parent"
@@ -23,12 +22,12 @@
                 android:paddingLeft="12dp">
 
             <ImageView
-                    android:id="@+id/frag_all_category_iv_back"
+                    android:id="@+id/act_all_category_iv_back"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/back"/>
             <TextView
-                    android:id="@+id/frag_all_category_tv_title"
+                    android:id="@+id/act_all_category_tv_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
@@ -47,7 +46,7 @@
                 android:layout_marginBottom="13dp">
             <androidx.cardview.widget.CardView
                     categoryVisibility="@{vm.category}"
-                    android:id="@+id/frag_all_category_cv_field"
+                    android:id="@+id/act_all_category_cv_field"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     categoryFieldBackground="@{vm.field}"
@@ -71,7 +70,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                    android:id="@+id/frag_all_category_cv_sort"
+                    android:id="@+id/act_all_category_cv_sort"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -81,21 +80,21 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
                     <ImageView
-                            android:id="@+id/frag_all_category_iv_v"
+                            android:id="@+id/act_all_category_iv_v"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             imgResId="@drawable/v_check"
                             android:layout_centerVertical="true"/>
 
                     <TextView
-                            android:id="@+id/frag_all_category_tv_sort"
+                            android:id="@+id/act_all_category_tv_sort"
                             categorySortType="@{vm.sortType}"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentStart="true"
                             android:layout_marginStart="18dp"
                             android:layout_marginLeft="2dp"
-                            android:layout_toRightOf="@+id/frag_all_category_iv_v"
+                            android:layout_toRightOf="@+id/act_all_category_iv_v"
                             android:fontFamily="@font/noto_sans_kr_medium"
                             android:textColor="#656ef0"
                             android:textSize="12sp"
@@ -107,7 +106,7 @@
         </RelativeLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/frag_all_category_rv"
+                android:id="@+id/act_all_category_rv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -115,7 +114,7 @@
 
         <RelativeLayout
                 android:visibility="gone"
-                android:id="@+id/frag_all_category_rl_empty"
+                android:id="@+id/act_all_category_rl_empty"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
             <LinearLayout

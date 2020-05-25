@@ -16,7 +16,6 @@ import com.icoo.ssgsag_android.databinding.ActivityMainBinding
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.data.local.pref.SharedPreferenceController
 import com.icoo.ssgsag_android.ui.main.MainActivity.mainActivityContext.mainContext
-import com.icoo.ssgsag_android.ui.main.allPosters.category.AllCategoryFragment
 import com.icoo.ssgsag_android.ui.main.calendar.CalendarFragment
 import com.icoo.ssgsag_android.ui.main.calendar.calendarDetail.CalendarDetailActivity
 import com.icoo.ssgsag_android.ui.main.coachmark.FilterCoachmarkDialogFragment

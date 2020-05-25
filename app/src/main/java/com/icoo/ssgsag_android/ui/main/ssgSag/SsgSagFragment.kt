@@ -28,6 +28,7 @@ import com.icoo.ssgsag_android.SsgSagApplication
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import com.facebook.appevents.AppEventsLogger
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.icoo.ssgsag_android.ui.main.allPosters.AllPostersFragment
 import com.icoo.ssgsag_android.ui.main.ssgSag.todaySwipePoster.TodaySwipePosterActivity
 import com.icoo.ssgsag_android.ui.main.ssgSag.todaySwipePoster.TodaySwipePosterViewModel
 
@@ -255,5 +256,10 @@ class SsgSagFragment : BaseFragment<FragmentSsgSagBinding, SsgSagViewModel>() {
 
     companion object {
         private val TAG = "SsgSagFragment"
+
+        fun newInstance(): SsgSagFragment {
+            val fragment = SsgSagFragment()
+            return fragment
+        }
     }
 }

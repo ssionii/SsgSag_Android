@@ -14,11 +14,13 @@ import com.icoo.ssgsag_android.base.BaseViewModel
 import com.icoo.ssgsag_android.data.local.pref.PreferenceManager
 import com.icoo.ssgsag_android.data.local.pref.SharedPreferenceController
 import com.icoo.ssgsag_android.data.model.login.LoginRepository
+import com.icoo.ssgsag_android.data.model.user.DeviceInfo
 import com.icoo.ssgsag_android.ui.main.MainActivity
 import com.icoo.ssgsag_android.ui.signUp.SignupActivity
 import com.icoo.ssgsag_android.util.scheduler.SchedulerProvider
 import com.igaworks.v2.core.AdBrixRm
 import io.reactivex.Observable
+import io.realm.Realm
 import org.json.JSONObject
 import java.lang.IllegalStateException
 import kotlin.reflect.KClass
@@ -36,15 +38,16 @@ class LoginViewModel (
     private val _isUpdated = MutableLiveData<Int>()
     val isUpdated: LiveData<Int> get() = _isUpdated
 
+    val realm = Realm.getDefaultInstance()
     private val context = SsgSagApplication.getGlobalApplicationContext()
 
 
-    fun login(accessToken: String, loginType: Int){
+    fun login(accessToken: String, loginType: Int, uuid: String){
         val jsonObject = JSONObject()
         jsonObject.put("accessToken", accessToken)
         jsonObject.put("loginType", loginType)
         jsonObject.put("osType", 0)
-//        jsonObject.put("uuid", LoginActivity.GetLogin.uuid)
+        jsonObject.put("uuid",uuid)
 
         val body = JsonParser().parse(jsonObject.toString()) as JsonObject
 
@@ -92,8 +95,11 @@ class LoginViewModel (
                             _activityToStart.postValue(Pair(MainActivity::class, bundle))
                         }
 
-                    } else
+                    } else {
+                        Log.e("auto login fail", "fail!")
+                        SharedPreferenceController.setAuthorization(context, "")
                         _activityToStart.postValue(Pair(LoginActivity::class, null))
+                    }
                 }
 
             }) {
@@ -127,7 +133,7 @@ class LoginViewModel (
                 }
 
             }) {
-                Log.e("autoLogin fail", it.toString())
+                Log.e("getUpdate fail", it.toString())
             })
     }
 

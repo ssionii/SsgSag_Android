@@ -7,29 +7,11 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import androidx.annotation.Dimension.DP
-import androidx.cardview.widget.CardView
-import androidx.core.content.res.ResourcesCompat
-import androidx.core.view.marginRight
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.SimpleItemAnimator
-import com.bumptech.glide.Glide
-import com.bumptech.glide.RequestManager
-import com.icoo.ssgsag_android.BR
 import com.icoo.ssgsag_android.R
-import com.icoo.ssgsag_android.SsgSagApplication
 import com.icoo.ssgsag_android.base.BaseFragment
-import com.icoo.ssgsag_android.base.BasePagerAdapter
-import com.icoo.ssgsag_android.base.BaseRecyclerViewAdapter
-import com.icoo.ssgsag_android.data.model.category.Category
-import com.icoo.ssgsag_android.data.model.poster.posterDetail.PosterDetail
 import com.icoo.ssgsag_android.databinding.FragmentAllPosterBinding
-import com.icoo.ssgsag_android.databinding.ItemCalSortBinding
-import com.icoo.ssgsag_android.ui.main.MainActivity
-import com.icoo.ssgsag_android.ui.main.MainFragment
-import com.icoo.ssgsag_android.ui.main.allPosters.category.AllCategoryFragment
-import com.icoo.ssgsag_android.ui.main.calendar.CalendarFragment
-import com.icoo.ssgsag_android.ui.main.feed.FeedFragment
+import com.icoo.ssgsag_android.ui.main.allPosters.category.AllCategoryActivity
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -40,8 +22,6 @@ class AllPostersFragment : BaseFragment<FragmentAllPosterBinding, AllPostersView
     override val layoutResID: Int
         get() = R.layout.fragment_all_poster
     override val viewModel: AllPostersViewModel by viewModel()
-
-    lateinit var categoryFragment: AllCategoryFragment
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -61,52 +41,46 @@ class AllPostersFragment : BaseFragment<FragmentAllPosterBinding, AllPostersView
     private fun setButton(){
 
         viewDataBinding.fragAllPosterLlClubMore.setSafeOnClickListener {
-            categoryFragment = AllCategoryFragment()
-            categoryFragment.setCategory(2)
+            val intent = Intent(activity!!, AllCategoryActivity::class.java)
+            intent.putExtra("category", 2)
 
-            fragmentManager!!.beginTransaction().add(R.id.frag_main_fl_container, categoryFragment).commit()
-            fragmentManager!!.beginTransaction().show(categoryFragment).commit()
+            startActivity(intent)
         }
 
         viewDataBinding.fragAllPosterLlActMore.setSafeOnClickListener {
-            categoryFragment = AllCategoryFragment()
-            categoryFragment.setCategory(1)
+            val intent = Intent(activity!!, AllCategoryActivity::class.java)
+            intent.putExtra("category", 1)
 
-            fragmentManager!!.beginTransaction().add(R.id.frag_main_fl_container, categoryFragment).commit()
-            fragmentManager!!.beginTransaction().show(categoryFragment).commit()
+            startActivity(intent)
         }
 
         viewDataBinding.fragAllPosterLlContestMore.setSafeOnClickListener {
-            categoryFragment = AllCategoryFragment()
-            categoryFragment.setCategory(0)
+            val intent = Intent(activity!!, AllCategoryActivity::class.java)
+            intent.putExtra("category", 0)
 
-            fragmentManager!!.beginTransaction().add(R.id.frag_main_fl_container, categoryFragment).commit()
-            fragmentManager!!.beginTransaction().show(categoryFragment).commit()
+            startActivity(intent)
         }
 
         viewDataBinding.fragAllPosterLlInternMore.setSafeOnClickListener {
-            categoryFragment = AllCategoryFragment()
-            categoryFragment.setCategory(4)
+            val intent = Intent(activity!!, AllCategoryActivity::class.java)
+            intent.putExtra("category", 4)
 
-            fragmentManager!!.beginTransaction().add(R.id.frag_main_fl_container, categoryFragment).commit()
-            fragmentManager!!.beginTransaction().show(categoryFragment).commit()
+            startActivity(intent)
         }
 
         viewDataBinding.fragAllPosterLlEducationMore.setSafeOnClickListener {
-            categoryFragment = AllCategoryFragment()
-            categoryFragment.setCategory(7)
+            val intent = Intent(activity!!, AllCategoryActivity::class.java)
+            intent.putExtra("category", 7)
 
-            fragmentManager!!.beginTransaction().add(R.id.frag_main_fl_container, categoryFragment).commit()
-            fragmentManager!!.beginTransaction().show(categoryFragment).commit()
+            startActivity(intent)
         }
 
 
         viewDataBinding.fragAllPosterLlEtcMore.setSafeOnClickListener {
-            categoryFragment = AllCategoryFragment()
-            categoryFragment.setCategory(5)
+            val intent = Intent(activity!!, AllCategoryActivity::class.java)
+            intent.putExtra("category", 5)
 
-            fragmentManager!!.beginTransaction().add(R.id.frag_main_fl_container, categoryFragment).commit()
-            fragmentManager!!.beginTransaction().show(categoryFragment).commit()
+            startActivity(intent)
         }
 
 
@@ -267,5 +241,12 @@ class AllPostersFragment : BaseFragment<FragmentAllPosterBinding, AllPostersView
             view!!.context.startActivity(intent)
 
         })
+    }
+
+    companion object {
+        fun newInstance(): AllPostersFragment {
+            val fragment = AllPostersFragment()
+            return fragment
+        }
     }
 }

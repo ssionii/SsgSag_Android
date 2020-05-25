@@ -3,18 +3,14 @@ package com.icoo.ssgsag_android.ui.main.allPosters.category
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.widget.PopupMenu
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.icoo.ssgsag_android.BR
 import com.icoo.ssgsag_android.R
-import com.icoo.ssgsag_android.base.BaseFragment
 import com.icoo.ssgsag_android.base.BaseRecyclerViewAdapter
 import com.icoo.ssgsag_android.data.model.poster.posterDetail.PosterDetail
-import com.icoo.ssgsag_android.databinding.FragmentAllCategoryBinding
 import com.icoo.ssgsag_android.databinding.ItemAllPostersBinding
-import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import com.icoo.ssgsag_android.util.view.WrapContentLinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import android.view.*
@@ -23,22 +19,23 @@ import androidx.cardview.widget.CardView
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.icoo.ssgsag_android.SsgSagApplication
+import com.icoo.ssgsag_android.base.BaseActivity
+import com.icoo.ssgsag_android.databinding.ActivityAllCategoryBinding
 import com.icoo.ssgsag_android.ui.main.allPosters.AllPostersRecyclerViewAdapter
 import com.icoo.ssgsag_android.util.DialogPlusAdapter
+import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import com.orhanobut.dialogplus.DialogPlus
 import com.orhanobut.dialogplus.GridHolder
-import kotlinx.android.synthetic.main.item_dialog_plus_club_header_first.*
 
-class AllCategoryFragment() : BaseFragment<FragmentAllCategoryBinding, AllCategoryViewModel>(),
+class AllCategoryActivity : BaseActivity<ActivityAllCategoryBinding, AllCategoryViewModel>(),
     BaseRecyclerViewAdapter.OnItemClickListener {
 
     override val layoutResID: Int
-        get() = R.layout.fragment_all_category
+        get() = R.layout.activity_all_category
     override val viewModel: AllCategoryViewModel by viewModel()
 
-    private var allPosterRecyclerViewAdapter: AllPostersRecyclerViewAdapter? = null
-
     private var category = 0
+
     private var curPage = 0
     private var field = 0
     private var isUnion = true
@@ -46,16 +43,19 @@ class AllCategoryFragment() : BaseFragment<FragmentAllCategoryBinding, AllCatego
 
     lateinit var mAdapter: DialogPlusAdapter
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
         viewDataBinding.vm = viewModel
 
-        viewDataBinding.fragAllCategoryLlTopContainer.setOnTouchListener(object : View.OnTouchListener{
+        category = intent.getIntExtra("category", 0)
+
+        viewDataBinding.actAllCategoryLlTopContainer.setOnTouchListener(object : View.OnTouchListener{
             override fun onTouch(v: View?, event: MotionEvent?): Boolean {
                 return true;
             }
         })
+
 
         setRv()
         refreshRv()
@@ -74,7 +74,7 @@ class AllCategoryFragment() : BaseFragment<FragmentAllCategoryBinding, AllCatego
         viewModel.sortType.observe(this, Observer { value->
 
             if(field == 0) {
-                (viewDataBinding.fragAllCategoryRv.adapter as? BaseRecyclerViewAdapter<Any, *>)?.run {
+                (viewDataBinding.actAllCategoryRv.adapter as? BaseRecyclerViewAdapter<Any, *>)?.run {
                     clearAll()
                     curPage = 0
                     viewModel.getAllPosterCategory(curPage)
@@ -83,7 +83,7 @@ class AllCategoryFragment() : BaseFragment<FragmentAllCategoryBinding, AllCatego
                         notifyDataSetChanged()
                 }
             }else{
-                (viewDataBinding.fragAllCategoryRv.adapter as? BaseRecyclerViewAdapter<Any, *>)?.run {
+                (viewDataBinding.actAllCategoryRv.adapter as? BaseRecyclerViewAdapter<Any, *>)?.run {
                     clearAll()
                     curPage = 0
                     viewModel.getAllPosterField(field, curPage, category, isEnterprise)
@@ -96,7 +96,7 @@ class AllCategoryFragment() : BaseFragment<FragmentAllCategoryBinding, AllCatego
 
 
         viewModel.refreshedPoster.observe(this, Observer { value ->
-            (viewDataBinding.fragAllCategoryRv.adapter as? BaseRecyclerViewAdapter<Any, *>)?.run {
+            (viewDataBinding.actAllCategoryRv.adapter as? BaseRecyclerViewAdapter<Any, *>)?.run {
                 refreshItem(value, viewModel.refreshedPosterPosition)
                 notifyItemChanged(viewModel.refreshedPosterPosition)
             }
@@ -104,11 +104,11 @@ class AllCategoryFragment() : BaseFragment<FragmentAllCategoryBinding, AllCatego
 
       viewModel.empty.observe(this, Observer { value ->
           if(curPage == 0 && value){
-              viewDataBinding.fragAllCategoryRlEmpty.visibility = View.VISIBLE
-              viewDataBinding.fragAllCategoryRv.visibility = View.GONE
+              viewDataBinding.actAllCategoryRlEmpty.visibility = View.VISIBLE
+              viewDataBinding.actAllCategoryRv.visibility = View.GONE
           }else{
-              viewDataBinding.fragAllCategoryRlEmpty.visibility = View.GONE
-              viewDataBinding.fragAllCategoryRv.visibility = View.VISIBLE
+              viewDataBinding.actAllCategoryRlEmpty.visibility = View.GONE
+              viewDataBinding.actAllCategoryRv.visibility = View.VISIBLE
           }
       })
     }
@@ -119,7 +119,7 @@ class AllCategoryFragment() : BaseFragment<FragmentAllCategoryBinding, AllCatego
         viewModel.setCategoryType(category)
         //viewModel.getAllPosterCategory(0)
 
-        viewDataBinding.fragAllCategoryRv.apply {
+        viewDataBinding.actAllCategoryRv.apply {
             adapter =
                 object : BaseRecyclerViewAdapter<PosterDetail, ItemAllPostersBinding>() {
                     override val layoutResID: Int
@@ -127,7 +127,7 @@ class AllCategoryFragment() : BaseFragment<FragmentAllCategoryBinding, AllCatego
                     override val bindingVariableId: Int
                         get() = BR.posterDetail
                     override val listener: OnItemClickListener?
-                        get() = this@AllCategoryFragment
+                        get() = this@AllCategoryActivity
 
                 }
             (this.itemAnimator as SimpleItemAnimator).run {
@@ -175,13 +175,13 @@ class AllCategoryFragment() : BaseFragment<FragmentAllCategoryBinding, AllCatego
     }
 
     private fun setButton(){
-        viewDataBinding.fragAllCategoryIvBack.setSafeOnClickListener {
-            activity!!.supportFragmentManager.beginTransaction().remove(this).commit()
+        viewDataBinding.actAllCategoryIvBack.setSafeOnClickListener {
+            finish()
         }
 
-        viewDataBinding.fragAllCategoryCvSort.setSafeOnClickListener {
+        viewDataBinding.actAllCategoryCvSort.setSafeOnClickListener {
 
-            val wrapper = ContextThemeWrapper(context!!, R.style.popupMenuStyle)
+            val wrapper = ContextThemeWrapper(this, R.style.popupMenuStyle)
             val popup = PopupMenu(wrapper, it)
             val inflater = popup.menuInflater
             val menu = popup.menu
@@ -209,18 +209,15 @@ class AllCategoryFragment() : BaseFragment<FragmentAllCategoryBinding, AllCatego
             popup.show()
         }
 
-        viewDataBinding.fragAllCategoryCvField.setSafeOnClickListener {
+        viewDataBinding.actAllCategoryCvField.setSafeOnClickListener {
             showDialog()
         }
     }
 
-    fun setCategory(num: Int){
-        category = num
-    }
 
     private fun navigator() {
         viewModel.activityToStart.observe(this, Observer { value ->
-            val intent = Intent(activity!!, value.first.java)
+            val intent = Intent(this, value.first.java)
             value.second?.let {
                 intent.putExtras(it)
             }
@@ -235,17 +232,17 @@ class AllCategoryFragment() : BaseFragment<FragmentAllCategoryBinding, AllCatego
         val holder = GridHolder(2)
 
         when(category){
-            0 -> mAdapter = DialogPlusAdapter(context!!, true, 10, field, category)
-            1 -> mAdapter = DialogPlusAdapter(context!!, true, 7, field, category)
-            2,6 -> mAdapter = DialogPlusAdapter(context!!, true, 12, field, category)
+            0 -> mAdapter = DialogPlusAdapter(this, true, 10, field, category)
+            1 -> mAdapter = DialogPlusAdapter(this, true, 7, field, category)
+            2,6 -> mAdapter = DialogPlusAdapter(this, true, 12, field, category)
             4 -> {
-                if(isEnterprise) mAdapter =  DialogPlusAdapter(context!!, true, 8, field, category, isEnterprise)
-                else mAdapter =  DialogPlusAdapter(context!!, true, 12, field, category, isEnterprise)
+                if(isEnterprise) mAdapter =  DialogPlusAdapter(this, true, 8, field, category, isEnterprise)
+                else mAdapter =  DialogPlusAdapter(this, true, 12, field, category, isEnterprise)
 
             }
         }
 
-        val builder = DialogPlus.newDialog(context!!).apply {
+        val builder = DialogPlus.newDialog(this).apply {
 
             setContentHolder(holder)
             if(category == 2 || category == 6 || category == 4){
@@ -372,7 +369,7 @@ class AllCategoryFragment() : BaseFragment<FragmentAllCategoryBinding, AllCatego
 
             setOnDismissListener {
                 if(isChanged && !internHeaderClick) {
-                    (viewDataBinding.fragAllCategoryRv.adapter as? BaseRecyclerViewAdapter<Any, *>)?.run {
+                    (viewDataBinding.actAllCategoryRv.adapter as? BaseRecyclerViewAdapter<Any, *>)?.run {
                         clearAll()
                         if(field != 0)
                             viewModel.getAllPosterField(field, curPage, category, isEnterprise)
