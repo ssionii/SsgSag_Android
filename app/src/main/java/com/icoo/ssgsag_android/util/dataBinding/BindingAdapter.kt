@@ -80,7 +80,27 @@ fun setGlideImg(view: ImageView, imgUrl: String?) {
     Glide.with(view.context)
         .load(imgUrl)
         .placeholder(R.drawable.img_default)
+        .listener(createLoggerListener("glideImg"))
         .thumbnail(0.1f)
+        .error(R.drawable.img_default) //에러시 나올 이미지 적용
+        .apply(requestOptions)
+        .into(view)
+
+}
+
+@BindingAdapter("glideSsgSagImg")
+fun setGlideSsgSagImg(view: ImageView, imgUrl: String?) {
+
+    val requestOptions = RequestOptions
+        .skipMemoryCacheOf(false)//memory cache 사용
+        .diskCacheStrategy(DiskCacheStrategy.NONE)//disk cache 사용하지 않음
+
+    Glide.with(view.context)
+        .load(imgUrl)
+        .placeholder(R.drawable.img_default)
+        .listener(createLoggerListener("glideSsgSagImg"))
+        .thumbnail(0.1f)
+        .override(501, 704)
         .error(R.drawable.img_default) //에러시 나올 이미지 적용
         .apply(requestOptions)
         .into(view)
@@ -96,9 +116,11 @@ fun setAllPosterCardGlideImg(view: ImageView, imgUrl: String?) {
 
     Glide.with(view.context)
         .load(imgUrl)
+        .listener(createLoggerListener("allPosterCardGlideImg"))
         .placeholder(R.drawable.img_default)
         .thumbnail(0.1f)
         .error(R.drawable.img_default) //에러시 나올 이미지 적용
+        .override(390, 370)
         .apply(requestOptions)
         .into(view)
 
@@ -140,6 +162,7 @@ fun setGlideImgFromSquare(view: ImageView, string: String?) {
 fun setGlideTopCropImg(view: ImageView, imgUrl: String?) {
     Glide.with(view.context)
         .load(imgUrl)
+        .listener(createLoggerListener("glideTopCrop"))
         .apply(RequestOptions.bitmapTransform(CropTransformation(view.width, 1520, CropTransformation.CropType.TOP)))
         .into(view)
 }
@@ -301,8 +324,6 @@ fun setTextviewVisivility(view: TextView, str: String?){
 
 @BindingAdapter("tvVisibilityFromEmptyView")
 fun setTextViewVisibilityFromEmptyView(view: TextView, num: Int){
-
-    Log.e("num", num.toString())
 
     if(num == 0)
         view.visibility = VISIBLE

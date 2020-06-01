@@ -27,7 +27,7 @@ import com.igaworks.v2.core.AdBrixRm
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import android.app.AlarmManager
 import android.app.PendingIntent
-
+import com.bumptech.glide.Glide
 
 
 class MainActivity : BaseActivity<ActivityMainBinding, SsgSagViewModel>() {
@@ -173,6 +173,17 @@ class MainActivity : BaseActivity<ActivityMainBinding, SsgSagViewModel>() {
             backPressHandler.onBackPressed()
         }
     }
+
+    override fun onLowMemory() {
+        super.onLowMemory()
+        Glide.get(this).clearMemory()
+    }
+
+    override fun onTrimMemory(level: Int) {
+        super.onTrimMemory(level)
+        Glide.get(this).trimMemory(level)
+    }
+
 
     override fun onPause() {
         super.onPause()

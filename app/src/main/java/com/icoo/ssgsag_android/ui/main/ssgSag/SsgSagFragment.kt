@@ -58,6 +58,8 @@ class SsgSagFragment : BaseFragment<FragmentSsgSagBinding, SsgSagViewModel>() {
 
         ssgSagCardStackAdapter.setHasStableIds(true)
         setSsgSagCardStackView()
+
+
         navigator()
         setEndPage()
         setButton()
@@ -99,17 +101,20 @@ class SsgSagFragment : BaseFragment<FragmentSsgSagBinding, SsgSagViewModel>() {
 
 
         viewModel.allPosters.observe(this@SsgSagFragment, Observer { value ->
+            if(value.size != 0){
+                viewDataBinding.fragSsgSagCv.apply{
+                    visibility = GONE
 
-            viewDataBinding.fragSsgSagCv.apply{
-                visibility = GONE
+                    (adapter as SsgSagCardStackAdapter).apply {
+                        replaceAll(value)
+                        notifyDataSetChanged()
+                    }
 
-                (adapter as SsgSagCardStackAdapter).apply {
-                    replaceAll(value)
-                    notifyDataSetChanged()
+                    viewDataBinding.fragSsgSagCv.visibility = VISIBLE
                 }
+            }else
+                viewDataBinding.fragSsgSagCv.visibility = GONE
 
-                viewDataBinding.fragSsgSagCv.visibility = VISIBLE
-            }
         })
     }
 
@@ -137,7 +142,9 @@ class SsgSagFragment : BaseFragment<FragmentSsgSagBinding, SsgSagViewModel>() {
 
     private val ssgSagListener = object : SsgSagCardStackAdapter.OnSsgSagItemClickListener {
         override fun onEnlargeClicked(photoUrl: String) {
-            viewModel.navigatePhoto(PhotoExpandActivity::class, photoUrl)
+            val intent = Intent(activity!!, PhotoExpandActivity::class.java)
+            intent.putExtra("photoUrl", photoUrl)
+            startActivity(intent)
         }
     }
 

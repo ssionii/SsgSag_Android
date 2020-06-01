@@ -29,7 +29,8 @@
                     android:id="@+id/item_feed_iv_preview_img"
                     glideTopCropFeedImg="@{feed.FeedPreviewImgUrl}"
                     android:layout_width="match_parent"
-                    android:layout_height="91dp"/>
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"/>
         </androidx.cardview.widget.CardView>
 
 

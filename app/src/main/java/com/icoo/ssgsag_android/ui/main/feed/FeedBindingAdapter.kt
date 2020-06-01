@@ -138,7 +138,6 @@ fun setFeedsTitle(view: TextView, categoryIdx: Int?) {
 fun setGlideTopCropImg(view: ImageView, imgUrl: String?) {
     Glide.with(view.context)
         .load(imgUrl)
-        .apply(RequestOptions.bitmapTransform(CropTransformation(view.width, 476, CropTransformation.CropType.TOP)))
         .into(view)
 }
 
@@ -148,9 +147,9 @@ fun setGlideTopFeedImg(view: ImageView, imgUrl: String?) {
     Glide.with(view.context)
         .load(imgUrl)
         .placeholder(R.drawable.img_default)
+        .listener(createLoggerListener("glideTopCropFeedImg"))
         .thumbnail(0.1f)
         .error(R.drawable.img_default) //에러시 나올 이미지 적용
-        .apply(RequestOptions.bitmapTransform(CropTransformation(381, 273, CropTransformation.CropType.TOP)))
         .into(view)
 }
 

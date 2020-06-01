@@ -38,7 +38,7 @@
                             android:adjustViewBounds="false"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            app:glideImg="@{poster.photoUrl}"/>
+                            app:glideSsgSagImg="@{poster.photoUrl}"/>
 
                     <ImageView
                             android:id="@+id/item_ssgsag_iv_poster_gradient"

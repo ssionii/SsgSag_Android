@@ -28,7 +28,7 @@ class PhotoExpandActivity : AppCompatActivity() {
         var poster = intent.getStringExtra("photoUrl")
 
         if(poster.isNotEmpty()){
-            Glide.with(act_poster_enlarge_pv_img)
+            Glide.with(this)
                 .load(poster)
                 .into(act_poster_enlarge_pv_img)
         }
