@@ -6,6 +6,7 @@ import android.util.Log
 import com.google.gson.JsonObject
 import com.icoo.ssgsag_android.SsgSagApplication
 import com.icoo.ssgsag_android.data.local.pref.PreferenceManager
+import com.icoo.ssgsag_android.data.local.pref.SharedPreferenceController
 import com.icoo.ssgsag_android.data.model.base.IntResponse
 import com.icoo.ssgsag_android.data.remote.api.NetworkService
 import io.reactivex.Observable
@@ -22,10 +23,9 @@ class LoginRepositoryImpl (val api: NetworkService, val pref: PreferenceManager)
         .map { it }
 
     override fun autoLogin(): Single<Int> {
-        Log.e("TOKEN", pref.findPreference("TOKEN", ""))
 
         return api
-            .postAutoLoginResponse("application/json", pref.findPreference("TOKEN", ""))
+            .postAutoLoginResponse("application/json", pref.findPreference("TOKEN", ""), SharedPreferenceController.getFireBaseInstanceId(context))
             .map { it.status }
     }
 

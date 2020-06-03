@@ -69,8 +69,6 @@ class SignupViewModel(
         addDisposable(loginRepository.login(body)
             .subscribeOn(schedulerProvider.io())
             .flatMap {
-                Log.e("login status:", it.status.toString())
-                Log.e("login message:", it.message)
                 if (it.status == 200) {
                     Observable.just(it.data.token)
                 } else if(it.status == 404) {

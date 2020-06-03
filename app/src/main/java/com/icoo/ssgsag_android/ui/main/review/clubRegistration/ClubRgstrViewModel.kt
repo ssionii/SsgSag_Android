@@ -100,7 +100,6 @@ class ClubRgstrViewModel(
     fun rgstrClub(jsonObject : JSONObject){
 
         val body = JsonParser().parse(jsonObject.toString()) as JsonObject
-        Log.e("rgstr club body", body.toString())
 
         addDisposable(clubReviewRepository.rgstrClub(body)
             .subscribeOn(schedulerProvider.io())
@@ -125,8 +124,6 @@ class ClubRgstrViewModel(
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.mainThread())
                 .subscribe({
-
-                    Log.e("uploadPhoto status", it.status.toString())
 
                     try {
                         clubPhotoUrlList.add(it.data)

@@ -18,6 +18,8 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.iid.FirebaseInstanceId
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseActivity
 import com.icoo.ssgsag_android.data.local.pref.SharedPreferenceController
@@ -45,6 +47,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(){
     override val viewModel: LoginViewModel by viewModel()
 
     internal val disposable = CompositeDisposable()
+
     val realm = Realm.getDefaultInstance()
 
     override fun onStop() {
@@ -74,13 +77,16 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(){
 
 
         var uuid = getUuid()
+        Log.e("uuid", uuid)
+
         if(uuid != "") { // 권한을 받은 경우
             val _uuid = uuid
             setDeviceInfoUuid(_uuid)
         }else{
-
-//            toast("해당 앱을 이용할 수 없는 기기입니다.")
+            setDeviceInfoUuid("")
         }
+
+        getFirebaseInstanceId()
 
         // naver
         naverContext = this
@@ -305,4 +311,23 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(){
         }
         realm.commitTransaction()
     }
+
+    private fun getFirebaseInstanceId(){
+        FirebaseInstanceId.getInstance().instanceId
+            .addOnCompleteListener(OnCompleteListener { task ->
+                if(!task.isSuccessful){
+                    Log.w("getFireBase", "getInstanceId failed", task.exception)
+                    return@OnCompleteListener
+                }
+
+                // get new instance id token
+                val token = task.result?.token
+
+                if(token != null) {
+                    SharedPreferenceController.setFireBaseInstanceId(this, token)
+                    Log.e("fire token", token)
+                }
+            })
+    }
+
 }

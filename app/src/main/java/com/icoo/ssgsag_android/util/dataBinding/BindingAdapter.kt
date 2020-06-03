@@ -80,7 +80,7 @@ fun setGlideImg(view: ImageView, imgUrl: String?) {
     Glide.with(view.context)
         .load(imgUrl)
         .placeholder(R.drawable.img_default)
-        .listener(createLoggerListener("glideImg"))
+      //  .listener(createLoggerListener("glideImg"))
         .thumbnail(0.1f)
         .error(R.drawable.img_default) //에러시 나올 이미지 적용
         .apply(requestOptions)
@@ -98,7 +98,7 @@ fun setGlideSsgSagImg(view: ImageView, imgUrl: String?) {
     Glide.with(view.context)
         .load(imgUrl)
         .placeholder(R.drawable.img_default)
-        .listener(createLoggerListener("glideSsgSagImg"))
+      //  .listener(createLoggerListener("glideSsgSagImg"))
         .thumbnail(0.1f)
         .override(501, 704)
         .error(R.drawable.img_default) //에러시 나올 이미지 적용
@@ -116,7 +116,7 @@ fun setAllPosterCardGlideImg(view: ImageView, imgUrl: String?) {
 
     Glide.with(view.context)
         .load(imgUrl)
-        .listener(createLoggerListener("allPosterCardGlideImg"))
+       // .listener(createLoggerListener("allPosterCardGlideImg"))
         .placeholder(R.drawable.img_default)
         .thumbnail(0.1f)
         .error(R.drawable.img_default) //에러시 나올 이미지 적용

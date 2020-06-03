@@ -45,7 +45,8 @@ interface NetworkService {
     @POST("/autoLogin")
     fun postAutoLoginResponse(
         @Header("Content-Type") content_type: String,
-        @Header("Authorization") token: String
+        @Header("Authorization") token: String,
+        @Query("registrationCode") registrationCode : String
     ): Single<NullDataResponse>
     //endregion
 

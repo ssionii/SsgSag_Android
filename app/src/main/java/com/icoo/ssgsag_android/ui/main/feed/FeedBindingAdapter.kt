@@ -147,7 +147,7 @@ fun setGlideTopFeedImg(view: ImageView, imgUrl: String?) {
     Glide.with(view.context)
         .load(imgUrl)
         .placeholder(R.drawable.img_default)
-        .listener(createLoggerListener("glideTopCropFeedImg"))
+       // .listener(createLoggerListener("glideTopCropFeedImg"))
         .thumbnail(0.1f)
         .error(R.drawable.img_default) //에러시 나올 이미지 적용
         .into(view)

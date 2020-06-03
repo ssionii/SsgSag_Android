@@ -31,7 +31,6 @@ class RgstrBlogReviewActivity : BaseActivity<ActivityRgstrBlogReviewBinding, Blo
         super.onCreate(savedInstanceState)
 
         clubIdx = intent.getIntExtra("clubIdx", -1)
-        Log.e("블로그 후기 등록 club Idx", clubIdx.toString())
 
         setButton()
         setEditTextChange()

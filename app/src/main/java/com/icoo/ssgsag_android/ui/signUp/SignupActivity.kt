@@ -25,6 +25,7 @@ import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseActivity
+import com.icoo.ssgsag_android.data.local.pref.SharedPreferenceController
 import com.icoo.ssgsag_android.data.model.user.DeviceInfo
 import com.icoo.ssgsag_android.databinding.ActivitySignupBinding
 import com.icoo.ssgsag_android.ui.login.LoginActivity
@@ -148,7 +149,6 @@ class SignupActivity : BaseActivity<ActivitySignupBinding, SignupViewModel>() {
                 str = bufferedReader.readLine()
                 while(str != null){
                     buffer.append(str)
-                    Log.e("buffer", buffer.toString())
                     str = bufferedReader.readLine()
                 }
 
@@ -517,6 +517,7 @@ class SignupActivity : BaseActivity<ActivitySignupBinding, SignupViewModel>() {
         jsonObject.put("userPushAllow", 1)
         jsonObject.put("userInfoAllow", 1)
         jsonObject.put("osType", 0)
+        jsonObject.put("registrationCode", SharedPreferenceController.getFireBaseInstanceId(this))
         var gsonObject = JsonParser().parse(jsonObject.toString()) as JsonObject
 
         viewModel.signup(gsonObject)

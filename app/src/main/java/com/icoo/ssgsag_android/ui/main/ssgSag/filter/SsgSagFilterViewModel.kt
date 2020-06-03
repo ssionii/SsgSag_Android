@@ -195,7 +195,8 @@ class SsgSagFilterViewModel(
             .doOnSubscribe { showProgress() }
             .doOnTerminate { hideProgress() }
             .subscribe({
-                Log.e("reInterest status",it.toString())
+               
+
             }, {
                 it.printStackTrace()
             })

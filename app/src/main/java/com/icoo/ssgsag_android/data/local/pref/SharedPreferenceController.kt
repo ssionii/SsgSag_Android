@@ -23,6 +23,8 @@ object SharedPreferenceController{
     private val seeCalendarCoachMark = "calendarCoachMark"
     private val seeReviewCoachMark = "reviewCoachMark"
 
+    private val firebaseInstanceId = "instanceId"
+
 
     fun setAuthorization(context: Context, authorization : String)
     {
@@ -189,6 +191,18 @@ object SharedPreferenceController{
     fun getReviewCoachMark(context: Context) : Boolean {
         val pref = context.getSharedPreferences(seeReviewCoachMark, Context.MODE_PRIVATE) //현재 내 기기에서만 볼수 있는 데이터
         return pref.getBoolean(seeReviewCoachMark, true)
+    }
+
+    fun setFireBaseInstanceId(context: Context, v: String) {
+        val pref = context.getSharedPreferences(firebaseInstanceId, Context.MODE_PRIVATE) //현재 내 기기에서만 볼수 있는 데이터
+        val editor = pref.edit()
+        editor.putString(firebaseInstanceId, v)
+        editor.apply()
+    }
+
+    fun getFireBaseInstanceId(context: Context) : String {
+        val pref = context.getSharedPreferences(firebaseInstanceId, Context.MODE_PRIVATE) //현재 내 기기에서만 볼수 있는 데이터
+        return pref.getString(firebaseInstanceId, "")!!
     }
 
 }

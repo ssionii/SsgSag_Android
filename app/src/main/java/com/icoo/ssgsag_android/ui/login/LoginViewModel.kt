@@ -52,6 +52,7 @@ class LoginViewModel (
         }else{
             jsonObject.put("uuid","")
         }
+        jsonObject.put("registrationCode", SharedPreferenceController.getFireBaseInstanceId(context))
 
         val body = JsonParser().parse(jsonObject.toString()) as JsonObject
 
@@ -123,7 +124,6 @@ class LoginViewModel (
             }
             .subscribe({
                 it.run{
-                    Log.e("update status:" ,this.status.toString() + ", " +this.data.toString())
                     if(this.status == 200 && (this.data == 0)){
                         _isUpdated.setValue(0)
                     }else if(this.data == 1){

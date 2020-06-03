@@ -155,8 +155,6 @@ class ClubDetailInfoFragment : BaseFragment<FragmentClubDetailInfoBinding, ClubR
 
     private fun checkUrl(input: String) : Boolean {
 
-        Log.e("checkUr", input)
-
         if(input != "") {
             return (Pattern.matches(
                 "^(https?):\\/\\/([^:\\/\\s]+)(:([^\\/]*))?((\\/[^\\s/\\/]+)*)?\\/?([^#\\s\\?]*)(\\?([^#\\s]*))?(#(\\w*))?$", input
@@ -250,7 +248,6 @@ class ClubDetailInfoFragment : BaseFragment<FragmentClubDetailInfoBinding, ClubR
                                 // viewModel.addPhoto(File(datas[i]).toUri())
                                 viewModel.uploadPhoto1(datas[i])
                                 viewModel.addPath(datas[i])
-                                Log.e("포토", "절대 경로 : " + datas[i])
                             }
                         }
 

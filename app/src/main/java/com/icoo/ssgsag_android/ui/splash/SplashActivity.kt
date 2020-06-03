@@ -23,6 +23,8 @@ import android.view.Gravity
 import android.view.View.GONE
 import android.view.View.INVISIBLE
 import androidx.lifecycle.Observer
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.iid.FirebaseInstanceId
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseActivity
 import com.icoo.ssgsag_android.ui.walkthrough.WalkthroughActivity
@@ -63,8 +65,14 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, LoginViewModel>() {
         //adbrix
         onNewIntent(this.intent)
 
-        setLottie()
-        logoutFirstTimeVersion231()
+        if(SharedPreferenceController.getFireBaseInstanceId(this) == ""){
+            getFirebaseInstanceId()
+        }else{
+            Log.e("fire token", SharedPreferenceController.getFireBaseInstanceId(this))
+        }
+
+//        setLottie()
+        // logoutFirstTimeVersion231()
         getUpdateResponse()
         navigator()
     }
@@ -292,6 +300,24 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, LoginViewModel>() {
         }
     }
 
+    private fun getFirebaseInstanceId(){
+        FirebaseInstanceId.getInstance().instanceId
+            .addOnCompleteListener(OnCompleteListener { task ->
+                if(!task.isSuccessful){
+                    Log.w("getFireBase", "getInstanceId failed", task.exception)
+                    return@OnCompleteListener
+                }
+
+                // get new instance id token
+                val token = task.result?.token
+
+                if(token != null) {
+                    SharedPreferenceController.setFireBaseInstanceId(this, token)
+                    Log.e("fire token", token)
+                }
+            })
+    }
+
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
         setIntent(intent)
@@ -306,6 +332,8 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, LoginViewModel>() {
             SharedPreferenceController.setIsLogout(thisActivity, true)
         }
     }
+
+
 
     companion object {
         private val TAG = "SplashActivity"
