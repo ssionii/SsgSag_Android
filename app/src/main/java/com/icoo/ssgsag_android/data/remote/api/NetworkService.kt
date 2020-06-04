@@ -197,16 +197,15 @@ interface NetworkService {
 
     //region 캘린더
     //일정 조회
-    @GET("/todo")
+    @GET("/todo/v2")
     fun calendarResponse(
         @Header("Authorization") token: String,
         @Query("year") year: String,
         @Query("month") month: String,
-        @Query("day") day: String,
-        @Query("categoryList") categoryList: ArrayList<Int>?
+        @Query("day") day: String
     ): Single<ScheduleResponse>
     //즐겨찾는 일정 조회
-    @GET("/todo")
+    @GET("/todo/v2")
     fun calendarFavoriteResponse(
         @Header("Authorization") token: String,
         @Query("year") year: String,

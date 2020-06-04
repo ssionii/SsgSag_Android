@@ -29,8 +29,8 @@ class CalendarDialogPageViewModel(
     private val _activityToStart = MutableLiveData<Pair<KClass<*>, Bundle?>>()
     val activityToStart: LiveData<Pair<KClass<*>, Bundle?>> get() = _activityToStart
 
-    fun getAllSchedule(year: String, month: String, date: String,  categoryList: ArrayList<Int>) {
-        addDisposable(repository.getCalendar(year, month, date, categoryList)
+    fun getAllSchedule(year: String, month: String, date: String) {
+        addDisposable(repository.getCalendar(year, month, date)
             .subscribeOn(schedulerProvider.io())
             .observeOn(schedulerProvider.mainThread())
             .doOnSubscribe { showProgress() }
@@ -63,7 +63,7 @@ class CalendarDialogPageViewModel(
     }
 
 
-    fun deleteSchedule(posterIdxList: ArrayList<Int>, year: String, month: String, date: String, categoryList: ArrayList<Int>) {
+    fun deleteSchedule(posterIdxList: ArrayList<Int>, year: String, month: String, date: String) {
 
         val jsonObject = JSONObject()
         val jsonArray = JSONArray(posterIdxList)
@@ -78,7 +78,7 @@ class CalendarDialogPageViewModel(
             .doOnSubscribe { showProgress() }
             .doOnTerminate { hideProgress() }
             .subscribe({
-                getAllSchedule(year, month, date, categoryList)
+                getAllSchedule(year, month, date)
             }, {
 
             })
@@ -86,7 +86,7 @@ class CalendarDialogPageViewModel(
 
     }
 
-    fun bookmark(posterIdx: Int, isFavorite: Int, year: String, month: String, date: String, categoryList: ArrayList<Int>) {
+    fun bookmark(posterIdx: Int, isFavorite: Int, year: String, month: String, date: String) {
         lateinit var response: Single<Int>
 
         if(isFavorite == 0) response = repository.bookmarkSchedule(posterIdx)
@@ -98,7 +98,7 @@ class CalendarDialogPageViewModel(
             .doOnSubscribe { showProgress() }
             .doOnTerminate { hideProgress() }
             .subscribe({
-                getAllSchedule(year, month, date, categoryList)
+                getAllSchedule(year, month, date)
             }, {
 
             })

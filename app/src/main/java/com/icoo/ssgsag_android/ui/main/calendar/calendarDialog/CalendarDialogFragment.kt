@@ -27,7 +27,6 @@ class CalendarDialogFragment : BaseDialogFragment<DialogFragmentCalendarBinding,
     var year = 0
     var month = 0
     var date = 0
-    lateinit var categoryList : ArrayList<Int>
     var showFavorite = false
 
     lateinit var calendarDialogPagerAdapter: CalendarDialogPagerAdapter
@@ -81,13 +80,11 @@ class CalendarDialogFragment : BaseDialogFragment<DialogFragmentCalendarBinding,
         //data 불러오기
         val mArgs = arguments
         val mDateValue = mArgs!!.getStringArrayList("Date")
-        val mCategoryValue = mArgs!!.getIntegerArrayList("categoryList")
         val mShowFavoriteValue = mArgs!!.getBoolean("showFavorite")
 
         year = mDateValue!![0].toInt()
         month = mDateValue[1].toInt() - 1
         date = mDateValue[2].toInt()
-        categoryList = mCategoryValue
         showFavorite = mShowFavoriteValue
 
         //Schedule 설정
@@ -108,7 +105,7 @@ class CalendarDialogFragment : BaseDialogFragment<DialogFragmentCalendarBinding,
         //PagerAdapter 설정
         calendarDialogPagerAdapter = CalendarDialogPagerAdapter(childFragmentManager).apply {
             setNumOfDay(cal)
-            setSelectedFilter(categoryList, showFavorite)
+            setShowFavorite(showFavorite)
         }
 
         //adapter 적용 및 position에 따른 addNext, addPrev 적용
@@ -133,7 +130,6 @@ class CalendarDialogFragment : BaseDialogFragment<DialogFragmentCalendarBinding,
                 override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
 
                 }
-
                 override fun onPageSelected(position: Int) {
                     if (position == 0) {
                         month -= 1
@@ -160,8 +156,5 @@ class CalendarDialogFragment : BaseDialogFragment<DialogFragmentCalendarBinding,
 
     companion object {
         private val TAG = "CalendarDialogFragment"
-        //고민중..
-//        (targetFragment as CalendarPageFragment).changePage(true)
-//        (targetFragment as CalendarPageFragment).changePage(false)
     }
 }

@@ -8,12 +8,11 @@ import io.reactivex.Single
 
 class ScheduleRepositoryImpl(val api: NetworkService, val pref: PreferenceManager): ScheduleRepository {
     override fun getAllCalendar(): Single<ArrayList<Schedule>> = api
-        .calendarResponse(pref.findPreference("TOKEN", ""), "0000", "00", "00"
-        ,arrayListOf(0, 1, 2, 4, 5, 7, 8))
+        .calendarResponse(pref.findPreference("TOKEN", ""), "0000", "00", "00")
         .map { it.data }
 
-    override fun getCalendar(year: String, month: String, date: String, categoryList : ArrayList<Int>?): Single<ArrayList<Schedule>> = api
-        .calendarResponse(pref.findPreference("TOKEN", ""), year, month, date, categoryList)
+    override fun getCalendar(year: String, month: String, date: String): Single<ArrayList<Schedule>> = api
+        .calendarResponse(pref.findPreference("TOKEN", ""), year, month, date)
         .map { it.data }
 
     override fun getFavoriteCalendar(year: String, month: String, date: String): Single<ArrayList<Schedule>> = api

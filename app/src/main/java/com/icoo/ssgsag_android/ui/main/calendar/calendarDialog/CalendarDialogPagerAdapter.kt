@@ -46,7 +46,6 @@ class CalendarDialogPagerAdapter(fm : FragmentManager) : FragmentStatePagerAdapt
             frgMap[position] = frg;
         }
         frg.setTimeByMillis(listDayByMillis[position])
-        frg.setCategoryList(categoryList)
         frg.setShowFavorite(showFavorite)
         return frg
     }
@@ -66,8 +65,7 @@ class CalendarDialogPagerAdapter(fm : FragmentManager) : FragmentStatePagerAdapt
         notifyDataSetChanged()
     }
 
-    fun setSelectedFilter (list: ArrayList<Int>, favorite: Boolean){
-        this.categoryList = list
+    fun setShowFavorite (favorite: Boolean){
         this.showFavorite = favorite
     }
 

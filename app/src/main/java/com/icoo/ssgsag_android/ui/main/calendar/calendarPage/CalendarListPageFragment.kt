@@ -3,8 +3,6 @@ package com.icoo.ssgsag_android.ui.main.calendar.calendarPage
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -78,14 +76,13 @@ class CalendarListPageFragment : BaseFragment<FragmentCalendarListPageBinding, C
 
         var curPosition = 0
 
-        dataList = viewModel.getCalendarByCategory(year,month,"list")
+        dataList = viewModel.filterScheduleFromList(year,month)
         calendarListPageRecyclerViewAdapter = CalendarListPageRecyclerViewAdapter(dataList)
-        //calendarListPageRecyclerViewAdapter.setHasStableIds(true)
 
         viewDataBinding.fragCalendarListPageRv.apply {
 
-            layoutManager  = WrapContentLinearLayoutManager()
-            adapter = calendarListPageRecyclerViewAdapter.apply{
+            layoutManager = WrapContentLinearLayoutManager()
+            adapter = calendarListPageRecyclerViewAdapter.apply {
                 setOnScheduleItemClickListener(onScheduleItemClickListener)
             }
 
@@ -94,68 +91,59 @@ class CalendarListPageFragment : BaseFragment<FragmentCalendarListPageBinding, C
                 supportsChangeAnimations = false
             }
 
-            viewModel.categorySort.observe(this@CalendarListPageFragment, Observer {
-                (layoutManager as WrapContentLinearLayoutManager).scrollToPositionWithOffset(0,0)
-                makeScheduleList(year, month)
-            })
+            addOnScrollListener(object:RecyclerView.OnScrollListener(){
+                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                    super.onScrollStateChanged(recyclerView, newState)
 
-            viewModel.schedule.observe(this@CalendarListPageFragment, Observer {
-                makeScheduleList(year, month)
-            })
+                    if(newState == SCROLL_STATE_DRAGGING || newState == SCROLL_STATE_IDLE) {
+                        var position = (layoutManager as WrapContentLinearLayoutManager).findFirstVisibleItemPosition()
 
-            viewModel.deleteType.observe(this@CalendarListPageFragment, Observer {value ->
-                calendarListPageRecyclerViewAdapter.apply {
+                        calendarListPageRecyclerViewAdapter.apply{
 
-                    if(value == 0){
-                        setSelectType(0)
-                        notifyItemRangeChanged(0, dataList.size)
-                    }else if(value == 1) {
-                        setSelectType(1)
-                        notifyItemRangeChanged(0, dataList.size)
-                    } else if(value == 3){
-                        dialogFragment = CalendarDialogPageDeleteDialogFragment()
+                            if(itemList.size < curPosition) curPosition = position
 
-                        dialogFragment.setOnDialogDismissedListener(this@CalendarListPageFragment)
-                        dialogFragment.setInfo(deletePosterIdxList, deletePosterNameList)
-                        dialogFragment.show(fragmentManager!!, "schedule delete dialog")
+                            if(itemList.size > 0 &&
+                                this.getItemDate(curPosition) != this.getItemDate(position)){
+                                curPosition = position
+                                viewModel.setListDate((adapter as CalendarListPageRecyclerViewAdapter).getItemDate(position))
+
+                            }
+                        }
+
                     }
                 }
+
             })
 
-
-            addOnScrollListener(object:RecyclerView.OnScrollListener(){
-               override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                   super.onScrollStateChanged(recyclerView, newState)
-
-                   if(newState == SCROLL_STATE_DRAGGING || newState == SCROLL_STATE_IDLE) {
-                       var position = (layoutManager as WrapContentLinearLayoutManager).findFirstVisibleItemPosition()
-
-                       calendarListPageRecyclerViewAdapter.apply{
-
-                           if(itemList.size < curPosition) curPosition = position
-
-                           if(itemList.size > 0 &&
-                               this.getItemDate(curPosition) != this.getItemDate(position)){
-                               curPosition = position
-                               viewModel.setListDate((adapter as CalendarListPageRecyclerViewAdapter).getItemDate(position))
-
-                           }
-                       }
-
-                   }
-               }
-
-           })
         }
+        viewModel.isFavorite.observe(this@CalendarListPageFragment, Observer {
+            makeScheduleList(year, month)
+        })
+
+        viewModel.deleteType.observe(this@CalendarListPageFragment, Observer {value ->
+            calendarListPageRecyclerViewAdapter.apply {
+
+                if(value == 0){
+                    setSelectType(0)
+                    notifyItemRangeChanged(0, dataList.size)
+                }else if(value == 1) {
+                    setSelectType(1)
+                    notifyItemRangeChanged(0, dataList.size)
+                } else if(value == 3){
+                    dialogFragment = CalendarDialogPageDeleteDialogFragment()
+
+                    dialogFragment.setOnDialogDismissedListener(this@CalendarListPageFragment)
+                    dialogFragment.setInfo(deletePosterIdxList, deletePosterNameList)
+                    dialogFragment.show(fragmentManager!!, "schedule delete dialog")
+                }
+            }
+        })
     }
 
     private fun makeScheduleList(year: String, month: String){
         viewModel.setDeleteType(0)
 
-        if(!viewModel.categorySort.value!![1].isChecked)
-            dataList = viewModel.getCalendarByCategory(year,month,"list")
-        else
-            dataList = viewModel.getCalendarByBookMark(year, month, "list")
+        dataList = viewModel.filterScheduleFromList(year, month)
 
         calendarListPageRecyclerViewAdapter.apply {
 

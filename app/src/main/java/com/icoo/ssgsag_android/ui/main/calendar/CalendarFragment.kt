@@ -8,10 +8,12 @@ import android.os.Environment
 import android.os.Handler
 import android.os.HandlerThread
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.MotionEvent
 import android.view.View
 import android.view.View.*
+import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.appcompat.widget.PopupMenu
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -45,8 +47,7 @@ import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
 
-class CalendarFragment : BaseFragment<FragmentCalendarBinding, CalendarViewModel>(),
-    BaseRecyclerViewAdapter.OnItemClickListener {
+class CalendarFragment : BaseFragment<FragmentCalendarBinding, CalendarViewModel>(){
 
     override val layoutResID: Int
         get() = R.layout.fragment_calendar
@@ -73,40 +74,17 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding, CalendarViewModel
 
         //ui
         setCalendarViewPager()
-        setSortTab()
         setFirstButton()
         setButton()
         setHeaderDate()
         if(!SharedPreferenceController.getCalendarCoachMark(activity!!))
             setCoachMark()
 
-        viewModel.categorySort.observe(this, androidx.lifecycle.Observer {
-            viewDataBinding.fragCalendarRvSort.adapter!!.notifyDataSetChanged()
-        })
     }
 
     override fun onResume() {
         super.onResume()
         viewModel.getAllCalendar()
-    }
-
-
-    private fun setSortTab() {
-        viewDataBinding.fragCalendarRvSort.apply {
-            adapter =
-                object : BaseRecyclerViewAdapter<Category, ItemCalSortBinding>() {
-                    override val layoutResID: Int
-                        get() = R.layout.item_cal_sort
-                    override val bindingVariableId: Int
-                        get() = BR.category
-                    override val listener: OnItemClickListener?
-                        get() = this@CalendarFragment
-                }
-        }
-    }
-
-    override fun onItemClicked(item: Any?, position: Int?){
-        viewModel.checkCate((item as Category).categoryIdx)
     }
 
 
@@ -163,6 +141,13 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding, CalendarViewModel
             )
         }
 
+        viewDataBinding.fragCalendarLlAll.setSafeOnClickListener {
+            viewModel.setIsFavorite(false)
+        }
+
+        viewDataBinding.fragCalendarLlFavorite.setSafeOnClickListener {
+            viewModel.setIsFavorite(true)
+        }
 
         viewDataBinding.fragCalIvList.setSafeOnClickListener {
 

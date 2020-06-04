@@ -33,22 +33,15 @@ class CalendarPageFragment : BaseFragment<FragmentCalendarPageBinding, CalendarV
 
     override val viewModel: CalendarViewModel by viewModel()
 
-
-    lateinit var realm: Realm
-
     private var timeByMillis: Long = 0
     private val dataList: ArrayList<Date> by lazy { ArrayList<Date>() }
 
     // 선택된 categoryList
     private var categoryList : ArrayList<Int> = arrayListOf()
-    private var showFavorite = false
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewDataBinding.vm = viewModel
-
-        Realm.init(context)
-        realm = Realm.getDefaultInstance()
 
         setRecyclerView()
         setCalendar()
@@ -56,9 +49,13 @@ class CalendarPageFragment : BaseFragment<FragmentCalendarPageBinding, CalendarV
         viewModel.isUpdated.observe(this, androidx.lifecycle.Observer { value->
             if(value) {
                 viewModel.getAllCalendar()
+                viewModel.getFavoriteSchedule()
+
                 viewModel.setIsUpdated(false)
             }
         })
+
+
     }
 
     override fun onDialogDismissed(dataChanged: Boolean) {
@@ -68,40 +65,17 @@ class CalendarPageFragment : BaseFragment<FragmentCalendarPageBinding, CalendarV
 
     override fun onItemClicked(item: Any?, position: Int?){
 
-        if(viewModel.categorySort.value!![0].isChecked) {
-            categoryList.addAll(arrayListOf(0,1,2,4,5,7,8))
-            showFavorite = false
-        }
-        else if(viewModel.categorySort.value!![1].isChecked){
-            showFavorite = true
-        }
-        else{
-            showFavorite = false
-            for(i in 2..viewModel.categorySort.value!!.size-1) {
-                if (viewModel.categorySort.value!![i].isChecked) {
-                    categoryList.add(viewModel.categorySort.value!![i].categoryIdx)
-                }
-            }
-        }
-
         val dialogFragment = CalendarDialogFragment()
         val args = Bundle()
         args.putStringArrayList("Date", arrayListOf((item as Date).year, item.month, item.date))
-        args.putIntegerArrayList("categoryList", categoryList)
-        args.putBoolean("showFavorite",showFavorite)
+        args.putBoolean("showFavorite",viewModel.isFavorite.value!!)
+
 
         dialogFragment.arguments = args
         dialogFragment.setOnDialogDismissedListener(this)
         dialogFragment.setTargetFragment(this, 0)
         dialogFragment.show(fragmentManager!!, "frag_dialog_cal")
 
-    }
-
-    fun changePage(isPrev: Boolean) {
-        if (isPrev)
-            (parentFragment as CalendarFragment).viewDataBinding.fragCalendarVpPage.currentItem -= 1
-        else
-            (parentFragment as CalendarFragment).viewDataBinding.fragCalendarVpPage.currentItem += 1
     }
 
     private fun setCalendar() {
@@ -153,17 +127,18 @@ class CalendarPageFragment : BaseFragment<FragmentCalendarPageBinding, CalendarV
             lines = 5
 
 
-        // 캘린더에 뿌리기
-        viewModel.categorySort.observe(this, androidx.lifecycle.Observer {
+        makeCalendarSchedule(mCalendar, mPrevCalendar, mNextCalendar, mInstanceCal, date, lines)
+
+        viewModel.isFavorite.observe(this, androidx.lifecycle.Observer {
             makeCalendarSchedule(mCalendar, mPrevCalendar, mNextCalendar, mInstanceCal, date, lines)
         })
 
         viewModel.schedule.observe(this, androidx.lifecycle.Observer {
             makeCalendarSchedule(mCalendar, mPrevCalendar, mNextCalendar, mInstanceCal, date, lines)
+        })
 
-            for(i in 0..it.size){
-                //insertMyPoster(it[i])
-            }
+        viewModel.favoriteSchedule.observe(this, androidx.lifecycle.Observer {
+            makeCalendarSchedule(mCalendar, mPrevCalendar, mNextCalendar, mInstanceCal, date, lines)
         })
 
     }
@@ -215,13 +190,7 @@ class CalendarPageFragment : BaseFragment<FragmentCalendarPageBinding, CalendarV
         ) + 1) {
 
             val scheduleList = ArrayList<Schedule>()
-
-            lateinit var instanceScheduleList : ArrayList<Schedule>
-            if(!viewModel.categorySort.value!![1].isChecked)
-                instanceScheduleList = viewModel.getCalendarByCategory(mPrevCalendar.get(Calendar.YEAR).toString(),
-                    mPrevCalendar.get(Calendar.MONTH).toString())
-            else
-                instanceScheduleList = viewModel.getCalendarByBookMark(mPrevCalendar.get(Calendar.YEAR).toString(),
+            val instanceScheduleList = viewModel.filterScheduleFromCalendar(mPrevCalendar.get(Calendar.YEAR).toString(),
                     mPrevCalendar.get(Calendar.MONTH).toString())
 
             for (j in instanceScheduleList.indices) {
@@ -229,7 +198,6 @@ class CalendarPageFragment : BaseFragment<FragmentCalendarPageBinding, CalendarV
                     scheduleList.add(instanceScheduleList[j])
                 }
             }
-
 
             dataList.add(
                 Date(
@@ -252,11 +220,7 @@ class CalendarPageFragment : BaseFragment<FragmentCalendarPageBinding, CalendarV
             instanceDayNum = mInstanceCal.get(Calendar.DAY_OF_WEEK)
             val scheduleList = ArrayList<Schedule>()
 
-            lateinit var instanceScheduleList : ArrayList<Schedule>
-            if(!viewModel.categorySort.value!![1].isChecked)
-                instanceScheduleList = viewModel.getCalendarByCategory(year, month)
-            else
-                instanceScheduleList = viewModel.getCalendarByBookMark(year, month)
+            val instanceScheduleList = viewModel.filterScheduleFromCalendar(year, month)
 
             for (j in instanceScheduleList.indices) {
                 if (instanceScheduleList[j].posterEndDate.substring(8, 10).toInt() == i + 1) {
@@ -300,12 +264,7 @@ class CalendarPageFragment : BaseFragment<FragmentCalendarPageBinding, CalendarV
 
                 val scheduleList = ArrayList<Schedule>()
 
-                lateinit var instanceScheduleList : ArrayList<Schedule>
-                if(!viewModel.categorySort.value!![1].isChecked)
-                    instanceScheduleList = viewModel.getCalendarByCategory(mNextCalendar.get(Calendar.YEAR).toString(),
-                        mPrevCalendar.get(Calendar.MONTH).toString())
-                else
-                    instanceScheduleList = viewModel.getCalendarByBookMark(mNextCalendar.get(Calendar.YEAR).toString(),
+                val instanceScheduleList = viewModel.filterScheduleFromCalendar(mNextCalendar.get(Calendar.YEAR).toString(),
                         mPrevCalendar.get(Calendar.MONTH).toString())
 
                 for (j in instanceScheduleList.indices) {
@@ -329,14 +288,12 @@ class CalendarPageFragment : BaseFragment<FragmentCalendarPageBinding, CalendarV
                 )
             }
         }
-
-        //setRecyclerView()
+        
         refreshCal()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        realm.close()
     }
 
 

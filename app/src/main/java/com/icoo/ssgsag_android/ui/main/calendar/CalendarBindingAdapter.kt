@@ -12,6 +12,7 @@ import androidx.core.view.marginEnd
 import androidx.databinding.BindingAdapter
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.SsgSagApplication
+import org.jetbrains.anko.backgroundColor
 import org.jetbrains.anko.textColor
 
 //Category BindingAdapter
@@ -105,5 +106,23 @@ fun setSortVisibility(view: CardView, categoryIdx: Int?){
     when (categoryIdx) {
         3,6 -> view.visibility = GONE
         else -> view.visibility = VISIBLE
+    }
+}
+
+@BindingAdapter("calendarFavoriteTabText")
+fun setCalendarFavoriteTab(view: TextView, bool: Boolean){
+    if(bool) {
+        view.textColor = view.context.getColor(R.color.ssgsag)
+    }else{
+        view.textColor = view.context.getColor(R.color.grey_2)
+    }
+}
+
+@BindingAdapter("calendarFavoriteTabView")
+fun setCalendarFavoriteTab(view: View, bool: Boolean){
+    if(bool) {
+        view.backgroundColor = view.context.getColor(R.color.ssgsag)
+    }else{
+        view.backgroundColor = view.context.getColor(R.color.grey_4)
     }
 }

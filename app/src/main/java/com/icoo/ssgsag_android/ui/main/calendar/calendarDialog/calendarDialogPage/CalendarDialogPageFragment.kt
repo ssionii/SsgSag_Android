@@ -35,7 +35,6 @@ class CalendarDialogPageFragment : BaseFragment<FragmentCalendarDialogPageBindin
     private var dialogFragment = CalendarDialogPageDeleteDialogFragment()
 
     private var timeByMillis: Long = 0
-    private var categoryList = ArrayList<Int>()
     private var showFavorite = false
     private var year = ""
     private var month = ""
@@ -50,7 +49,7 @@ class CalendarDialogPageFragment : BaseFragment<FragmentCalendarDialogPageBindin
     override fun onDialogDismissed(bool:Boolean, posterIdxList:ArrayList<Int>) {
         if(bool) {
             isDeleted = bool
-            viewModel.deleteSchedule(posterIdxList, year, month, day, categoryList)
+            viewModel.deleteSchedule(posterIdxList, year, month, day)
             CalendarDialogFragment.GetUpdate.isUpdated = true
         }
 
@@ -98,9 +97,6 @@ class CalendarDialogPageFragment : BaseFragment<FragmentCalendarDialogPageBindin
         this.timeByMillis = timeByMillis
     }
 
-    fun setCategoryList(list: ArrayList<Int>){
-        this.categoryList = list
-    }
     fun setShowFavorite(bool: Boolean){
         this.showFavorite = bool
     }
@@ -121,7 +117,7 @@ class CalendarDialogPageFragment : BaseFragment<FragmentCalendarDialogPageBindin
         viewDataBinding.fragCalendarDialogPageTvDate.text = "${month.toInt()}월 ${day.toInt()}일 ${dayOfWeek}요일"
 
         if(!showFavorite)
-            viewModel.getAllSchedule(year, month, day, categoryList)
+            viewModel.getAllSchedule(year, month, day)
         else
             viewModel.getFavoriteSchedule(year, month, day)
     }
@@ -174,7 +170,7 @@ class CalendarDialogPageFragment : BaseFragment<FragmentCalendarDialogPageBindin
             }
 
             override fun onBookmarkClicked(posterIdx: Int, isFavorite: Int) {
-                viewModel.bookmark(posterIdx, isFavorite, year, month, day, categoryList)
+                viewModel.bookmark(posterIdx, isFavorite, year, month, day)
                 CalendarDialogFragment.GetUpdate.isUpdated = true
 
             }
