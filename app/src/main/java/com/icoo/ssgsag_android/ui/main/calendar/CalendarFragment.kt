@@ -5,41 +5,26 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.os.Environment
-import android.os.Handler
-import android.os.HandlerThread
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.MotionEvent
 import android.view.View
 import android.view.View.*
-import android.widget.RelativeLayout
-import android.widget.Toast
 import androidx.appcompat.widget.PopupMenu
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.FileProvider
-import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.SimpleItemAnimator
-import androidx.viewpager.widget.ViewPager
-import com.icoo.ssgsag_android.BR
 import com.icoo.ssgsag_android.BuildConfig
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseFragment
-import com.icoo.ssgsag_android.base.BaseRecyclerViewAdapter
 import com.icoo.ssgsag_android.data.local.pref.SharedPreferenceController
-import com.icoo.ssgsag_android.data.model.category.Category
 import com.icoo.ssgsag_android.databinding.FragmentCalendarBinding
-import com.icoo.ssgsag_android.databinding.ItemCalSortBinding
 import com.icoo.ssgsag_android.ui.main.MainActivity
-import com.icoo.ssgsag_android.ui.main.calendar.calendarPage.CalendarListPageFragment
-import com.icoo.ssgsag_android.ui.main.calendar.calendarPage.CalendarListPageRecyclerViewAdapter
-import com.icoo.ssgsag_android.ui.main.feed.FeedFragment
+import com.icoo.ssgsag_android.ui.main.calendar.calendarPage.CalendarGridFragment
+import com.icoo.ssgsag_android.ui.main.calendar.calendarPage.CalendarListFragment
 import com.icoo.ssgsag_android.ui.main.myPage.MyPageActivity
-import com.icoo.ssgsag_android.ui.splash.SplashActivity
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
-import kotlinx.coroutines.*
-import okhttp3.Dispatcher
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.verticalMargin
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -53,30 +38,28 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding, CalendarViewModel
         get() = R.layout.fragment_calendar
     override val viewModel: CalendarViewModel by viewModel()
 
-    var position = COUNT_PAGE
-
-    lateinit var calendarPagerAdapter: CalendarPagerAdapter
-    var calendarListPageFragment = CalendarListPageFragment()
+    lateinit var calendarGridFragment: CalendarGridFragment
+    lateinit var calendarListFragment: CalendarListFragment
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
         if(isVisibleToUser && (activity as MainActivity).isSsgSaged) {
-            //setCalendarViewPager()
             viewModel.getAllCalendar()
             (activity as MainActivity).isSsgSaged = false
         }
     }
 
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewDataBinding.vm = viewModel
 
-        //ui
-        setCalendarViewPager()
-        setFirstButton()
+        calendarGridFragment = CalendarGridFragment()
+        calendarListFragment = CalendarListFragment()
+
+        childFragmentManager.beginTransaction().add(R.id.frag_calendar_fl_page_container, calendarListFragment, "list").commit()
+
+
         setButton()
-        setHeaderDate()
         if(!SharedPreferenceController.getCalendarCoachMark(activity!!))
             setCoachMark()
 
@@ -88,50 +71,7 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding, CalendarViewModel
     }
 
 
-    private fun setCalendarViewPager() {
-        calendarPagerAdapter = CalendarPagerAdapter(childFragmentManager).apply { setNumOfMonth(COUNT_PAGE) }
-
-        viewDataBinding.fragCalTvDay.text = calendarPagerAdapter.getMonthDisplayed(position)
-
-        viewDataBinding.fragCalendarVpPage.run {
-            adapter = calendarPagerAdapter
-            currentItem = COUNT_PAGE
-            addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-                override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-
-                }
-
-                override fun onPageSelected(position: Int) {
-
-                    viewDataBinding.fragCalTvDay.text =
-                        calendarPagerAdapter.getMonthDisplayed(position)
-
-                    if (position == 0) {
-                        calendarPagerAdapter.addPrev()
-                        setCurrentItem(COUNT_PAGE, false)
-                    } else if (position == calendarPagerAdapter.count - 1) {
-                        calendarPagerAdapter.addNext()
-                        setCurrentItem(calendarPagerAdapter.count - (COUNT_PAGE + 1), false)
-                    }
-                    this@CalendarFragment.position = position
-                }
-
-                override fun onPageScrollStateChanged(state: Int) {
-
-                }
-            })
-        }
-    }
-
-    private fun setFirstButton(){
-        viewDataBinding.fragCalIvCalendar.visibility = INVISIBLE
-        viewDataBinding.fragCalIvList.visibility = VISIBLE
-    }
-
     private fun setButton() {
-
-        val scope = CoroutineScope(Dispatchers.Main)
-        var tempDay : String = ""
 
         viewDataBinding.fragCalIvDrawer.setSafeOnClickListener {
             view!!.context.startActivity<MyPageActivity>()
@@ -141,6 +81,7 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding, CalendarViewModel
             )
         }
 
+        // 전체, 즐겨 찾기 tab
         viewDataBinding.fragCalendarLlAll.setSafeOnClickListener {
             viewModel.setIsFavorite(false)
         }
@@ -149,32 +90,15 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding, CalendarViewModel
             viewModel.setIsFavorite(true)
         }
 
-        viewDataBinding.fragCalIvList.setSafeOnClickListener {
-
-            scope.launch {
-                fragmentManager!!.beginTransaction().replace(R.id.frag_calendar_rl_page_container,calendarListPageFragment).commit()
+        // 캘린더로 보기, 리스트로 보기 toggle
+        viewDataBinding.fragCalendarCvToggle.setOnClickListener {
+            if(viewDataBinding.fragCalendarTvToggle.text == "캘린더로 보기"){
+                replaceFragment(calendarGridFragment)
+                viewDataBinding.fragCalendarTvToggle.text = "리스트로 보기"
+            }else{
+                replaceFragment(calendarListFragment)
+                viewDataBinding.fragCalendarTvToggle.text = "캘린더로 보기"
             }
-
-            //tempDay = viewDataBinding.fragCalTvDay.text.toString()
-
-            viewDataBinding.fragCalendarVpPage.visibility = GONE
-            viewDataBinding.fragCalendarLlDayOfWeek.visibility = GONE
-            viewDataBinding.fragCalIvCalendar.visibility = VISIBLE
-            viewDataBinding.fragCalIvList.visibility = INVISIBLE
-        }
-
-        viewDataBinding.fragCalIvCalendar.setSafeOnClickListener {
-            scope.launch {
-                fragmentManager!!.beginTransaction().remove(calendarListPageFragment).commit()
-            }
-                viewDataBinding.fragCalendarVpPage.visibility = VISIBLE
-                viewDataBinding.fragCalendarLlDayOfWeek.visibility = VISIBLE
-                viewDataBinding.fragCalendarVpPage.bringToFront()
-                viewDataBinding.fragCalTvDay.text = calendarPagerAdapter.getMonthDisplayed(position)
-
-                viewDataBinding.fragCalIvList.visibility = VISIBLE
-                viewDataBinding.fragCalIvCalendar.visibility = INVISIBLE
-
         }
 
         viewDataBinding.fragCalIvDeleteBack.setSafeOnClickListener {
@@ -192,14 +116,6 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding, CalendarViewModel
             val menu = popup.menu
 
             inflater.inflate(R.menu.menu_cal_list, menu)
-
-            if(viewDataBinding.fragCalIvList.visibility == VISIBLE) {
-                menu.findItem(R.id.menu_cal_list_delete).setVisible(false)
-                menu.findItem(R.id.menu_cal_list_share).setVisible(true)
-            }else{
-                menu.findItem(R.id.menu_cal_list_delete).setVisible(true)
-                menu.findItem(R.id.menu_cal_list_share).setVisible(false)
-            }
 
             popup.setOnMenuItemClickListener(object : PopupMenu.OnMenuItemClickListener {
                 override fun onMenuItemClick(item: MenuItem): Boolean {
@@ -248,42 +164,38 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding, CalendarViewModel
                     viewDataBinding.fragCalIvDeleteBack.visibility = GONE
                     viewDataBinding.fragCalTvDelete.visibility = GONE
                     viewDataBinding.fragCalIvModify.visibility = VISIBLE
-                    viewDataBinding.fragCalIvList.visibility = GONE
-                    viewDataBinding.fragCalIvCalendar.visibility = VISIBLE
                 }
                 1->{ // list, 뒤로 버튼
                     viewDataBinding.fragCalIvDeleteBack.visibility = VISIBLE
                     viewDataBinding.fragCalTvDelete.visibility = GONE
                     viewDataBinding.fragCalIvModify.visibility = GONE
-                    viewDataBinding.fragCalIvList.visibility = GONE
-                    viewDataBinding.fragCalIvCalendar.visibility = GONE
                 }
                 2->{ // list, 삭제 버튼
                     viewDataBinding.fragCalIvDeleteBack.visibility = GONE
                     viewDataBinding.fragCalTvDelete.visibility = VISIBLE
                     viewDataBinding.fragCalIvModify.visibility = GONE
-                    viewDataBinding.fragCalIvList.visibility = GONE
                 }
                 4->{ // calendar
                     viewDataBinding.fragCalIvModify.visibility = VISIBLE
-                    viewDataBinding.fragCalIvList.visibility = VISIBLE
-                    viewDataBinding.fragCalIvCalendar.visibility = GONE
                 }
             }
         })
     }
 
-    private fun setHeaderDate(){
-        viewModel.listDate.observe(
-            this@CalendarFragment, Observer { value ->
-                value?.run{
-                    var temp = this
-                    if(value[6].equals('0')) {
-                        temp = temp.substring(0,6) + temp.substring(7,9)
-                    }
-                    viewDataBinding.fragCalTvDay.text = temp
+    private fun replaceFragment(fragment: Fragment) {
+        childFragmentManager.beginTransaction().apply {
+            if (fragment.isAdded) {
+                show(fragment)
+            } else {
+                add(R.id.frag_calendar_fl_page_container, fragment)
+            }
+
+            childFragmentManager.fragments.forEach {
+                if (it != fragment && it.isAdded) {
+                    hide(it)
                 }
-        })
+            }
+        }.commit()
     }
 
     private fun setCoachMark(){
@@ -315,14 +227,7 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding, CalendarViewModel
         viewDataBinding.fragCalendarClCoachmark.setOnClickListener {
             viewDataBinding.fragCalendarClCoachmarkContainer.visibility = GONE
 
-
         }
-
-    }
-
-    companion object {
-        private val TAG = "CalendarFragment"
-        private val COUNT_PAGE = 60
 
     }
 }

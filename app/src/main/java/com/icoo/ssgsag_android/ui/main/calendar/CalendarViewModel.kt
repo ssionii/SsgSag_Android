@@ -1,6 +1,7 @@
 package com.icoo.ssgsag_android.ui.main.calendar
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -44,9 +45,12 @@ class CalendarViewModel(
 
     private val _listDate = MutableLiveData<String>()
     val listDate : LiveData<String> get() = _listDate
-
     private val _isFavorite = MutableLiveData<Boolean>()
     val isFavorite : LiveData<Boolean> get() = _isFavorite
+
+    // header에 있는 date
+    private val _headerDate = MutableLiveData<String>()
+    val headerDate : LiveData<String> get() = _headerDate
 
     init {
         setIsFavorite(false)
@@ -65,6 +69,8 @@ class CalendarViewModel(
             .subscribe({
                 it.run {
                     _schedule.postValue(this)
+
+                    Log.e("schedule", "update")
                 }
             }, {
 
@@ -81,6 +87,8 @@ class CalendarViewModel(
             .subscribe({
                 it.run {
                     _favoriteSchedule.postValue(this)
+
+                    Log.e("favorite schedule", "update")
                 }
             }, {
 
@@ -89,12 +97,10 @@ class CalendarViewModel(
     }
 
     fun filterScheduleFromCalendar (year: String, month: String): ArrayList<Schedule> {
-
         val cal = Calendar.getInstance()
         cal.set(year.toInt(), month.toInt(), 1)
 
         scheduleByDate.clear()
-
         // all
         if(!isFavorite.value!!){
             schedule.value?.let {
@@ -128,8 +134,6 @@ class CalendarViewModel(
 
         scheduleByDate.clear()
 
-
-
         // all
         if(!isFavorite.value!!){
             schedule.value?.let {
@@ -148,28 +152,14 @@ class CalendarViewModel(
                 }
             }
         }
-
         return scheduleByDate
     }
 
-    fun navigate(idx: Int) {
-        val bundle = Bundle().apply {
-            putInt("Idx", idx)
-            putString("from","calendar")
-        }
-        _activityToStart.postValue(Pair(CalendarDetailActivity::class, bundle))
-    }
-
-
-    fun setIsUpdated(isUpdated: Boolean){
-        _isUpdated.setValue(isUpdated)
-    }
-
-    fun bookmark(posterIdx: Int, isFavorite: Int) {
+    fun bookmark(posterIdx: Int, isBookmarked: Int) {
         lateinit var response: Single<Int>
 
-        if(isFavorite == 0) response = repository.bookmarkSchedule(posterIdx)
-        else if(isFavorite == 1) response = repository.unbookmarkSchedule(posterIdx)
+        if(isBookmarked == 0) response = repository.bookmarkSchedule(posterIdx)
+        else if(isBookmarked == 1) response = repository.unbookmarkSchedule(posterIdx)
 
         addDisposable(response
             .subscribeOn(schedulerProvider.io())
@@ -177,18 +167,15 @@ class CalendarViewModel(
             .doOnSubscribe { showProgress() }
             .doOnTerminate { hideProgress() }
             .subscribe({
-                getAllCalendar()
+                if(isFavorite.value!!){
+                    getFavoriteSchedule()
+                }else {
+                    getAllCalendar()
+                }
             }, {
 
             })
         )
-
-    }
-
-    fun setDeleteType(type : Int){
-        _deleteType.setValue(type)
-
-        // 0: 선택 x, 1: 선택 가능, 2: 선택된 항목 있음
     }
 
     fun deleteSchedule(posterIdxList: ArrayList<Int>) {
@@ -212,13 +199,33 @@ class CalendarViewModel(
         )
 
     }
-    
+
+
+
+    fun setIsUpdated(isUpdated: Boolean){
+        _isUpdated.setValue(isUpdated)
+    }
+
+    fun setDeleteType(type : Int){
+        _deleteType.setValue(type)
+        // 0: 선택 x, 1: 선택 가능, 2: 선택된 항목 있음
+    }
+
+    fun setHeaderDate(date: String){
+        _headerDate.postValue(date)
+    }
+
     fun setIsFavorite(bool: Boolean){
         _isFavorite.value = bool
     }
 
-    fun setListDate(date: String){
-        _listDate.setValue(date.substring(0,4) + "년 " + date.substring(5,7) + "월")
+
+    fun navigate(idx: Int) {
+        val bundle = Bundle().apply {
+            putInt("Idx", idx)
+            putString("from","calendar")
+        }
+        _activityToStart.postValue(Pair(CalendarDetailActivity::class, bundle))
     }
 
     private fun showProgress() {
