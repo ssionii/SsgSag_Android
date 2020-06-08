@@ -5,7 +5,6 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.os.Environment
-import android.util.Log
 import android.view.MenuItem
 import android.view.MotionEvent
 import android.view.View
@@ -22,7 +21,8 @@ import com.icoo.ssgsag_android.data.local.pref.SharedPreferenceController
 import com.icoo.ssgsag_android.databinding.FragmentCalendarBinding
 import com.icoo.ssgsag_android.ui.main.MainActivity
 import com.icoo.ssgsag_android.ui.main.calendar.calendarPage.CalendarGridFragment
-import com.icoo.ssgsag_android.ui.main.calendar.calendarPage.CalendarListFragment
+import com.icoo.ssgsag_android.ui.main.calendar.calendarPage.list.CalendarListFragment
+import com.icoo.ssgsag_android.ui.main.calendar.calendarPage.list.CalendarListPageFragment
 import com.icoo.ssgsag_android.ui.main.myPage.MyPageActivity
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import org.jetbrains.anko.startActivity
@@ -52,12 +52,11 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding, CalendarViewModel
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewDataBinding.vm = viewModel
-
+        
         calendarGridFragment = CalendarGridFragment()
         calendarListFragment = CalendarListFragment()
 
-        childFragmentManager.beginTransaction().add(R.id.frag_calendar_fl_page_container, calendarListFragment, "list").commit()
-
+        replaceFragment(calendarListFragment)
 
         setButton()
         if(!SharedPreferenceController.getCalendarCoachMark(activity!!))
@@ -67,6 +66,7 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding, CalendarViewModel
 
     override fun onResume() {
         super.onResume()
+
         viewModel.getAllCalendar()
     }
 

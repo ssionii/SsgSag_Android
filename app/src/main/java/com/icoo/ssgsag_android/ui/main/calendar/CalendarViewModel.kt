@@ -127,7 +127,7 @@ class CalendarViewModel(
         return scheduleByDate
     }
 
-    fun filterScheduleFromList(year: String, month: String): ArrayList<Schedule> {
+    fun filterScheduleFromList(year: String, month: String, isFavorite: Boolean): ArrayList<Schedule> {
 
         val cal = Calendar.getInstance()
         cal.set(year.toInt(), month.toInt(), 1)
@@ -135,7 +135,7 @@ class CalendarViewModel(
         scheduleByDate.clear()
 
         // all
-        if(!isFavorite.value!!){
+        if(!isFavorite){
             schedule.value?.let {
                 for (i in it.indices) {
                     if (it[i].isEnded == 0) {

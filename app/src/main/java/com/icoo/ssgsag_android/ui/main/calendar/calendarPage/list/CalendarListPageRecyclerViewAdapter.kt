@@ -1,21 +1,16 @@
-package com.icoo.ssgsag_android.ui.main.calendar.calendarPage
+package com.icoo.ssgsag_android.ui.main.calendar.calendarPage.list
 
-import android.util.Log
 import android.view.*
-import android.view.View.GONE
-import android.widget.RelativeLayout
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.data.model.schedule.Schedule
 import com.icoo.ssgsag_android.databinding.ItemCalendarListBinding
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
-import kotlinx.android.synthetic.main.item_calendar_list.*
 
-class CalendarListPageRecyclerViewAdapter(
-    var itemList: ArrayList<Schedule>
-) : RecyclerView.Adapter<CalendarListPageRecyclerViewAdapter.ViewHolder>() {
+class CalendarListPageRecyclerViewAdapter() : RecyclerView.Adapter<CalendarListPageRecyclerViewAdapter.ViewHolder>() {
 
+    var itemList: ArrayList<Schedule> = arrayListOf<Schedule>()
     private var listener: OnScheduleItemClickListener? = null
 
     fun setOnScheduleItemClickListener(listener: OnScheduleItemClickListener) {
@@ -23,27 +18,33 @@ class CalendarListPageRecyclerViewAdapter(
     }
 
     fun replaceAll(array: ArrayList<Schedule>?) {
-        if(array?.size == 0)
+        if(array?.size != null) {
             itemList.clear()
+            itemList.addAll(array)
 
-        if (itemList.size > 0) {
             for (i in itemList.indices) {
                 if (i > 0 &&
                     itemList[i].posterEndDate.substring(8, 10)
-                    == itemList[i - 1].posterEndDate.substring(8, 10)) {
+                    == itemList[i - 1].posterEndDate.substring(8, 10)
+                ) {
                     itemList[i].isAlone = false
-                }else{
+                } else {
                     itemList[i].isAlone = true
                 }
 
-                if(i < itemList.size-1 &&
-                    itemList[i].posterEndDate.substring(8,10) == itemList[i+1].posterEndDate.substring(8,10)){
+                if (i < itemList.size - 1 &&
+                    itemList[i].posterEndDate.substring(
+                        8,
+                        10
+                    ) == itemList[i + 1].posterEndDate.substring(8, 10)
+                ) {
                     itemList[i].isLast = false
-                }else{
+                } else {
                     itemList[i].isLast = true
                 }
             }
         }
+
     }
 
 

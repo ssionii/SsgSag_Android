@@ -28,6 +28,8 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import android.app.AlarmManager
 import android.app.PendingIntent
 import com.bumptech.glide.Glide
+import java.net.HttpURLConnection
+import java.net.URL
 
 
 class MainActivity : BaseActivity<ActivityMainBinding, SsgSagViewModel>() {
@@ -81,7 +83,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, SsgSagViewModel>() {
     // 현재 필터설정만 존재
     private fun showCoachMark(){
         val dialogFragment = FilterCoachmarkDialogFragment()
-        dialogFragment.show(supportFragmentManager!!, "frag_dialog_filter_coachmark")
+        dialogFragment.show(supportFragmentManager, "frag_dialog_filter_coachmark")
     }
 
     private fun setViewPager() {

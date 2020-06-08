@@ -1,4 +1,4 @@
-package com.icoo.ssgsag_android.ui.main.calendar.calendarPage
+package com.icoo.ssgsag_android.ui.main.calendar.calendarPage.list
 
 import android.content.Context
 import android.content.Intent
@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.SimpleItemAnimator
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseFragment
 import com.icoo.ssgsag_android.data.model.schedule.Schedule
-import com.icoo.ssgsag_android.databinding.FragmentCalendarListBinding
+import com.icoo.ssgsag_android.databinding.FragmentCalendarListPageBinding
 import com.icoo.ssgsag_android.ui.main.MainActivity
 import com.icoo.ssgsag_android.ui.main.calendar.CalendarViewModel
 import com.icoo.ssgsag_android.ui.main.calendar.calendarDetail.CalendarDetailActivity
@@ -23,14 +23,14 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 import kotlin.collections.ArrayList
 
-class CalendarListFragment : BaseFragment<FragmentCalendarListBinding, CalendarViewModel>(),
+class CalendarListPageFragment : BaseFragment<FragmentCalendarListPageBinding, CalendarViewModel>(),
     CalendarDialogPageDeleteDialogFragment.OnDialogDismissedListener, MainActivity.onKeyBackPressedListener{
 
     override val layoutResID: Int
-        get() = R.layout.fragment_calendar_list
+        get() = R.layout.fragment_calendar_list_page
     override val viewModel: CalendarViewModel by viewModel()
 
-    lateinit private var calendarListPageRecyclerViewAdapter : CalendarListPageRecyclerViewAdapter
+    lateinit  var calendarListPageRecyclerViewAdapter : CalendarListPageRecyclerViewAdapter
 
     lateinit private var dialogFragment : CalendarDialogPageDeleteDialogFragment
     lateinit private var dataList: ArrayList<Schedule>
@@ -38,24 +38,25 @@ class CalendarListFragment : BaseFragment<FragmentCalendarListBinding, CalendarV
     private var deletePosterIdxList = arrayListOf<Int>()
     private var deletePosterNameList = arrayListOf<String>()
 
+    private var isFavorite = false
+
+    val date : Date = Calendar.getInstance().time
+    val year = DateUtil.yearFormat.format(date)
+    val month = DateUtil.monthFormat.format(date)
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
         viewDataBinding.vm = viewModel
+        isFavorite = arguments!!.getBoolean("isFavorite")
+
         setRecyclerView()
     }
 
     override fun onResume() {
         super.onResume()
 
-        Log.e("onResume", "hello")
-
         viewModel.setDeleteType(0)
-    }
-
-    override fun onStart() {
-        super.onStart()
-        Log.e("onStart", "hello")
     }
 
     override fun onDialogDismissed(bool:Boolean, posterIdxList:ArrayList<Int>) {
@@ -71,15 +72,7 @@ class CalendarListFragment : BaseFragment<FragmentCalendarListBinding, CalendarV
 
     private fun setRecyclerView() {
 
-        val date : Date = Calendar.getInstance().time
-
-        val year = DateUtil.yearFormat.format(date)
-        val month = DateUtil.monthFormat.format(date)
-
-        var curPosition = 0
-
-        dataList = viewModel.filterScheduleFromList(year,month)
-        calendarListPageRecyclerViewAdapter = CalendarListPageRecyclerViewAdapter(dataList)
+        calendarListPageRecyclerViewAdapter = CalendarListPageRecyclerViewAdapter()
 
         viewDataBinding.fragCalendarListPageRv.apply {
             adapter = calendarListPageRecyclerViewAdapter.apply {
@@ -93,11 +86,15 @@ class CalendarListFragment : BaseFragment<FragmentCalendarListBinding, CalendarV
 
             layoutManager = WrapContentLinearLayoutManager()
 
+
+            var curPosition = 0
+
             addOnScrollListener(object:RecyclerView.OnScrollListener(){
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                     super.onScrollStateChanged(recyclerView, newState)
 
                     if(newState == SCROLL_STATE_DRAGGING || newState == SCROLL_STATE_IDLE) {
+
                         var position = (layoutManager as WrapContentLinearLayoutManager).findFirstVisibleItemPosition()
 
                         calendarListPageRecyclerViewAdapter.apply{
@@ -124,23 +121,16 @@ class CalendarListFragment : BaseFragment<FragmentCalendarListBinding, CalendarV
 
         makeScheduleList(year, month)
 
-        viewModel.isFavorite.observe(this@CalendarListFragment, Observer {
+        viewModel.schedule.observe(this@CalendarListPageFragment, Observer {
             makeScheduleList(year, month)
-
-            Log.e("item 개수", viewDataBinding.fragCalendarListPageRv.adapter!!.itemCount.toString())
         })
 
-        viewModel.schedule.observe(this@CalendarListFragment, Observer {
-            makeScheduleList(year, month)
-
-        })
-
-        viewModel.favoriteSchedule.observe(this@CalendarListFragment, Observer {
+        viewModel.favoriteSchedule.observe(this@CalendarListPageFragment, Observer {
             makeScheduleList(year, month)
         })
 
 
-        viewModel.deleteType.observe(this@CalendarListFragment, Observer { value ->
+        viewModel.deleteType.observe(this@CalendarListPageFragment, Observer { value ->
             calendarListPageRecyclerViewAdapter.apply {
 
                 if(value == 0){
@@ -152,7 +142,7 @@ class CalendarListFragment : BaseFragment<FragmentCalendarListBinding, CalendarV
                 } else if(value == 3){
                     dialogFragment = CalendarDialogPageDeleteDialogFragment()
 
-                    dialogFragment.setOnDialogDismissedListener(this@CalendarListFragment)
+                    dialogFragment.setOnDialogDismissedListener(this@CalendarListPageFragment)
                     dialogFragment.setInfo(deletePosterIdxList, deletePosterNameList)
                     dialogFragment.show(fragmentManager!!, "schedule delete dialog")
                 }
@@ -163,7 +153,9 @@ class CalendarListFragment : BaseFragment<FragmentCalendarListBinding, CalendarV
     private fun makeScheduleList(year: String, month: String){
 
         viewModel.setDeleteType(0)
-        dataList = viewModel.filterScheduleFromList(year, month)
+        dataList = viewModel.filterScheduleFromList(year, month, isFavorite)
+
+        Log.e("make Data", dataList.toString())
 
         calendarListPageRecyclerViewAdapter.apply {
             setSelectType(0);
@@ -183,7 +175,8 @@ class CalendarListFragment : BaseFragment<FragmentCalendarListBinding, CalendarV
     }
 
     private val onScheduleItemClickListener =
-        object : CalendarListPageRecyclerViewAdapter.OnScheduleItemClickListener {
+        object :
+            CalendarListPageRecyclerViewAdapter.OnScheduleItemClickListener {
             override fun onItemClicked(posterIdx: Int){
 
                 val intent = Intent(context, CalendarDetailActivity::class.java)
@@ -233,24 +226,27 @@ class CalendarListFragment : BaseFragment<FragmentCalendarListBinding, CalendarV
             }
         }
 
-    override fun onStop() {
-        super.onStop()
-
-        Log.e("onStop", "hello")
-    }
-
-
     override fun onBack() {
         val activity = activity as MainActivity
         activity.setOnKeyBackPressedListener(null)
         activity.onBackPressed()
 
-        Log.e("onBack", "hello")
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
         (context as MainActivity).setOnKeyBackPressedListener(this)
+    }
+
+    companion object{
+        fun newInstance(isFavorite: Boolean): CalendarListPageFragment {
+            val args = Bundle()
+            args.putBoolean("isFavorite", isFavorite)
+
+            val fragment = CalendarListPageFragment()
+            fragment.arguments = args
+            return fragment
+        }
     }
 }
