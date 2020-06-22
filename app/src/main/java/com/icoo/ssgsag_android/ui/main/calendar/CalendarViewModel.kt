@@ -25,9 +25,12 @@ class CalendarViewModel(
     , private val schedulerProvider: SchedulerProvider
 ) : BaseViewModel() {
     val scheduleByDate = ArrayList<Schedule>()
+    val favoriteScheduleByDate = ArrayList<Schedule>()
 
     private val _isProgress = MutableLiveData<Int>()
     val isProgress: LiveData<Int> get() = _isProgress
+    private val _activityToStart = MutableLiveData<Pair<KClass<*>, Bundle?>>()
+    val activityToStart: LiveData<Pair<KClass<*>, Bundle?>> get() = _activityToStart
 
     // 스케쥴
     private val _schedule = MutableLiveData<ArrayList<Schedule>>()
@@ -37,27 +40,19 @@ class CalendarViewModel(
 
     private var _isUpdated = MutableLiveData<Boolean>()
     val isUpdated: LiveData<Boolean> get() = _isUpdated
-    private val _activityToStart = MutableLiveData<Pair<KClass<*>, Bundle?>>()
-    val activityToStart: LiveData<Pair<KClass<*>, Bundle?>> get() = _activityToStart
 
-    private val _deleteType = MutableLiveData<Int>()
-    val deleteType : LiveData<Int> get() = _deleteType
+    var isFavorite = MutableLiveData<Boolean>()
 
-    private val _listDate = MutableLiveData<String>()
-    val listDate : LiveData<String> get() = _listDate
-    private val _isFavorite = MutableLiveData<Boolean>()
-    val isFavorite : LiveData<Boolean> get() = _isFavorite
+    var changedPosterPosition = 0
 
     // header에 있는 date
     private val _headerDate = MutableLiveData<String>()
     val headerDate : LiveData<String> get() = _headerDate
 
     init {
-        setIsFavorite(false)
+        isFavorite.value = false
         getAllCalendar()
         getFavoriteSchedule()
-        setDeleteType(4)
-       
     }
 
     fun getAllCalendar() {
@@ -69,8 +64,6 @@ class CalendarViewModel(
             .subscribe({
                 it.run {
                     _schedule.postValue(this)
-
-                    Log.e("schedule", "update")
                 }
             }, {
 
@@ -155,7 +148,7 @@ class CalendarViewModel(
         return scheduleByDate
     }
 
-    fun bookmark(posterIdx: Int, isBookmarked: Int) {
+    fun bookmark(posterIdx: Int, isBookmarked: Int, position: Int) {
         lateinit var response: Single<Int>
 
         if(isBookmarked == 0) response = repository.bookmarkSchedule(posterIdx)
@@ -167,56 +160,22 @@ class CalendarViewModel(
             .doOnSubscribe { showProgress() }
             .doOnTerminate { hideProgress() }
             .subscribe({
-                if(isFavorite.value!!){
-                    getFavoriteSchedule()
-                }else {
-                    getAllCalendar()
-                }
-            }, {
-
-            })
-        )
-    }
-
-    fun deleteSchedule(posterIdxList: ArrayList<Int>) {
-
-        val jsonObject = JSONObject()
-        val jsonArray = JSONArray(posterIdxList)
-        jsonObject.put("posterIdxList", jsonArray)
-
-        val body = JsonParser().parse(jsonObject.toString()) as JsonObject
-
-        addDisposable(repository.deleteSchedule(body)
-            .subscribeOn(schedulerProvider.io())
-            .observeOn(schedulerProvider.mainThread())
-            .doOnSubscribe { showProgress() }
-            .doOnTerminate { hideProgress() }
-            .subscribe({
+                getFavoriteSchedule()
                 getAllCalendar()
+                changedPosterPosition = position
             }, {
 
             })
         )
-
     }
-
 
 
     fun setIsUpdated(isUpdated: Boolean){
         _isUpdated.setValue(isUpdated)
     }
 
-    fun setDeleteType(type : Int){
-        _deleteType.setValue(type)
-        // 0: 선택 x, 1: 선택 가능, 2: 선택된 항목 있음
-    }
-
     fun setHeaderDate(date: String){
         _headerDate.postValue(date)
-    }
-
-    fun setIsFavorite(bool: Boolean){
-        _isFavorite.value = bool
     }
 
 

@@ -110,6 +110,8 @@
         <activity android:name=".ui.main.ssgSag.todaySwipePoster.TodaySwipePosterActivity"
                 android:windowSoftInputMode="adjustResize"/>
 
+        <activity android:name=".ui.main.calendar.calendarPage.list.CalendarListDeleteActivity"/>
+
         <activity android:name="me.iwf.photopicker.PhotoPickerActivity"
                 android:theme="@style/Theme.AppCompat.NoActionBar"
                 />

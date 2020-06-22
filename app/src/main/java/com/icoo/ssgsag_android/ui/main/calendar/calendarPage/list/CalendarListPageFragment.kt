@@ -15,7 +15,6 @@ import com.icoo.ssgsag_android.databinding.FragmentCalendarListPageBinding
 import com.icoo.ssgsag_android.ui.main.MainActivity
 import com.icoo.ssgsag_android.ui.main.calendar.CalendarViewModel
 import com.icoo.ssgsag_android.ui.main.calendar.calendarDetail.CalendarDetailActivity
-import com.icoo.ssgsag_android.ui.main.calendar.calendarDialog.calendarDialogPage.CalendarDialogPageDeleteDialogFragment
 import com.icoo.ssgsag_android.util.DateUtil
 import com.icoo.ssgsag_android.util.view.WrapContentLinearLayoutManager
 import com.igaworks.v2.core.AdBrixRm
@@ -24,19 +23,15 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class CalendarListPageFragment : BaseFragment<FragmentCalendarListPageBinding, CalendarViewModel>(),
-    CalendarDialogPageDeleteDialogFragment.OnDialogDismissedListener, MainActivity.onKeyBackPressedListener{
+   MainActivity.onKeyBackPressedListener{
 
     override val layoutResID: Int
         get() = R.layout.fragment_calendar_list_page
     override val viewModel: CalendarViewModel by viewModel()
 
-    lateinit  var calendarListPageRecyclerViewAdapter : CalendarListPageRecyclerViewAdapter
+    var calendarListPageRecyclerViewAdapter = CalendarListPageRecyclerViewAdapter()
 
-    lateinit private var dialogFragment : CalendarDialogPageDeleteDialogFragment
-    lateinit private var dataList: ArrayList<Schedule>
-
-    private var deletePosterIdxList = arrayListOf<Int>()
-    private var deletePosterNameList = arrayListOf<String>()
+    private var dataList: ArrayList<Schedule> = arrayListOf()
 
     private var isFavorite = false
 
@@ -53,30 +48,12 @@ class CalendarListPageFragment : BaseFragment<FragmentCalendarListPageBinding, C
         setRecyclerView()
     }
 
-    override fun onResume() {
-        super.onResume()
-
-        viewModel.setDeleteType(0)
-    }
-
-    override fun onDialogDismissed(bool:Boolean, posterIdxList:ArrayList<Int>) {
-        if(bool) {
-            viewModel.deleteSchedule(posterIdxList)
-        }
-
-        viewModel.setDeleteType(0)
-        deletePosterIdxList.clear()
-        deletePosterNameList.clear()
-        activity!!.supportFragmentManager.beginTransaction().remove(dialogFragment).commit()
-    }
-
     private fun setRecyclerView() {
-
-        calendarListPageRecyclerViewAdapter = CalendarListPageRecyclerViewAdapter()
 
         viewDataBinding.fragCalendarListPageRv.apply {
             adapter = calendarListPageRecyclerViewAdapter.apply {
                 setOnScheduleItemClickListener(onScheduleItemClickListener)
+                setHasStableIds(true)
             }
 
             (itemAnimator as SimpleItemAnimator).run {
@@ -86,29 +63,35 @@ class CalendarListPageFragment : BaseFragment<FragmentCalendarListPageBinding, C
 
             layoutManager = WrapContentLinearLayoutManager()
 
-
             var curPosition = 0
 
-            addOnScrollListener(object:RecyclerView.OnScrollListener(){
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                     super.onScrollStateChanged(recyclerView, newState)
 
-                    if(newState == SCROLL_STATE_DRAGGING || newState == SCROLL_STATE_IDLE) {
+                    if (newState == SCROLL_STATE_DRAGGING || newState == SCROLL_STATE_IDLE) {
 
-                        var position = (layoutManager as WrapContentLinearLayoutManager).findFirstVisibleItemPosition()
+                        var position =
+                            (layoutManager as WrapContentLinearLayoutManager).findFirstVisibleItemPosition()
 
-                        calendarListPageRecyclerViewAdapter.apply{
+                        calendarListPageRecyclerViewAdapter.apply {
 
-                            if(itemList.size < curPosition) curPosition = position
+                            if (itemList.size < curPosition) curPosition = position
 
-                            if(itemList.size > 0 &&
-                                this.getItemDate(curPosition) != this.getItemDate(position)){
+                            if (itemList.size > 0 &&
+                                this.getItemDate(curPosition) != this.getItemDate(position)
+                            ) {
                                 curPosition = position
 
-                                val date = (adapter as CalendarListPageRecyclerViewAdapter).getItemDate(position)
+                                val date =
+                                    (adapter as CalendarListPageRecyclerViewAdapter).getItemDate(
+                                        position
+                                    )
                                 val monthInt = date.substring(5, 7).toInt()
-                                val headerDate = date.substring(0,4) + "년 " + monthInt.toString() + "월"
+                                val headerDate =
+                                    date.substring(0, 4) + "년 " + monthInt.toString() + "월"
                                 viewModel.setHeaderDate(headerDate)
+
                             }
                         }
 
@@ -121,55 +104,35 @@ class CalendarListPageFragment : BaseFragment<FragmentCalendarListPageBinding, C
 
         makeScheduleList(year, month)
 
-        viewModel.schedule.observe(this@CalendarListPageFragment, Observer {
+        viewModel.schedule.observe(this, Observer {
             makeScheduleList(year, month)
         })
 
-        viewModel.favoriteSchedule.observe(this@CalendarListPageFragment, Observer {
+        viewModel.favoriteSchedule.observe(this, Observer {
             makeScheduleList(year, month)
         })
 
-
-        viewModel.deleteType.observe(this@CalendarListPageFragment, Observer { value ->
-            calendarListPageRecyclerViewAdapter.apply {
-
-                if(value == 0){
-                    setSelectType(0)
-                    notifyItemRangeChanged(0, dataList.size)
-                }else if(value == 1) {
-                    setSelectType(1)
-                    notifyItemRangeChanged(0, dataList.size)
-                } else if(value == 3){
-                    dialogFragment = CalendarDialogPageDeleteDialogFragment()
-
-                    dialogFragment.setOnDialogDismissedListener(this@CalendarListPageFragment)
-                    dialogFragment.setInfo(deletePosterIdxList, deletePosterNameList)
-                    dialogFragment.show(fragmentManager!!, "schedule delete dialog")
-                }
-            }
-        })
     }
 
     private fun makeScheduleList(year: String, month: String){
 
-        viewModel.setDeleteType(0)
+        dataList.clear()
         dataList = viewModel.filterScheduleFromList(year, month, isFavorite)
 
-        Log.e("make Data", dataList.toString())
-
         calendarListPageRecyclerViewAdapter.apply {
-            setSelectType(0);
+            setSelectType(0)
             replaceAll(dataList)
+
             if(dataList.size != 0) {
-                notifyItemRangeChanged(0, dataList.size)
-            }else
-                notifyDataSetChanged()
+                notifyItemChanged(viewModel.changedPosterPosition)
+            }
 
             if(itemList.size > 0) {
                 val date = this.getItemDate(0)
                 val monthInt = date.substring(5, 7).toInt()
                 val headerDate = date.substring(0,4) + "년 " + monthInt.toString() + "월"
                 viewModel.setHeaderDate(headerDate)
+
             }
         }
     }
@@ -196,41 +159,17 @@ class CalendarListPageFragment : BaseFragment<FragmentCalendarListPageBinding, C
                     AdBrixRm.AttrModel().setAttrs("posterIdx",posterIdx.toLong()))
             }
 
-            override fun onBookmarkClicked(posterIdx: Int, isFavorite: Int) {
-                viewModel.bookmark(posterIdx, isFavorite)
+            override fun onBookmarkClicked(posterIdx: Int, isFavorite: Int, position: Int) {
+                viewModel.bookmark(posterIdx, isFavorite, position)
             }
 
-            override fun onSelectorClicked(posterIdx: Int, posterName:String, isSelected: Boolean) {
-                calendarListPageRecyclerViewAdapter.apply {
-                    if(getSelectType()){ // 선택된게 하나라도 있음
-
-                        viewModel.setDeleteType(2)
-
-                        if(isSelected) {
-                            deletePosterIdxList.add(posterIdx)
-                            deletePosterNameList.add(posterName)
-                        }
-                        else{
-                            deletePosterIdxList.remove(posterIdx)
-                            deletePosterNameList.remove(posterName)
-                        }
-
-
-                    }else{
-                        // 1이면 뒤로가기 2면 삭제
-                        viewModel.setDeleteType(1)
-                        deletePosterIdxList.clear()
-                        deletePosterNameList.clear()
-                    }
-                }
-            }
+            override fun onSelectorClicked(posterIdx: Int, posterName:String, isSelected: Boolean) {}
         }
 
     override fun onBack() {
         val activity = activity as MainActivity
         activity.setOnKeyBackPressedListener(null)
         activity.onBackPressed()
-
     }
 
     override fun onAttach(context: Context) {

@@ -1,15 +1,18 @@
-package com.icoo.ssgsag_android.ui.main.calendar.calendarPage
+package com.icoo.ssgsag_android.ui.main.calendar.calendarPage.grid
 
 import android.os.Bundle
-import android.util.Log
 import androidx.viewpager.widget.ViewPager
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseFragment
 import com.icoo.ssgsag_android.databinding.FragmentCalendarGridBinding
-import com.icoo.ssgsag_android.ui.main.calendar.CalendarFragment
 import com.icoo.ssgsag_android.ui.main.calendar.CalendarPagerAdapter
 import com.icoo.ssgsag_android.ui.main.calendar.CalendarViewModel
+import com.icoo.ssgsag_android.ui.main.review.club.registration.ClubRgstrActivity
+import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.io.BufferedReader
+import java.io.InputStreamReader
+import java.net.URL
 
 class CalendarGridFragment :BaseFragment<FragmentCalendarGridBinding, CalendarViewModel>(){
 
@@ -17,21 +20,21 @@ class CalendarGridFragment :BaseFragment<FragmentCalendarGridBinding, CalendarVi
         get() = R.layout.fragment_calendar_grid
     override val viewModel: CalendarViewModel by viewModel()
 
-    var position = COUNT_PAGE
+    var position =
+        COUNT_PAGE
     private lateinit var calendarPagerAdapter : CalendarPagerAdapter
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        Log.e("grid 생성", "완료")
-
         viewDataBinding.vm = viewModel
         setCalendarViewPager()
+        setTab()
     }
 
     private fun setCalendarViewPager() {
 
-        calendarPagerAdapter = CalendarPagerAdapter(childFragmentManager!!).apply {
+        calendarPagerAdapter = CalendarPagerAdapter(childFragmentManager).apply {
             setNumOfMonth(COUNT_PAGE)
         }
 
@@ -40,6 +43,7 @@ class CalendarGridFragment :BaseFragment<FragmentCalendarGridBinding, CalendarVi
         viewDataBinding.fragCalGridVpPage.run {
             adapter = calendarPagerAdapter
             currentItem = COUNT_PAGE
+
             addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
                 override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
 
@@ -62,6 +66,16 @@ class CalendarGridFragment :BaseFragment<FragmentCalendarGridBinding, CalendarVi
 
                 }
             })
+        }
+    }
+
+    private fun setTab(){
+        viewDataBinding.fragCalGridLlAll.setSafeOnClickListener {
+            viewModel.isFavorite.value = false
+
+        }
+        viewDataBinding.fragCalGridLlFavorite.setSafeOnClickListener {
+            viewModel.isFavorite.value = true
         }
     }
 

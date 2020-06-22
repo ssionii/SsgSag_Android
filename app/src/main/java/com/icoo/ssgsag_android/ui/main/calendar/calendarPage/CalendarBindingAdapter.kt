@@ -68,7 +68,6 @@ fun setSchedule(view: CardView, date: Date, position: Int) {
            if (it.size > position) {
                view.visibility = VISIBLE
 
-
                /* 지난 포스터 회색 처리
                if (date.schedule!![position].isEnded == 1)
                    view.setCardBackgroundColor(view.context.getColor(R.color.passive))
@@ -95,58 +94,9 @@ fun setSchedule(view: CardView, date: Date, position: Int) {
                    view.setCardBackgroundColor(view.context.getColor(R.color.white))
                }
            }
+
        }
 
-    /*
-       date.schedule?.let {
-           if (it.size > position) {
-
-               Log.e(date.schedule!![position].posterName + "의 idx", date.schedule!![position].categoryIdx.toString())
-               Log.e( cate.value!![date.schedule!![position].categoryIdx+1].categoryIdx.toString() ,cate.value!![date.schedule!![position].categoryIdx+1].isChecked.toString())
-
-               // 전체
-               if(cate.value!![0].isChecked)
-                   view.visibility = View.VISIBLE
-               else if(cate.value!![1].isChecked){
-                   if(date.schedule!![position].isFavorite == 1)
-                       view.visibility = View.VISIBLE
-               }
-               else if(date.schedule!![position].categoryIdx < 3){
-                   if(cate.value!![date.schedule!![position].categoryIdx+2].isChecked) {
-                       view.visibility = View.VISIBLE
-                   }else
-                       view.visibility = View.GONE
-               }
-               else if(date.schedule!![position].categoryIdx < 6){
-                   if(cate.value!![(date.schedule!![position].categoryIdx)+1].isChecked){
-                       view.visibility = View.VISIBLE
-                   }else
-                       view.visibility = View.GONE
-
-               }
-               else if(date.schedule!![position].categoryIdx < 9) {
-                   if (cate.value!![(date.schedule!![position].categoryIdx)].isChecked) {
-                       view.visibility = View.VISIBLE
-                   } else
-                       view.visibility = View.GONE
-               }
-
-               if (date.schedule!![position].isEnded == 1)
-                   view.setCardBackgroundColor(view.context.getColor(R.color.passive))
-               else {
-                   when (date.schedule!![position].categoryIdx) {
-                       0 -> view.setCardBackgroundColor(view.context.getColor(R.color.contest))
-                       1 -> view.setCardBackgroundColor(view.context.getColor(R.color.act))
-                       2 -> view.setCardBackgroundColor(view.context.getColor(R.color.club))
-                       4 -> view.setCardBackgroundColor(view.context.getColor(R.color.recruit))
-                       5 -> view.setCardBackgroundColor(view.context.getColor(R.color.etcText))
-                       7-> view.setCardBackgroundColor(view.context.getColor(R.color.education))
-                       8 -> view.setCardBackgroundColor(view.context.getColor(R.color.scholarship))
-                   }
-               }
-           } else
-               view.visibility = View.INVISIBLE
-       }*/
 }
 
 @BindingAdapter("date", "position")

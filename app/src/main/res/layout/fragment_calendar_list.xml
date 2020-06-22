@@ -18,12 +18,13 @@
             android:layout_height="36dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:tabSelectedTextColor="@color/ssgsag"
+            app:tabGravity="fill"
             app:tabTextColor="@color/grey_2"
+            app:tabSelectedTextColor="@color/ssgsag"
             app:tabIndicatorColor="@color/ssgsag"
+            app:tabIndicatorAnimationDuration="0"
             app:tabIndicatorHeight="2dp"
-            app:tabMode="fixed"
-            app:tabGravity="fill"/>
+            app:tabMode="fixed"/>
 
     <androidx.viewpager.widget.ViewPager
             android:id="@+id/frag_cal_list_vp"

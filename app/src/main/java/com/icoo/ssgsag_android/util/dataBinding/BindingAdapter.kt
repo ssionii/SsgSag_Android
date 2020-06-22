@@ -244,7 +244,7 @@ fun setDateTextFormat1(view: TextView, posterStartDate: String?, posterEndDate: 
     var startDate = ""
     var endDate = ""
     posterStartDate?.let {
-        if(!posterStartDate!![0].equals('0')) {
+        if(!posterStartDate[0].equals('0')) {
             val startDateArr =
                 arrayListOf(getDateInfo(it, 0), getDateInfo(it, 1), getDateInfo(it, 2))
             startDate = "${startDateArr[1]}.${startDateArr[2]}"
@@ -263,7 +263,7 @@ fun setDateTextFormat2(view: TextView, posterStartDate: String?, posterEndDate: 
     var startDate = ""
     var endDate = ""
     posterStartDate?.let {
-        if(!posterStartDate!![0].equals('0')){
+        if(!posterStartDate[0].equals('0')){
             val startDateArr = arrayListOf(getDateInfo(it, 0), getDateInfo(it, 1), getDateInfo(it, 2))
             startDate = "${startDateArr[1]}.${startDateArr[2]}(${dayOfWeekExtension(startDateArr)})"
 

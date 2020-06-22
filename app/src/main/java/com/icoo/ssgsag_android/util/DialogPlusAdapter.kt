@@ -237,7 +237,7 @@ class DialogPlusAdapter(
         if(position == selected)
             viewHolder.textView.setTextColor(context.resources.getColor(R.color.selectedTabColor))
 
-        return view!!
+        return view
     }
 
     fun setSelectedField(select: Int){

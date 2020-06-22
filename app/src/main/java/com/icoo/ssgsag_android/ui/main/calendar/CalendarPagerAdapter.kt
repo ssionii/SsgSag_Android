@@ -1,15 +1,16 @@
 package com.icoo.ssgsag_android.ui.main.calendar
 
+import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.viewpager.widget.PagerAdapter
-import com.icoo.ssgsag_android.ui.main.calendar.calendarPage.CalendarPageFragment
+import com.icoo.ssgsag_android.ui.main.calendar.calendarPage.grid.CalendarGridPageFragment
 import java.text.SimpleDateFormat
 import java.util.*
 
 class CalendarPagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
-    private val frgMap: HashMap<Int, CalendarPageFragment>
+    private val frgMap: HashMap<Int, CalendarGridPageFragment>
     private val listMonthByMillis = ArrayList<Long>()
     private var numOfMonth: Int = 0
 
@@ -25,7 +26,7 @@ class CalendarPagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) 
             val ft = fm.beginTransaction()
 
             for (f in listFragment) {
-                if (f is CalendarPageFragment) {
+                if (f is CalendarGridPageFragment) {
                     ft.remove(f)
                 }
             }
@@ -34,12 +35,12 @@ class CalendarPagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) 
     }
 
     override fun getItem(position: Int): Fragment {
-        var frg: CalendarPageFragment? = null
+        var frg: CalendarGridPageFragment? = null
         if (frgMap.size > 0) {
             frg = frgMap[position]
         }
         if (frg == null) {
-            frg = CalendarPageFragment.newInstance(position)
+            frg = CalendarGridPageFragment.newInstance(position)
             frgMap[position] = frg;
         }
         frg.setTimeByMillis(listMonthByMillis[position])
@@ -114,7 +115,4 @@ class CalendarPagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) 
         return "${year}년 ${month}월"
     }
 
-    fun refresh() {
-        notifyDataSetChanged()
-    }
 }

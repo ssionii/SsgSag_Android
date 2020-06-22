@@ -33,6 +33,7 @@ import com.icoo.ssgsag_android.ui.main.calendar.CalendarViewModel
 import com.icoo.ssgsag_android.ui.main.calendar.calendarDetail.CalendarDetailViewModel
 import com.icoo.ssgsag_android.ui.main.calendar.calendarDialog.CalendarDialogViewModel
 import com.icoo.ssgsag_android.ui.main.calendar.calendarDialog.calendarDialogPage.CalendarDialogPageViewModel
+import com.icoo.ssgsag_android.ui.main.calendar.calendarPage.list.CalendarListDeleteViewModel
 import com.icoo.ssgsag_android.ui.main.feed.FeedViewModel
 import com.icoo.ssgsag_android.ui.main.myPage.MyPageViewModel
 import com.icoo.ssgsag_android.ui.main.myPage.myReview.MyReviewViewModel
@@ -154,6 +155,7 @@ val viewModule = module {
     viewModel { CalendarDialogViewModel() }
     viewModel { CalendarDialogPageViewModel(get(), get()) }
     viewModel { CalendarDetailViewModel(get(), get(), get(), get()) }
+    viewModel {CalendarListDeleteViewModel(get(), get())}
     // review
     viewModel { ReviewViewModel(get(), get()) }
     viewModel { ReviewDetailViewModel( get(), get(), get()) }

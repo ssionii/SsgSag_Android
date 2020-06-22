@@ -14,9 +14,9 @@ import com.icoo.ssgsag_android.util.dataBinding.replaceAll
 fun setBookmarkBtnImgInDialog(view: ImageView, isFavorite: Int?) {
     isFavorite?.run {
         if (isFavorite == 1)
-            view.setImageResource(R.drawable.favorite)
+            view.setImageResource(R.drawable.ic_favorite_active)
         else
-            view.setImageResource(R.drawable.favorite_passive)
+            view.setImageResource(R.drawable.ic_favorite)
     }
 }
 

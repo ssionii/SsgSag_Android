@@ -23,25 +23,11 @@ class CalendarListPageRecyclerViewAdapter() : RecyclerView.Adapter<CalendarListP
             itemList.addAll(array)
 
             for (i in itemList.indices) {
-                if (i > 0 &&
-                    itemList[i].posterEndDate.substring(8, 10)
-                    == itemList[i - 1].posterEndDate.substring(8, 10)
-                ) {
-                    itemList[i].isAlone = false
-                } else {
-                    itemList[i].isAlone = true
-                }
+                itemList[i].isAlone = !(i > 0 &&
+                        itemList[i].posterEndDate.substring(8, 10) == itemList[i - 1].posterEndDate.substring(8, 10))
 
-                if (i < itemList.size - 1 &&
-                    itemList[i].posterEndDate.substring(
-                        8,
-                        10
-                    ) == itemList[i + 1].posterEndDate.substring(8, 10)
-                ) {
-                    itemList[i].isLast = false
-                } else {
-                    itemList[i].isLast = true
-                }
+                itemList[i].isLast = !(i < itemList.size - 1 &&
+                        itemList[i].posterEndDate.substring(8, 10) == itemList[i + 1].posterEndDate.substring(8, 10))
             }
         }
 
@@ -65,7 +51,7 @@ class CalendarListPageRecyclerViewAdapter() : RecyclerView.Adapter<CalendarListP
         }
 
         holder.dataBinding.itemCalendarListIvFavorite.setSafeOnClickListener {
-            listener?.onBookmarkClicked(itemList[position].posterIdx, itemList[position].isFavorite)
+            listener?.onBookmarkClicked(itemList[position].posterIdx, itemList[position].isFavorite, position)
         }
 
         holder.dataBinding.itemCalendarListIvSelector.setSafeOnClickListener {
@@ -96,23 +82,15 @@ class CalendarListPageRecyclerViewAdapter() : RecyclerView.Adapter<CalendarListP
 
     interface OnScheduleItemClickListener {
         fun onItemClicked(posterIdx: Int)
-        fun onBookmarkClicked(posterIdx: Int, isFavorite: Int)
+        fun onBookmarkClicked(posterIdx: Int, isFavorite: Int, position: Int)
         fun onSelectorClicked(posterIdx: Int, posterName: String, isSelected:Boolean)
     }
 
     fun setSelectType(type: Int){
-
         for(i in itemList.indices)
             itemList[i].selectType = type
-    }
 
-    fun getSelectType() : Boolean {
-        for (i in itemList.indices) {
-            if (itemList[i].selectType == 2) {
-                return true
-            }
-        }
-        return false
+        notifyDataSetChanged()
     }
 
 }

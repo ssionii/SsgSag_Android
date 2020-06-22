@@ -123,6 +123,6 @@ fun setCalendarFavoriteTab(view: View, bool: Boolean){
     if(bool) {
         view.backgroundColor = view.context.getColor(R.color.ssgsag)
     }else{
-        view.backgroundColor = view.context.getColor(R.color.grey_4)
+        view.backgroundColor = view.context.getColor(R.color.white)
     }
 }

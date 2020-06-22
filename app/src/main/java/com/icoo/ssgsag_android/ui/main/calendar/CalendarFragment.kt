@@ -20,9 +20,9 @@ import com.icoo.ssgsag_android.base.BaseFragment
 import com.icoo.ssgsag_android.data.local.pref.SharedPreferenceController
 import com.icoo.ssgsag_android.databinding.FragmentCalendarBinding
 import com.icoo.ssgsag_android.ui.main.MainActivity
-import com.icoo.ssgsag_android.ui.main.calendar.calendarPage.CalendarGridFragment
+import com.icoo.ssgsag_android.ui.main.calendar.calendarPage.grid.CalendarGridFragment
+import com.icoo.ssgsag_android.ui.main.calendar.calendarPage.list.CalendarListDeleteActivity
 import com.icoo.ssgsag_android.ui.main.calendar.calendarPage.list.CalendarListFragment
-import com.icoo.ssgsag_android.ui.main.calendar.calendarPage.list.CalendarListPageFragment
 import com.icoo.ssgsag_android.ui.main.myPage.MyPageActivity
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import org.jetbrains.anko.startActivity
@@ -56,6 +56,7 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding, CalendarViewModel
         calendarGridFragment = CalendarGridFragment()
         calendarListFragment = CalendarListFragment()
 
+        replaceFragment(calendarGridFragment)
         replaceFragment(calendarListFragment)
 
         setButton()
@@ -81,32 +82,22 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding, CalendarViewModel
             )
         }
 
-        // 전체, 즐겨 찾기 tab
-        viewDataBinding.fragCalendarLlAll.setSafeOnClickListener {
-            viewModel.setIsFavorite(false)
-        }
-
-        viewDataBinding.fragCalendarLlFavorite.setSafeOnClickListener {
-            viewModel.setIsFavorite(true)
-        }
-
         // 캘린더로 보기, 리스트로 보기 toggle
         viewDataBinding.fragCalendarCvToggle.setOnClickListener {
             if(viewDataBinding.fragCalendarTvToggle.text == "캘린더로 보기"){
                 replaceFragment(calendarGridFragment)
                 viewDataBinding.fragCalendarTvToggle.text = "리스트로 보기"
+
+                viewDataBinding.fragCalTvDay.visibility = VISIBLE
+                viewDataBinding.fragCalTvHeader.visibility = GONE
+
             }else{
                 replaceFragment(calendarListFragment)
                 viewDataBinding.fragCalendarTvToggle.text = "캘린더로 보기"
+
+                viewDataBinding.fragCalTvDay.visibility = GONE
+                viewDataBinding.fragCalTvHeader.visibility = VISIBLE
             }
-        }
-
-        viewDataBinding.fragCalIvDeleteBack.setSafeOnClickListener {
-            viewModel.setDeleteType(0)
-        }
-
-        viewDataBinding.fragCalTvDelete.setSafeOnClickListener {
-            viewModel.setDeleteType(3)
         }
 
         viewDataBinding.fragCalIvModify.setSafeOnClickListener {
@@ -115,71 +106,70 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding, CalendarViewModel
             val inflater = popup.menuInflater
             val menu = popup.menu
 
-            inflater.inflate(R.menu.menu_cal_list, menu)
+            if(calendarListFragment.isHidden) {
+                inflater.inflate(R.menu.menu_cal_grid, menu)
 
-            popup.setOnMenuItemClickListener(object : PopupMenu.OnMenuItemClickListener {
-                override fun onMenuItemClick(item: MenuItem): Boolean {
-                    when (item.itemId) {
-                        R.id.menu_cal_list_delete -> {
-                            viewModel.setDeleteType(1)
-                        }
-                        R.id.menu_cal_list_share ->{
-                            // 현재 화면 스크린샷
-                            var container: View = viewDataBinding.fragCalClContainer
-                            container.buildDrawingCache()
-                            var captureView : Bitmap = container.getDrawingCache()
+                popup.setOnMenuItemClickListener(object : PopupMenu.OnMenuItemClickListener {
+                    override fun onMenuItemClick(item: MenuItem): Boolean {
+                        when (item.itemId) {
+                            R.id.menu_cal_list_share -> {
+                                // 현재 화면 스크린샷
+                                var container: View = viewDataBinding.fragCalClContainer
+                                container.buildDrawingCache()
+                                var captureView: Bitmap = container.getDrawingCache()
 
-                            // 화면 저장
-                            var storeAddress : String = Environment.getExternalStorageDirectory().absolutePath + "/Android/data/com.icoo.ssgsag_android/files" + "/capture.jpeg"
-                            lateinit var fos : FileOutputStream
+                                // 화면 저장
+                                var storeAddress: String =
+                                    Environment.getExternalStorageDirectory().absolutePath + "/Android/data/com.icoo.ssgsag_android/files" + "/capture.jpeg"
+                                lateinit var fos: FileOutputStream
 
-                            try{
-                                fos = FileOutputStream(storeAddress)
-                                captureView.compress(Bitmap.CompressFormat.JPEG, 100, fos)
-                            }catch (e : FileNotFoundException){
-                                e.printStackTrace()
+                                try {
+                                    fos = FileOutputStream(storeAddress)
+                                    captureView.compress(Bitmap.CompressFormat.JPEG, 100, fos)
+                                } catch (e: FileNotFoundException) {
+                                    e.printStackTrace()
+                                }
+
+                                // Intent로 공유
+                                val shareIntent = Intent(Intent.ACTION_SEND)
+                                shareIntent.setType("image/*")
+                                shareIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                                shareIntent.setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+
+                                shareIntent.putExtra(
+                                    Intent.EXTRA_STREAM, FileProvider.getUriForFile(
+                                        context!!,
+                                        BuildConfig.APPLICATION_ID, File(storeAddress)
+                                    )
+                                )
+                                shareIntent.putExtra(
+                                    Intent.EXTRA_TEXT,
+                                    "슥삭 다운로드 바로가기\nhttps://ssgsag.page.link/install"
+                                )
+                                startActivity(Intent.createChooser(shareIntent, "캘린더 공유"))
                             }
-
-                            // Intent로 공유
-                            val shareIntent = Intent(Intent.ACTION_SEND)
-                            shareIntent.setType("image/*")
-                            shareIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                            shareIntent.setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
-
-                            shareIntent.putExtra(Intent.EXTRA_STREAM, FileProvider.getUriForFile(context!!,
-                                BuildConfig.APPLICATION_ID, File(storeAddress)))
-                            shareIntent.putExtra(Intent.EXTRA_TEXT, "슥삭 다운로드 바로가기\nhttps://ssgsag.page.link/install")
-                            startActivity(Intent.createChooser(shareIntent, "캘린더 공유"))
                         }
+                        return false
                     }
-                    return false
-                }
-            })
+                })
+
+            }else{
+                inflater.inflate(R.menu.menu_cal_list, menu)
+
+                popup.setOnMenuItemClickListener(object : PopupMenu.OnMenuItemClickListener {
+                    override fun onMenuItemClick(item: MenuItem): Boolean {
+                        when (item.itemId) {
+                            R.id.menu_cal_list_delete -> {
+                                val intent = Intent(activity, CalendarListDeleteActivity::class.java)
+                                startActivity(intent)
+                            }
+                        }
+                        return false
+                    }
+                })
+            }
             popup.show()
         }
-
-        viewModel.deleteType.observe(this@CalendarFragment, Observer {value ->
-            when(value){
-                0->{ // list, passive
-                    viewDataBinding.fragCalIvDeleteBack.visibility = GONE
-                    viewDataBinding.fragCalTvDelete.visibility = GONE
-                    viewDataBinding.fragCalIvModify.visibility = VISIBLE
-                }
-                1->{ // list, 뒤로 버튼
-                    viewDataBinding.fragCalIvDeleteBack.visibility = VISIBLE
-                    viewDataBinding.fragCalTvDelete.visibility = GONE
-                    viewDataBinding.fragCalIvModify.visibility = GONE
-                }
-                2->{ // list, 삭제 버튼
-                    viewDataBinding.fragCalIvDeleteBack.visibility = GONE
-                    viewDataBinding.fragCalTvDelete.visibility = VISIBLE
-                    viewDataBinding.fragCalIvModify.visibility = GONE
-                }
-                4->{ // calendar
-                    viewDataBinding.fragCalIvModify.visibility = VISIBLE
-                }
-            }
-        })
     }
 
     private fun replaceFragment(fragment: Fragment) {
