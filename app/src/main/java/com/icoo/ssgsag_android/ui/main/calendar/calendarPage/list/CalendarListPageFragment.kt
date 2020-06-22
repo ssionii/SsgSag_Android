@@ -16,6 +16,7 @@ import com.icoo.ssgsag_android.ui.main.MainActivity
 import com.icoo.ssgsag_android.ui.main.calendar.CalendarViewModel
 import com.icoo.ssgsag_android.ui.main.calendar.calendarDetail.CalendarDetailActivity
 import com.icoo.ssgsag_android.util.DateUtil
+import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import com.icoo.ssgsag_android.util.view.WrapContentLinearLayoutManager
 import com.igaworks.v2.core.AdBrixRm
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -34,6 +35,8 @@ class CalendarListPageFragment : BaseFragment<FragmentCalendarListPageBinding, C
     private var dataList: ArrayList<Schedule> = arrayListOf()
 
     private var isFavorite = false
+    private var filterClick = false
+    var curPosition = 0
 
     val date : Date = Calendar.getInstance().time
     val year = DateUtil.yearFormat.format(date)
@@ -46,6 +49,12 @@ class CalendarListPageFragment : BaseFragment<FragmentCalendarListPageBinding, C
         isFavorite = arguments!!.getBoolean("isFavorite")
 
         setRecyclerView()
+        setButton()
+
+        viewModel.isFavorite.observe(this, Observer {
+            viewModel.getAllCalendar()
+            viewModel.getFavoriteSchedule()
+        })
     }
 
     private fun setRecyclerView() {
@@ -63,8 +72,6 @@ class CalendarListPageFragment : BaseFragment<FragmentCalendarListPageBinding, C
 
             layoutManager = WrapContentLinearLayoutManager()
 
-            var curPosition = 0
-
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                     super.onScrollStateChanged(recyclerView, newState)
@@ -72,7 +79,7 @@ class CalendarListPageFragment : BaseFragment<FragmentCalendarListPageBinding, C
                     if (newState == SCROLL_STATE_DRAGGING || newState == SCROLL_STATE_IDLE) {
 
                         var position =
-                            (layoutManager as WrapContentLinearLayoutManager).findFirstVisibleItemPosition()
+                            (layoutManager as WrapContentLinearLayoutManager).findLastVisibleItemPosition()
 
                         calendarListPageRecyclerViewAdapter.apply {
 
@@ -123,17 +130,25 @@ class CalendarListPageFragment : BaseFragment<FragmentCalendarListPageBinding, C
             setSelectType(0)
             replaceAll(dataList)
 
+
             if(dataList.size != 0) {
-                notifyItemChanged(viewModel.changedPosterPosition)
+                if(filterClick){
+                    viewDataBinding.fragCalendarListPageRv.scrollToPosition(0)
+                    curPosition = 0
+                    filterClick = false
+                    notifyDataSetChanged()
+                }else {
+                    notifyItemChanged(viewModel.changedPosterPosition)
+                }
             }
 
-            if(itemList.size > 0) {
-                val date = this.getItemDate(0)
-                val monthInt = date.substring(5, 7).toInt()
-                val headerDate = date.substring(0,4) + "년 " + monthInt.toString() + "월"
-                viewModel.setHeaderDate(headerDate)
-
-            }
+//            if(itemList.size > 0) {
+//                val date = this.getItemDate(0)
+//                val monthInt = date.substring(5, 7).toInt()
+//                val headerDate = date.substring(0,4) + "년 " + monthInt.toString() + "월"
+//                viewModel.setHeaderDate(headerDate)
+//
+//            }
         }
     }
 
@@ -165,6 +180,18 @@ class CalendarListPageFragment : BaseFragment<FragmentCalendarListPageBinding, C
 
             override fun onSelectorClicked(posterIdx: Int, posterName:String, isSelected: Boolean) {}
         }
+
+    private fun setButton(){
+        viewDataBinding.fragCalListPageCvLastSave.setSafeOnClickListener {
+            viewModel.isLastSaveFilter.value = true
+            filterClick = true
+        }
+
+        viewDataBinding.fragCalListPageCvDeadline.setSafeOnClickListener {
+            viewModel.isLastSaveFilter.value = false
+            filterClick = true
+        }
+    }
 
     override fun onBack() {
         val activity = activity as MainActivity

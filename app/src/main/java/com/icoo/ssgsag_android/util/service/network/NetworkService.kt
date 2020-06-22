@@ -7,7 +7,6 @@ import com.icoo.ssgsag_android.data.model.base.IntResponse
 import com.icoo.ssgsag_android.data.model.base.StringResponse
 import com.icoo.ssgsag_android.data.model.career.CareerResponse
 import com.icoo.ssgsag_android.data.model.interest.InterestResponse
-import com.icoo.ssgsag_android.data.model.login.LoginResponse
 import com.icoo.ssgsag_android.data.model.notice.NoticeResponse
 import com.icoo.ssgsag_android.data.model.poster.PosterResponse
 import com.icoo.ssgsag_android.data.model.poster.posterDetail.PosterDetailResponse
@@ -17,7 +16,6 @@ import com.icoo.ssgsag_android.data.model.subscribe.SubscribeResponse
 import com.icoo.ssgsag_android.data.model.user.userInfo.UserInfoResponse
 import io.reactivex.Observable
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.http.*
@@ -235,7 +233,7 @@ interface NetworkService {
     companion object {
         fun create(): NetworkService {
             val retrofit = retrofit2.Retrofit.Builder()
-                .baseUrl(SsgSagApplication.getGlobalApplicationContext().getString(R.string.test_url))
+                .baseUrl(SsgSagApplication.getGlobalApplicationContext().getString(R.string.base_url))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()

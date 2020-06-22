@@ -1,6 +1,5 @@
 package com.icoo.ssgsag_android.data.remote.api
 
-import com.google.android.gms.common.internal.safeparcel.SafeParcelable
 import com.google.gson.JsonObject
 import com.icoo.ssgsag_android.SsgSagApplication.Companion.globalApplication
 import com.icoo.ssgsag_android.R
@@ -202,7 +201,8 @@ interface NetworkService {
         @Header("Authorization") token: String,
         @Query("year") year: String,
         @Query("month") month: String,
-        @Query("day") day: String
+        @Query("day") day: String,
+        @Query("sortType") sortType: Int
     ): Single<ScheduleResponse>
     //즐겨찾는 일정 조회
     @GET("/todo/v2")
@@ -499,7 +499,7 @@ interface NetworkService {
     companion object {
         fun create(): NetworkService {
             return Retrofit.Builder()
-                .baseUrl(globalApplication.getString(R.string.test_url))
+                .baseUrl(globalApplication.getString(R.string.base_url))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()

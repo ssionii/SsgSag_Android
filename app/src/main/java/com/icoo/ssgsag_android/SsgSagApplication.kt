@@ -115,7 +115,7 @@ class SsgSagApplication : Application() {
 
     private fun buildNetwork() {
         val retrofit: Retrofit = Retrofit.Builder()
-            .baseUrl(getString(R.string.test_url))
+            .baseUrl(getString(R.string.base_url))
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .build()

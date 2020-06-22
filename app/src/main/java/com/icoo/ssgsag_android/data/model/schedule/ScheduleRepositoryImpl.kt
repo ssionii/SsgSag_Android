@@ -7,16 +7,16 @@ import com.icoo.ssgsag_android.data.remote.api.NetworkService
 import io.reactivex.Single
 
 class ScheduleRepositoryImpl(val api: NetworkService, val pref: PreferenceManager): ScheduleRepository {
-    override fun getAllCalendar(): Single<ArrayList<Schedule>> = api
-        .calendarResponse(pref.findPreference("TOKEN", ""), "0000", "00", "00")
+    override fun getAllCalendar(sortType: Int?): Single<ArrayList<Schedule>> = api
+        .calendarResponse(pref.findPreference("TOKEN", ""), "0000", "00", "00", sortType!!)
         .map { it.data }
 
-    override fun getCalendar(year: String, month: String, date: String): Single<ArrayList<Schedule>> = api
-        .calendarResponse(pref.findPreference("TOKEN", ""), year, month, date)
+    override fun getCalendar(year: String, month: String, date: String, sortType: Int?): Single<ArrayList<Schedule>> = api
+        .calendarResponse(pref.findPreference("TOKEN", ""), year, month, date, sortType!!)
         .map { it.data }
 
-    override fun getFavoriteCalendar(year: String, month: String, date: String): Single<ArrayList<Schedule>> = api
-        .calendarFavoriteResponse(pref.findPreference("TOKEN", ""), year, month, date, 1)
+    override fun getFavoriteCalendar(year: String, month: String, date: String, sortType: Int?): Single<ArrayList<Schedule>> = api
+        .calendarFavoriteResponse(pref.findPreference("TOKEN", ""), year, month, date, sortType!!)
         .map { it.data }
 
     override fun bookmarkSchedule(posterIdx: Int): Single<Int> = api

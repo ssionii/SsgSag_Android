@@ -42,6 +42,7 @@ class CalendarViewModel(
     val isUpdated: LiveData<Boolean> get() = _isUpdated
 
     var isFavorite = MutableLiveData<Boolean>()
+    var isLastSaveFilter = MutableLiveData<Boolean>()
 
     var changedPosterPosition = 0
 
@@ -51,12 +52,16 @@ class CalendarViewModel(
 
     init {
         isFavorite.value = false
+        isLastSaveFilter.value = true
         getAllCalendar()
         getFavoriteSchedule()
     }
 
     fun getAllCalendar() {
-        addDisposable(repository.getAllCalendar()
+       var sortType = 1
+        if(!isLastSaveFilter.value!!) sortType = 0
+
+        addDisposable(repository.getAllCalendar(sortType)
             .subscribeOn(schedulerProvider.io())
             .observeOn(schedulerProvider.mainThread())
             .doOnSubscribe { showProgress() }
@@ -72,7 +77,10 @@ class CalendarViewModel(
     }
 
     fun getFavoriteSchedule(){
-        addDisposable(repository.getFavoriteCalendar("0000", "00", "00")
+        var sortType = 1
+        if(!isLastSaveFilter.value!!) sortType = 0
+
+        addDisposable(repository.getFavoriteCalendar("0000", "00", "00", sortType)
             .subscribeOn(schedulerProvider.io())
             .observeOn(schedulerProvider.mainThread())
             .doOnSubscribe { showProgress() }

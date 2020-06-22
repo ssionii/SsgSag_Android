@@ -35,7 +35,7 @@ class ReviewListFragment : BaseFragment<FragmentReviewPageBinding, ReviewViewMod
         }
 
         viewModel.getClubReviews(curPage, reviewType)
-        
+
         viewDataBinding.vm = viewModel
         viewDataBinding.reviewListFragment = this
 
@@ -81,8 +81,7 @@ class ReviewListFragment : BaseFragment<FragmentReviewPageBinding, ReviewViewMod
                     super.onScrollStateChanged(recyclerView, newState)
 
                     if (newState == RecyclerView.SCROLL_STATE_DRAGGING || newState == RecyclerView.SCROLL_STATE_IDLE) {
-                        var position =
-                            (layoutManager as WrapContentLinearLayoutManager).findLastVisibleItemPosition()
+                        var position = (layoutManager as WrapContentLinearLayoutManager).findLastVisibleItemPosition()
 
                         adapter!!.apply {
 

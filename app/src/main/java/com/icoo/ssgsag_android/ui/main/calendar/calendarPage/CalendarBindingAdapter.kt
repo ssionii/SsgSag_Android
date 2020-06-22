@@ -4,6 +4,7 @@ import android.view.View
 import androidx.databinding.BindingAdapter
 import android.graphics.Point
 import android.content.Context.WINDOW_SERVICE
+import android.graphics.Color
 import android.graphics.PorterDuff
 import android.graphics.drawable.ShapeDrawable
 import android.graphics.drawable.shapes.OvalShape
@@ -189,5 +190,23 @@ fun setSelectorVisibility(view: ImageView, selectType: Int) {
         }
         1 -> view.visibility = VISIBLE
 
+    }
+}
+
+@BindingAdapter("selectedBgSsgsag")
+fun setSelectedBgSsgsag(view: CardView, bool: Boolean) {
+    if(bool){
+        view.setCardBackgroundColor(view.context.getColor(R.color.ssgsag8))
+    }else{
+        view.setCardBackgroundColor(Color.parseColor("#f2f2f2"))
+    }
+}
+
+@BindingAdapter("selectedTextSsgsag")
+fun setSelectedTextSsgsag(view: TextView, bool:Boolean){
+    if(bool){
+        view.setTextColor(view.context.getColor(R.color.ssgsag))
+    }else{
+        view.setTextColor(view.context.getColor(R.color.grey_1))
     }
 }
