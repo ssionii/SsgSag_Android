@@ -86,7 +86,7 @@
                     android:layout_marginTop="8dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="100dp"
+                    android:paddingBottom="120dp"
                     android:clipToPadding="false"
                     app:layout_constraintTop_toBottomOf="@+id/frag_cal_list_page_ll_filter"
                     android:background="@color/white"/>

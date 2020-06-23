@@ -16,7 +16,7 @@ class ScheduleRepositoryImpl(val api: NetworkService, val pref: PreferenceManage
         .map { it.data }
 
     override fun getFavoriteCalendar(year: String, month: String, date: String, sortType: Int?): Single<ArrayList<Schedule>> = api
-        .calendarFavoriteResponse(pref.findPreference("TOKEN", ""), year, month, date, sortType!!)
+        .calendarFavoriteResponse(pref.findPreference("TOKEN", ""), year, month, date, 1, sortType!!)
         .map { it.data }
 
     override fun bookmarkSchedule(posterIdx: Int): Single<Int> = api

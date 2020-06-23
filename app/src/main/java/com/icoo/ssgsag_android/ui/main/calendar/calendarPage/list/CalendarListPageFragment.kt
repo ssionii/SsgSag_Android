@@ -52,8 +52,7 @@ class CalendarListPageFragment : BaseFragment<FragmentCalendarListPageBinding, C
         setButton()
 
         viewModel.isFavorite.observe(this, Observer {
-            viewModel.getAllCalendar()
-            viewModel.getFavoriteSchedule()
+            makeScheduleList(year, month)
         })
     }
 
@@ -136,19 +135,11 @@ class CalendarListPageFragment : BaseFragment<FragmentCalendarListPageBinding, C
                     viewDataBinding.fragCalendarListPageRv.scrollToPosition(0)
                     curPosition = 0
                     filterClick = false
-                    notifyDataSetChanged()
+                    notifyItemRangeChanged(0, itemCount)
                 }else {
                     notifyItemChanged(viewModel.changedPosterPosition)
                 }
             }
-
-//            if(itemList.size > 0) {
-//                val date = this.getItemDate(0)
-//                val monthInt = date.substring(5, 7).toInt()
-//                val headerDate = date.substring(0,4) + "년 " + monthInt.toString() + "월"
-//                viewModel.setHeaderDate(headerDate)
-//
-//            }
         }
     }
 
@@ -184,12 +175,20 @@ class CalendarListPageFragment : BaseFragment<FragmentCalendarListPageBinding, C
     private fun setButton(){
         viewDataBinding.fragCalListPageCvLastSave.setSafeOnClickListener {
             viewModel.isLastSaveFilter.value = true
+
             filterClick = true
+
+            viewModel.getAllCalendar()
+            viewModel.getFavoriteSchedule()
         }
 
         viewDataBinding.fragCalListPageCvDeadline.setSafeOnClickListener {
             viewModel.isLastSaveFilter.value = false
+
             filterClick = true
+
+                viewModel.getAllCalendar()
+                viewModel.getFavoriteSchedule()
         }
     }
 

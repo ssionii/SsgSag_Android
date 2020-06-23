@@ -211,7 +211,8 @@ interface NetworkService {
         @Query("year") year: String,
         @Query("month") month: String,
         @Query("day") day: String,
-        @Query("favorite") favorite: Int
+        @Query("favorite") favorite: Int,
+        @Query("sortType") sortType: Int
     ): Single<ScheduleResponse>
     //일정 지원 완료
     //일정 삭제
