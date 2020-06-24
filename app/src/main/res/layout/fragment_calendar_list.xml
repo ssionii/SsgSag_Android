@@ -3,10 +3,11 @@
     <data>
         <variable
                 name="vm"
-                type="com.icoo.ssgsag_android.ui.main.calendar.CalendarViewModel" />
+                type="com.icoo.ssgsag_android.ui.main.calendar.calendarPage.list.CalendarListViewModel" />
     </data>
 
 <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/frag_cal_list_cl_container"
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

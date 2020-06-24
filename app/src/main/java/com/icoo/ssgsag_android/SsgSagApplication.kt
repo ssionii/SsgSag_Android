@@ -82,7 +82,7 @@ class SsgSagApplication : Application() {
     private fun initAdjustSetting(){
         val appToken = this.resources.getString(R.string.adjust_app_token)
         val environment = AdjustConfig.ENVIRONMENT_SANDBOX
-        //val environment = AdjustConfig.ENVIRONMENT_PRODUCTION
+        // val environment = AdjustConfig.ENVIRONMENT_PRODUCTION
         val config = AdjustConfig(this, appToken, environment)
         config.setAppSecret(2, 1858703771, 1353181520, 555890878, 1372324175)
         config.setLogLevel(LogLevel.WARN)

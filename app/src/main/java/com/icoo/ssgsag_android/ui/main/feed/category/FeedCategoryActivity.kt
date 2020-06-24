@@ -1,5 +1,6 @@
 package com.icoo.ssgsag_android.ui.main.feed.category
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.MotionEvent
@@ -38,11 +39,9 @@ class FeedCategoryActivity : BaseActivity<ActivityCategoryFeedBinding, FeedViewM
         categoryIdx = intent.getIntExtra("categoryIdx", 0)
         viewModel.setCategory(categoryIdx)
 
-        viewDataBinding.actCategoryFeedsLlContainer.setOnTouchListener(object : View.OnTouchListener{
-            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-                return true;
-            }
-        })
+        viewDataBinding.run {
+            actCategoryFeedsLlContainer.setOnTouchListener { v, event -> true }
+        }
 
 
         setRv()

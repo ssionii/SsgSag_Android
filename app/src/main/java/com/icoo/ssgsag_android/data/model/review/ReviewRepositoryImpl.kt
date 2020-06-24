@@ -23,6 +23,9 @@ class ReviewRepositoryImpl(val api: NetworkService, val pref: PreferenceManager)
 
     override fun getAds(): Single<ArrayList<Banner>> = api
         .getAds("review-00")
+        .doOnError { throwable ->
+            Log.e("getAds API : ", throwable.message)
+        }
         .map { it.data }
 
 }

@@ -106,6 +106,7 @@ class AllPostersFragment : BaseFragment<FragmentAllPosterBinding, AllPostersView
         val middleMargin = (middleDpValue * d).toInt()
 
         viewModel.clubPosterList.observe(this, Observer {value ->
+            Log.e("clubPosterList observer", "들어옴")
 
             var cardViewPagerAdapter = CardViewPagerAdapter(activity!!, value)
             cardViewPagerAdapter.setOnItemClickListener(this)

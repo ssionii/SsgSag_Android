@@ -1,5 +1,6 @@
 package com.icoo.ssgsag_android.ui.main.feed
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
@@ -275,11 +276,9 @@ class FeedFragment : BaseFragment<FragmentFeedPageBinding, FeedViewModel>(){
             verticalMargin = bottomMargin
         }
 
-        viewDataBinding.fragFeedPageClCoachmarkContainer.setOnTouchListener( object : View.OnTouchListener{
-            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-                return true
-            }
-        })
+        viewDataBinding.run {
+            fragFeedPageClCoachmarkContainer.setOnTouchListener { v, event -> true }
+        }
 
         viewDataBinding.fragFeedPageClCoachmarkContainer.visibility = VISIBLE
 

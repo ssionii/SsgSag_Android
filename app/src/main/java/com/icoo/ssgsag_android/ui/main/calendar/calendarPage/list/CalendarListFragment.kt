@@ -1,26 +1,22 @@
 package com.icoo.ssgsag_android.ui.main.calendar.calendarPage.list
 
+import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
-import android.widget.LinearLayout
-import android.widget.RelativeLayout
-import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.material.tabs.TabLayout
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseFragment
 import com.icoo.ssgsag_android.base.BasePagerAdapter
 import com.icoo.ssgsag_android.databinding.FragmentCalendarListBinding
 import com.icoo.ssgsag_android.ui.main.calendar.CalendarViewModel
-import com.icoo.ssgsag_android.ui.main.review.ReviewListFragment
-import kotlinx.android.synthetic.main.activity_walkthrough.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class CalendarListFragment : BaseFragment<FragmentCalendarListBinding, CalendarViewModel>(){
+class CalendarListFragment : BaseFragment<FragmentCalendarListBinding, CalendarListViewModel>(){
 
     override val layoutResID: Int
         get() = R.layout.fragment_calendar_list
-    override val viewModel: CalendarViewModel by viewModel()
+    override val viewModel: CalendarListViewModel by viewModel()
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -29,6 +25,10 @@ class CalendarListFragment : BaseFragment<FragmentCalendarListBinding, CalendarV
 
         setVp()
         setTabLayout()
+
+        viewDataBinding.run {
+            fragCalListClContainer.setOnTouchListener { v, event -> true }
+        }
     }
 
     private fun setTabLayout(){

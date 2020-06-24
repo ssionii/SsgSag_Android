@@ -4,13 +4,27 @@
     <data>
         <variable
                 name="vm"
-                type="com.icoo.ssgsag_android.ui.main.calendar.CalendarViewModel"/>
+                type="com.icoo.ssgsag_android.ui.main.calendar.calendarPage.list.CalendarListViewModel"/>
     </data>
         <androidx.constraintlayout.widget.ConstraintLayout
                 xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/white">
+
+            <TextView
+                    android:visibility="gone"
+                    android:id="@+id/frag_cal_list_page_tv_empty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="저장된 추후 일정이 없습니다"
+                    android:textColor="@color/grey_1"
+                    android:fontFamily="@font/noto_sans_kr_regular"
+                    android:textSize="12sp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
 
             <LinearLayout
                     android:id="@+id/frag_cal_list_page_ll_filter"
@@ -37,7 +51,8 @@
                         <ImageView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                selectedFilterImg="@{vm.isLastSaveFilter}"/>
+                                selectedFilterImg="@{vm.isLastSaveFilter}"
+                                android:layout_gravity="center_vertical"/>
                         <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -67,7 +82,8 @@
                         <ImageView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                selectedFilterImg="@{!vm.isLastSaveFilter}"/>
+                                selectedFilterImg="@{!vm.isLastSaveFilter}"
+                                android:layout_gravity="center_vertical"/>
                         <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -83,24 +99,16 @@
 
             </LinearLayout>
 
+
             <androidx.recyclerview.widget.RecyclerView
+                    android:background="@color/white"
                     android:id="@+id/frag_calendar_list_page_rv"
-                    android:layout_marginTop="8dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="120dp"
-                    android:clipToPadding="false"
                     app:layout_constraintTop_toBottomOf="@+id/frag_cal_list_page_ll_filter"
-                    android:background="@color/white"/>
-
-<!--            <ProgressBar-->
-<!--                    android:visibility="@{vm.isProgress}"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    app:layout_constraintTop_toTopOf="parent"-->
-<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                    app:layout_constraintStart_toStartOf="parent"-->
-<!--                    app:layout_constraintEnd_toEndOf="parent"/>-->
+                    android:layout_marginTop="8dp"
+                    android:paddingBottom="120dp"
+                    android:clipToPadding="false" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

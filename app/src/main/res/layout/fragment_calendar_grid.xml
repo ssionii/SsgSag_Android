@@ -38,14 +38,14 @@
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:gravity="center"
-                    calendarFavoriteTabText="@{!vm.isFavorite()}"/>
+                    calendarFavoriteTabText="@{!vm.isFavoriteFromGrid}"/>
             <View
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
                     android:background="@color/ssgsag"
-                    calendarFavoriteTabView="@{!vm.isFavorite()}"/>
+                    calendarFavoriteTabView="@{!vm.isFavoriteFromGrid}"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
         <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/frag_cal_grid_ll_favorite"
@@ -66,14 +66,14 @@
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:gravity="center"
-                    calendarFavoriteTabText="@{vm.isFavorite}"/>
+                    calendarFavoriteTabText="@{vm.isFavoriteFromGrid}"/>
             <View
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
                     android:background="@color/grey_4"
-                    calendarFavoriteTabView="@{vm.isFavorite}"/>
+                    calendarFavoriteTabView="@{vm.isFavoriteFromGrid}"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 

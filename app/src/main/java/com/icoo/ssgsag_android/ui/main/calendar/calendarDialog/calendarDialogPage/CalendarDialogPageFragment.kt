@@ -170,7 +170,7 @@ class CalendarDialogPageFragment : BaseFragment<FragmentCalendarDialogPageBindin
             }
 
             override fun onBookmarkClicked(posterIdx: Int, isFavorite: Int) {
-                viewModel.bookmark(posterIdx, isFavorite, year, month, day)
+                viewModel.bookmark(posterIdx, isFavorite, year, month, day, showFavorite)
                 CalendarDialogFragment.GetUpdate.isUpdated = true
 
             }
@@ -244,16 +244,6 @@ class CalendarDialogPageFragment : BaseFragment<FragmentCalendarDialogPageBindin
             dialogFragment.show(fragmentManager!!, "schedule delete dialog")
         }
     }
-
-    /*private fun goToSsgSag(){
-        viewDataBinding.fragCalendarDialogPageTvSsgsag.apply{
-            paintFlags = Paint.UNDERLINE_TEXT_FLAG
-            setOnClickListener {
-                (activity as MainActivity).moveFragment(1)
-            }
-        }
-    }*/
-
 
     companion object {
         private val TAG = "CalendarDialogPageFragment"

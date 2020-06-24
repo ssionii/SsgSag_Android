@@ -12,14 +12,14 @@ class PosterRepositoryImpl(val api: NetworkService, val pref: PreferenceManager)
     override fun getAllPostersCategory(category: Int, sortType: Int, curPage: Int): Single<ArrayList<PosterDetail>> = api
         .allPosterCategoryResponse(pref.findPreference("TOKEN",""), category, sortType, curPage)
         .doOnError { throwable ->
-            Log.e("error : ", throwable.message)
+            Log.e("getAllPostersC API : ", throwable.message)
         }
         .map { it.data}
 
     override fun getAllPostersField( category: Int, interestNum: String, sortType: Int, curPage: Int): Single<ArrayList<PosterDetail>>  = api
         .allPosterFieldResponse(pref.findPreference("TOKEN", ""), category, interestNum, sortType, curPage)
         .doOnError { throwable ->
-            Log.e("error : ", throwable.message)
+            Log.e("getAllPostersF API : ", throwable.message)
         }
         .map {
             Log.e("all posters 분야 status", it.status.toString())
@@ -27,10 +27,16 @@ class PosterRepositoryImpl(val api: NetworkService, val pref: PreferenceManager)
 
     override fun getWhatPosters(category: Int): Single<ArrayList<PosterDetail>> = api
         .allPosterResponse(pref.findPreference("TOKEN", ""), category)
+        .doOnError { throwable ->
+            Log.e("getWhatPosters API : ", throwable.message)
+        }
         .map { it.data }
 
     override fun getAllPosters(): Single<Poster> = api
         .posterResponse(pref.findPreference("TOKEN", ""))
+        .doOnError { throwable ->
+            Log.e("getAllPosters API : ", throwable.message)
+        }
         .map { it.data }
 
     override fun ssgSag(posterIdx: Int, like: Int): Single<Int> = api

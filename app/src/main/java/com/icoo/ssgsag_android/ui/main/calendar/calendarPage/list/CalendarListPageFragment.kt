@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.*
@@ -23,12 +24,12 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 import kotlin.collections.ArrayList
 
-class CalendarListPageFragment : BaseFragment<FragmentCalendarListPageBinding, CalendarViewModel>(),
+class CalendarListPageFragment : BaseFragment<FragmentCalendarListPageBinding, CalendarListViewModel>(),
    MainActivity.onKeyBackPressedListener{
 
     override val layoutResID: Int
         get() = R.layout.fragment_calendar_list_page
-    override val viewModel: CalendarViewModel by viewModel()
+    override val viewModel: CalendarListViewModel by viewModel()
 
     var calendarListPageRecyclerViewAdapter = CalendarListPageRecyclerViewAdapter()
 
@@ -51,10 +52,13 @@ class CalendarListPageFragment : BaseFragment<FragmentCalendarListPageBinding, C
         setRecyclerView()
         setButton()
 
-//        viewModel.isFavorite.observe(this, Observer {
-//            makeScheduleList(year, month)
-//        })
+    }
 
+    override fun onResume() {
+        super.onResume()
+
+        viewModel.getAllCalendar()
+        viewModel.getFavoriteSchedule()
     }
 
     private fun setRecyclerView() {
@@ -84,22 +88,6 @@ class CalendarListPageFragment : BaseFragment<FragmentCalendarListPageBinding, C
                         calendarListPageRecyclerViewAdapter.apply {
 
                             if (itemList.size < curPosition) curPosition = position
-
-                            if (itemList.size > 0 &&
-                                this.getItemDate(curPosition) != this.getItemDate(position)
-                            ) {
-                                curPosition = position
-
-//                                val date =
-//                                    (adapter as CalendarListPageRecyclerViewAdapter).getItemDate(
-//                                        position
-//                                    )
-//                                val monthInt = date.substring(5, 7).toInt()
-//                                val headerDate =
-//                                    date.substring(0, 4) + "년 " + monthInt.toString() + "월"
-//                                viewModel.setHeaderDate(headerDate)
-
-                            }
                         }
 
                     }
@@ -112,11 +100,15 @@ class CalendarListPageFragment : BaseFragment<FragmentCalendarListPageBinding, C
         makeScheduleList(year, month)
 
         viewModel.schedule.observe(this, Observer {
-            makeScheduleList(year, month)
+            if(it.size > 0) {
+                makeScheduleList(year, month)
+            }
         })
 
         viewModel.favoriteSchedule.observe(this, Observer {
-            makeScheduleList(year, month)
+            if(it.size > 0) {
+                makeScheduleList(year, month)
+            }
         })
     }
 
@@ -130,15 +122,19 @@ class CalendarListPageFragment : BaseFragment<FragmentCalendarListPageBinding, C
             replaceAll(dataList, viewModel.isLastSaveFilter.value!!)
 
             if(dataList.size != 0) {
+                viewDataBinding.fragCalendarListPageRv.visibility = View.VISIBLE
                 if(filterClick){
                     viewDataBinding.fragCalendarListPageRv.scrollToPosition(0)
                     curPosition = 0
                     filterClick = false
                     notifyDataSetChanged()
-//                    notifyItemRangeChanged(0, itemCount)
-                }else {
-                    notifyItemChanged(viewModel.changedPosterPosition)
                 }
+
+                viewDataBinding.fragCalendarListPageRv.visibility = VISIBLE
+                viewDataBinding.fragCalListPageTvEmpty.visibility = GONE
+            }else{
+                viewDataBinding.fragCalendarListPageRv.visibility = GONE
+                viewDataBinding.fragCalListPageTvEmpty.visibility = VISIBLE
             }
         }
     }

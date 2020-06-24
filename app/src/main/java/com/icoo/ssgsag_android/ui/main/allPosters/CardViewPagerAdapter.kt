@@ -32,7 +32,7 @@ class CardViewPagerAdapter(
         )
 
         if(posterList!= null){
-            viewDataBinding.poster = posterList!![position]
+            viewDataBinding.poster = posterList[position]
 
             viewDataBinding.itemAllPostersCardCvContainer.setSafeOnClickListener {
                 mOnItemClickListener?.onItemClick(posterList[position].posterIdx)

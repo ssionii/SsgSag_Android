@@ -7,12 +7,8 @@ import com.icoo.ssgsag_android.base.BaseFragment
 import com.icoo.ssgsag_android.databinding.FragmentCalendarGridBinding
 import com.icoo.ssgsag_android.ui.main.calendar.CalendarPagerAdapter
 import com.icoo.ssgsag_android.ui.main.calendar.CalendarViewModel
-import com.icoo.ssgsag_android.ui.main.review.club.registration.ClubRgstrActivity
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.io.BufferedReader
-import java.io.InputStreamReader
-import java.net.URL
 
 class CalendarGridFragment :BaseFragment<FragmentCalendarGridBinding, CalendarViewModel>(){
 
@@ -70,11 +66,11 @@ class CalendarGridFragment :BaseFragment<FragmentCalendarGridBinding, CalendarVi
 
     private fun setTab(){
         viewDataBinding.fragCalGridLlAll.setSafeOnClickListener {
-            viewModel.isFavorite.value = false
+            viewModel.isFavoriteFromGrid.value = false
 
         }
         viewDataBinding.fragCalGridLlFavorite.setSafeOnClickListener {
-            viewModel.isFavorite.value = true
+            viewModel.isFavoriteFromGrid.value = true
         }
     }
 

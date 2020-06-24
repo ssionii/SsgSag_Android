@@ -86,7 +86,7 @@ class CalendarDialogPageViewModel(
 
     }
 
-    fun bookmark(posterIdx: Int, isFavorite: Int, year: String, month: String, date: String) {
+    fun bookmark(posterIdx: Int, isFavorite: Int, year: String, month: String, date: String, showFavorite : Boolean) {
         lateinit var response: Single<Int>
 
         if(isFavorite == 0) response = repository.bookmarkSchedule(posterIdx)
@@ -98,7 +98,8 @@ class CalendarDialogPageViewModel(
             .doOnSubscribe { showProgress() }
             .doOnTerminate { hideProgress() }
             .subscribe({
-                getAllSchedule(year, month, date)
+                if(showFavorite) getFavoriteSchedule(year, month, date)
+                else getAllSchedule(year, month, date)
             }, {
 
             })

@@ -66,7 +66,7 @@ class CalendarGridPageFragment : BaseFragment<FragmentCalendarPageBinding, Calen
         val dialogFragment = CalendarDialogFragment()
         val args = Bundle()
         args.putStringArrayList("Date", arrayListOf((item as Date).year, item.month, item.date))
-        args.putBoolean("showFavorite",viewModel.isFavorite.value!!)
+        args.putBoolean("showFavorite",viewModel.isFavoriteFromGrid.value!!)
 
 
         dialogFragment.arguments = args
@@ -121,7 +121,7 @@ class CalendarGridPageFragment : BaseFragment<FragmentCalendarPageBinding, Calen
 
         makeCalendarSchedule(mCalendar, mPrevCalendar, mNextCalendar, mInstanceCal, date, lines)
 
-        viewModel.isFavorite.observe(this, androidx.lifecycle.Observer {
+        viewModel.isFavoriteFromGrid.observe(this, androidx.lifecycle.Observer {
             val thread = Runnable {
                 makeCalendarSchedule(mCalendar, mPrevCalendar, mNextCalendar, mInstanceCal, date, lines)
             }

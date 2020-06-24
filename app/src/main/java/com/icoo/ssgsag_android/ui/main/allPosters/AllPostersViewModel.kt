@@ -87,6 +87,7 @@ class AllPostersViewModel(
 
 
     fun getActPosters(){
+
         addDisposable(
             repository.getWhatPosters(1)
                 .subscribeOn(schedulerProvider.io())

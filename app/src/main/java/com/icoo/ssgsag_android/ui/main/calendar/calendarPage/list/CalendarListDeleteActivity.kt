@@ -78,11 +78,6 @@ class CalendarListDeleteActivity : BaseActivity<ActivityCalendarListDeleteBindin
                         calendarListPageRecyclerViewAdapter.apply{
 
                             if(itemList.size < curPosition) curPosition = position
-
-                            if(itemList.size > 0 &&
-                                this.getItemDate(curPosition) != this.getItemDate(position)){
-                                curPosition = position
-                            }
                         }
 
                     }

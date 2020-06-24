@@ -5,17 +5,12 @@ import android.util.Log
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.google.gson.JsonObject
-import com.google.gson.JsonParser
 import com.icoo.ssgsag_android.base.BaseViewModel
-import com.icoo.ssgsag_android.data.model.category.Category
 import com.icoo.ssgsag_android.data.model.schedule.Schedule
 import com.icoo.ssgsag_android.data.model.schedule.ScheduleRepository
 import com.icoo.ssgsag_android.ui.main.calendar.calendarDetail.CalendarDetailActivity
 import com.icoo.ssgsag_android.util.scheduler.SchedulerProvider
 import io.reactivex.Single
-import org.json.JSONArray
-import org.json.JSONObject
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.reflect.KClass
@@ -41,10 +36,8 @@ class CalendarViewModel(
     private var _isUpdated = MutableLiveData<Boolean>()
     val isUpdated: LiveData<Boolean> get() = _isUpdated
 
-    private var _bookmarkStatus = MutableLiveData<Int>()
-    val bookmarkStatus: LiveData<Int> get() = _bookmarkStatus
+    var isFavoriteFromGrid = MutableLiveData<Boolean>()
 
-    var isFavorite = MutableLiveData<Boolean>()
     var isLastSaveFilter = MutableLiveData<Boolean>()
 
     var changedPosterPosition = 0
@@ -54,7 +47,7 @@ class CalendarViewModel(
     val headerDate : LiveData<String> get() = _headerDate
 
     init {
-        isFavorite.value = false
+        isFavoriteFromGrid.value = false
         isLastSaveFilter.value = true
         getAllCalendar()
         getFavoriteSchedule()
@@ -70,6 +63,7 @@ class CalendarViewModel(
             .subscribe({
                 it.run {
                     _schedule.postValue(this)
+                    Log.e("schedule size", schedule.value?.size.toString())
                 }
             }, {
 
@@ -100,7 +94,7 @@ class CalendarViewModel(
 
         scheduleByDate.clear()
         // all
-        if(!isFavorite.value!!){
+        if(!isFavoriteFromGrid.value!!){
             schedule.value?.let {
                 for (i in it.indices) {
                     if (it[i].posterEndDate.substring(0, 4) == year
