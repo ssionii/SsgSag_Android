@@ -108,7 +108,7 @@ class CalendarListDeleteActivity : BaseActivity<ActivityCalendarListDeleteBindin
         dataList = viewModel.filterSchedule(year, month)
 
         calendarListPageRecyclerViewAdapter.apply {
-            replaceAll(dataList)
+            replaceAll(dataList, true)
             setSelectType(1)
             if(dataList.size != 0) {
                 notifyItemRangeChanged(0, dataList.size)

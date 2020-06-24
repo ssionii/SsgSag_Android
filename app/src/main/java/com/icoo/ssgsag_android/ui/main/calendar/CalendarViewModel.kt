@@ -41,6 +41,9 @@ class CalendarViewModel(
     private var _isUpdated = MutableLiveData<Boolean>()
     val isUpdated: LiveData<Boolean> get() = _isUpdated
 
+    private var _bookmarkStatus = MutableLiveData<Int>()
+    val bookmarkStatus: LiveData<Int> get() = _bookmarkStatus
+
     var isFavorite = MutableLiveData<Boolean>()
     var isLastSaveFilter = MutableLiveData<Boolean>()
 
@@ -64,8 +67,6 @@ class CalendarViewModel(
         addDisposable(repository.getAllCalendar(sortType)
             .subscribeOn(schedulerProvider.io())
             .observeOn(schedulerProvider.mainThread())
-            .doOnSubscribe { showProgress() }
-            .doOnTerminate { hideProgress() }
             .subscribe({
                 it.run {
                     _schedule.postValue(this)
@@ -83,13 +84,9 @@ class CalendarViewModel(
         addDisposable(repository.getFavoriteCalendar("0000", "00", "00", sortType)
             .subscribeOn(schedulerProvider.io())
             .observeOn(schedulerProvider.mainThread())
-            .doOnSubscribe { showProgress() }
-            .doOnTerminate { hideProgress() }
             .subscribe({
                 it.run {
                     _favoriteSchedule.postValue(this)
-
-                    Log.e("favorite schedule", "update")
                 }
             }, {
 
@@ -169,8 +166,6 @@ class CalendarViewModel(
             .doOnTerminate { hideProgress() }
             .subscribe({
                 getFavoriteSchedule()
-                getAllCalendar()
-                changedPosterPosition = position
             }, {
 
             })

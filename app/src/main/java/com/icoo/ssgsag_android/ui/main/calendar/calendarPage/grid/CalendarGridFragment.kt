@@ -20,8 +20,7 @@ class CalendarGridFragment :BaseFragment<FragmentCalendarGridBinding, CalendarVi
         get() = R.layout.fragment_calendar_grid
     override val viewModel: CalendarViewModel by viewModel()
 
-    var position =
-        COUNT_PAGE
+    var position = COUNT_PAGE
     private lateinit var calendarPagerAdapter : CalendarPagerAdapter
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

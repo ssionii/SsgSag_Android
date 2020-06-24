@@ -54,9 +54,8 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding, CalendarViewModel
         viewDataBinding.vm = viewModel
         
         calendarGridFragment = CalendarGridFragment()
-        calendarListFragment = CalendarListFragment()
-
         replaceFragment(calendarGridFragment)
+        calendarListFragment = CalendarListFragment()
         replaceFragment(calendarListFragment)
 
         setButton()

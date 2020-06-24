@@ -7,6 +7,7 @@ import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.data.model.schedule.Schedule
 import com.icoo.ssgsag_android.databinding.ItemCalendarListBinding
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
+import org.jetbrains.anko.image
 
 class CalendarListPageRecyclerViewAdapter() : RecyclerView.Adapter<CalendarListPageRecyclerViewAdapter.ViewHolder>() {
 
@@ -17,17 +18,24 @@ class CalendarListPageRecyclerViewAdapter() : RecyclerView.Adapter<CalendarListP
         this.listener = listener
     }
 
-    fun replaceAll(array: ArrayList<Schedule>?) {
+    fun replaceAll(array: ArrayList<Schedule>?, isLastSaveFilter : Boolean?) {
         if(array?.size != null) {
             itemList.clear()
             itemList.addAll(array)
 
-            for (i in itemList.indices) {
-                itemList[i].isAlone = !(i > 0 &&
-                        itemList[i].posterEndDate.substring(8, 10) == itemList[i - 1].posterEndDate.substring(8, 10))
+            if(isLastSaveFilter != null && !isLastSaveFilter){
+                for (i in itemList.indices) {
+                    itemList[i].isAlone = !(i > 0 &&
+                            itemList[i].posterEndDate.substring(8, 10) == itemList[i - 1].posterEndDate.substring(8, 10))
 
-                itemList[i].isLast = !(i < itemList.size - 1 &&
-                        itemList[i].posterEndDate.substring(8, 10) == itemList[i + 1].posterEndDate.substring(8, 10))
+                    itemList[i].isLast = !(i < itemList.size - 1 &&
+                            itemList[i].posterEndDate.substring(8, 10) == itemList[i + 1].posterEndDate.substring(8, 10))
+                }
+            }else{
+                for (i in itemList.indices) {
+                    itemList[i].isAlone = false
+                    itemList[i].isLast = true
+                }
             }
         }
 
@@ -52,6 +60,12 @@ class CalendarListPageRecyclerViewAdapter() : RecyclerView.Adapter<CalendarListP
 
         holder.dataBinding.itemCalendarListIvFavorite.setSafeOnClickListener {
             listener?.onBookmarkClicked(itemList[position].posterIdx, itemList[position].isFavorite, position)
+            if(itemList[position].isFavorite == 1){
+                itemList[position].isFavorite = 0
+            }else{
+                itemList[position].isFavorite = 1
+            }
+            notifyDataSetChanged()
         }
 
         holder.dataBinding.itemCalendarListIvSelector.setSafeOnClickListener {

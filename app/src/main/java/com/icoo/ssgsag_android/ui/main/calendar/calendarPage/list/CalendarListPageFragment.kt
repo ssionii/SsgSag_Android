@@ -51,9 +51,10 @@ class CalendarListPageFragment : BaseFragment<FragmentCalendarListPageBinding, C
         setRecyclerView()
         setButton()
 
-        viewModel.isFavorite.observe(this, Observer {
-            makeScheduleList(year, month)
-        })
+//        viewModel.isFavorite.observe(this, Observer {
+//            makeScheduleList(year, month)
+//        })
+
     }
 
     private fun setRecyclerView() {
@@ -89,14 +90,14 @@ class CalendarListPageFragment : BaseFragment<FragmentCalendarListPageBinding, C
                             ) {
                                 curPosition = position
 
-                                val date =
-                                    (adapter as CalendarListPageRecyclerViewAdapter).getItemDate(
-                                        position
-                                    )
-                                val monthInt = date.substring(5, 7).toInt()
-                                val headerDate =
-                                    date.substring(0, 4) + "년 " + monthInt.toString() + "월"
-                                viewModel.setHeaderDate(headerDate)
+//                                val date =
+//                                    (adapter as CalendarListPageRecyclerViewAdapter).getItemDate(
+//                                        position
+//                                    )
+//                                val monthInt = date.substring(5, 7).toInt()
+//                                val headerDate =
+//                                    date.substring(0, 4) + "년 " + monthInt.toString() + "월"
+//                                viewModel.setHeaderDate(headerDate)
 
                             }
                         }
@@ -117,7 +118,6 @@ class CalendarListPageFragment : BaseFragment<FragmentCalendarListPageBinding, C
         viewModel.favoriteSchedule.observe(this, Observer {
             makeScheduleList(year, month)
         })
-
     }
 
     private fun makeScheduleList(year: String, month: String){
@@ -127,15 +127,15 @@ class CalendarListPageFragment : BaseFragment<FragmentCalendarListPageBinding, C
 
         calendarListPageRecyclerViewAdapter.apply {
             setSelectType(0)
-            replaceAll(dataList)
-
+            replaceAll(dataList, viewModel.isLastSaveFilter.value!!)
 
             if(dataList.size != 0) {
                 if(filterClick){
                     viewDataBinding.fragCalendarListPageRv.scrollToPosition(0)
                     curPosition = 0
                     filterClick = false
-                    notifyItemRangeChanged(0, itemCount)
+                    notifyDataSetChanged()
+//                    notifyItemRangeChanged(0, itemCount)
                 }else {
                     notifyItemChanged(viewModel.changedPosterPosition)
                 }
@@ -167,6 +167,7 @@ class CalendarListPageFragment : BaseFragment<FragmentCalendarListPageBinding, C
 
             override fun onBookmarkClicked(posterIdx: Int, isFavorite: Int, position: Int) {
                 viewModel.bookmark(posterIdx, isFavorite, position)
+
             }
 
             override fun onSelectorClicked(posterIdx: Int, posterName:String, isSelected: Boolean) {}
@@ -187,8 +188,8 @@ class CalendarListPageFragment : BaseFragment<FragmentCalendarListPageBinding, C
 
             filterClick = true
 
-                viewModel.getAllCalendar()
-                viewModel.getFavoriteSchedule()
+            viewModel.getAllCalendar()
+            viewModel.getFavoriteSchedule()
         }
     }
 

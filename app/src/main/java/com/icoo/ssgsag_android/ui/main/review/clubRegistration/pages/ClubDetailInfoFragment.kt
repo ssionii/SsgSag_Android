@@ -39,8 +39,6 @@ import com.icoo.ssgsag_android.ui.main.review.photoViewPager.PhotoViewPagerActiv
 import com.icoo.ssgsag_android.util.dataBinding.replaceAll
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import com.icoo.ssgsag_android.util.view.SpacesItemDecoration
-import droidninja.filepicker.FilePickerBuilder
-import droidninja.filepicker.FilePickerConst
 import kotlinx.android.synthetic.main.fragment_club_detail_info.*
 import org.jetbrains.anko.backgroundColor
 import org.jetbrains.anko.support.v4.toast
@@ -69,7 +67,7 @@ class ClubDetailInfoFragment : BaseFragment<FragmentClubDetailInfoBinding, ClubR
         setButton()
         setEditTextTouch()
         setEditTextChange()
-        setPhotoRv()
+//        setPhotoRv()
     }
 
     override fun onResume() {
@@ -139,7 +137,7 @@ class ClubDetailInfoFragment : BaseFragment<FragmentClubDetailInfoBinding, ClubR
 
             if(checkUrl(ClubRgstrData.clubWebsite)) {
                 (activity as ClubRgstrActivity).toNextPage(position)
-                postPhotoResponse()
+//                postPhotoResponse()
                 (activity as ClubRgstrActivity).hideKeyboard(viewDataBinding.fragClubDetailInfoPersonnel)
             } else
                 toast("사이트 주소 형식을 확인해주세요.")
@@ -228,34 +226,34 @@ class ClubDetailInfoFragment : BaseFragment<FragmentClubDetailInfoBinding, ClubR
     }
 
     private fun showAlbum(){
-        FilePickerBuilder.instance.setMaxCount(9)
-            .setActivityTheme(R.style.LibAppTheme)
-            .enableVideoPicker(false)
-            .setActivityTitle("사진 선택")
-            .enableCameraSupport(false)
-            .pickPhoto(this)
+//        FilePickerBuilder.instance.setMaxCount(9)
+//            .setActivityTheme(R.style.LibAppTheme)
+//            .enableVideoPicker(false)
+//            .setActivityTitle("사진 선택")
+//            .enableCameraSupport(false)
+//            .pickPhoto(this)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
        when(requestCode) {
-           FilePickerConst.REQUEST_CODE_PHOTO-> {
-               if (resultCode == Activity.RESULT_OK && data != null) {
+//           FilePickerConst.REQUEST_CODE_PHOTO-> {
+//               if (resultCode == Activity.RESULT_OK && data != null) {
+//
+//                   var datas = data!!.getStringArrayListExtra(FilePickerConst.KEY_SELECTED_MEDIA)
+//                   for (i in 0 until datas.size) {
+//                            if (viewModel.photoList.size < 9) {
+//                                // viewModel.addPhoto(File(datas[i]).toUri())
+//                                viewModel.uploadPhoto1(datas[i])
+//                                viewModel.addPath(datas[i])
+//                            }
+//                        }
+//
+//               }
+//
+//               }
 
-                   var datas = data!!.getStringArrayListExtra(FilePickerConst.KEY_SELECTED_MEDIA)
-                   for (i in 0 until datas.size) {
-                            if (viewModel.photoList.size < 9) {
-                                // viewModel.addPhoto(File(datas[i]).toUri())
-                                viewModel.uploadPhoto1(datas[i])
-                                viewModel.addPath(datas[i])
-                            }
-                        }
-
-               }
-
-               }
-           }
-
+       }
 
     }
 

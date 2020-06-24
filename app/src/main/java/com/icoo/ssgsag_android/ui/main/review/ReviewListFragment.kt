@@ -40,10 +40,7 @@ class ReviewListFragment : BaseFragment<FragmentReviewPageBinding, ReviewViewMod
         viewDataBinding.reviewListFragment = this
 
         setRv()
-
-        // navigator()
     }
-
 
     private fun setRv() {
 

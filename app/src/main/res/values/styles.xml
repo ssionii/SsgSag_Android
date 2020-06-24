@@ -79,13 +79,6 @@
         <item name="tabMaxWidth">0dp</item>
     </style>
 
-    <style name="SmoothCheckBoxStyle">
-        <item name="color_checked">@color/ssgsag</item>
-        <item name="color_unchecked">@android:color/white</item>
-        <item name="color_unchecked_stroke">@color/checkbox_unchecked_color</item>
-        <item name="color_tick">@android:color/white</item>
-    </style>
-
     <style name="Base.Widget.Design.TabLayout" parent="android:Widget">
         <item name="tabPaddingStart">0dp</item>
         <item name="tabPaddingEnd">0dp</item>

@@ -19,7 +19,7 @@ data class Schedule(
     val keyword: String?,
     val isCompleted : Int,
     val isEnded : Int,
-    val isFavorite : Int,
+    var isFavorite : Int,
     val likeNum: Int,
     val swipeNum: Int,
     val favoriteNum: Int,

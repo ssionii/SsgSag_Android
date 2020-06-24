@@ -35,9 +35,6 @@ class ReviewPageFragment : BaseFragment<FragmentReviewBinding, ReviewViewModel>(
 
     var reviewType = -1
 
-    lateinit var mAdapter: DialogPlusAdapter
-    var isReviewOpend = false
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewDataBinding.vm = viewModel
@@ -64,8 +61,8 @@ class ReviewPageFragment : BaseFragment<FragmentReviewBinding, ReviewViewModel>(
 
         viewDataBinding.fragReviewVp.run {
             adapter = BasePagerAdapter(childFragmentManager).apply {
-                addFragment(campusClubReviewFrag)
                 addFragment(unionClubReviewFrag)
+                addFragment(campusClubReviewFrag)
             }
             currentItem = 0
             offscreenPageLimit = 1
@@ -87,8 +84,8 @@ class ReviewPageFragment : BaseFragment<FragmentReviewBinding, ReviewViewModel>(
     private fun setTabLayout(){
         viewDataBinding.fragReviewTlCategory.run {
             setupWithViewPager(viewDataBinding.fragReviewVp)
-            getTabAt(0)!!.text = "교내 동아리"
-            getTabAt(1)!!.text = "연합 동아리"
+            getTabAt(0)!!.text = "연합 동아리"
+            getTabAt(1)!!.text = "교내 동아리"
             setTabRippleColor(null)
         }
 
@@ -99,9 +96,8 @@ class ReviewPageFragment : BaseFragment<FragmentReviewBinding, ReviewViewModel>(
         for (i in 0..1) {
             tabStrip.getChildAt(i).setOnTouchListener(View.OnTouchListener { v, event ->
                 if (event?.action == MotionEvent.ACTION_UP) {
-
-                    if(i == 1) reviewType = 0
-                    else reviewType = 1
+                    if(i == 1) reviewType = 1
+                    else reviewType = 0
                 }
                 false
             })

@@ -210,3 +210,12 @@ fun setSelectedTextSsgsag(view: TextView, bool:Boolean){
         view.setTextColor(view.context.getColor(R.color.grey_1))
     }
 }
+
+@BindingAdapter("selectedFilterImg")
+fun setSelectedFilterImg(view: ImageView, bool:Boolean){
+    if(bool){
+        view.setImageDrawable(view.context.getDrawable(R.drawable.ic_circle_checked_active))
+    }else{
+        view.setImageDrawable(view.context.getDrawable(R.drawable.ic_circle_checked))
+    }
+}
