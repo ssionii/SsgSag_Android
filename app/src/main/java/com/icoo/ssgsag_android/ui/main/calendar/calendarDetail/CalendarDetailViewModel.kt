@@ -42,6 +42,8 @@ class CalendarDetailViewModel(
     private val _webUrl = MutableLiveData<String>()
     val webUrl : LiveData<String> get () = _webUrl
 
+    var pushAlarmList = arrayListOf<Int>()
+
 
     private val _activityToStart = MutableLiveData<Pair<KClass<*>, Bundle?>>()
     val activityToStart: LiveData<Pair<KClass<*>, Bundle?>> get() = _activityToStart
@@ -260,7 +262,6 @@ class CalendarDetailViewModel(
                 "캘린더에 저장되었습니다.",Toast.LENGTH_SHORT).show();
 
         }else if(posterDetail.value?.isSave == 1){
-
             val jsonObject = JSONObject()
             val jsonArray = JSONArray(arrayListOf(posterIdx))
             jsonObject.put("posterIdxList", jsonArray)
@@ -274,8 +275,11 @@ class CalendarDetailViewModel(
                 .doOnTerminate { hideProgress() }
                 .subscribe({
                     getPosterDetail(posterIdx)
-                }, {
 
+                    Log.e("detail delete", it.toString())
+
+                }, {
+                    it.printStackTrace()
                 }))
 
             Toast.makeText(SsgSagApplication.getGlobalApplicationContext(),
@@ -287,6 +291,20 @@ class CalendarDetailViewModel(
         }
     }
 
+    // 푸시 알림 관련 함수
+    fun getPushAlarm(posterIdx: Int){
+        addDisposable(posterRepository.getTodoPushAlarm(posterIdx)
+            .subscribeOn(schedulerProvider.io())
+            .observeOn(schedulerProvider.mainThread())
+            .doOnSubscribe { showProgress() }
+            .doOnTerminate { hideProgress() }
+            .subscribe({
+                pushAlarmList = it
+            }, {
+
+            })
+        )
+    }
 
     fun navigatePhoto(activity: KClass<*>, photoUrl: String?) {
         val bundle = Bundle().apply { putString("photoUrl", photoUrl)}

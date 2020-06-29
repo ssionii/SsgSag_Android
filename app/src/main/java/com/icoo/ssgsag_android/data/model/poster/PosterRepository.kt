@@ -19,6 +19,11 @@ interface PosterRepository {
     fun getTodaySsgSag(): Single<TodaySsgSag>
     fun getUserCnt():Single<Int>
 
+    // pushAlarm
+    fun getTodoPushAlarm(posterIdx: Int) : Single<ArrayList<Int>>
+    fun postTodoPushAlarm(posterIdx: Int, ddayList: ArrayList<Int>) : Single<Int>
+    fun deleteTodoPushAlarm(posterIdx: Int) : Single<Int>
+
     //comment
     fun writeComment(body: JsonObject): Single<Int>
     fun editComment(body: JsonObject): Single<Int>

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+                name="vm"
+                type="com.icoo.ssgsag_android.ui.main.calendar.calendarDetail.CalendarDetailViewModel" />
+    </data>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="32dp"
+        android:paddingBottom="48dp"
+        android:paddingHorizontal="32dp"
+        android:background="@drawable/header_dialog_plus_radius">
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black_1"
+            android:text="마감 알림 설정"
+            android:fontFamily="@font/noto_sans_kr_bold"
+            android:textAlignment="center"
+            android:textSize="16sp"
+            android:layout_marginLeft="8dp"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="알림 설정하고 마감기한 놓치지 마세요.(복수선택 가능)"
+            android:textColor="@color/grey_1"
+            android:fontFamily="@font/noto_sans_kr_regular"
+            android:layout_marginLeft="8dp"
+            android:textSize="12sp"
+            android:layout_marginTop="4dp"/>
+    
+<!--    <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="55dp"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:layout_marginHorizontal="8dp">-->
+<!--        <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                pushDday="@{vm.}"-->
+<!--                android:text="알림 없음"-->
+<!--                android:textSize="14sp"-->
+<!--                android:fontFamily="@font/noto_sans_kr_regular"-->
+<!--                android:textColor="@color/black_1"-->
+<!--                android:layout_gravity="center_vertical"/>-->
+<!--        <View-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="0dp"-->
+<!--                android:layout_weight="1"/>-->
+
+<!--        <ImageView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:src="@drawable/ic_checkbox_off"-->
+<!--                android:layout_gravity="center_vertical"/>-->
+<!--    </LinearLayout>-->
+
+<!--    <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="55dp"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:layout_marginHorizontal="8dp">-->
+<!--        <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="마감 당일 알림(오전 10시)"-->
+<!--                android:textSize="14sp"-->
+<!--                android:fontFamily="@font/noto_sans_kr_regular"-->
+<!--                android:textColor="@color/black_1"-->
+<!--                android:layout_gravity="center_vertical"/>-->
+<!--        <View-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="0dp"-->
+<!--                android:layout_weight="1"/>-->
+
+<!--        <ImageView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:src="@drawable/ic_checkbox_off"-->
+<!--                android:layout_gravity="center_vertical"/>-->
+<!--    </LinearLayout>-->
+
+<!--    <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="55dp"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:layout_marginHorizontal="8dp">-->
+<!--        <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="마감 1일 전 알림"-->
+<!--                android:textSize="14sp"-->
+<!--                android:fontFamily="@font/noto_sans_kr_regular"-->
+<!--                android:textColor="@color/black_1"-->
+<!--                android:layout_gravity="center_vertical"/>-->
+<!--        <View-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="0dp"-->
+<!--                android:layout_weight="1"/>-->
+
+<!--        <ImageView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:src="@drawable/ic_checkbox_off"-->
+<!--                android:layout_gravity="center_vertical"/>-->
+<!--    </LinearLayout>-->
+
+<!--    <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="55dp"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:layout_marginHorizontal="8dp">-->
+<!--        <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="마감 3일 전 알림"-->
+<!--                android:textSize="14sp"-->
+<!--                android:fontFamily="@font/noto_sans_kr_regular"-->
+<!--                android:textColor="@color/black_1"-->
+<!--                android:layout_gravity="center_vertical"/>-->
+<!--        <View-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="0dp"-->
+<!--                android:layout_weight="1"/>-->
+
+<!--        <ImageView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:src="@drawable/ic_checkbox_off"-->
+<!--                android:layout_gravity="center_vertical"/>-->
+<!--    </LinearLayout>-->
+
+<!--    <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="55dp"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:layout_marginHorizontal="8dp">-->
+<!--        <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="마감 7일 전 알림"-->
+<!--                android:textSize="14sp"-->
+<!--                android:fontFamily="@font/noto_sans_kr_regular"-->
+<!--                android:textColor="@color/black_1"-->
+<!--                android:layout_gravity="center_vertical"/>-->
+<!--        <View-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="0dp"-->
+<!--                android:layout_weight="1"/>-->
+
+<!--        <ImageView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:src="@drawable/ic_checkbox_off"-->
+<!--                android:layout_gravity="center_vertical"/>-->
+<!--    </LinearLayout>-->
+<!--    -->
+
+</LinearLayout>
+</layout>

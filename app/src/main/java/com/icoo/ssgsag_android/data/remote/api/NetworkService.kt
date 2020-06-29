@@ -3,10 +3,7 @@ package com.icoo.ssgsag_android.data.remote.api
 import com.google.gson.JsonObject
 import com.icoo.ssgsag_android.SsgSagApplication.Companion.globalApplication
 import com.icoo.ssgsag_android.R
-import com.icoo.ssgsag_android.data.model.base.BooleanResponse
-import com.icoo.ssgsag_android.data.model.base.IntResponse
-import com.icoo.ssgsag_android.data.model.base.NullDataResponse
-import com.icoo.ssgsag_android.data.model.base.StringResponse
+import com.icoo.ssgsag_android.data.model.base.*
 import com.icoo.ssgsag_android.data.model.feed.FeedResponse
 import com.icoo.ssgsag_android.data.model.feed.FeedTodayResponse
 import com.icoo.ssgsag_android.data.model.feed.FeedsResponse
@@ -243,6 +240,26 @@ interface NetworkService {
         @Header("Authorization") token: String,
         @Path("posterIdx") posterIdx : Int
     ): Single<ScheduleResponse>
+    // 일정 푸시 조회
+    @GET("todo/push")
+    fun getTodoPushAlarm(
+        @Header("Authorization") token: String,
+        @Query("posterIdx") posterIdx : Int
+    ):Single<IntArrayListResponse>
+    // 일정 푸시 등록
+    @GET("todo/push")
+    fun postTodoPushAlarm(
+        @Header("Authorization") token: String,
+        @Query("posterIdx") posterIdx : Int,
+        @Query("ddayList") ddayList : ArrayList<Int>
+    ):Single<IntResponse>
+    // 일정 푸시 및 즐겨찾기 동시 삭제
+    @DELETE("todo/push")
+    fun deleteTodoPushAlarm(
+        @Header("Authorization") token: String,
+        @Query("posterIdx") posterIdx : Int
+    ):Single<IntResponse>
+
     //endregion
 
     //region 이력

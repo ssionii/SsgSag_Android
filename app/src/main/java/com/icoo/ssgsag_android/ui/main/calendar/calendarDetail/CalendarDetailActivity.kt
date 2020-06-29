@@ -2,16 +2,11 @@ package com.icoo.ssgsag_android.ui.main.calendar.calendarDetail
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.Canvas
 import android.graphics.Color
-import android.graphics.Paint
 import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
 import android.view.MenuItem
 import android.view.View
-import android.view.animation.AlphaAnimation
 import android.view.inputmethod.InputMethodManager
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.SimpleItemAnimator
@@ -27,17 +22,12 @@ import com.icoo.ssgsag_android.ui.main.calendar.calendarDetail.CommentRecyclerVi
 import com.icoo.ssgsag_android.util.view.NonScrollLinearLayoutManager
 import org.jetbrains.anko.toast
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import android.os.Handler
 import android.util.Log
+import android.view.Gravity
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import com.github.mikephil.charting.data.*
-import com.icoo.ssgsag_android.BuildConfig
-import com.icoo.ssgsag_android.SsgSagApplication
-import com.icoo.ssgsag_android.data.local.pref.SharedPreferenceController
-import com.icoo.ssgsag_android.ui.login.LoginActivity
 import com.icoo.ssgsag_android.ui.main.photoEnlarge.PhotoExpandActivity
-import com.icoo.ssgsag_android.ui.main.ssgSag.SsgSagCardStackAdapter
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import com.igaworks.v2.core.AdBrixRm
 import com.kakao.kakaolink.v2.KakaoLinkResponse
@@ -48,16 +38,13 @@ import com.kakao.message.template.FeedTemplate
 import com.kakao.message.template.LinkObject
 import com.kakao.network.ErrorResult
 import com.kakao.network.callback.ResponseCallback
+import com.orhanobut.dialogplus.DialogPlus
+import com.orhanobut.dialogplus.GridHolder
 import kotlinx.android.synthetic.main.activity_calendar_detail.*
-import kotlinx.android.synthetic.main.activity_photo_enlarge.*
-import org.jetbrains.anko.startActivity
-import org.jetbrains.anko.support.v4.startActivity
-import java.io.File
-import java.io.FileNotFoundException
-import java.io.FileOutputStream
 
 
-class CalendarDetailActivity : BaseActivity<ActivityCalendarDetailBinding, CalendarDetailViewModel>() {
+class CalendarDetailActivity : BaseActivity<ActivityCalendarDetailBinding, CalendarDetailViewModel>(),
+    CalendarDetailDeletePosterDialogFragment.OnDialogDismissedListener {
 
     override val layoutResID: Int
         get() = R.layout.activity_calendar_detail
@@ -102,6 +89,8 @@ class CalendarDetailActivity : BaseActivity<ActivityCalendarDetailBinding, Calen
 
     }
 
+    lateinit private var deleteDialogFragment : CalendarDetailDeletePosterDialogFragment
+
     private var posterIdx: Int = 0
     private var from: String = "calendar"
     private var fromDetail : String = ""
@@ -139,15 +128,18 @@ class CalendarDetailActivity : BaseActivity<ActivityCalendarDetailBinding, Calen
             viewModel.getPosterDetail(posterIdx)
 
         }
+
+        viewModel.getPushAlarm(posterIdx)
+
         //ui
         setToolbar()
         setEnlargeClicked()
         setPosterDetailRv()
         setDetailImage()
-        setBottomBar()
+        setButton()
         setCommentRv()
         writeComment()
-        bookmarkPoster()
+
         moveWebSite()
         directApply()
 
@@ -158,6 +150,12 @@ class CalendarDetailActivity : BaseActivity<ActivityCalendarDetailBinding, Calen
 
         navigator()
 
+    }
+
+    override fun onDialogDismissed(isDeleted:Boolean, posterIdx:Int) {
+        if(isDeleted) {
+            viewModel.managePoster(posterIdx)
+        }
     }
 
     private fun setToolbar() {
@@ -221,22 +219,67 @@ class CalendarDetailActivity : BaseActivity<ActivityCalendarDetailBinding, Calen
        })
     }
 
-    private fun setBottomBar(){
+    private fun setButton(){
+        viewDataBinding.actCalDetailCvStore.setSafeOnClickListener {
+            viewModel.managePoster(posterIdx)
+        }
 
-        if(from == "calendar"){
-            viewDataBinding.actCalDetailIvBookmark.visibility = VISIBLE
-            viewDataBinding.actCalDetailTvApply.visibility = VISIBLE
-            viewDataBinding.actCalDetailRlStore.visibility = GONE
-        }else{
-            viewDataBinding.actCalDetailIvBookmark.visibility = GONE
-            viewDataBinding.actCalDetailTvApply.visibility = GONE
-            viewDataBinding.actCalDetailRlStore.visibility = VISIBLE
+        viewDataBinding.actCalDetailCvCancelStore.setSafeOnClickListener {
+            deleteDialogFragment = CalendarDetailDeletePosterDialogFragment()
+            deleteDialogFragment.setOnDialogDismissedListener(this)
+            deleteDialogFragment.show(supportFragmentManager, "poster delete dialog")
+        }
 
-            viewDataBinding.actCalDetailRlStore.setSafeOnClickListener {
-                viewModel.managePoster(posterIdx)
-            }
+        viewDataBinding.actCalDetailCvBookmark.setSafeOnClickListener {
+            showBookmarkDialog()
 
         }
+    }
+
+    private fun showBookmarkDialog(){
+
+        val mAdapter = TodoPushAlarmDialogPlusAdapter(this, viewModel.posterDetail.value?.dday, viewModel.pushAlarmList)
+        val builder =  DialogPlus.newDialog(this)
+
+        val holder = GridHolder(1)
+
+        builder.apply {
+
+//            setContentHolder(ViewHolder(R.layout.dialog_fragment_poster_detail_bookmark_header))
+            setContentHolder(holder)
+            setHeader(R.layout.dialog_fragment_poster_detail_bookmark_header)
+            setFooter(R.layout.dialog_fragment_poster_detail_bookmark_footer)
+            setCancelable(false)
+            setGravity(Gravity.BOTTOM)
+
+            setOnClickListener { dialog, view ->
+                if (view.id == R.id.dialog_frag_poster_detail_bookmark_cancel) {
+                    dialog.dismiss()
+                    // todo: 취소
+                }else if(view.id == R.id.dialog_frag_poster_detail_bookmark_ok) {
+                    dialog.dismiss()
+                   // todo: 통신
+
+                    viewModel.bookmark(posterIdx)
+                }
+            }
+
+            setAdapter(mAdapter)
+            setOverlayBackgroundResource(R.color.dialog_background)
+            setContentBackgroundResource(R.drawable.header_dialog_plus_radius)
+
+            val horizontalDpValue = 32
+            val topDpValue = 32
+            val bottomDpValue = 32
+            val d = resources.displayMetrics.density
+            val horizontalMargin = (horizontalDpValue * d).toInt()
+            val topMargin = (topDpValue * d).toInt()
+            val bottomMargin = (bottomDpValue * d).toInt()
+
+            setPadding(horizontalMargin, topMargin, horizontalMargin, bottomMargin)
+
+        }
+        builder.create().show()
     }
 
 
@@ -315,16 +358,8 @@ class CalendarDetailActivity : BaseActivity<ActivityCalendarDetailBinding, Calen
         }
     }
 
-    private fun bookmarkPoster() {
-        viewDataBinding.actCalDetailIvBookmark.setSafeOnClickListener {
-            viewModel.bookmark(posterIdx)
-
-        }
-
-    }
-
     private fun moveWebSite() {
-        viewDataBinding.actCalDetailTvGoWebsite.setSafeOnClickListener {
+        viewDataBinding.actCalDetailClGoWebsite.setSafeOnClickListener {
             viewModel.webUrl.value?.let {
                 viewModel.recordClickHistory(posterIdx)
                 AdBrixRm.event(
@@ -397,9 +432,7 @@ class CalendarDetailActivity : BaseActivity<ActivityCalendarDetailBinding, Calen
         }
     }
 
-
     private fun setPieChart() {
-
 
             if (viewModel.analytics.value!!.majorCategory[0] != null) {
                 viewDataBinding.actCalDetailTvAnalyticsTitleMajor.text = viewModel.analytics.value!!.majorCategory[0]
@@ -566,7 +599,6 @@ class CalendarDetailActivity : BaseActivity<ActivityCalendarDetailBinding, Calen
                 genderChart.isSelected = true
 
             }
-
     }
 
 

@@ -63,7 +63,6 @@ class CalendarViewModel(
             .subscribe({
                 it.run {
                     _schedule.postValue(this)
-                    Log.e("schedule size", schedule.value?.size.toString())
                 }
             }, {
 

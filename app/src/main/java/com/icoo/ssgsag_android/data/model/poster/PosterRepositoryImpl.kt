@@ -69,6 +69,17 @@ class PosterRepositoryImpl(val api: NetworkService, val pref: PreferenceManager)
         .posterResponse(pref.findPreference("TOKEN", ""))
         .map { it.data.userCnt }
 
+    override fun getTodoPushAlarm(posterIdx: Int): Single<ArrayList<Int>> = api
+        .getTodoPushAlarm(pref.findPreference("TOKEN", ""), posterIdx)
+        .map { it.data }
+
+    override fun postTodoPushAlarm(posterIdx: Int, ddayList: ArrayList<Int>): Single<Int> = api
+        .postTodoPushAlarm(pref.findPreference("TOKEN", ""), posterIdx, ddayList)
+        .map { it.data }
+
+    override fun deleteTodoPushAlarm(posterIdx: Int): Single<Int> = api
+        .deleteTodoPushAlarm(pref.findPreference("TOKEN", ""), posterIdx)
+        .map { it.data }
 
     //comment
     override fun writeComment(body: JsonObject): Single<Int> = api

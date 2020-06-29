@@ -348,6 +348,29 @@ fun setConstraintLayoutVisibility(layout: ConstraintLayout, bool: Boolean){
         layout.visibility = GONE
 }
 
+@BindingAdapter("llVisibilityByInt")
+fun LinearLayout.setVisibilityByInt(num: Int){
+    when(num){
+        1 -> this.visibility = VISIBLE
+        else -> this.visibility = GONE
+    }
+}
+
+@BindingAdapter("cvVisibilityByIntR")
+fun CardView.setVisibilityByIntR(num: Int){
+    when(num){
+        0 -> this.visibility = VISIBLE
+        else -> this.visibility = GONE
+    }
+}
+
+@BindingAdapter("cvVisibilityByInt")
+fun CardView.setVisibilityByInt(num: Int){
+    when(num){
+        1 -> this.visibility = VISIBLE
+        else -> this.visibility = GONE
+    }
+}
 
 private fun createLoggerListener(name: String): RequestListener<Drawable> {
     return object : RequestListener<Drawable> {

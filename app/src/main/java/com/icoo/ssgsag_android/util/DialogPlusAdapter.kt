@@ -21,7 +21,6 @@ class DialogPlusAdapter(
 ) : BaseAdapter() {
 
     private var selectedField = 0
-
     private val layoutInflater: LayoutInflater = LayoutInflater.from(context)
 
     override fun getCount(): Int {
