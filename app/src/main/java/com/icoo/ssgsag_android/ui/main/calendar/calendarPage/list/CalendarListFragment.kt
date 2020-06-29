@@ -2,6 +2,7 @@ package com.icoo.ssgsag_android.ui.main.calendar.calendarPage.list
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import com.google.android.material.tabs.TabLayout
@@ -25,10 +26,6 @@ class CalendarListFragment : BaseFragment<FragmentCalendarListBinding, CalendarL
 
         setVp()
         setTabLayout()
-
-        viewDataBinding.run {
-            fragCalListClContainer.setOnTouchListener { v, event -> true }
-        }
     }
 
     private fun setTabLayout(){
@@ -44,6 +41,11 @@ class CalendarListFragment : BaseFragment<FragmentCalendarListBinding, CalendarL
 
                 override fun onTabSelected(tab: TabLayout.Tab?) {
                     viewModel.isFavorite.value = tab!!.position != 0
+
+                    when(tab.position){
+                        0 -> viewModel.getAllCalendar()
+                        1 -> viewModel.getFavoriteSchedule()
+                    }
                 }
 
                 override fun onTabUnselected(tab: TabLayout.Tab?) {}

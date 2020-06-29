@@ -174,6 +174,16 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding, CalendarViewModel
     private fun replaceFragment(fragment: Fragment) {
         childFragmentManager.beginTransaction().apply {
             if (fragment.isAdded) {
+                when(fragment){
+                    is CalendarListFragment -> {
+                        fragment.viewModel.getAllCalendar()
+                        fragment.viewModel.getFavoriteSchedule()
+                    }
+                    is CalendarGridFragment -> {
+                        fragment.viewModel.getAllCalendar()
+                        fragment.viewModel.getFavoriteSchedule()
+                    }
+                }
                 show(fragment)
             } else {
                 add(R.id.frag_calendar_fl_page_container, fragment)

@@ -45,6 +45,7 @@ class CalendarListViewModel (
     }
 
     fun getAllCalendar() {
+        Log.e("list", "viewModel")
         var sortType = 1
         if(!isLastSaveFilter.value!!) sortType = 0
 
