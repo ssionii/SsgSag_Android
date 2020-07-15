@@ -131,7 +131,12 @@ class CalendarListDeleteActivity : BaseActivity<ActivityCalendarListDeleteBindin
         object :
             CalendarListPageRecyclerViewAdapter.OnScheduleItemClickListener {
 
-            override fun onBookmarkClicked(posterIdx: Int, isFavorite: Int, position:Int) {}
+            override fun onBookmarkClicked(
+                posterIdx: Int,
+                isFavorite: Int,
+                dday: Int,
+                position: Int
+            ) {}
 
             override fun onItemClicked(posterIdx: Int) {}
 

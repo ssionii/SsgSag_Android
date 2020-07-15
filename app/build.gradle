@@ -5,6 +5,7 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'realm-android'
 apply plugin: 'com.google.firebase.crashlytics'
+//apply plugin: 'io.fabric'
 
 def keystorePropertiesFile = project.rootProject.file("app/keystore.properties")
 def keystoreProperties = new Properties()
@@ -120,7 +121,7 @@ dependencies {
     //facebook
     implementation 'com.facebook.android:facebook-android-sdk:[5,6)'
     //adbrix
-    implementation 'com.google.android.gms:play-services-ads:15.0.0'
+    implementation 'com.google.android.gms:play-services-ads:19.2.0'
     implementation 'com.android.installreferrer:installreferrer:1.0'
     implementation 'com.igaworks.adbrix:abx-common-rm:+'
     //adjust
@@ -138,6 +139,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics-ktx:17.4.4'
     implementation 'com.google.firebase:firebase-crashlytics:17.1.1'
     implementation "com.google.firebase:firebase-crash:16.2.1"
+    implementation('com.crashlytics.sdk.android:crashlytics:2.10.1-SNAPSHOT@aar') {
+        transitive = true;
+    }
 
 
     //test

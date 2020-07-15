@@ -19,6 +19,7 @@ class CalendarDetailDeletePosterDialogFragment : BaseDialogFragment<DialogFragme
     lateinit var listener : OnDialogDismissedListener
 
     private var isDeleted = false
+    private var posterIdx = 0
 
     private var text = ""
 

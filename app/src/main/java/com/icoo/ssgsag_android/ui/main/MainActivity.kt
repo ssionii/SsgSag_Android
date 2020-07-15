@@ -4,17 +4,18 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Point
 import android.os.Bundle
-import android.util.Log
-import android.view.*
-import android.widget.LinearLayout
+import android.view.Display
+import android.view.LayoutInflater
+import android.view.View
 import android.widget.RelativeLayout
-import android.widget.Toast
+import com.bumptech.glide.Glide
+import com.crashlytics.android.Crashlytics
+import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseActivity
 import com.icoo.ssgsag_android.base.BasePagerAdapter
 import com.icoo.ssgsag_android.data.local.pref.PreferenceManager
-import com.icoo.ssgsag_android.databinding.ActivityMainBinding
-import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.data.local.pref.SharedPreferenceController
+import com.icoo.ssgsag_android.databinding.ActivityMainBinding
 import com.icoo.ssgsag_android.ui.main.MainActivity.mainActivityContext.mainContext
 import com.icoo.ssgsag_android.ui.main.calendar.CalendarFragment
 import com.icoo.ssgsag_android.ui.main.calendar.calendarDetail.CalendarDetailActivity
@@ -24,12 +25,8 @@ import com.icoo.ssgsag_android.ui.main.review.main.ReviewMainFragment
 import com.icoo.ssgsag_android.ui.main.ssgSag.SsgSagViewModel
 import com.icoo.ssgsag_android.util.listener.BackPressHandler
 import com.igaworks.v2.core.AdBrixRm
+import io.fabric.sdk.android.Fabric
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import android.app.AlarmManager
-import android.app.PendingIntent
-import com.bumptech.glide.Glide
-import java.net.HttpURLConnection
-import java.net.URL
 
 
 class MainActivity : BaseActivity<ActivityMainBinding, SsgSagViewModel>() {
@@ -63,6 +60,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, SsgSagViewModel>() {
         mainContext = this
 
         backPressHandler = BackPressHandler(this)
+        Fabric.with(this, Crashlytics())
 
         //myAuth를 원래 토큰으로 사용했는데 2.0버전은 실수로 TOKEN이라고 지음... 이미 TOKEN을 받아서 사용하는것도 많고 myAuth를 받아서 사용하는것도
         //많아가지고 일단 이렇게 했슴다... 점진적으로 다른 클래스에서 서버통신할때 토큰받아오는거 TOKEN으로 수정합시당

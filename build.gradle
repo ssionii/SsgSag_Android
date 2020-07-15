@@ -5,6 +5,9 @@ buildscript {
     repositories {
         google()
         jcenter()
+        maven {
+            url 'https://maven.fabric.io/public'
+        }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.4.2'
@@ -12,6 +15,7 @@ buildscript {
         classpath 'com.google.gms:google-services:4.3.3'
         classpath 'io.realm:realm-gradle-plugin:6.0.0'
         classpath 'com.google.firebase:firebase-crashlytics-gradle:2.2.0'
+//        classpath 'io.fabric.tools:gradle:1.+'
         classpath ('com.google.firebase:firebase-plugins:1.1.0') {
             exclude group: 'com.google.guava', module: 'guava-jdk5'
         }
@@ -32,6 +36,12 @@ allprojects {
         }
         maven {
             url 'https://dl.bintray.com/igaworks/AdbrixRmSDK'
+        }
+        maven {
+            url 'https://s3.amazonaws.com/fabric-artifacts-private/internal-snapshots'
+        }
+        maven {
+            url 'https://maven.fabric.io/public'
         }
 
     }

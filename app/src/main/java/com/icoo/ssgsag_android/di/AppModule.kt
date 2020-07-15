@@ -153,7 +153,7 @@ val viewModule = module {
     viewModel { TodaySwipePosterViewModel(get(), get()) }
     //Schedule
     single { CalendarViewModel(get(), get()) }
-    single {CalendarListViewModel(get(), get())}
+    single {CalendarListViewModel(get(), get(), get())}
     viewModel { CalendarDialogViewModel() }
     viewModel { CalendarDialogPageViewModel(get(), get()) }
     viewModel { CalendarDetailViewModel(get(), get(), get(), get()) }

@@ -59,13 +59,13 @@ class CalendarListPageRecyclerViewAdapter() : RecyclerView.Adapter<CalendarListP
         }
 
         holder.dataBinding.itemCalendarListIvFavorite.setSafeOnClickListener {
-            listener?.onBookmarkClicked(itemList[position].posterIdx, itemList[position].isFavorite, position)
-            if(itemList[position].isFavorite == 1){
-                itemList[position].isFavorite = 0
-            }else{
-                itemList[position].isFavorite = 1
-            }
-            notifyDataSetChanged()
+            listener?.onBookmarkClicked(itemList[position].posterIdx, itemList[position].isFavorite, itemList[position].dday, position)
+//            if(itemList[position].isFavorite == 1){
+//                itemList[position].isFavorite = 0
+//            }else{
+//                itemList[position].isFavorite = 1
+//            }
+//            notifyDataSetChanged()
         }
 
         holder.dataBinding.itemCalendarListIvSelector.setSafeOnClickListener {
@@ -96,7 +96,7 @@ class CalendarListPageRecyclerViewAdapter() : RecyclerView.Adapter<CalendarListP
 
     interface OnScheduleItemClickListener {
         fun onItemClicked(posterIdx: Int)
-        fun onBookmarkClicked(posterIdx: Int, isFavorite: Int, position: Int)
+        fun onBookmarkClicked(posterIdx: Int, isFavorite: Int, dday : Int, position: Int)
         fun onSelectorClicked(posterIdx: Int, posterName: String, isSelected:Boolean)
     }
 
