@@ -26,6 +26,8 @@ import android.util.Log
 import android.view.Gravity
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.widget.Toast
+import androidx.core.content.ContextCompat
 import com.github.mikephil.charting.data.*
 import com.icoo.ssgsag_android.ui.main.photoEnlarge.PhotoExpandActivity
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
@@ -39,6 +41,7 @@ import com.kakao.message.template.LinkObject
 import com.kakao.network.ErrorResult
 import com.kakao.network.callback.ResponseCallback
 import com.orhanobut.dialogplus.DialogPlus
+import com.orhanobut.dialogplus.DialogPlusBuilder
 import com.orhanobut.dialogplus.GridHolder
 import kotlinx.android.synthetic.main.activity_calendar_detail.*
 
@@ -90,12 +93,20 @@ class CalendarDetailActivity : BaseActivity<ActivityCalendarDetailBinding, Calen
     }
 
     lateinit private var deleteDialogFragment : CalendarDetailDeletePosterDialogFragment
+    lateinit private var favoriteCancelDialogFragment : CalendarDetailDeletePosterDialogFragment
+
+    private var scheduleDeleteClick = false
+
+    private var favoriteDeleteClick = false
+    lateinit var favoriteDialog : DialogPlus
+    lateinit var favorietDialogAdapter : TodoPushAlarmDialogPlusAdapter
+
+    private var alarmCheckList = arrayListOf<Boolean>(true, false, false, false, false)
 
     private var posterIdx: Int = 0
     private var from: String = "calendar"
     private var fromDetail : String = ""
     private var param: String = ""
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -148,14 +159,27 @@ class CalendarDetailActivity : BaseActivity<ActivityCalendarDetailBinding, Calen
             setPieChart()
         })
 
+        viewModel.posterDetail.observe(this, Observer {
+            if (it.posterWebSite2 == null){
+                viewDataBinding.actCalDetailIvApply.setColorFilter(resources.getColor(R.color.grey_3), android.graphics.PorterDuff.Mode.MULTIPLY)
+                viewDataBinding.actCalDetailTvApply.setTextColor(resources.getColor(R.color.grey_3))
+            }
+        })
+
         navigator()
 
     }
 
-    override fun onDialogDismissed(isDeleted:Boolean, posterIdx:Int) {
+    override fun onDialogDismissed(isDeleted:Boolean) {
         if(isDeleted) {
-            viewModel.managePoster(posterIdx)
+            if (scheduleDeleteClick) viewModel.managePoster(posterIdx)
+            else if (favoriteDeleteClick) {
+                viewModel.unBookmarkWithAlarm(posterIdx)
+                favoriteDialog.dismiss()
+            }
         }
+        scheduleDeleteClick = false
+        favoriteDeleteClick = false
     }
 
     private fun setToolbar() {
@@ -225,6 +249,8 @@ class CalendarDetailActivity : BaseActivity<ActivityCalendarDetailBinding, Calen
         }
 
         viewDataBinding.actCalDetailCvCancelStore.setSafeOnClickListener {
+            scheduleDeleteClick = true
+
             deleteDialogFragment = CalendarDetailDeletePosterDialogFragment()
             deleteDialogFragment.setOnDialogDismissedListener(this)
             deleteDialogFragment.show(supportFragmentManager, "poster delete dialog")
@@ -232,20 +258,43 @@ class CalendarDetailActivity : BaseActivity<ActivityCalendarDetailBinding, Calen
 
         viewDataBinding.actCalDetailCvBookmark.setSafeOnClickListener {
             showBookmarkDialog()
+        }
 
+        viewDataBinding.actCalDetailCvBookmarked.setSafeOnClickListener {
+            showBookmarkDialog()
         }
     }
 
     private fun showBookmarkDialog(){
 
-        val mAdapter = TodoPushAlarmDialogPlusAdapter(this, viewModel.posterDetail.value?.dday, viewModel.pushAlarmList)
+        // default 값 설정 필요
+        if(viewDataBinding.actCalDetailCvBookmark.visibility == VISIBLE) {
+
+            if(viewModel.posterDetail.value?.dday != "0" && viewModel.posterDetail.value?.dday != "1"){
+                for(i in 0 until alarmCheckList.size){
+                    alarmCheckList[i] = i == 2
+                }
+            }
+
+        }else{
+            if(viewModel.pushAlarmList.contains(0)) alarmCheckList[1] = true
+            if(viewModel.pushAlarmList.contains(1)) alarmCheckList[2] = true
+            if(viewModel.pushAlarmList.contains(3)) alarmCheckList[3] = true
+            if(viewModel.pushAlarmList.contains(7)) alarmCheckList[4] = true
+
+            for(i in 1 until alarmCheckList.size){
+                if(alarmCheckList[i]) alarmCheckList[0] = false
+            }
+        }
+
+        favorietDialogAdapter = TodoPushAlarmDialogPlusAdapter(this, viewModel.posterDetail.value?.dday, alarmCheckList)
+        favorietDialogAdapter.setItemClickListener(OnBookmarkItemClickListener)
         val builder =  DialogPlus.newDialog(this)
 
         val holder = GridHolder(1)
 
         builder.apply {
 
-//            setContentHolder(ViewHolder(R.layout.dialog_fragment_poster_detail_bookmark_header))
             setContentHolder(holder)
             setHeader(R.layout.dialog_fragment_poster_detail_bookmark_header)
             setFooter(R.layout.dialog_fragment_poster_detail_bookmark_footer)
@@ -253,22 +302,51 @@ class CalendarDetailActivity : BaseActivity<ActivityCalendarDetailBinding, Calen
             setGravity(Gravity.BOTTOM)
 
             setOnClickListener { dialog, view ->
-                if (view.id == R.id.dialog_frag_poster_detail_bookmark_cancel) {
-                    dialog.dismiss()
-                    // todo: 취소
-                }else if(view.id == R.id.dialog_frag_poster_detail_bookmark_ok) {
-                    dialog.dismiss()
-                   // todo: 통신
 
-                    viewModel.bookmark(posterIdx)
+                // 취소, 확인
+                if (view.id == R.id.dialog_frag_poster_detail_bookmark_cancel) {
+                    if(viewDataBinding.actCalDetailCvBookmarked.visibility == VISIBLE) {
+                        favoriteDeleteClick = true
+
+                        favoriteCancelDialogFragment = CalendarDetailDeletePosterDialogFragment()
+                        favoriteCancelDialogFragment.setOnDialogDismissedListener(this@CalendarDetailActivity)
+                        favoriteCancelDialogFragment.setTextView("즐겨찾기를 취소하시겠어요?\n즐겨찾기 취소 시 알림도 취소됩니다.")
+                        favoriteCancelDialogFragment.show(
+                            supportFragmentManager,
+                            "poster delete dialog"
+                        )
+                    }else{
+                        dialog.dismiss()
+                    }
+
+                }else if(view.id == R.id.dialog_frag_poster_detail_bookmark_ok) {
+
+                    var ddayList = ""
+                    var mapper = arrayListOf(0, 1, 3, 7)
+
+                    var isAdded = false
+                    for(i in 1 until alarmCheckList.size){
+                        if(alarmCheckList[i]){
+                            ddayList += mapper[i-1]
+                            ddayList += ", "
+                            isAdded = true
+                        }
+                    }
+
+                    if(isAdded) ddayList = ddayList.substring(0, ddayList.length - 2)
+
+                    viewModel.bookmarkWithAlarm(posterIdx, ddayList)
+                    dialog.dismiss()
                 }
+
+
             }
 
-            setAdapter(mAdapter)
+            setAdapter(favorietDialogAdapter)
             setOverlayBackgroundResource(R.color.dialog_background)
             setContentBackgroundResource(R.drawable.header_dialog_plus_radius)
 
-            val horizontalDpValue = 32
+            val horizontalDpValue = 40
             val topDpValue = 32
             val bottomDpValue = 32
             val d = resources.displayMetrics.density
@@ -276,12 +354,43 @@ class CalendarDetailActivity : BaseActivity<ActivityCalendarDetailBinding, Calen
             val topMargin = (topDpValue * d).toInt()
             val bottomMargin = (bottomDpValue * d).toInt()
 
-            setPadding(horizontalMargin, topMargin, horizontalMargin, bottomMargin)
+           setPadding(horizontalMargin, 0, horizontalMargin, 0)
 
         }
-        builder.create().show()
+
+        favoriteDialog = builder.create()
+        favoriteDialog.show()
+
+
     }
 
+    private val OnBookmarkItemClickListener
+            = object : TodoPushAlarmDialogPlusAdapter.OnItemClickListener {
+
+        override fun onItemClick(position: Int) {
+            if(position != 0){
+                alarmCheckList[position] = !alarmCheckList[position]
+                alarmCheckList[0] = false
+            }else{
+
+                alarmCheckList[0] = true
+                for(i in 1..4){
+                    alarmCheckList[i] = false
+                }
+            }
+
+            var isAllFalse = true
+            for(i in 1 until alarmCheckList.size){
+                if(alarmCheckList[i]){
+                    isAllFalse = false
+                    break
+                }
+            }
+
+            if(isAllFalse) alarmCheckList[0] = true
+            favorietDialogAdapter.replace(alarmCheckList)
+        }
+    }
 
     private fun setCommentRv() {
         viewDataBinding.actCalDetailRvComment.apply {

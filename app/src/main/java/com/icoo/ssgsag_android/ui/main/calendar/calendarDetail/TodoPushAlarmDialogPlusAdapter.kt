@@ -4,23 +4,27 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
-import android.widget.CheckBox
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
+import androidx.databinding.ViewDataBinding
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.color.MaterialColors.getColor
 import com.icoo.ssgsag_android.R
+import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import org.jetbrains.anko.backgroundDrawable
 import org.jetbrains.anko.textColor
 
 class TodoPushAlarmDialogPlusAdapter(
     private val context: Context,
     private val dday : String?,
-    private val checkedList : ArrayList<Int>
+    private var isCheckList : ArrayList<Boolean>
 ) : BaseAdapter() {
 
-    private var selectedField = 0
+    private var listener: OnItemClickListener? = null
     private val layoutInflater: LayoutInflater = LayoutInflater.from(context)
+
+    fun setItemClickListener(listener: OnItemClickListener) {
+        this.listener = listener
+    }
 
     override fun getCount(): Int {
         return 5
@@ -35,18 +39,18 @@ class TodoPushAlarmDialogPlusAdapter(
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        val viewHolder: ViewHolder
+        val viewHolder: PushAlarmView
         var view: View? = convertView
 
         if (view == null) {
             view = layoutInflater.inflate(R.layout.item_dialog_plus_push_alarm, parent, false)
-            viewHolder = ViewHolder(
+            viewHolder = PushAlarmView(
                 view!!.findViewById(R.id.text_view),
-                view.findViewById(R.id.checkbox)
+                view.findViewById(R.id.image_view)
             )
             view.tag = viewHolder
         } else {
-            viewHolder = view.tag as ViewHolder
+            viewHolder = view.tag as PushAlarmView
         }
 
         when(position){
@@ -57,26 +61,25 @@ class TodoPushAlarmDialogPlusAdapter(
             4-> viewHolder.textView.text = "마감 7일 전 알림"
         }
 
-        // 이미 Check한 list 체크 표시로 뿌려주기
-        checkedList.let{
-            if(it.size == 0){
-                when(position) {
-                    0-> viewHolder.checkBox.backgroundDrawable = context.getDrawable(R.drawable.ic_checkbox_on_yellow)
-                }
-            }else{
-                for(i in 0 until it.size){
-                    when(it[i]){
-                        0 -> if(position == 1) viewHolder.checkBox.backgroundDrawable = context.getDrawable(R.drawable.ic_checkbox_on_yellow)
-                        1 -> if(position == 2) viewHolder.checkBox.backgroundDrawable = context.getDrawable(R.drawable.ic_checkbox_on_yellow)
-                        3 -> if(position == 3) viewHolder.checkBox.backgroundDrawable = context.getDrawable(R.drawable.ic_checkbox_on_yellow)
-                        7 -> if(position == 4) viewHolder.checkBox.backgroundDrawable = context.getDrawable(R.drawable.ic_checkbox_on_yellow)
 
-                    }
-                }
+        if(isCheckList[position]){
+            viewHolder.checkBox.setImageDrawable(context.getDrawable(R.drawable.ic_checkbox_on_yellow))
+        }else{
+            viewHolder.checkBox.setImageDrawable(context.getDrawable(R.drawable.ic_checkbox_off))
+        }
+
+        if(isCheckList[0]){
+            when(position) {
+                0 -> { viewHolder.checkBox.setImageDrawable(context.getDrawable(R.drawable.ic_checkbox_on_yellow)) }
+                1, 2, 3, 4 -> {   viewHolder.checkBox.setImageDrawable(context.getDrawable(R.drawable.ic_checkbox_off)) }
             }
         }
 
+        viewHolder.checkBox.setSafeOnClickListener {
+            listener?.onItemClick(position)
+        }
 
+        // 지난 날짜 click disable 시키기
         dday?.let {
             if(it.toInt() > 7){
                 viewHolder.textView.setTextColor(com.icoo.ssgsag_android.ui.main.feed.context.getColor(R.color.black_1))
@@ -86,7 +89,7 @@ class TodoPushAlarmDialogPlusAdapter(
                         viewHolder.textView.setTextColor(com.icoo.ssgsag_android.ui.main.feed.context.getColor(R.color.grey_2))
                         viewHolder.checkBox.apply{
                             isClickable = false
-                            backgroundDrawable = context.getDrawable(R.drawable.ic_checkbox_disabled)
+                            setImageDrawable(context.getDrawable(R.drawable.ic_checkbox_disabled))
                         }
                     }
                     else -> {
@@ -99,7 +102,7 @@ class TodoPushAlarmDialogPlusAdapter(
                         viewHolder.textView.setTextColor(com.icoo.ssgsag_android.ui.main.feed.context.getColor(R.color.grey_2))
                         viewHolder.checkBox.apply{
                             isClickable = false
-                            backgroundDrawable = context.getDrawable(R.drawable.ic_checkbox_disabled)
+                            setImageDrawable(context.getDrawable(R.drawable.ic_checkbox_disabled))
                         }
                     }
                     else -> {
@@ -112,7 +115,7 @@ class TodoPushAlarmDialogPlusAdapter(
                         viewHolder.textView.setTextColor(com.icoo.ssgsag_android.ui.main.feed.context.getColor(R.color.grey_2))
                         viewHolder.checkBox.apply{
                             isClickable = false
-                            backgroundDrawable = context.getDrawable(R.drawable.ic_checkbox_disabled)
+                            setImageDrawable(context.getDrawable(R.drawable.ic_checkbox_disabled))
                         }
                     }
                     else -> {
@@ -125,7 +128,7 @@ class TodoPushAlarmDialogPlusAdapter(
                         viewHolder.textView.setTextColor(com.icoo.ssgsag_android.ui.main.feed.context.getColor(R.color.grey_2))
                         viewHolder.checkBox.apply{
                             isClickable = false
-                            backgroundDrawable = context.getDrawable(R.drawable.ic_checkbox_disabled)
+                            setImageDrawable(context.getDrawable(R.drawable.ic_checkbox_disabled))
                         }
                     }
                     else -> {
@@ -138,11 +141,18 @@ class TodoPushAlarmDialogPlusAdapter(
         return view
     }
 
-    fun setSelectedField(select: Int){
-        selectedField = select
+    data class PushAlarmView(val textView: TextView, val checkBox: ImageView)
+
+
+    interface OnItemClickListener {
+        fun onItemClick(position: Int)
     }
 
-    data class ViewHolder(val textView: TextView, val checkBox: CheckBox)
+    fun replace(list : ArrayList<Boolean>){
+        this.isCheckList = list
 
+        notifyDataSetChanged()
+
+    }
 
 }

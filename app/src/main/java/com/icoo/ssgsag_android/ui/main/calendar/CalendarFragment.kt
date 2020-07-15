@@ -45,7 +45,9 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding, CalendarViewModel
         super.setUserVisibleHint(isVisibleToUser)
         if(isVisibleToUser && (activity as MainActivity).isSsgSaged) {
             viewModel.getAllCalendar()
+            calendarListFragment.viewModel.getAllCalendar()
             (activity as MainActivity).isSsgSaged = false
+
         }
     }
 

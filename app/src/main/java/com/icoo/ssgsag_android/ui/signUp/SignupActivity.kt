@@ -523,10 +523,7 @@ class SignupActivity : BaseActivity<ActivitySignupBinding, SignupViewModel>() {
         viewModel.signup(gsonObject)
 
         viewModel.loginToken.observe(this, androidx.lifecycle.Observer {
-            viewModel.login(
-                realmDeviceInfo.token,
-                realmDeviceInfo.loginType
-            )
+            viewModel.autoLogin(null)
 
             //adbrix
             try {

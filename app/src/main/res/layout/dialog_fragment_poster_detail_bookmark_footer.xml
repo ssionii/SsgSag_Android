@@ -2,6 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingBottom="32dp"
+        android:paddingTop="14dp"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:orientation="horizontal"
         android:layout_marginTop="14dp">
@@ -10,6 +12,7 @@
             android:id="@+id/dialog_frag_poster_detail_bookmark_cancel"
             android:layout_width="match_parent"
             android:layout_height="48dp"
+            android:layout_marginLeft="32dp"
             app:cardBackgroundColor="@color/grey_4"
             app:cardElevation="0dp"
             app:cardCornerRadius="4dp">
@@ -32,6 +35,7 @@
             android:layout_height="48dp"
             app:cardBackgroundColor="#f2c801"
             app:cardElevation="0dp"
+            android:layout_marginRight="32dp"
             app:cardCornerRadius="4dp">
         <TextView
                 android:layout_width="wrap_content"

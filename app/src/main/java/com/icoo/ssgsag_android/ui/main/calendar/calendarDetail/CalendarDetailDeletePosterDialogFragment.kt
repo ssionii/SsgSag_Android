@@ -20,16 +20,16 @@ class CalendarDetailDeletePosterDialogFragment : BaseDialogFragment<DialogFragme
 
     private var isDeleted = false
 
-    private var posterIdx = 0
+    private var text = ""
 
     fun setOnDialogDismissedListener(listener: OnDialogDismissedListener){
         this.listener = listener
     }
     interface OnDialogDismissedListener {
-        fun onDialogDismissed(isDeleted:Boolean, posterIdx:Int)
+        fun onDialogDismissed(isDeleted:Boolean)
     }
     override fun dismiss() {
-        listener.onDialogDismissed(isDeleted, posterIdx)
+        listener.onDialogDismissed(isDeleted)
         super.dismiss()
     }
 
@@ -47,7 +47,7 @@ class CalendarDetailDeletePosterDialogFragment : BaseDialogFragment<DialogFragme
                     if (event.action != KeyEvent.ACTION_DOWN)
                         true
                     else {
-                        listener.onDialogDismissed(isDeleted, posterIdx)
+                        listener.onDialogDismissed(isDeleted)
                         dismiss()
                         true // pretend we've processed it
                     }
@@ -61,7 +61,15 @@ class CalendarDetailDeletePosterDialogFragment : BaseDialogFragment<DialogFragme
         super.onActivityCreated(savedInstanceState)
         viewDataBinding.vm = viewModel
 
+        if(text != ""){
+            viewDataBinding.dialogFragmentTv.text = text
+        }
+
         setButton()
+    }
+
+    fun setTextView(text : String){
+        this.text = text
     }
 
     private fun setButton(){

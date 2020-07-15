@@ -73,13 +73,16 @@ class PosterRepositoryImpl(val api: NetworkService, val pref: PreferenceManager)
         .getTodoPushAlarm(pref.findPreference("TOKEN", ""), posterIdx)
         .map { it.data }
 
-    override fun postTodoPushAlarm(posterIdx: Int, ddayList: ArrayList<Int>): Single<Int> = api
+    override fun postTodoPushAlarm(posterIdx: Int, ddayList: String): Single<Int> = api
         .postTodoPushAlarm(pref.findPreference("TOKEN", ""), posterIdx, ddayList)
-        .map { it.data }
+        .doOnError { throwable ->
+            Log.e("postTodoPushAlarm err :", throwable.message)
+        }
+        .map { it.status }
 
     override fun deleteTodoPushAlarm(posterIdx: Int): Single<Int> = api
         .deleteTodoPushAlarm(pref.findPreference("TOKEN", ""), posterIdx)
-        .map { it.data }
+        .map { it.status }
 
     //comment
     override fun writeComment(body: JsonObject): Single<Int> = api

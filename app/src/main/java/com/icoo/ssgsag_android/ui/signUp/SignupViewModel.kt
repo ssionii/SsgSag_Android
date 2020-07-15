@@ -14,6 +14,7 @@ import com.icoo.ssgsag_android.data.model.login.LoginRepository
 import com.icoo.ssgsag_android.data.model.login.LoginToken
 import com.icoo.ssgsag_android.data.model.signUp.SignupRepository
 import com.icoo.ssgsag_android.data.model.subscribe.SubscribeRepository
+import com.icoo.ssgsag_android.ui.login.LoginActivity
 import com.icoo.ssgsag_android.ui.main.MainActivity
 import com.icoo.ssgsag_android.util.scheduler.SchedulerProvider
 import com.igaworks.v2.core.AdBrixRm
@@ -49,6 +50,8 @@ class SignupViewModel(
             .subscribe({
                 if(it.status == 201){
                     _loginToken.postValue(it.data!!.token)
+                    SharedPreferenceController.setAuthorization(context, it.data!!.token)
+                    SharedPreferenceController.setType(context, "user")
                 } else {
                     Toast.makeText(context, "입력 정보를 확인해주세요.", Toast.LENGTH_SHORT).show()
                     Log.e("signup status:" , it.status.toString())
@@ -88,6 +91,33 @@ class SignupViewModel(
                 Toast.makeText(context, "네트워크 연결 상태를 확인해주세요." ,Toast.LENGTH_SHORT).show();
                 Log.e("login fail message:", it.message)
             })
+    }
+
+    fun autoLogin(param: String?){
+        addDisposable(loginRepository.autoLogin()
+            .subscribeOn(schedulerProvider.io())
+            .observeOn(schedulerProvider.mainThread())
+            .subscribe({
+                it.run{
+                    if(this == 200){
+                        AdBrixRm.login(SharedPreferenceController.getAuthorization(context))
+                        if(param == null){
+                            _activityToStart.postValue(Pair(MainActivity::class, null))
+                        }else{
+                            val bundle = Bundle().apply { putString("param", param) }
+                            _activityToStart.postValue(Pair(MainActivity::class, bundle))
+                        }
+                    } else if(this == 404){
+                        SharedPreferenceController.setAuthorization(context, "")
+                        _activityToStart.postValue(Pair(LoginActivity::class, null))
+                    }
+                }
+
+            }) {
+                Toast.makeText(context, "네트워크 상태를 확인해주세요.",Toast.LENGTH_SHORT).show()
+                Log.e("auto login error:", it.message)
+            })
+
     }
 
     fun validateUserNickname(nickname: String){

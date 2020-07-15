@@ -1,5 +1,6 @@
 package com.icoo.ssgsag_android.data.model.schedule
 
+import android.util.Log
 import com.google.gson.JsonObject
 import com.icoo.ssgsag_android.data.local.pref.PreferenceManager
 import com.icoo.ssgsag_android.data.model.subscribe.Subscribe

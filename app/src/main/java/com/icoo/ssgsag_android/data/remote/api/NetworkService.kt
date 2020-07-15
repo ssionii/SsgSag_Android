@@ -220,13 +220,13 @@ interface NetworkService {
         @Body() body: JsonObject
     ): Single<NullDataResponse>
 
-    /*
-    @DELETE("/todo")
-    fun deletePoster(
-        @Header("Authorization") token: String,
-        @Header("Content-Type") content_type: String,
-        @Body() body: JsonObject
-    ): Single<NullDataResponse>*/
+
+//    @DELETE("/todo")
+//    fun deletePoster(
+//        @Header("Authorization") token: String,
+//        @Header("Content-Type") content_type: String,
+//        @Body() body: JsonObject
+//    ): Single<NullDataResponse>
     //일정 지원 완료 조회
     //일정 지원 즐겨찾기
     @POST("/todo/favorite/{posterIdx}")
@@ -247,11 +247,11 @@ interface NetworkService {
         @Query("posterIdx") posterIdx : Int
     ):Single<IntArrayListResponse>
     // 일정 푸시 등록
-    @GET("todo/push")
+    @POST("todo/push")
     fun postTodoPushAlarm(
         @Header("Authorization") token: String,
         @Query("posterIdx") posterIdx : Int,
-        @Query("ddayList") ddayList : ArrayList<Int>
+        @Query("ddayList") ddayList : String
     ):Single<IntResponse>
     // 일정 푸시 및 즐겨찾기 동시 삭제
     @DELETE("todo/push")

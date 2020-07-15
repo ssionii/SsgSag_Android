@@ -21,7 +21,7 @@ interface PosterRepository {
 
     // pushAlarm
     fun getTodoPushAlarm(posterIdx: Int) : Single<ArrayList<Int>>
-    fun postTodoPushAlarm(posterIdx: Int, ddayList: ArrayList<Int>) : Single<Int>
+    fun postTodoPushAlarm(posterIdx: Int, ddayList: String) : Single<Int>
     fun deleteTodoPushAlarm(posterIdx: Int) : Single<Int>
 
     //comment

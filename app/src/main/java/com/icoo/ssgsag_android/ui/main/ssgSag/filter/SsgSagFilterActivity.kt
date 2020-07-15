@@ -2,6 +2,8 @@ package com.icoo.ssgsag_android.ui.main.ssgSag.filter
 
 import android.content.Context
 import android.os.Bundle
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -62,6 +64,8 @@ class SsgSagFilterActivity : BaseActivity<ActivitySsgsagFilterBinding, SsgSagFil
             viewDataBinding.actSsgsagFilterIvBack.setSafeOnClickListener {
                 finish()
             }
+        }else{
+            viewDataBinding.actSsgsagFilterIvBack.visibility = INVISIBLE
         }
 
         viewDataBinding.actSsgsagFilterRlDone.setSafeOnClickListener {

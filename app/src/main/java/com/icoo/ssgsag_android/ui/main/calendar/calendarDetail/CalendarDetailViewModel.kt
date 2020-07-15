@@ -44,7 +44,6 @@ class CalendarDetailViewModel(
 
     var pushAlarmList = arrayListOf<Int>()
 
-
     private val _activityToStart = MutableLiveData<Pair<KClass<*>, Bundle?>>()
     val activityToStart: LiveData<Pair<KClass<*>, Bundle?>> get() = _activityToStart
 
@@ -245,6 +244,38 @@ class CalendarDetailViewModel(
         )
     }
 
+
+    fun bookmarkWithAlarm(posterIdx: Int, ddayList : String){
+        addDisposable(posterRepository.postTodoPushAlarm(posterIdx, ddayList)
+            .subscribeOn(schedulerProvider.io())
+            .observeOn(schedulerProvider.mainThread())
+            .doOnSubscribe { showProgress() }
+            .doOnTerminate { hideProgress() }
+            .subscribe({
+                Log.e("알람 설정과 북마크 status", it.toString())
+                getPosterDetail(posterIdx)
+            }, {
+
+            })
+        )
+    }
+
+    fun unBookmarkWithAlarm(posterIdx: Int){
+        addDisposable(posterRepository.deleteTodoPushAlarm(posterIdx)
+            .subscribeOn(schedulerProvider.io())
+            .observeOn(schedulerProvider.mainThread())
+            .doOnSubscribe { showProgress() }
+            .doOnTerminate { hideProgress() }
+            .subscribe({
+                Log.e("unBookmark status", it.toString())
+                getPosterDetail(posterIdx)
+            }, {
+
+            })
+        )
+    }
+
+
     fun managePoster(posterIdx: Int) {
         if(posterDetail.value?.isSave == 0) {
             addDisposable(
@@ -253,17 +284,18 @@ class CalendarDetailViewModel(
                     .observeOn(schedulerProvider.mainThread())
                     .subscribe({
                         getPosterDetail(posterIdx)
+                        Toast.makeText(SsgSagApplication.getGlobalApplicationContext(),
+                            "캘린더에 저장되었습니다.",Toast.LENGTH_SHORT).show()
                     }, {
 
                     })
             )
 
-            Toast.makeText(SsgSagApplication.getGlobalApplicationContext(),
-                "캘린더에 저장되었습니다.",Toast.LENGTH_SHORT).show();
-
         }else if(posterDetail.value?.isSave == 1){
+            var posterIdxList = arrayListOf(posterIdx)
+
             val jsonObject = JSONObject()
-            val jsonArray = JSONArray(arrayListOf(posterIdx))
+            val jsonArray = JSONArray(posterIdxList)
             jsonObject.put("posterIdxList", jsonArray)
 
             val body = JsonParser().parse(jsonObject.toString()) as JsonObject
@@ -271,19 +303,14 @@ class CalendarDetailViewModel(
             addDisposable(scheduleRepository.deleteSchedule(body)
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.mainThread())
-                .doOnSubscribe { showProgress() }
-                .doOnTerminate { hideProgress() }
                 .subscribe({
                     getPosterDetail(posterIdx)
-
-                    Log.e("detail delete", it.toString())
-
+                    Toast.makeText(SsgSagApplication.getGlobalApplicationContext(),
+                        "캘린더에서 삭제되었습니다!",Toast.LENGTH_SHORT).show()
                 }, {
                     it.printStackTrace()
-                }))
-
-            Toast.makeText(SsgSagApplication.getGlobalApplicationContext(),
-                "캘린더에서 삭제되었습니다.",Toast.LENGTH_SHORT).show();
+                })
+            )
 
         }else{
             Toast.makeText(SsgSagApplication.getGlobalApplicationContext(),

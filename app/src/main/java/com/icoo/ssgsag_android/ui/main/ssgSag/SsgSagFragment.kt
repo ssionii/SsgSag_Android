@@ -28,6 +28,7 @@ import com.icoo.ssgsag_android.SsgSagApplication
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import com.facebook.appevents.AppEventsLogger
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.crashlytics.internal.model.CrashlyticsReport
 import com.icoo.ssgsag_android.ui.main.allPosters.AllPostersFragment
 import com.icoo.ssgsag_android.ui.main.ssgSag.todaySwipePoster.TodaySwipePosterActivity
 import com.icoo.ssgsag_android.ui.main.ssgSag.todaySwipePoster.TodaySwipePosterViewModel
