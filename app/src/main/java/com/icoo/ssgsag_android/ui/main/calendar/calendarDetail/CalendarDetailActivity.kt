@@ -26,8 +26,6 @@ import android.util.Log
 import android.view.Gravity
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.widget.Toast
-import androidx.core.content.ContextCompat
 import com.github.mikephil.charting.data.*
 import com.icoo.ssgsag_android.ui.main.photoEnlarge.PhotoExpandActivity
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
@@ -41,7 +39,6 @@ import com.kakao.message.template.LinkObject
 import com.kakao.network.ErrorResult
 import com.kakao.network.callback.ResponseCallback
 import com.orhanobut.dialogplus.DialogPlus
-import com.orhanobut.dialogplus.DialogPlusBuilder
 import com.orhanobut.dialogplus.GridHolder
 import kotlinx.android.synthetic.main.activity_calendar_detail.*
 
@@ -99,7 +96,7 @@ class CalendarDetailActivity : BaseActivity<ActivityCalendarDetailBinding, Calen
 
     private var favoriteDeleteClick = false
     lateinit var favoriteDialog : DialogPlus
-    lateinit var favorietDialogAdapter : TodoPushAlarmDialogPlusAdapter
+    lateinit var favoriteDialogAdapter : TodoPushAlarmDialogPlusAdapter
 
     private var alarmCheckList = arrayListOf<Boolean>(true, false, false, false, false)
 
@@ -287,8 +284,8 @@ class CalendarDetailActivity : BaseActivity<ActivityCalendarDetailBinding, Calen
             }
         }
 
-        favorietDialogAdapter = TodoPushAlarmDialogPlusAdapter(this, viewModel.posterDetail.value?.dday, alarmCheckList)
-        favorietDialogAdapter.setItemClickListener(OnBookmarkItemClickListener)
+        favoriteDialogAdapter = TodoPushAlarmDialogPlusAdapter(this, viewModel.posterDetail.value?.dday, alarmCheckList)
+        favoriteDialogAdapter.setItemClickListener(OnBookmarkItemClickListener)
         val builder =  DialogPlus.newDialog(this)
 
         val holder = GridHolder(1)
@@ -342,7 +339,7 @@ class CalendarDetailActivity : BaseActivity<ActivityCalendarDetailBinding, Calen
 
             }
 
-            setAdapter(favorietDialogAdapter)
+            setAdapter(favoriteDialogAdapter)
             setOverlayBackgroundResource(R.color.dialog_background)
             setContentBackgroundResource(R.drawable.header_dialog_plus_radius)
 
@@ -388,7 +385,7 @@ class CalendarDetailActivity : BaseActivity<ActivityCalendarDetailBinding, Calen
             }
 
             if(isAllFalse) alarmCheckList[0] = true
-            favorietDialogAdapter.replace(alarmCheckList)
+            favoriteDialogAdapter.replace(alarmCheckList)
         }
     }
 

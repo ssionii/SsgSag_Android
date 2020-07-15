@@ -363,10 +363,10 @@
             <ImageView
                     android:layout_gravity="right"
                     android:layout_marginRight="28dp"
-                    android:layout_marginTop="62dp"
+                    android:layout_marginTop="72dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/txt_main_swipe_x"/>
+                    android:src="@drawable/img_stamp_delete"/>
 
         </FrameLayout>
 
@@ -378,11 +378,11 @@
                 android:background="@drawable/img_main_swipe_o">
 
             <ImageView
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginTop="62dp"
+                    android:layout_marginLeft="28dp"
+                    android:layout_marginTop="72dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/txt_main_swipe_o"/>
+                    android:src="@drawable/img_stamp_save"/>
         </FrameLayout>
 
         <FrameLayout
