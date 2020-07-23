@@ -26,6 +26,7 @@ import android.util.Log
 import android.view.Gravity
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.widget.Toast
 import com.github.mikephil.charting.data.*
 import com.icoo.ssgsag_android.ui.main.calendar.posterBookmark.PosterBookmarkBottomSheet
 import com.icoo.ssgsag_android.ui.main.photoEnlarge.PhotoExpandActivity
@@ -264,7 +265,7 @@ class CalendarDetailActivity : BaseActivity<ActivityCalendarDetailBinding, Calen
 
             val posterBookmarkBottomSheet =  PosterBookmarkBottomSheet(posterIdx, viewModel.posterDetail.value!!.dday.toInt(),isFavorite, isFirstClick, "detail"
             ) {
-                bookmarkToggle(it)
+                bookmarkToggle(isFavorite, it)
             }
             posterBookmarkBottomSheet.isCancelable = false
             posterBookmarkBottomSheet.show(supportFragmentManager, null)
@@ -283,7 +284,7 @@ class CalendarDetailActivity : BaseActivity<ActivityCalendarDetailBinding, Calen
 
             val posterBookmarkBottomSheet =  PosterBookmarkBottomSheet(posterIdx, viewModel.posterDetail.value!!.dday.toInt(), isFavorite, isFirstClick, "detail"
             ) {
-                bookmarkToggle(it)
+                bookmarkToggle(isFavorite, it)
             }
             posterBookmarkBottomSheet.isCancelable = false
             posterBookmarkBottomSheet.show(supportFragmentManager, null)
@@ -292,16 +293,20 @@ class CalendarDetailActivity : BaseActivity<ActivityCalendarDetailBinding, Calen
         }
     }
 
-    private fun bookmarkToggle(toggle: Int){
+    private fun bookmarkToggle(isFavorite : Int, toggle: Int){
 
         when(toggle){
             0 -> {
                 viewDataBinding.actCalDetailCvBookmark.visibility = VISIBLE
                 viewDataBinding.actCalDetailCvBookmarked.visibility = GONE
+
+                Toast.makeText(this, "즐겨찾기에서 삭제되었습니다.", Toast.LENGTH_SHORT).show()
             }
             1-> {
                 viewDataBinding.actCalDetailCvBookmark.visibility = GONE
                 viewDataBinding.actCalDetailCvBookmarked.visibility = VISIBLE
+
+                if(isFavorite == 0) Toast.makeText(this, "즐겨찾기에 추가되었습니다.", Toast.LENGTH_SHORT).show()
             }
         }
     }

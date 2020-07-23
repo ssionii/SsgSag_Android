@@ -358,7 +358,7 @@
                 android:id="@+id/left_overlay"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/img_main_swipe_x">
+                android:background="@drawable/img_swipe_bottom_x">
 
             <ImageView
                     android:layout_gravity="right"
@@ -375,7 +375,7 @@
                 android:id="@+id/right_overlay"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/img_main_swipe_o">
+                android:background="@drawable/img_swipe_bottom_o">
 
             <ImageView
                     android:layout_marginLeft="28dp"

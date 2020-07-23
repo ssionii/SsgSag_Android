@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.icoo.ssgsag_android.R
@@ -173,7 +174,7 @@ class CalendarDialogPageFragment : BaseFragment<FragmentCalendarDialogPageBindin
             override fun onBookmarkClicked(posterIdx: Int, isFavorite: Int, dday: Int, position:Int) {
                 val posterBookmarkBottomSheet =  PosterBookmarkBottomSheet(posterIdx, dday,  isFavorite, true
                 , "grid") {
-                    bookmarkToggle(position, it)
+                    bookmarkToggle(position, isFavorite, it)
                 }
                 posterBookmarkBottomSheet.isCancelable = false
                 posterBookmarkBottomSheet.show(childFragmentManager, null)
@@ -211,10 +212,17 @@ class CalendarDialogPageFragment : BaseFragment<FragmentCalendarDialogPageBindin
             }
         }
 
-    private fun bookmarkToggle(position : Int, toggle: Int){
+    private fun bookmarkToggle(position : Int, isFavorite : Int, toggle: Int){
         (viewDataBinding.fragCalendarDialogPageRv.adapter as CalendarDialogPageRecyclerViewAdapter).apply {
             items[position].isFavorite = toggle
             notifyItemChanged(position)
+        }
+
+        when(toggle){
+            0 -> Toast.makeText(activity, "즐겨찾기에서 삭제되었습니다.", Toast.LENGTH_SHORT).show()
+            1 -> {
+                if(isFavorite == 0) Toast.makeText(activity, "즐겨찾기에 추가되었습니다.", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 

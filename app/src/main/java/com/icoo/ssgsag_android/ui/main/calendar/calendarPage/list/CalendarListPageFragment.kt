@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.*
@@ -177,7 +178,7 @@ class CalendarListPageFragment : BaseFragment<FragmentCalendarListPageBinding, C
 
                 val posterBookmarkBottomSheet =  PosterBookmarkBottomSheet(posterIdx, dday, isFavorite, true
                 , "list") {
-                    bookmarkToggle(position, it)
+                    bookmarkToggle(position, isFavorite, it)
                 }
                 posterBookmarkBottomSheet.isCancelable = false
                 posterBookmarkBottomSheet.show(childFragmentManager, null)
@@ -186,9 +187,16 @@ class CalendarListPageFragment : BaseFragment<FragmentCalendarListPageBinding, C
             override fun onSelectorClicked(posterIdx: Int, posterName:String, isSelected: Boolean) {}
         }
 
-    private fun bookmarkToggle(position : Int, toggle: Int){
+    private fun bookmarkToggle(position : Int, isFavorite: Int, toggle: Int){
         calendarListPageRecyclerViewAdapter.itemList[position].isFavorite = toggle
         calendarListPageRecyclerViewAdapter.notifyItemChanged(position)
+
+        when(toggle){
+            0 -> Toast.makeText(activity, "즐겨찾기에서 삭제되었습니다.", Toast.LENGTH_SHORT).show()
+            1 -> {
+                if(isFavorite == 0) Toast.makeText(activity, "즐겨찾기에 추가되었습니다.", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun setButton(){
