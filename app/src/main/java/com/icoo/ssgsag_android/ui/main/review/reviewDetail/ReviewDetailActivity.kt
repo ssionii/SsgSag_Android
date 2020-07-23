@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.icoo.ssgsag_android.BR
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseActivity
-import com.icoo.ssgsag_android.base.BasePagerAdapter
 import com.icoo.ssgsag_android.base.BaseRecyclerViewAdapter
 import com.icoo.ssgsag_android.data.model.review.ReviewGrade
 import com.icoo.ssgsag_android.databinding.ActivityClubReviewDetailBinding
@@ -17,7 +16,6 @@ import com.icoo.ssgsag_android.databinding.ItemClubReviewDetailGradeBinding
 import com.icoo.ssgsag_android.databinding.ItemReviewCategoryBinding
 import com.icoo.ssgsag_android.ui.main.review.HowWriteReviewActivity
 import com.icoo.ssgsag_android.ui.main.review.reviewDetail.ReviewDetailViewModel
-import com.icoo.ssgsag_android.ui.main.review.club.info.ClubInfoFragment
 import com.icoo.ssgsag_android.ui.main.review.club.reviews.ReviewsFragment
 import com.icoo.ssgsag_android.util.DialogPlusAdapter
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
@@ -157,7 +155,7 @@ class ReviewDetailActivity : BaseActivity<ActivityClubReviewDetailBinding, Revie
             }
             setAdapter(mAdapter)
             setOverlayBackgroundResource(R.color.dialog_background)
-            setContentBackgroundResource(R.drawable.header_dialog_plus_radius)
+            setContentBackgroundResource(R.drawable.bg_white_top_39_radius)
 
             val horizontalDpValue = 32
             val topDpValue = 44

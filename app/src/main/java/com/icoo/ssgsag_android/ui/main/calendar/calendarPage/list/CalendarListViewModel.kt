@@ -2,6 +2,7 @@ package com.icoo.ssgsag_android.ui.main.calendar.calendarPage.list
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.icoo.ssgsag_android.base.BaseViewModel
@@ -9,6 +10,7 @@ import com.icoo.ssgsag_android.data.model.poster.PosterRepository
 import com.icoo.ssgsag_android.data.model.schedule.Schedule
 import com.icoo.ssgsag_android.data.model.schedule.ScheduleRepository
 import com.icoo.ssgsag_android.ui.main.calendar.calendarDetail.CalendarDetailActivity
+import com.icoo.ssgsag_android.ui.main.feed.context
 import com.icoo.ssgsag_android.util.scheduler.SchedulerProvider
 import io.reactivex.Single
 import java.util.*
@@ -144,6 +146,9 @@ class CalendarListViewModel (
             .subscribe({
                 if(it == 204){
                     getFavoriteSchedule()
+                    getAllCalendar()
+
+                    Toast.makeText(context, "즐겨찾기에 추가되었습니다.", Toast.LENGTH_SHORT).show()
                 }
             }, {
 
@@ -158,6 +163,9 @@ class CalendarListViewModel (
             .subscribe({
                 if(it == 204){
                     getFavoriteSchedule()
+                    getAllCalendar()
+
+                    Toast.makeText(context, "즐겨찾기가 해제되었습니다.", Toast.LENGTH_SHORT).show()
                 }
             }, {
 

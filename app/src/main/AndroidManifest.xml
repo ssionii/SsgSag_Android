@@ -139,6 +139,9 @@
         <meta-data
                 android:name="com.google.android.gms.ads.AD_MANAGER_APP"
                 android:value="true"/>
+        <meta-data
+                android:name="firebase_crashlytics_collection_enabled"
+                android:value="${crashlyticsCollectionEnabled}" />
 
         <!--receiver-->
         <receiver

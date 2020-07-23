@@ -51,7 +51,7 @@ class CalendarDialogPageRecyclerViewAdapter(
             return@setOnLongClickListener true
         }
         holder.dataBinding.itemCalendarScheduleIvLike.setSafeOnClickListener {
-            listener?.onBookmarkClicked(items[position].posterIdx, items[position].isFavorite)
+            listener?.onBookmarkClicked(items[position].posterIdx, items[position].isFavorite , items[position].dday, position)
         }
         holder.dataBinding.itemCalendarScheduleIvSelect.setSafeOnClickListener {
 
@@ -78,7 +78,7 @@ class CalendarDialogPageRecyclerViewAdapter(
 
     interface OnScheduleItemClickListener {
         fun onItemClicked(posterIdx: Int)
-        fun onBookmarkClicked(posterIdx: Int, isFavorite: Int)
+        fun onBookmarkClicked(posterIdx: Int, isFavorite: Int, dday : Int, position : Int)
         fun onItemLongClicked(posterIdx: Int, posterName: String)
         fun onSelectorClicked(posterIdx: Int, posterName: String, isSelected:Boolean)
     }

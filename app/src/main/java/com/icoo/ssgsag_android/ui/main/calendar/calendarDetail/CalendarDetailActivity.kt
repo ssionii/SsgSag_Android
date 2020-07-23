@@ -27,6 +27,7 @@ import android.view.Gravity
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import com.github.mikephil.charting.data.*
+import com.icoo.ssgsag_android.ui.main.calendar.posterBookmark.PosterBookmarkBottomSheet
 import com.icoo.ssgsag_android.ui.main.photoEnlarge.PhotoExpandActivity
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import com.igaworks.v2.core.AdBrixRm
@@ -41,6 +42,7 @@ import com.kakao.network.callback.ResponseCallback
 import com.orhanobut.dialogplus.DialogPlus
 import com.orhanobut.dialogplus.GridHolder
 import kotlinx.android.synthetic.main.activity_calendar_detail.*
+import org.jetbrains.anko.backgroundDrawable
 
 
 class CalendarDetailActivity : BaseActivity<ActivityCalendarDetailBinding, CalendarDetailViewModel>(),
@@ -96,9 +98,6 @@ class CalendarDetailActivity : BaseActivity<ActivityCalendarDetailBinding, Calen
 
     private var favoriteDeleteClick = false
     lateinit var favoriteDialog : DialogPlus
-    lateinit var favoriteDialogAdapter : TodoPushAlarmDialogPlusAdapter
-
-    private var alarmCheckList = arrayListOf<Boolean>(true, false, false, false, false)
 
     private var posterIdx: Int = 0
     private var from: String = "calendar"
@@ -254,138 +253,56 @@ class CalendarDetailActivity : BaseActivity<ActivityCalendarDetailBinding, Calen
         }
 
         viewDataBinding.actCalDetailCvBookmark.setSafeOnClickListener {
-            showBookmarkDialog()
+            var isFirstClick = true
+            var isFavorite = 0
+            if(viewDataBinding.actCalDetailCvBookmarked.visibility == VISIBLE) {
+                isFavorite = 1
+                isFirstClick = false
+            }else{
+                isFavorite = 0
+            }
+
+            val posterBookmarkBottomSheet =  PosterBookmarkBottomSheet(posterIdx, viewModel.posterDetail.value!!.dday.toInt(),isFavorite, isFirstClick, "detail"
+            ) {
+                bookmarkToggle(it)
+            }
+            posterBookmarkBottomSheet.isCancelable = false
+            posterBookmarkBottomSheet.show(supportFragmentManager, null)
+
         }
 
         viewDataBinding.actCalDetailCvBookmarked.setSafeOnClickListener {
-            showBookmarkDialog()
-        }
-    }
-
-    private fun showBookmarkDialog(){
-
-        // default 값 설정 필요
-        if(viewDataBinding.actCalDetailCvBookmark.visibility == VISIBLE) {
-
-            if(viewModel.posterDetail.value?.dday != "0" && viewModel.posterDetail.value?.dday != "1"){
-                for(i in 0 until alarmCheckList.size){
-                    alarmCheckList[i] = i == 2
-                }
-            }
-
-        }else{
-            if(viewModel.pushAlarmList.contains(0)) alarmCheckList[1] = true
-            if(viewModel.pushAlarmList.contains(1)) alarmCheckList[2] = true
-            if(viewModel.pushAlarmList.contains(3)) alarmCheckList[3] = true
-            if(viewModel.pushAlarmList.contains(7)) alarmCheckList[4] = true
-
-            for(i in 1 until alarmCheckList.size){
-                if(alarmCheckList[i]) alarmCheckList[0] = false
-            }
-        }
-
-        favoriteDialogAdapter = TodoPushAlarmDialogPlusAdapter(this, viewModel.posterDetail.value?.dday, alarmCheckList)
-        favoriteDialogAdapter.setItemClickListener(OnBookmarkItemClickListener)
-        val builder =  DialogPlus.newDialog(this)
-
-        val holder = GridHolder(1)
-
-        builder.apply {
-
-            setContentHolder(holder)
-            setHeader(R.layout.dialog_fragment_poster_detail_bookmark_header)
-            setFooter(R.layout.dialog_fragment_poster_detail_bookmark_footer)
-            setCancelable(false)
-            setGravity(Gravity.BOTTOM)
-
-            setOnClickListener { dialog, view ->
-
-                // 취소, 확인
-                if (view.id == R.id.dialog_frag_poster_detail_bookmark_cancel) {
-                    if(viewDataBinding.actCalDetailCvBookmarked.visibility == VISIBLE) {
-                        favoriteDeleteClick = true
-
-                        favoriteCancelDialogFragment = CalendarDetailDeletePosterDialogFragment()
-                        favoriteCancelDialogFragment.setOnDialogDismissedListener(this@CalendarDetailActivity)
-                        favoriteCancelDialogFragment.setTextView("즐겨찾기를 취소하시겠어요?\n즐겨찾기 취소 시 알림도 취소됩니다.")
-                        favoriteCancelDialogFragment.show(
-                            supportFragmentManager,
-                            "poster delete dialog"
-                        )
-                    }else{
-                        dialog.dismiss()
-                    }
-
-                }else if(view.id == R.id.dialog_frag_poster_detail_bookmark_ok) {
-
-                    var ddayList = ""
-                    var mapper = arrayListOf(0, 1, 3, 7)
-
-                    var isAdded = false
-                    for(i in 1 until alarmCheckList.size){
-                        if(alarmCheckList[i]){
-                            ddayList += mapper[i-1]
-                            ddayList += ", "
-                            isAdded = true
-                        }
-                    }
-
-                    if(isAdded) ddayList = ddayList.substring(0, ddayList.length - 2)
-
-                    viewModel.bookmarkWithAlarm(posterIdx, ddayList)
-                    dialog.dismiss()
-                }
-
-
-            }
-
-            setAdapter(favoriteDialogAdapter)
-            setOverlayBackgroundResource(R.color.dialog_background)
-            setContentBackgroundResource(R.drawable.header_dialog_plus_radius)
-
-            val horizontalDpValue = 40
-            val topDpValue = 32
-            val bottomDpValue = 32
-            val d = resources.displayMetrics.density
-            val horizontalMargin = (horizontalDpValue * d).toInt()
-            val topMargin = (topDpValue * d).toInt()
-            val bottomMargin = (bottomDpValue * d).toInt()
-
-           setPadding(horizontalMargin, 0, horizontalMargin, 0)
-
-        }
-
-        favoriteDialog = builder.create()
-        favoriteDialog.show()
-
-
-    }
-
-    private val OnBookmarkItemClickListener
-            = object : TodoPushAlarmDialogPlusAdapter.OnItemClickListener {
-
-        override fun onItemClick(position: Int) {
-            if(position != 0){
-                alarmCheckList[position] = !alarmCheckList[position]
-                alarmCheckList[0] = false
+            var isFirstClick = true
+            var isFavorite = 0
+            if(viewDataBinding.actCalDetailCvBookmarked.visibility == VISIBLE) {
+                isFavorite = 1
+                isFirstClick = false
             }else{
-
-                alarmCheckList[0] = true
-                for(i in 1..4){
-                    alarmCheckList[i] = false
-                }
+                isFavorite = 0
             }
 
-            var isAllFalse = true
-            for(i in 1 until alarmCheckList.size){
-                if(alarmCheckList[i]){
-                    isAllFalse = false
-                    break
-                }
+            val posterBookmarkBottomSheet =  PosterBookmarkBottomSheet(posterIdx, viewModel.posterDetail.value!!.dday.toInt(), isFavorite, isFirstClick, "detail"
+            ) {
+                bookmarkToggle(it)
             }
+            posterBookmarkBottomSheet.isCancelable = false
+            posterBookmarkBottomSheet.show(supportFragmentManager, null)
 
-            if(isAllFalse) alarmCheckList[0] = true
-            favoriteDialogAdapter.replace(alarmCheckList)
+
+        }
+    }
+
+    private fun bookmarkToggle(toggle: Int){
+
+        when(toggle){
+            0 -> {
+                viewDataBinding.actCalDetailCvBookmark.visibility = VISIBLE
+                viewDataBinding.actCalDetailCvBookmarked.visibility = GONE
+            }
+            1-> {
+                viewDataBinding.actCalDetailCvBookmark.visibility = GONE
+                viewDataBinding.actCalDetailCvBookmarked.visibility = VISIBLE
+            }
         }
     }
 

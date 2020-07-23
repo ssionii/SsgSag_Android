@@ -26,7 +26,7 @@ android {
         applicationId "com.icoo.ssgsag_android"
         minSdkVersion 23
         targetSdkVersion 28
-        versionCode 51 // application에 adjust environment 바꾸기!
+        versionCode 52 // application에 adjust environment 바꾸기!
         versionName "3.3.1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -34,11 +34,15 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            manifestPlaceholders = [crashlyticsCollectionEnabled:"true"]
         }
         debug {
             signingConfig signingConfigs.release
             ext.alwaysUpdateBuildId = false
+            manifestPlaceholders = [crashlyticsCollectionEnabled:"false"]
+
         }
+
     }
     aaptOptions {
         cruncherEnabled = false

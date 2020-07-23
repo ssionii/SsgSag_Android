@@ -56,6 +56,7 @@ class CalendarDetailViewModel(
             .doOnTerminate { hideProgress() }
             .subscribe({
                 it.run {
+
                     _posterDetail.setValue(this)
                     _webUrl.setValue(this.posterWebSite)
                     _analytics.postValue(this.analyticsJson)

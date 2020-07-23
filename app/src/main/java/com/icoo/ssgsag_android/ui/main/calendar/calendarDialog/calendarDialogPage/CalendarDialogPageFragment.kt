@@ -13,6 +13,7 @@ import com.icoo.ssgsag_android.base.BaseFragment
 import com.icoo.ssgsag_android.data.local.pref.SharedPreferenceController
 import com.icoo.ssgsag_android.databinding.FragmentCalendarDialogPageBinding
 import com.icoo.ssgsag_android.ui.main.calendar.calendarDialog.CalendarDialogFragment
+import com.icoo.ssgsag_android.ui.main.calendar.posterBookmark.PosterBookmarkBottomSheet
 import com.icoo.ssgsag_android.util.DateUtil.dateFormat
 import com.icoo.ssgsag_android.util.DateUtil.monthFormat
 import com.icoo.ssgsag_android.util.DateUtil.yearFormat
@@ -26,7 +27,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class CalendarDialogPageFragment : BaseFragment<FragmentCalendarDialogPageBinding, CalendarDialogPageViewModel>() ,
-     CalendarDialogPageDeleteDialogFragment.OnDialogDismissedListener{
+    CalendarDialogPageDeleteDialogFragment.OnDialogDismissedListener{
 
     override val layoutResID: Int
         get() = R.layout.fragment_calendar_dialog_page
@@ -148,7 +149,7 @@ class CalendarDialogPageFragment : BaseFragment<FragmentCalendarDialogPageBindin
                 }
             })
 
-           layoutManager = WrapContentLinearLayoutManager()
+            layoutManager = WrapContentLinearLayoutManager()
         }
     }
 
@@ -169,10 +170,15 @@ class CalendarDialogPageFragment : BaseFragment<FragmentCalendarDialogPageBindin
                 dialogFragment.show(fragmentManager!!, "schedule delete dialog")
             }
 
-            override fun onBookmarkClicked(posterIdx: Int, isFavorite: Int) {
-                viewModel.bookmark(posterIdx, isFavorite, year, month, day, showFavorite)
-                CalendarDialogFragment.GetUpdate.isUpdated = true
+            override fun onBookmarkClicked(posterIdx: Int, isFavorite: Int, dday: Int, position:Int) {
+                val posterBookmarkBottomSheet =  PosterBookmarkBottomSheet(posterIdx, dday,  isFavorite, true
+                , "grid") {
+                    bookmarkToggle(position, it)
+                }
+                posterBookmarkBottomSheet.isCancelable = false
+                posterBookmarkBottomSheet.show(childFragmentManager, null)
 
+                CalendarDialogFragment.GetUpdate.isUpdated = true
             }
 
             override fun onSelectorClicked(posterIdx: Int, posterName: String, isSelected: Boolean) {
@@ -204,6 +210,13 @@ class CalendarDialogPageFragment : BaseFragment<FragmentCalendarDialogPageBindin
                 }
             }
         }
+
+    private fun bookmarkToggle(position : Int, toggle: Int){
+        (viewDataBinding.fragCalendarDialogPageRv.adapter as CalendarDialogPageRecyclerViewAdapter).apply {
+            items[position].isFavorite = toggle
+            notifyItemChanged(position)
+        }
+    }
 
     private fun setEditButton(){
         viewDataBinding.fragCalendarDialogPageIvEdit.setSafeOnClickListener {

@@ -42,7 +42,6 @@ class CalendarGridPageFragment : BaseFragment<FragmentCalendarPageBinding, Calen
         viewDataBinding.vm = viewModel
 
         setRecyclerView()
-        setData()
         setCalendar()
 
         viewModel.isUpdated.observe(this, androidx.lifecycle.Observer { value->
@@ -73,7 +72,6 @@ class CalendarGridPageFragment : BaseFragment<FragmentCalendarPageBinding, Calen
         dialogFragment.setOnDialogDismissedListener(this)
         dialogFragment.setTargetFragment(this, 0)
         dialogFragment.show(fragmentManager!!, "frag_dialog_cal")
-
     }
 
     private fun setCalendar() {
@@ -145,10 +143,6 @@ class CalendarGridPageFragment : BaseFragment<FragmentCalendarPageBinding, Calen
             replaceAll(dataList)
             notifyDataSetChanged()
         }
-
-    }
-
-    private fun setData(){
 
     }
 
@@ -297,7 +291,7 @@ class CalendarGridPageFragment : BaseFragment<FragmentCalendarPageBinding, Calen
                 )
             }
         }
-        
+
         refreshCal()
     }
 

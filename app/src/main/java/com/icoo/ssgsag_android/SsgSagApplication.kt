@@ -1,8 +1,12 @@
 package com.icoo.ssgsag_android
 
+import android.app.Activity
 import android.app.Application
+import android.os.Bundle
 import com.adjust.sdk.Adjust
 import com.adjust.sdk.AdjustConfig
+import com.adjust.sdk.LogLevel
+import com.crashlytics.android.Crashlytics
 import com.icoo.ssgsag_android.di.appModule
 import com.icoo.ssgsag_android.util.sdk.kakao.KakaoSDKAdapter
 import com.icoo.ssgsag_android.util.service.network.NetworkService
@@ -10,17 +14,15 @@ import com.igaworks.v2.core.AdBrixRm
 import com.igaworks.v2.core.application.AbxActivityHelper
 import com.igaworks.v2.core.application.AbxActivityLifecycleCallbacks
 import com.kakao.auth.KakaoSDK
+import io.fabric.sdk.android.Fabric
+import io.realm.Realm
+import io.realm.RealmConfiguration
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import android.app.Activity
-import android.os.Bundle
-import com.adjust.sdk.LogLevel
-import io.realm.Realm
-import io.realm.RealmConfiguration
 
 
 class SsgSagApplication : Application() {
@@ -77,6 +79,9 @@ class SsgSagApplication : Application() {
 
         Realm.setDefaultConfiguration(config)
 
+        if (!BuildConfig.DEBUG) {
+            Fabric.with(this, Crashlytics())
+        }
     }
 
     private fun initAdjustSetting(){
