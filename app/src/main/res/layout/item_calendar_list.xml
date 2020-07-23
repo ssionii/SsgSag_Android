@@ -162,10 +162,9 @@
                         </LinearLayout>
 
                         <TextView
-                                android:layout_width="match_parent"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="2dp"
-                                android:layout_marginRight="36dp"
                                 android:fontFamily="@font/noto_sans_kr_regular"
                                 android:includeFontPadding="false"
                                 android:lineHeight="15sp"
@@ -174,7 +173,7 @@
                                 android:textSize="10sp"
                                 android:ellipsize="end"
                                 android:text="@{schedule.keyword.toString()}"
-                                tools:text="해시태그" />
+                                tools:text="해시 태그" />
 
                     </LinearLayout>
 
