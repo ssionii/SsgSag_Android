@@ -13,12 +13,12 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="32dp"
-            android:layout_marginHorizontal="40dp">
+            android:layout_marginTop="32dp">
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="마감 알림 설정"
+                android:layout_marginLeft="40dp"
                 android:textColor="@color/black_1"
                 android:fontFamily="@font/noto_sans_kr_bold"
                 android:textSize="16sp"/>
@@ -26,6 +26,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="알림 설정하고 마감기한 놓치지 마세요.(복수선택 가능)"
+                android:layout_marginLeft="40dp"
                 android:textColor="@color/grey_1"
                 android:fontFamily="@font/noto_sans_kr_regular"
                 android:textSize="12sp"

@@ -176,8 +176,7 @@ class CalendarListPageFragment : BaseFragment<FragmentCalendarListPageBinding, C
 
             override fun onBookmarkClicked(posterIdx: Int, isFavorite: Int, dday : Int, position: Int) {
 
-                val posterBookmarkBottomSheet =  PosterBookmarkBottomSheet(posterIdx, dday, isFavorite, true
-                , "list") {
+                val posterBookmarkBottomSheet =  PosterBookmarkBottomSheet(posterIdx, dday, isFavorite, "list") {
                     bookmarkToggle(position, isFavorite, it)
                 }
                 posterBookmarkBottomSheet.isCancelable = false

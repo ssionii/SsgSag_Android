@@ -254,16 +254,10 @@ class CalendarDetailActivity : BaseActivity<ActivityCalendarDetailBinding, Calen
         }
 
         viewDataBinding.actCalDetailCvBookmark.setSafeOnClickListener {
-            var isFirstClick = true
             var isFavorite = 0
-            if(viewDataBinding.actCalDetailCvBookmarked.visibility == VISIBLE) {
-                isFavorite = 1
-                isFirstClick = false
-            }else{
-                isFavorite = 0
-            }
+            if(viewDataBinding.actCalDetailCvBookmarked.visibility == VISIBLE) isFavorite = 1
 
-            val posterBookmarkBottomSheet =  PosterBookmarkBottomSheet(posterIdx, viewModel.posterDetail.value!!.dday.toInt(),isFavorite, isFirstClick, "detail"
+            val posterBookmarkBottomSheet =  PosterBookmarkBottomSheet(posterIdx, viewModel.posterDetail.value!!.dday.toInt(),isFavorite, "detail"
             ) {
                 bookmarkToggle(isFavorite, it)
             }
@@ -273,16 +267,12 @@ class CalendarDetailActivity : BaseActivity<ActivityCalendarDetailBinding, Calen
         }
 
         viewDataBinding.actCalDetailCvBookmarked.setSafeOnClickListener {
-            var isFirstClick = true
-            var isFavorite = 0
-            if(viewDataBinding.actCalDetailCvBookmarked.visibility == VISIBLE) {
-                isFavorite = 1
-                isFirstClick = false
-            }else{
-                isFavorite = 0
-            }
 
-            val posterBookmarkBottomSheet =  PosterBookmarkBottomSheet(posterIdx, viewModel.posterDetail.value!!.dday.toInt(), isFavorite, isFirstClick, "detail"
+            var isFavorite = 0
+            if(viewDataBinding.actCalDetailCvBookmarked.visibility == VISIBLE) isFavorite = 1
+
+
+            val posterBookmarkBottomSheet =  PosterBookmarkBottomSheet(posterIdx, viewModel.posterDetail.value!!.dday.toInt(), isFavorite,  "detail"
             ) {
                 bookmarkToggle(isFavorite, it)
             }

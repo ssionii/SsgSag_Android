@@ -57,7 +57,7 @@ class PosterBookmarkRecyclerViewAdapter : RecyclerView.Adapter<PosterBookmarkRec
             }
         }
 
-        holder.dataBinding.itemPosterBookmarkIv.setSafeOnClickListener {
+        holder.dataBinding.root.setSafeOnClickListener {
             if(!item.isPast) listener?.onItemClicked(position)
         }
     }

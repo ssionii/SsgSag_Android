@@ -24,7 +24,6 @@ class PosterBookmarkBottomSheet (
     private val posterIdx : Int,
     private val dday : Int,
     private val isFavorite : Int,
-    private val isFirstClick : Boolean,
     private val from : String,
     val buttonClick: (Int) -> Unit
 ) : BottomSheetDialogFragment(), CalendarDetailDeletePosterDialogFragment.OnDialogDismissedListener {
@@ -158,12 +157,12 @@ class PosterBookmarkBottomSheet (
 
     private fun setButton(){
         viewDataBinding.bottomSheetPosterBookmarkCvCancel.setSafeOnClickListener {
-            if(isFirstClick){
+            if(isFavorite == 0){
                 if(from == "detail"){
                     dismiss()
                 }else{
                     viewModel.unBookmarkWithAlarm(posterIdx)
-                    buttonClick(0)
+                    buttonClick(2)
                     dismiss()
                 }
             } else{
