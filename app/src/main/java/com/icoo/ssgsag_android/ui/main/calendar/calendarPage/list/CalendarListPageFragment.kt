@@ -199,8 +199,9 @@ class CalendarListPageFragment : BaseFragment<FragmentCalendarListPageBinding, C
     }
 
     private fun setButton(){
-        viewDataBinding.fragCalListPageCvLastSave.setSafeOnClickListener {
-            viewModel.isLastSaveFilter.value = true
+
+        viewDataBinding.fragCalListPageCvDeadline.setSafeOnClickListener {
+            viewModel.isLastSaveFilter.value = false
 
             filterClick = true
 
@@ -208,8 +209,8 @@ class CalendarListPageFragment : BaseFragment<FragmentCalendarListPageBinding, C
             viewModel.getFavoriteSchedule()
         }
 
-        viewDataBinding.fragCalListPageCvDeadline.setSafeOnClickListener {
-            viewModel.isLastSaveFilter.value = false
+        viewDataBinding.fragCalListPageCvLastSave.setSafeOnClickListener {
+            viewModel.isLastSaveFilter.value = true
 
             filterClick = true
 
