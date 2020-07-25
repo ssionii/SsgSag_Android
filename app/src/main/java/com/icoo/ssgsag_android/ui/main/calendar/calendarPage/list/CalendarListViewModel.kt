@@ -43,7 +43,7 @@ class CalendarListViewModel (
 
     init {
         isFavorite.value = false
-        isLastSaveFilter.value = true
+        isLastSaveFilter.value = false
         getAllCalendar()
         getFavoriteSchedule()
     }
