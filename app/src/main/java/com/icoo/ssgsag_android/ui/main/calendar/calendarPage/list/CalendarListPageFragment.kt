@@ -37,8 +37,6 @@ class CalendarListPageFragment : BaseFragment<FragmentCalendarListPageBinding, C
         get() = R.layout.fragment_calendar_list_page
     override val viewModel: CalendarListViewModel by viewModel()
 
-    lateinit var favoriteDialog : DialogPlus
-
     var calendarListPageRecyclerViewAdapter = CalendarListPageRecyclerViewAdapter()
 
     private var dataList: ArrayList<Schedule> = arrayListOf()
@@ -46,11 +44,6 @@ class CalendarListPageFragment : BaseFragment<FragmentCalendarListPageBinding, C
     private var isFavorite = false
     private var filterClick = false
     var curPosition = 0
-
-    lateinit private var alarmCheckList: ArrayList<Boolean>
-    private var clickBookmarkPosterIdx = 0
-    private var clickIsFavorite = 0
-    private var clickDday = 0
 
     val date : Date = Calendar.getInstance().time
     val year = DateUtil.yearFormat.format(date)
@@ -144,10 +137,10 @@ class CalendarListPageFragment : BaseFragment<FragmentCalendarListPageBinding, C
                 }
 
                 viewDataBinding.fragCalendarListPageRv.visibility = VISIBLE
-                viewDataBinding.fragCalListPageTvEmpty.visibility = GONE
+                viewDataBinding.fragCalListPageLlEmpty.visibility = GONE
             }else{
                 viewDataBinding.fragCalendarListPageRv.visibility = GONE
-                viewDataBinding.fragCalListPageTvEmpty.visibility = VISIBLE
+                viewDataBinding.fragCalListPageLlEmpty.visibility = VISIBLE
             }
         }
     }

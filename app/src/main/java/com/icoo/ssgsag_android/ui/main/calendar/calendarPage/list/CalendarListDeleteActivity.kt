@@ -2,9 +2,12 @@ package com.icoo.ssgsag_android.ui.main.calendar.calendarPage.list
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseActivity
 import com.icoo.ssgsag_android.base.BaseRecyclerViewAdapter
@@ -83,10 +86,16 @@ class CalendarListDeleteActivity : BaseActivity<ActivityCalendarListDeleteBindin
         dataList.clear()
         dataList = viewModel.filterSchedule(year, month)
 
-        calendarListPageRecyclerViewAdapter.apply {
-            replaceAll(dataList, true)
-            setSelectType(1)
-            notifyDataSetChanged()
+        if(dataList.size > 0) {
+
+            calendarListPageRecyclerViewAdapter.apply {
+                replaceAll(dataList, true)
+                setSelectType(1)
+                notifyDataSetChanged()
+            }
+        }else{
+            viewDataBinding.actCalListDeleteRv.visibility = GONE
+            viewDataBinding.actCalListDeleteLlEmpty.visibility = VISIBLE
         }
     }
 
