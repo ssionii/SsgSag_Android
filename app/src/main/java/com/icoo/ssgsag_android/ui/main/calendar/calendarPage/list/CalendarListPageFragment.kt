@@ -155,7 +155,7 @@ class CalendarListPageFragment : BaseFragment<FragmentCalendarListPageBinding, C
     private val onScheduleItemClickListener =
         object :
             CalendarListPageRecyclerViewAdapter.OnScheduleItemClickListener {
-            override fun onItemClicked(posterIdx: Int){
+            override fun onItemClicked(posterIdx: Int, position: Int){
 
                 val intent = Intent(context, CalendarDetailActivity::class.java)
                 val bundle = Bundle().apply {
@@ -182,8 +182,6 @@ class CalendarListPageFragment : BaseFragment<FragmentCalendarListPageBinding, C
                 posterBookmarkBottomSheet.isCancelable = false
                 posterBookmarkBottomSheet.show(childFragmentManager, null)
             }
-
-            override fun onSelectorClicked(posterIdx: Int, posterName:String, isSelected: Boolean) {}
         }
 
     private fun bookmarkToggle(position : Int, isFavorite: Int, toggle: Int){

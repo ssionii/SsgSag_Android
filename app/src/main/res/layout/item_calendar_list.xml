@@ -184,19 +184,18 @@
                             android:layout_gravity="center_vertical|end"
                             android:src="@drawable/ic_favorite"
                             android:scaleType="center"
-                            android:layout_alignParentRight="true"
                             bookmarkBtnImgInDialog="@{schedule.isFavorite()}"
                             favoriteVisibility="@{schedule.selectType}"/>
 
                     <ImageView
                             android:visibility="gone"
+                            tools:visibility="visible"
                             android:id="@+id/item_calendar_list_iv_selector"
                             android:layout_height="match_parent"
                             android:layout_width="74dp"
                             android:layout_gravity="center_vertical|end"
-                            android:src="@drawable/selector_edit_schedule"
+                            android:src="@drawable/ic_select_all_passive"
                             android:scaleType="center"
-                            android:layout_alignParentRight="true"
                             selectorVisibility="@{schedule.selectType}"/>
 
                 </LinearLayout>

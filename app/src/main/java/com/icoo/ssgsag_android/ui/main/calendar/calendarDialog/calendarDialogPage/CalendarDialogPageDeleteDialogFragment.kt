@@ -79,7 +79,6 @@ class CalendarDialogPageDeleteDialogFragment : BaseDialogFragment<DialogFragment
 
         viewDataBinding.dialogFragScheduleDeleteCancel.setSafeOnClickListener {
             isDeleted = false
-            posterIdxList.clear()
             this.dismiss()
         }
 

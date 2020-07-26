@@ -245,22 +245,6 @@ class CalendarDetailViewModel(
         )
     }
 
-
-    fun bookmarkWithAlarm(posterIdx: Int, ddayList : String){
-        addDisposable(posterRepository.postTodoPushAlarm(posterIdx, ddayList)
-            .subscribeOn(schedulerProvider.io())
-            .observeOn(schedulerProvider.mainThread())
-            .doOnSubscribe { showProgress() }
-            .doOnTerminate { hideProgress() }
-            .subscribe({
-                Log.e("알람 설정과 북마크 status", it.toString())
-                getPosterDetail(posterIdx)
-            }, {
-
-            })
-        )
-    }
-
     fun unBookmarkWithAlarm(posterIdx: Int){
         addDisposable(posterRepository.deleteTodoPushAlarm(posterIdx)
             .subscribeOn(schedulerProvider.io())

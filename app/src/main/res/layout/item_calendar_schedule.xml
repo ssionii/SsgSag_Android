@@ -114,9 +114,10 @@
                         favoriteVisibility="@{schedule.selectType}"/>
                 <ImageView
                         android:visibility="gone"
+                        tools:visibility="visible"
                         android:id="@+id/item_calendar_schedule_iv_select"
                         android:layout_gravity="center_vertical|end"
-                        android:src="@drawable/selector_edit_schedule"
+                        android:src="@drawable/ic_select_all_passive"
                         android:scaleType="center"
                         android:layout_width="48dp"
                         android:layout_height="match_parent"
