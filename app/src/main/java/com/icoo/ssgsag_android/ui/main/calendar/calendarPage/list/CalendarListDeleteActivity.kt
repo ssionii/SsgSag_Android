@@ -119,11 +119,13 @@ class CalendarListDeleteActivity : BaseActivity<ActivityCalendarListDeleteBindin
         }
 
         viewDataBinding.actCalListDeleteClDelete.setSafeOnClickListener {
-            dialogFragment = CalendarDialogPageDeleteDialogFragment()
+            if(deletePosterNameList.size > 0) {
+                dialogFragment = CalendarDialogPageDeleteDialogFragment()
 
-            dialogFragment.setOnDialogDismissedListener(this)
-            dialogFragment.setInfo(deletePosterIdxList, deletePosterNameList)
-            dialogFragment.show(supportFragmentManager, "schedule delete dialog")
+                dialogFragment.setOnDialogDismissedListener(this)
+                dialogFragment.setInfo(deletePosterIdxList, deletePosterNameList)
+                dialogFragment.show(supportFragmentManager, "schedule delete dialog")
+            }
         }
     }
 
@@ -155,9 +157,16 @@ class CalendarListDeleteActivity : BaseActivity<ActivityCalendarListDeleteBindin
                 }
 
                 if(deletePosterNameList.size != 0 ){
-                    viewDataBinding.actCalListDeleteClDelete.setBackgroundColor(resources.getColor(R.color.ssgsag))
+                    viewDataBinding.actCalListDeleteClDelete.apply{
+                        setBackgroundColor(resources.getColor(R.color.ssgsag))
+                        isClickable = true
+                    }
+
                 }else{
-                    viewDataBinding.actCalListDeleteClDelete.setBackgroundColor(resources.getColor(R.color.grey_2))
+                    viewDataBinding.actCalListDeleteClDelete.apply{
+                        setBackgroundColor(resources.getColor(R.color.grey_2))
+                        isClickable = false
+                    }
                 }
             }
         }
