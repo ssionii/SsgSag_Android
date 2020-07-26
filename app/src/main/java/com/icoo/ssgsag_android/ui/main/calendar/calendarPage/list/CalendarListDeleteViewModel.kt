@@ -1,10 +1,12 @@
 package com.icoo.ssgsag_android.ui.main.calendar.calendarPage.list
 
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
+import com.icoo.ssgsag_android.SsgSagApplication
 import com.icoo.ssgsag_android.base.BaseViewModel
 import com.icoo.ssgsag_android.data.model.schedule.Schedule
 import com.icoo.ssgsag_android.data.model.schedule.ScheduleRepository
@@ -73,7 +75,9 @@ class CalendarListDeleteViewModel(
             .subscribeOn(schedulerProvider.io())
             .observeOn(schedulerProvider.mainThread())
             .subscribe({
-                Toast.makeText(context, "삭제가 완료되었습니다.", Toast.LENGTH_SHORT).show()
+                if(it == 204) {
+                    Toast.makeText(context, "삭제가 완료되었습니다.", Toast.LENGTH_SHORT).show()
+                }
             }, {
 
             })

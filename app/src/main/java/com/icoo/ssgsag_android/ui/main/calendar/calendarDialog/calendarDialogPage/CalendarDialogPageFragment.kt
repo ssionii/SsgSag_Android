@@ -181,22 +181,33 @@ class CalendarDialogPageFragment : BaseFragment<FragmentCalendarDialogPageBindin
                 CalendarDialogFragment.GetUpdate.isUpdated = true
             }
 
-            override fun onSelectorClicked(posterIdx: Int, posterName: String, isSelected: Boolean) {
+            override fun onSelectorClicked(posterIdx: Int, posterName: String, position: Int) {
 
                 (viewDataBinding.fragCalendarDialogPageRv
                     .adapter as CalendarDialogPageRecyclerViewAdapter).apply {
+
+                    Log.e("클릭", "!!")
+                    Log.e("getSelectType", getSelectType().toString())
+
+                    when(items[position].selectType){
+                        1 ->{
+                            items[position].selectType = 2
+                            deletePosterIdxList.add(posterIdx)
+                            deletePosterNameList.add(posterName)
+                        }
+                        2 ->{
+                            items[position].selectType = 1
+                            deletePosterIdxList.remove(posterIdx)
+                            deletePosterNameList.remove(posterName)
+                        }
+                    }
+
+                    notifyItemChanged(position)
+
                     if(getSelectType()){
                         viewDataBinding.fragCalendarDialogPageTvDelete.visibility = VISIBLE
                         viewDataBinding.fragCalendarDialogPageIvEdit.visibility = INVISIBLE
                         viewDataBinding.fragCalendarDialogPageIvBack.visibility = INVISIBLE
-
-                        if(isSelected){
-                            deletePosterIdxList.add(posterIdx)
-                            deletePosterNameList.add(posterName)
-                        } else {
-                            deletePosterIdxList.remove(posterIdx)
-                            deletePosterNameList.remove(posterName)
-                        }
 
                     }else{
                         viewDataBinding.fragCalendarDialogPageTvDelete.visibility = INVISIBLE

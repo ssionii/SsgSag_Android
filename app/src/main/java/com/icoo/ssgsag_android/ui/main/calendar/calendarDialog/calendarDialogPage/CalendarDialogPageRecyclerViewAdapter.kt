@@ -1,5 +1,6 @@
 package com.icoo.ssgsag_android.ui.main.calendar.calendarDialog.calendarDialogPage
 
+import android.util.Log
 import android.view.*
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -31,6 +32,10 @@ class CalendarDialogPageRecyclerViewAdapter(
         }
     }
 
+    fun replace(item: Schedule, position: Int){
+        items[position] = item
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val viewDataBinding = DataBindingUtil.inflate<ItemCalendarScheduleBinding>(
             LayoutInflater.from(parent.context),
@@ -54,18 +59,7 @@ class CalendarDialogPageRecyclerViewAdapter(
             listener?.onBookmarkClicked(items[position].posterIdx, items[position].isFavorite , items[position].dday, position)
         }
         holder.dataBinding.itemCalendarScheduleIvSelect.setSafeOnClickListener {
-
-            if(items[position].selectType != 1) { // 선택된 상태
-                holder.dataBinding.itemCalendarScheduleIvSelect.isSelected = false
-                items[position].selectType = 1 // 취소
-            }
-            else { // 선택되지 않은 상태
-                holder.dataBinding.itemCalendarScheduleIvSelect.isSelected = true
-                items[position].selectType = 2 // 선택
-            }
-
-            listener?.onSelectorClicked(items[position].posterIdx, items[position].posterName,
-                holder.dataBinding.itemCalendarScheduleIvSelect.isSelected)
+            listener?.onSelectorClicked(items[position].posterIdx, items[position].posterName, position)
         }
 
     }
@@ -80,18 +74,17 @@ class CalendarDialogPageRecyclerViewAdapter(
         fun onItemClicked(posterIdx: Int)
         fun onBookmarkClicked(posterIdx: Int, isFavorite: Int, dday : Int, position : Int)
         fun onItemLongClicked(posterIdx: Int, posterName: String)
-        fun onSelectorClicked(posterIdx: Int, posterName: String, isSelected:Boolean)
+        fun onSelectorClicked(posterIdx: Int, posterName: String, position: Int)
     }
 
     fun setSelectType(type: Int){
-
-        for(i in items.indices)
-            items[i].selectType = type
+        for(item in items)
+            item.selectType = type
     }
 
     fun getSelectType() : Boolean {
-        for (i in items.indices) {
-            if (items[i].selectType == 2) {
+        for (item in items) {
+            if (item.selectType == 2) {
                 return true
             }
         }

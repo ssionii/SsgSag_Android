@@ -1,5 +1,6 @@
 package com.icoo.ssgsag_android.ui.main.calendar.calendarPage.list
 
+import android.util.Log
 import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -41,6 +42,10 @@ class CalendarListPageRecyclerViewAdapter() : RecyclerView.Adapter<CalendarListP
 
     }
 
+    fun replace(item : Schedule, position : Int){
+        itemList[position] = item
+    }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val viewDataBinding = DataBindingUtil.inflate<ItemCalendarListBinding>(
@@ -55,32 +60,12 @@ class CalendarListPageRecyclerViewAdapter() : RecyclerView.Adapter<CalendarListP
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.dataBinding.schedule = itemList[position]
         holder.dataBinding.root.setSafeOnClickListener {
-            listener?.onItemClicked(itemList[position].posterIdx)
+
+            listener?.onItemClicked(itemList[position].posterIdx, position)
         }
 
         holder.dataBinding.itemCalendarListIvFavorite.setSafeOnClickListener {
             listener?.onBookmarkClicked(itemList[position].posterIdx, itemList[position].isFavorite, itemList[position].dday, position)
-//            if(itemList[position].isFavorite == 1){
-//                itemList[position].isFavorite = 0
-//            }else{
-//                itemList[position].isFavorite = 1
-//            }
-//            notifyDataSetChanged()
-        }
-
-        holder.dataBinding.itemCalendarListIvSelector.setSafeOnClickListener {
-
-            if(itemList[position].selectType == 2) { // 선택된 상태
-                holder.dataBinding.itemCalendarListIvSelector.isSelected = false
-                itemList[position].selectType = 1 // 취소
-            }
-            else { // 선택되지 않은 상태
-                holder.dataBinding.itemCalendarListIvSelector.isSelected = true
-                itemList[position].selectType = 2 // 선택
-            }
-
-            listener?.onSelectorClicked(itemList[position].posterIdx, itemList[position].posterName,
-                holder.dataBinding.itemCalendarListIvSelector.isSelected)
         }
     }
 
@@ -88,23 +73,17 @@ class CalendarListPageRecyclerViewAdapter() : RecyclerView.Adapter<CalendarListP
         return itemList[position].posterIdx.toLong()
     }
 
-    fun getItemDate(position: Int): String{
-        return itemList[position].posterEndDate.substring(0, 7)
-    }
-
     inner class ViewHolder(val dataBinding: ItemCalendarListBinding) : RecyclerView.ViewHolder(dataBinding.root)
 
     interface OnScheduleItemClickListener {
-        fun onItemClicked(posterIdx: Int)
+        fun onItemClicked(posterIdx: Int, position: Int)
         fun onBookmarkClicked(posterIdx: Int, isFavorite: Int, dday : Int, position: Int)
-        fun onSelectorClicked(posterIdx: Int, posterName: String, isSelected:Boolean)
     }
 
     fun setSelectType(type: Int){
-        for(i in itemList.indices)
-            itemList[i].selectType = type
-
-        notifyDataSetChanged()
+        for(item in itemList){
+            item.selectType = type
+        }
     }
 
 }
