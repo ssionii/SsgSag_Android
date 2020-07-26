@@ -356,6 +356,14 @@ fun LinearLayout.setVisibilityByInt(num: Int){
     }
 }
 
+@BindingAdapter("llVisibilityByIntR")
+fun LinearLayout.setVisibilityByIntR(num: Int){
+    when(num){
+        0 -> this.visibility = VISIBLE
+        else -> this.visibility = GONE
+    }
+}
+
 @BindingAdapter("cvVisibilityByIntR")
 fun CardView.setVisibilityByIntR(num: Int){
     when(num){
