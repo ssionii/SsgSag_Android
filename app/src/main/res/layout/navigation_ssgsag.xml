@@ -19,31 +19,28 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/navi_ssgsag_cl_all"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingHorizontal="15dp">
+                    android:layout_height="wrap_content">
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="전체"
                         android:textColor="@drawable/selector_text_color"
-                        android:textSize="14sp"
+                        android:textSize="18sp"
                         android:textAlignment="center"
-                        android:fontFamily="@font/noto_sans_kr_medium"
+                        android:fontFamily="@font/noto_sans_kr_bold"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        android:letterSpacing="0.1"/>
+                        android:letterSpacing="-0.01"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/navi_ssgsag_cl_ssgsag"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingRight="15dp">
+                    android:layout_height="wrap_content">
                 <View
                         android:id="@+id/navi_ssgsag_v"
-                        android:layout_width="1dp"
-                        android:layout_height="17dp"
-                        android:background="#dddddd"
+                        android:layout_width="17dp"
+                        android:layout_height="0dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -55,12 +52,11 @@
                         app:layout_constraintTop_toTopOf="parent"
                         android:text="추천"
                         android:textColor="@drawable/selector_text_color"
-                        android:textSize="14sp"
+                        android:textSize="18sp"
                         android:textAlignment="center"
-                        android:fontFamily="@font/noto_sans_kr_medium"
+                        android:fontFamily="@font/noto_sans_kr_bold"
                         android:layout_centerVertical="true"
-                        android:letterSpacing="0.1"
-                        android:layout_marginLeft="15dp"
+                        android:letterSpacing="-0.01"
                       />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
