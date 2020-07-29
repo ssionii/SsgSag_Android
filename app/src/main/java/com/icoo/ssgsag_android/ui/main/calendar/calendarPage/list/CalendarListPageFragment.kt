@@ -3,8 +3,7 @@ package com.icoo.ssgsag_android.ui.main.calendar.calendarPage.list
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.view.Gravity
+import android.view.MotionEvent
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
@@ -17,14 +16,11 @@ import com.icoo.ssgsag_android.data.model.schedule.Schedule
 import com.icoo.ssgsag_android.databinding.FragmentCalendarListPageBinding
 import com.icoo.ssgsag_android.ui.main.MainActivity
 import com.icoo.ssgsag_android.ui.main.calendar.calendarDetail.CalendarDetailActivity
-import com.icoo.ssgsag_android.ui.main.calendar.calendarDetail.TodoPushAlarmDialogPlusAdapter
 import com.icoo.ssgsag_android.ui.main.calendar.posterBookmark.PosterBookmarkBottomSheet
 import com.icoo.ssgsag_android.util.DateUtil
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import com.icoo.ssgsag_android.util.view.WrapContentLinearLayoutManager
 import com.igaworks.v2.core.AdBrixRm
-import com.orhanobut.dialogplus.DialogPlus
-import com.orhanobut.dialogplus.GridHolder
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 import kotlin.collections.ArrayList
@@ -57,6 +53,7 @@ class CalendarListPageFragment : BaseFragment<FragmentCalendarListPageBinding, C
 
         setRecyclerView()
         setButton()
+        setUITouch()
     }
 
     override fun onResume() {
@@ -105,15 +102,13 @@ class CalendarListPageFragment : BaseFragment<FragmentCalendarListPageBinding, C
         makeScheduleList(year, month)
 
         viewModel.schedule.observe(this, Observer {
-            if(it.size > 0) {
-                makeScheduleList(year, month)
-            }
+            makeScheduleList(year, month)
+
         })
 
         viewModel.favoriteSchedule.observe(this, Observer {
-            if(it.size > 0) {
-                makeScheduleList(year, month)
-            }
+            makeScheduleList(year, month)
+
         })
     }
 
@@ -137,10 +132,10 @@ class CalendarListPageFragment : BaseFragment<FragmentCalendarListPageBinding, C
                 }
 
                 viewDataBinding.fragCalendarListPageRv.visibility = VISIBLE
-                viewDataBinding.fragCalListPageLlEmpty.visibility = GONE
+                viewDataBinding.fragCalListPageClEmpty.visibility = GONE
             }else{
                 viewDataBinding.fragCalendarListPageRv.visibility = GONE
-                viewDataBinding.fragCalListPageLlEmpty.visibility = VISIBLE
+                viewDataBinding.fragCalListPageClEmpty.visibility = VISIBLE
             }
         }
     }
@@ -208,6 +203,20 @@ class CalendarListPageFragment : BaseFragment<FragmentCalendarListPageBinding, C
             viewModel.getAllCalendar()
             viewModel.getFavoriteSchedule()
         }
+    }
+
+    private fun setUITouch(){
+        viewDataBinding.fragCalListPageClEmpty.setOnTouchListener( object : View.OnTouchListener{
+            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+                return true
+            }
+        })
+
+        viewDataBinding.fragCalListPageClFilter.setOnTouchListener( object : View.OnTouchListener{
+            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+                return true
+            }
+        })
     }
 
     override fun onBack() {
