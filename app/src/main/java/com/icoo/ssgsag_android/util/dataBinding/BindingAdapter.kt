@@ -167,8 +167,6 @@ fun setGlideTopCropImg(view: ImageView, imgUrl: String?) {
         .into(view)
 }
 
-
-
 @BindingAdapter("glideCenterCrop")
 fun setGlideCenterCropImg(view: ImageView, imgUrl: String?) {
     Glide.with(view.context)

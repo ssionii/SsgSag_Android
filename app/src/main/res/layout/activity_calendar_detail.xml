@@ -422,7 +422,8 @@
                             android:id="@+id/act_cal_detail_iv_detail_image"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            glideTopCrop="@{vm.detailImage}"/>
+                            glideImg="@{vm.detailImage}"
+                            android:adjustViewBounds="true"/>
                     <View
                             android:layout_width="match_parent"
                             android:layout_height="6dp"

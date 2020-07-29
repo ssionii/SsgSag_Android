@@ -46,6 +46,7 @@ class SecessionActivity : AppCompatActivity() {
                     if (response.body()!!.status.toString() == "204") {
                         SharedPreferenceController.deleteAuthorization(this@SecessionActivity)
                         SharedPreferenceController.deleteType(this@SecessionActivity)
+                        SharedPreferenceController.setIsFirstOpen(this@SecessionActivity, true)
                         toast("회원탈퇴 되었습니다.")
                         finishAffinity()
                     }
