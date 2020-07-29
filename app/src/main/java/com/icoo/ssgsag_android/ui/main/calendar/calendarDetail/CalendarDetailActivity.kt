@@ -27,8 +27,8 @@ import android.view.Gravity
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import com.github.mikephil.charting.data.*
+import com.icoo.ssgsag_android.ui.main.calendar.posterBookmark.PosterBookmarkBottomSheet
 import com.icoo.ssgsag_android.ui.main.photoEnlarge.PhotoExpandActivity
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import com.igaworks.v2.core.AdBrixRm
@@ -41,9 +41,9 @@ import com.kakao.message.template.LinkObject
 import com.kakao.network.ErrorResult
 import com.kakao.network.callback.ResponseCallback
 import com.orhanobut.dialogplus.DialogPlus
-import com.orhanobut.dialogplus.DialogPlusBuilder
 import com.orhanobut.dialogplus.GridHolder
 import kotlinx.android.synthetic.main.activity_calendar_detail.*
+import org.jetbrains.anko.backgroundDrawable
 
 
 class CalendarDetailActivity : BaseActivity<ActivityCalendarDetailBinding, CalendarDetailViewModel>(),
@@ -58,50 +58,12 @@ class CalendarDetailActivity : BaseActivity<ActivityCalendarDetailBinding, Calen
 
     private val KAKAO_BASE_LINK = "https://developers.kakao.com"
 
-    private val onCommentItemClickListener = object : OnCommentItemClickListener {
-        override fun onEditClicked(commentIdx: Int, position: Int) {
-            commentBehaviorNum = 2
-            commentToEdit = viewModel.posterDetail.value?.commentList!![position]
-            viewDataBinding.actCalDetailEtComment.run {
-                setText(commentToEdit?.commentContent)
-                setSelection(text.toString().length)
-            }
-            viewDataBinding.actCalDetailEtComment.post(Runnable {
-                viewDataBinding.actCalDetailEtComment.setFocusableInTouchMode(true)
-                viewDataBinding.actCalDetailEtComment.requestFocus()
-                val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.showSoftInput(viewDataBinding.actCalDetailEtComment, 0)
-            })
-        }
-
-        override fun onDeleteClicked(commentIdx: Int, position: Int) {
-            commentBehaviorNum = 3
-            viewModel.deleteComment(commentIdx, posterIdx)
-        }
-
-        override fun onLikeClicked(commentIdx: Int, like: Int) {
-            if (like == 0)
-                viewModel.likeComment(commentIdx, 1, posterIdx)
-            else
-                viewModel.likeComment(commentIdx, 0, posterIdx)
-        }
-
-        override fun onCautionClicked(commentIdx: Int) {
-            viewModel.cautionComment(commentIdx)
-        }
-
-    }
-
     lateinit private var deleteDialogFragment : CalendarDetailDeletePosterDialogFragment
-    lateinit private var favoriteCancelDialogFragment : CalendarDetailDeletePosterDialogFragment
 
     private var scheduleDeleteClick = false
 
     private var favoriteDeleteClick = false
     lateinit var favoriteDialog : DialogPlus
-    lateinit var favorietDialogAdapter : TodoPushAlarmDialogPlusAdapter
-
-    private var alarmCheckList = arrayListOf<Boolean>(true, false, false, false, false)
 
     private var posterIdx: Int = 0
     private var from: String = "calendar"
@@ -152,19 +114,12 @@ class CalendarDetailActivity : BaseActivity<ActivityCalendarDetailBinding, Calen
         writeComment()
 
         moveWebSite()
-        directApply()
-
 
         viewModel.analytics.observe(this, androidx.lifecycle.Observer {
             setPieChart()
         })
 
-        viewModel.posterDetail.observe(this, Observer {
-            if (it.posterWebSite2 == null){
-                viewDataBinding.actCalDetailIvApply.setColorFilter(resources.getColor(R.color.grey_3), android.graphics.PorterDuff.Mode.MULTIPLY)
-                viewDataBinding.actCalDetailTvApply.setTextColor(resources.getColor(R.color.grey_3))
-            }
-        })
+
 
         navigator()
 
@@ -257,138 +212,70 @@ class CalendarDetailActivity : BaseActivity<ActivityCalendarDetailBinding, Calen
         }
 
         viewDataBinding.actCalDetailCvBookmark.setSafeOnClickListener {
-            showBookmarkDialog()
+            var isFavorite = 0
+            if(viewDataBinding.actCalDetailCvBookmarked.visibility == VISIBLE) isFavorite = 1
+
+            val posterBookmarkBottomSheet =  PosterBookmarkBottomSheet(posterIdx, viewModel.posterDetail.value!!.dday.toInt(),isFavorite, "detail"
+            ) {
+                bookmarkToggle(isFavorite, it)
+            }
+            posterBookmarkBottomSheet.isCancelable = false
+            posterBookmarkBottomSheet.show(supportFragmentManager, null)
+
         }
 
         viewDataBinding.actCalDetailCvBookmarked.setSafeOnClickListener {
-            showBookmarkDialog()
+
+            var isFavorite = 0
+            if(viewDataBinding.actCalDetailCvBookmarked.visibility == VISIBLE) isFavorite = 1
+
+
+            val posterBookmarkBottomSheet =  PosterBookmarkBottomSheet(posterIdx, viewModel.posterDetail.value!!.dday.toInt(), isFavorite,  "detail"
+            ) {
+                bookmarkToggle(isFavorite, it)
+            }
+            posterBookmarkBottomSheet.isCancelable = false
+            posterBookmarkBottomSheet.show(supportFragmentManager, null)
         }
+
+        viewModel.posterDetail.observe(this, Observer {
+            if (it.posterWebSite2 == null){
+                viewDataBinding.actCalDetailIvApply.setColorFilter(Color.parseColor("#4dffffff"), android.graphics.PorterDuff.Mode.MULTIPLY)
+                viewDataBinding.actCalDetailTvApply.setTextColor(Color.parseColor("#4dffffff"))
+
+                viewDataBinding.actCalDetailClApply.isClickable = false
+
+            } else{
+                directApply(it.posterWebSite2!!)
+            }
+
+            if(it.posterWebSite == null){
+                viewDataBinding.actCalDetailIvGoWebsite.setColorFilter(Color.parseColor("#4dffffff") , android.graphics.PorterDuff.Mode.MULTIPLY)
+                viewDataBinding.actCalDetailTvGoWebsite.setTextColor(Color.parseColor("#4dffffff"))
+
+                viewDataBinding.actCalDetailClGoWebsite.isClickable = false
+            }else {
+                moveWebSite()
+            }
+
+        })
     }
 
-    private fun showBookmarkDialog(){
+    private fun bookmarkToggle(isFavorite : Int, toggle: Int){
 
-        // default 값 설정 필요
-        if(viewDataBinding.actCalDetailCvBookmark.visibility == VISIBLE) {
+        when(toggle){
+            0 -> {
+                viewDataBinding.actCalDetailCvBookmark.visibility = VISIBLE
+                viewDataBinding.actCalDetailCvBookmarked.visibility = GONE
 
-            if(viewModel.posterDetail.value?.dday != "0" && viewModel.posterDetail.value?.dday != "1"){
-                for(i in 0 until alarmCheckList.size){
-                    alarmCheckList[i] = i == 2
-                }
+                Toast.makeText(this, "즐겨찾기에서 삭제되었습니다.", Toast.LENGTH_SHORT).show()
             }
+            1-> {
+                viewDataBinding.actCalDetailCvBookmark.visibility = GONE
+                viewDataBinding.actCalDetailCvBookmarked.visibility = VISIBLE
 
-        }else{
-            if(viewModel.pushAlarmList.contains(0)) alarmCheckList[1] = true
-            if(viewModel.pushAlarmList.contains(1)) alarmCheckList[2] = true
-            if(viewModel.pushAlarmList.contains(3)) alarmCheckList[3] = true
-            if(viewModel.pushAlarmList.contains(7)) alarmCheckList[4] = true
-
-            for(i in 1 until alarmCheckList.size){
-                if(alarmCheckList[i]) alarmCheckList[0] = false
+                if(isFavorite == 0) Toast.makeText(this, "즐겨찾기에 추가되었습니다.", Toast.LENGTH_SHORT).show()
             }
-        }
-
-        favorietDialogAdapter = TodoPushAlarmDialogPlusAdapter(this, viewModel.posterDetail.value?.dday, alarmCheckList)
-        favorietDialogAdapter.setItemClickListener(OnBookmarkItemClickListener)
-        val builder =  DialogPlus.newDialog(this)
-
-        val holder = GridHolder(1)
-
-        builder.apply {
-
-            setContentHolder(holder)
-            setHeader(R.layout.dialog_fragment_poster_detail_bookmark_header)
-            setFooter(R.layout.dialog_fragment_poster_detail_bookmark_footer)
-            setCancelable(false)
-            setGravity(Gravity.BOTTOM)
-
-            setOnClickListener { dialog, view ->
-
-                // 취소, 확인
-                if (view.id == R.id.dialog_frag_poster_detail_bookmark_cancel) {
-                    if(viewDataBinding.actCalDetailCvBookmarked.visibility == VISIBLE) {
-                        favoriteDeleteClick = true
-
-                        favoriteCancelDialogFragment = CalendarDetailDeletePosterDialogFragment()
-                        favoriteCancelDialogFragment.setOnDialogDismissedListener(this@CalendarDetailActivity)
-                        favoriteCancelDialogFragment.setTextView("즐겨찾기를 취소하시겠어요?\n즐겨찾기 취소 시 알림도 취소됩니다.")
-                        favoriteCancelDialogFragment.show(
-                            supportFragmentManager,
-                            "poster delete dialog"
-                        )
-                    }else{
-                        dialog.dismiss()
-                    }
-
-                }else if(view.id == R.id.dialog_frag_poster_detail_bookmark_ok) {
-
-                    var ddayList = ""
-                    var mapper = arrayListOf(0, 1, 3, 7)
-
-                    var isAdded = false
-                    for(i in 1 until alarmCheckList.size){
-                        if(alarmCheckList[i]){
-                            ddayList += mapper[i-1]
-                            ddayList += ", "
-                            isAdded = true
-                        }
-                    }
-
-                    if(isAdded) ddayList = ddayList.substring(0, ddayList.length - 2)
-
-                    viewModel.bookmarkWithAlarm(posterIdx, ddayList)
-                    dialog.dismiss()
-                }
-
-
-            }
-
-            setAdapter(favorietDialogAdapter)
-            setOverlayBackgroundResource(R.color.dialog_background)
-            setContentBackgroundResource(R.drawable.header_dialog_plus_radius)
-
-            val horizontalDpValue = 40
-            val topDpValue = 32
-            val bottomDpValue = 32
-            val d = resources.displayMetrics.density
-            val horizontalMargin = (horizontalDpValue * d).toInt()
-            val topMargin = (topDpValue * d).toInt()
-            val bottomMargin = (bottomDpValue * d).toInt()
-
-           setPadding(horizontalMargin, 0, horizontalMargin, 0)
-
-        }
-
-        favoriteDialog = builder.create()
-        favoriteDialog.show()
-
-
-    }
-
-    private val OnBookmarkItemClickListener
-            = object : TodoPushAlarmDialogPlusAdapter.OnItemClickListener {
-
-        override fun onItemClick(position: Int) {
-            if(position != 0){
-                alarmCheckList[position] = !alarmCheckList[position]
-                alarmCheckList[0] = false
-            }else{
-
-                alarmCheckList[0] = true
-                for(i in 1..4){
-                    alarmCheckList[i] = false
-                }
-            }
-
-            var isAllFalse = true
-            for(i in 1 until alarmCheckList.size){
-                if(alarmCheckList[i]){
-                    isAllFalse = false
-                    break
-                }
-            }
-
-            if(isAllFalse) alarmCheckList[0] = true
-            favorietDialogAdapter.replace(alarmCheckList)
         }
     }
 
@@ -442,6 +329,40 @@ class CalendarDetailActivity : BaseActivity<ActivityCalendarDetailBinding, Calen
         }
     }
 
+    private val onCommentItemClickListener = object : OnCommentItemClickListener {
+        override fun onEditClicked(commentIdx: Int, position: Int) {
+            commentBehaviorNum = 2
+            commentToEdit = viewModel.posterDetail.value?.commentList!![position]
+            viewDataBinding.actCalDetailEtComment.run {
+                setText(commentToEdit?.commentContent)
+                setSelection(text.toString().length)
+            }
+            viewDataBinding.actCalDetailEtComment.post(Runnable {
+                viewDataBinding.actCalDetailEtComment.setFocusableInTouchMode(true)
+                viewDataBinding.actCalDetailEtComment.requestFocus()
+                val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.showSoftInput(viewDataBinding.actCalDetailEtComment, 0)
+            })
+        }
+
+        override fun onDeleteClicked(commentIdx: Int, position: Int) {
+            commentBehaviorNum = 3
+            viewModel.deleteComment(commentIdx, posterIdx)
+        }
+
+        override fun onLikeClicked(commentIdx: Int, like: Int) {
+            if (like == 0)
+                viewModel.likeComment(commentIdx, 1, posterIdx)
+            else
+                viewModel.likeComment(commentIdx, 0, posterIdx)
+        }
+
+        override fun onCautionClicked(commentIdx: Int) {
+            viewModel.cautionComment(commentIdx)
+        }
+
+    }
+
     private fun writeComment() {
         viewDataBinding.actCalDetailIvCommentWrite.setSafeOnClickListener {
             if (viewDataBinding.actCalDetailEtComment.text.toString().isNotEmpty()) {
@@ -491,9 +412,14 @@ class CalendarDetailActivity : BaseActivity<ActivityCalendarDetailBinding, Calen
 
     }
 
-    private fun directApply() {
+    private fun directApply(url : String) {
         viewDataBinding.actCalDetailTvApply.setSafeOnClickListener {
-            toast("기능 준비중입니다:)")
+            try {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse((url)))
+                startActivity(intent)
+            } catch (e: Exception) {
+                Log.e("error: ", e.toString());
+            }
         }
     }
 

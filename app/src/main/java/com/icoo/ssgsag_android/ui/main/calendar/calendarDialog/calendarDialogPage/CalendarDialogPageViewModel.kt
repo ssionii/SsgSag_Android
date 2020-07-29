@@ -3,14 +3,17 @@ package com.icoo.ssgsag_android.ui.main.calendar.calendarDialog.calendarDialogPa
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import com.icoo.ssgsag_android.base.BaseViewModel
+import com.icoo.ssgsag_android.data.model.poster.PosterRepository
 import com.icoo.ssgsag_android.data.model.schedule.Schedule
 import com.icoo.ssgsag_android.data.model.schedule.ScheduleRepository
 import com.icoo.ssgsag_android.ui.main.calendar.calendarDetail.CalendarDetailActivity
+import com.icoo.ssgsag_android.ui.main.feed.context
 import com.icoo.ssgsag_android.util.scheduler.SchedulerProvider
 import io.reactivex.Single
 import org.json.JSONArray
@@ -18,8 +21,9 @@ import org.json.JSONObject
 import kotlin.reflect.KClass
 
 class CalendarDialogPageViewModel(
-    private val repository: ScheduleRepository
-    , private val schedulerProvider: SchedulerProvider
+    private val repository: ScheduleRepository,
+    private val posterRepository: PosterRepository,
+    private val schedulerProvider: SchedulerProvider
 ) : BaseViewModel() {
 
     private val _isProgress = MutableLiveData<Int>()
@@ -28,6 +32,8 @@ class CalendarDialogPageViewModel(
     val schedule: LiveData<ArrayList<Schedule>> get() = _schedule
     private val _activityToStart = MutableLiveData<Pair<KClass<*>, Bundle?>>()
     val activityToStart: LiveData<Pair<KClass<*>, Bundle?>> get() = _activityToStart
+
+    var pushAlarmList = MutableLiveData<ArrayList<Int>>()
 
     fun getAllSchedule(year: String, month: String, date: String) {
         addDisposable(repository.getCalendar(year, month, date)
@@ -114,6 +120,54 @@ class CalendarDialogPageViewModel(
         }
         _activityToStart.postValue(Pair(CalendarDetailActivity::class, bundle))
     }
+
+    fun getPushAlarm(posterIdx: Int){
+        addDisposable(posterRepository.getTodoPushAlarm(posterIdx)
+            .subscribeOn(schedulerProvider.io())
+            .observeOn(schedulerProvider.mainThread())
+            .subscribe({
+                pushAlarmList.value = it
+            }, {
+
+            })
+        )
+    }
+
+    fun bookmarkWithAlarm(posterIdx: Int, dday : Int, showFavorite: Boolean, year : String, month : String, date : String ){
+        addDisposable(posterRepository.postTodoPushAlarm(posterIdx, dday.toString())
+            .subscribeOn(schedulerProvider.io())
+            .observeOn(schedulerProvider.mainThread())
+            .subscribe({
+                if(it == 204){
+                    if(showFavorite) getFavoriteSchedule(year, month, date)
+                    else getAllSchedule(year, month, date)
+
+                    Toast.makeText(context, "즐겨찾기에 추가되었습니다.", Toast.LENGTH_SHORT).show()
+                }
+            }, {
+
+            })
+        )
+    }
+
+    fun unBookmarkWithAlarm(posterIdx: Int, showFavorite: Boolean, year : String, month : String, date : String){
+        addDisposable(posterRepository.deleteTodoPushAlarm(posterIdx)
+            .subscribeOn(schedulerProvider.io())
+            .observeOn(schedulerProvider.mainThread())
+            .subscribe({
+                if(it == 204){
+                    if(showFavorite) getFavoriteSchedule(year, month, date)
+                    else getAllSchedule(year, month, date)
+
+                    Toast.makeText(context, "즐겨찾기가 해제되었습니다.", Toast.LENGTH_SHORT).show()
+                }
+            }, {
+
+            })
+        )
+    }
+
+
 
 
     private fun showProgress() {

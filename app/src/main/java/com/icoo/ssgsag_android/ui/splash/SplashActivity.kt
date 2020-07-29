@@ -2,12 +2,10 @@ package com.icoo.ssgsag_android.ui.splash
 
 import android.animation.Animator
 import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import com.icoo.ssgsag_android.data.local.pref.SharedPreferenceController
-import com.icoo.ssgsag_android.data.model.base.StringResponse
 import com.icoo.ssgsag_android.SsgSagApplication
 import com.icoo.ssgsag_android.util.service.network.NetworkService
 import org.jetbrains.anko.startActivity
@@ -20,8 +18,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Message
 import android.view.Gravity
-import android.view.View.GONE
-import android.view.View.INVISIBLE
 import androidx.lifecycle.Observer
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.iid.FirebaseInstanceId
@@ -29,14 +25,13 @@ import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseActivity
 import com.icoo.ssgsag_android.ui.walkthrough.WalkthroughActivity
 import com.icoo.ssgsag_android.ui.login.LoginActivity
-import com.icoo.ssgsag_android.data.model.base.IntResponse
 import com.icoo.ssgsag_android.databinding.ActivitySplashBinding
 import com.icoo.ssgsag_android.ui.login.LoginViewModel
 import com.icoo.ssgsag_android.util.DialogPlusAdapter
 import com.igaworks.v2.core.AdBrixRm
 import com.orhanobut.dialogplus.DialogPlus
-import com.orhanobut.dialogplus.DialogPlusBuilder
 import com.orhanobut.dialogplus.ViewHolder
+import org.jetbrains.anko.toast
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.lang.ref.WeakReference
 
@@ -138,7 +133,6 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, LoginViewModel>() {
            update()
 
         } else {*/
-
             // 앱 처음 설치
             if(SharedPreferenceController.getWalkthroughs(thisActivity)== "false"){
                 startActivity<WalkthroughActivity>()
@@ -175,9 +169,11 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, LoginViewModel>() {
 
 
     private fun getUpdateResponse() {
-
         viewModel.getUpdate()
         viewModel.isUpdated.observe(this@SplashActivity, Observer { value ->
+
+            Log.e("isUpdate 값", value.toString())
+
             if(value == 0) {
                 mBackgroundThread = BackgroundThread()
                 mBackgroundThread!!.start()
@@ -245,7 +241,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, LoginViewModel>() {
         builder.apply{
             setAdapter(mAdapter)
             setOverlayBackgroundResource(R.color.dialog_background)
-            setContentBackgroundResource(R.drawable.header_dialog_plus_radius)
+            setContentBackgroundResource(R.drawable.bg_white_top_39_radius)
 
             val horizontalDpValue = 32
             val topDpValue = 40

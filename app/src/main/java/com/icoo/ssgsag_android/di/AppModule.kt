@@ -35,6 +35,7 @@ import com.icoo.ssgsag_android.ui.main.calendar.calendarDialog.CalendarDialogVie
 import com.icoo.ssgsag_android.ui.main.calendar.calendarDialog.calendarDialogPage.CalendarDialogPageViewModel
 import com.icoo.ssgsag_android.ui.main.calendar.calendarPage.list.CalendarListDeleteViewModel
 import com.icoo.ssgsag_android.ui.main.calendar.calendarPage.list.CalendarListViewModel
+import com.icoo.ssgsag_android.ui.main.calendar.posterBookmark.PosterBookmarkViewModel
 import com.icoo.ssgsag_android.ui.main.feed.FeedViewModel
 import com.icoo.ssgsag_android.ui.main.myPage.MyPageViewModel
 import com.icoo.ssgsag_android.ui.main.myPage.myReview.MyReviewViewModel
@@ -153,11 +154,12 @@ val viewModule = module {
     viewModel { TodaySwipePosterViewModel(get(), get()) }
     //Schedule
     single { CalendarViewModel(get(), get()) }
-    single {CalendarListViewModel(get(), get())}
+    single {CalendarListViewModel(get(), get(), get())}
     viewModel { CalendarDialogViewModel() }
-    viewModel { CalendarDialogPageViewModel(get(), get()) }
+    viewModel { CalendarDialogPageViewModel(get(), get(), get()) }
     viewModel { CalendarDetailViewModel(get(), get(), get(), get()) }
     viewModel {CalendarListDeleteViewModel(get(), get())}
+    viewModel { PosterBookmarkViewModel(get() ,get()) }
     // review
     viewModel { ReviewViewModel(get(), get()) }
     viewModel { ReviewDetailViewModel( get(), get(), get()) }

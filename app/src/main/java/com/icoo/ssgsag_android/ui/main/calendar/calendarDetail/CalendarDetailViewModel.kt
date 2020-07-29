@@ -56,6 +56,7 @@ class CalendarDetailViewModel(
             .doOnTerminate { hideProgress() }
             .subscribe({
                 it.run {
+
                     _posterDetail.setValue(this)
                     _webUrl.setValue(this.posterWebSite)
                     _analytics.postValue(this.analyticsJson)
@@ -237,22 +238,6 @@ class CalendarDetailViewModel(
             .doOnSubscribe { showProgress() }
             .doOnTerminate { hideProgress() }
             .subscribe({
-                getPosterDetail(posterIdx)
-            }, {
-
-            })
-        )
-    }
-
-
-    fun bookmarkWithAlarm(posterIdx: Int, ddayList : String){
-        addDisposable(posterRepository.postTodoPushAlarm(posterIdx, ddayList)
-            .subscribeOn(schedulerProvider.io())
-            .observeOn(schedulerProvider.mainThread())
-            .doOnSubscribe { showProgress() }
-            .doOnTerminate { hideProgress() }
-            .subscribe({
-                Log.e("알람 설정과 북마크 status", it.toString())
                 getPosterDetail(posterIdx)
             }, {
 

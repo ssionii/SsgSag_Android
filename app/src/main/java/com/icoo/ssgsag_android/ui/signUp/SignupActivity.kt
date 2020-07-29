@@ -20,7 +20,9 @@ import android.widget.TextView
 import com.adjust.sdk.Adjust
 import com.adjust.sdk.AdjustEvent
 import com.facebook.appevents.AppEventsLogger
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.iid.FirebaseInstanceId
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import com.icoo.ssgsag_android.R
@@ -523,7 +525,7 @@ class SignupActivity : BaseActivity<ActivitySignupBinding, SignupViewModel>() {
         viewModel.signup(gsonObject)
 
         viewModel.loginToken.observe(this, androidx.lifecycle.Observer {
-            viewModel.autoLogin(null)
+            viewModel.autoLogin(it, null)
 
             //adbrix
             try {
@@ -577,6 +579,7 @@ class SignupActivity : BaseActivity<ActivitySignupBinding, SignupViewModel>() {
         })
     }
 
+
     private fun logEVENT_NAME_COMPELTE_REGISTRATIONEvent() {
         val logger = AppEventsLogger.newLogger(this)
         logger.logEvent("REGISTRATION_COMPELTE");
@@ -599,5 +602,7 @@ class SignupActivity : BaseActivity<ActivitySignupBinding, SignupViewModel>() {
         val adjustEvent = AdjustEvent("pj08ph")
         Adjust.trackEvent(adjustEvent)
     }
+
+
 
 }

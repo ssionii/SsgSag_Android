@@ -13,6 +13,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 
 import androidx.fragment.app.FragmentTransaction
 import androidx.viewpager.widget.ViewPager
+import com.crashlytics.android.Crashlytics
 import com.google.android.material.color.MaterialColors.getColor
 import com.google.android.material.tabs.TabLayout
 import com.icoo.ssgsag_android.R

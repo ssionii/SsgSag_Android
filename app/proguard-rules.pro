@@ -2,6 +2,9 @@
 -keep class com.google.android.gms.ads.identifier.AdvertisingIdClient {*;}
 -keep class com.google.android.gms.ads.identifier.AdvertisingIdClient$* {*;}
 
+-keepattributes SourceFile,LineNumberTable        # Keep file names and line numbers.
+-keep public class * extends java.lang.Exception  # Optional: Keep custom exceptions.
+
 # Add project specific ProGuard rules here.
 # You can control the set of applied configuration files using the
 # proguardFiles setting in build.gradle.

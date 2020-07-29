@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+                name="posterAlarm"
+                type="com.icoo.ssgsag_android.ui.main.calendar.posterBookmark.PosterAlarmData" />
+    </data>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent" 
+        android:layout_height="55dp"
+        android:background="@color/white"
+        android:paddingHorizontal="40dp">
+    <TextView
+            android:id="@+id/item_poster_bookmark_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="알림 내용"
+            android:text="@{posterAlarm.description}"
+            android:textSize="14sp"
+            android:fontFamily="@font/noto_sans_kr_regular"
+            android:textColor="@color/black_1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+    <ImageView
+            android:id="@+id/item_poster_bookmark_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:src="@drawable/ic_checkbox_off"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

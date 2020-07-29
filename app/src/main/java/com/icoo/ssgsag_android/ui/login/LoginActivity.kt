@@ -237,6 +237,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(){
 
                 val realmDeviceInfo = realm.where(DeviceInfo::class.java).equalTo("id", 1 as Int).findFirst()
 
+                Log.e("login token",realmDeviceInfo!!.token )
                 viewModel.login(realmDeviceInfo!!.token, realmDeviceInfo!!.loginType, realmDeviceInfo!!.uuid)
             } else {
                 val errorCode = naverOAuthLoginInstance!!.getLastErrorCode(naverContext).code

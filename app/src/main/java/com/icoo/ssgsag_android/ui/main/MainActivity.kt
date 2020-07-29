@@ -4,17 +4,18 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Point
 import android.os.Bundle
-import android.util.Log
-import android.view.*
-import android.widget.LinearLayout
+import android.view.Display
+import android.view.LayoutInflater
+import android.view.View
 import android.widget.RelativeLayout
-import android.widget.Toast
+import com.bumptech.glide.Glide
+import com.crashlytics.android.Crashlytics
+import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseActivity
 import com.icoo.ssgsag_android.base.BasePagerAdapter
 import com.icoo.ssgsag_android.data.local.pref.PreferenceManager
-import com.icoo.ssgsag_android.databinding.ActivityMainBinding
-import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.data.local.pref.SharedPreferenceController
+import com.icoo.ssgsag_android.databinding.ActivityMainBinding
 import com.icoo.ssgsag_android.ui.main.MainActivity.mainActivityContext.mainContext
 import com.icoo.ssgsag_android.ui.main.calendar.CalendarFragment
 import com.icoo.ssgsag_android.ui.main.calendar.calendarDetail.CalendarDetailActivity
@@ -24,12 +25,8 @@ import com.icoo.ssgsag_android.ui.main.review.main.ReviewMainFragment
 import com.icoo.ssgsag_android.ui.main.ssgSag.SsgSagViewModel
 import com.icoo.ssgsag_android.util.listener.BackPressHandler
 import com.igaworks.v2.core.AdBrixRm
+import io.fabric.sdk.android.Fabric
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import android.app.AlarmManager
-import android.app.PendingIntent
-import com.bumptech.glide.Glide
-import java.net.HttpURLConnection
-import java.net.URL
 
 
 class MainActivity : BaseActivity<ActivityMainBinding, SsgSagViewModel>() {

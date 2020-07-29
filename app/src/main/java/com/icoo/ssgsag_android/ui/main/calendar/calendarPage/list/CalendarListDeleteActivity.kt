@@ -1,8 +1,13 @@
 package com.icoo.ssgsag_android.ui.main.calendar.calendarPage.list
 
 import android.os.Bundle
+import android.util.Log
+import android.view.View.GONE
+import android.view.View.VISIBLE
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseActivity
 import com.icoo.ssgsag_android.base.BaseRecyclerViewAdapter
@@ -63,28 +68,7 @@ class CalendarListDeleteActivity : BaseActivity<ActivityCalendarListDeleteBindin
                 supportsChangeAnimations = false
             }
 
-            layoutManager = WrapContentLinearLayoutManager()
-
-            var curPosition = 0
-
-            addOnScrollListener(object: RecyclerView.OnScrollListener(){
-                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                    super.onScrollStateChanged(recyclerView, newState)
-
-                    if(newState == RecyclerView.SCROLL_STATE_DRAGGING || newState == RecyclerView.SCROLL_STATE_IDLE) {
-
-                        var position = (layoutManager as WrapContentLinearLayoutManager).findFirstVisibleItemPosition()
-
-                        calendarListPageRecyclerViewAdapter.apply{
-
-                            if(itemList.size < curPosition) curPosition = position
-                        }
-
-                    }
-                }
-
-            })
-
+            layoutManager = LinearLayoutManager(this@CalendarListDeleteActivity)
         }
 
         val date : Date = Calendar.getInstance().time
@@ -102,13 +86,16 @@ class CalendarListDeleteActivity : BaseActivity<ActivityCalendarListDeleteBindin
         dataList.clear()
         dataList = viewModel.filterSchedule(year, month)
 
-        calendarListPageRecyclerViewAdapter.apply {
-            replaceAll(dataList, true)
-            setSelectType(1)
-            if(dataList.size != 0) {
-                notifyItemRangeChanged(0, dataList.size)
-            }else
+        if(dataList.size > 0) {
+
+            calendarListPageRecyclerViewAdapter.apply {
+                replaceAll(dataList, true)
+                setSelectType(1)
                 notifyDataSetChanged()
+            }
+        }else{
+            viewDataBinding.actCalListDeleteRv.visibility = GONE
+            viewDataBinding.actCalListDeleteLlEmpty.visibility = VISIBLE
         }
     }
 
@@ -119,11 +106,13 @@ class CalendarListDeleteActivity : BaseActivity<ActivityCalendarListDeleteBindin
         }
 
         viewDataBinding.actCalListDeleteClDelete.setSafeOnClickListener {
-            dialogFragment = CalendarDialogPageDeleteDialogFragment()
+            if(deletePosterNameList.size > 0) {
+                dialogFragment = CalendarDialogPageDeleteDialogFragment()
 
-            dialogFragment.setOnDialogDismissedListener(this)
-            dialogFragment.setInfo(deletePosterIdxList, deletePosterNameList)
-            dialogFragment.show(supportFragmentManager, "schedule delete dialog")
+                dialogFragment.setOnDialogDismissedListener(this)
+                dialogFragment.setInfo(deletePosterIdxList, deletePosterNameList)
+                dialogFragment.show(supportFragmentManager, "schedule delete dialog")
+            }
         }
     }
 
@@ -131,28 +120,44 @@ class CalendarListDeleteActivity : BaseActivity<ActivityCalendarListDeleteBindin
         object :
             CalendarListPageRecyclerViewAdapter.OnScheduleItemClickListener {
 
-            override fun onBookmarkClicked(posterIdx: Int, isFavorite: Int, position:Int) {}
-
-            override fun onItemClicked(posterIdx: Int) {}
-
-            override fun onSelectorClicked(
+            override fun onBookmarkClicked(
                 posterIdx: Int,
-                posterName: String,
-                isSelected: Boolean
-            ) {
-                if(isSelected){
-                    deletePosterNameList.add(posterName)
-                    deletePosterIdxList.add(posterIdx)
-                }
-                else {
-                    deletePosterNameList.remove(posterName)
-                    deletePosterIdxList.remove(posterIdx)
+                isFavorite: Int,
+                dday: Int,
+                position: Int
+            ) {}
+
+            override fun onItemClicked(posterIdx: Int, position: Int) {
+                val selectedItem = dataList[position]
+                when(selectedItem.selectType){
+                    1 -> {
+                        dataList[position].selectType = 2
+                        deletePosterNameList.add(selectedItem.posterName)
+                        deletePosterIdxList.add(posterIdx)
+                    }
+                    2 -> {
+                        dataList[position].selectType = 1
+                        deletePosterNameList.remove(selectedItem.posterName)
+                        deletePosterIdxList.remove(posterIdx)
+                    }
                 }
 
                 if(deletePosterNameList.size != 0 ){
-                    viewDataBinding.actCalListDeleteClDelete.setBackgroundColor(resources.getColor(R.color.ssgsag))
+                    viewDataBinding.actCalListDeleteClDelete.apply{
+                        setBackgroundColor(resources.getColor(R.color.ssgsag))
+                        isClickable = true
+                    }
+
                 }else{
-                    viewDataBinding.actCalListDeleteClDelete.setBackgroundColor(resources.getColor(R.color.grey_2))
+                    viewDataBinding.actCalListDeleteClDelete.apply{
+                        setBackgroundColor(resources.getColor(R.color.grey_2))
+                        isClickable = false
+                    }
+                }
+
+                calendarListPageRecyclerViewAdapter.run{
+                    replace(dataList[position], position)
+                    notifyItemChanged(position)
                 }
             }
         }

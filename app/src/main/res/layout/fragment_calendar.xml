@@ -81,18 +81,15 @@
 
         <androidx.cardview.widget.CardView
                 android:id="@+id/frag_Calendar_cv_toggle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="100dp"
+                android:layout_height="36dp"
                 app:cardBackgroundColor="@color/ssgsag"
                 app:cardCornerRadius="8dp"
-                app:contentPaddingLeft="16dp"
-                app:contentPaddingRight="16dp"
-                app:contentPaddingTop="9dp"
-                app:contentPaddingBottom="9dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginBottom="28dp">
+                android:layout_marginBottom="28dp"
+                app:cardElevation="0dp">
             <TextView
                     android:id="@+id/frag_calendar_tv_toggle"
                     android:layout_width="wrap_content"
@@ -100,7 +97,8 @@
                     android:text="캘린더로 보기"
                     android:textColor="@color/white"
                     android:fontFamily="@font/noto_sans_kr_medium"
-                    android:textSize="12sp"/>
+                    android:textSize="12sp"
+                    android:layout_gravity="center"/>
        </androidx.cardview.widget.CardView>
 
         <androidx.constraintlayout.widget.ConstraintLayout

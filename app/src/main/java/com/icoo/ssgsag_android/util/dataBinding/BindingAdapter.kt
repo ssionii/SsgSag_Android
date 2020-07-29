@@ -167,8 +167,6 @@ fun setGlideTopCropImg(view: ImageView, imgUrl: String?) {
         .into(view)
 }
 
-
-
 @BindingAdapter("glideCenterCrop")
 fun setGlideCenterCropImg(view: ImageView, imgUrl: String?) {
     Glide.with(view.context)
@@ -352,6 +350,14 @@ fun setConstraintLayoutVisibility(layout: ConstraintLayout, bool: Boolean){
 fun LinearLayout.setVisibilityByInt(num: Int){
     when(num){
         1 -> this.visibility = VISIBLE
+        else -> this.visibility = GONE
+    }
+}
+
+@BindingAdapter("llVisibilityByIntR")
+fun LinearLayout.setVisibilityByIntR(num: Int){
+    when(num){
+        0 -> this.visibility = VISIBLE
         else -> this.visibility = GONE
     }
 }

@@ -1,6 +1,7 @@
 package com.icoo.ssgsag_android.ui.main.calendar.calendarDetail
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -76,7 +77,7 @@ class TodoPushAlarmDialogPlusAdapter(
         }
 
         viewHolder.checkBox.setSafeOnClickListener {
-            listener?.onItemClick(position)
+            listener?.onItemClick(position, this)
         }
 
         // 지난 날짜 click disable 시키기
@@ -145,14 +146,13 @@ class TodoPushAlarmDialogPlusAdapter(
 
 
     interface OnItemClickListener {
-        fun onItemClick(position: Int)
+        fun onItemClick(position: Int, adapter: TodoPushAlarmDialogPlusAdapter)
     }
 
     fun replace(list : ArrayList<Boolean>){
         this.isCheckList = list
 
-        notifyDataSetChanged()
-
+        this.notifyDataSetChanged()
     }
 
 }

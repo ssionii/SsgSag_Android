@@ -1,26 +1,26 @@
 package com.icoo.ssgsag_android
 
+import android.app.Activity
 import android.app.Application
+import android.os.Bundle
 import com.adjust.sdk.Adjust
 import com.adjust.sdk.AdjustConfig
+import com.adjust.sdk.LogLevel
+import com.crashlytics.android.Crashlytics
+import com.crashlytics.android.core.CrashlyticsCore
 import com.icoo.ssgsag_android.di.appModule
 import com.icoo.ssgsag_android.util.sdk.kakao.KakaoSDKAdapter
 import com.icoo.ssgsag_android.util.service.network.NetworkService
-import com.igaworks.v2.core.AdBrixRm
-import com.igaworks.v2.core.application.AbxActivityHelper
-import com.igaworks.v2.core.application.AbxActivityLifecycleCallbacks
 import com.kakao.auth.KakaoSDK
+import io.fabric.sdk.android.Fabric
+import io.realm.Realm
+import io.realm.RealmConfiguration
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import android.app.Activity
-import android.os.Bundle
-import com.adjust.sdk.LogLevel
-import io.realm.Realm
-import io.realm.RealmConfiguration
 
 
 class SsgSagApplication : Application() {
@@ -62,9 +62,12 @@ class SsgSagApplication : Application() {
         // Kakao Sdk 초기화
         KakaoSDK.init(KakaoSDKAdapter())
 
+        /*
         AbxActivityHelper.initializeSdk(applicationContext , getString(R.string.adbrix_app_key), getString(R.string.adbrix_secret_key));
         registerActivityLifecycleCallbacks(AbxActivityLifecycleCallbacks())
         AdBrixRm.setEventUploadTimeInterval(AdBrixRm.AdBrixEventUploadTimeInterval.NORMAL)
+
+         */
 
         initAdjustSetting()
 
@@ -77,12 +80,20 @@ class SsgSagApplication : Application() {
 
         Realm.setDefaultConfiguration(config)
 
+        val crashlyticsKit = Crashlytics.Builder()
+            .core(
+                CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
+            .build()
+
+        Fabric.with(this, crashlyticsKit)
+
+
     }
 
     private fun initAdjustSetting(){
         val appToken = this.resources.getString(R.string.adjust_app_token)
-        val environment = AdjustConfig.ENVIRONMENT_SANDBOX
-        // val environment = AdjustConfig.ENVIRONMENT_PRODUCTION
+        //val environment = AdjustConfig.ENVIRONMENT_SANDBOX
+        val environment = AdjustConfig.ENVIRONMENT_PRODUCTION
         val config = AdjustConfig(this, appToken, environment)
         config.setAppSecret(2, 1858703771, 1353181520, 555890878, 1372324175)
         config.setLogLevel(LogLevel.WARN)

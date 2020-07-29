@@ -89,17 +89,20 @@ class LoginViewModel (
             .observeOn(schedulerProvider.mainThread())
             .doOnSubscribe { showProgress() }
             .doOnTerminate { hideProgress() }
+            .doOnError {
+                Log.e("auto Login error", it.message)
+            }
             .subscribe({
                 it.run{
                     if(this == 200){
-                        AdBrixRm.login(SharedPreferenceController.getAuthorization(context))
+//                        AdBrixRm.login(SharedPreferenceController.getAuthorization(context))
                         if(param == null){
                             _activityToStart.postValue(Pair(MainActivity::class, null))
                         }else{
                             val bundle = Bundle().apply { putString("param", param) }
                             _activityToStart.postValue(Pair(MainActivity::class, bundle))
                         }
-                    } else if(this == 404){
+                    } else if(this == 404 || this == 401 || this == 600){
                         SharedPreferenceController.setAuthorization(context, "")
                         _activityToStart.postValue(Pair(LoginActivity::class, null))
                     }

@@ -29,6 +29,12 @@ class LoginRepositoryImpl (val api: NetworkService, val pref: PreferenceManager)
             .map { it.status }
     }
 
+    override fun autoLoginFromSignup(token : String): Single<Int> {
+        return api
+            .postAutoLoginResponse("application/json", token , SharedPreferenceController.getFireBaseInstanceId(context))
+            .map { it.status }
+    }
+
     override fun getUpdate(): Single<IntResponse> = api
         .getUpdateResponse("android", version.versionName)
         .map { it }

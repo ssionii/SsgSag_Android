@@ -5,6 +5,7 @@ import android.graphics.Typeface
 import android.text.Layout
 import android.view.View
 import android.view.View.*
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.core.content.res.ResourcesCompat

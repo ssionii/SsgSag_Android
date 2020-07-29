@@ -52,11 +52,16 @@ fun setFavoriteVisibility(view: ImageView, selectType: Int) {
 
 @BindingAdapter("selectorVisibility")
 fun setSelectorVisibility(view: ImageView, selectType: Int) {
-    when(selectType){
+    when(selectType) {
         0->{
             view.visibility = GONE
-            view.setImageResource(R.drawable.select_all_passive)
         }
-        1 -> view.visibility = VISIBLE
+        1 -> {
+            view.visibility = VISIBLE
+            view.setImageResource(R.drawable.ic_select_all_passive)
+        }
+        2 -> {
+            view.setImageResource(R.drawable.ic_select_all)
+        }
     }
 }

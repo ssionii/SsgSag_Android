@@ -7,7 +7,7 @@
         android:paddingTop="40dp"
         android:paddingBottom="48dp"
         android:paddingHorizontal="32dp"
-        android:background="@drawable/header_dialog_plus_radius">
+        android:background="@drawable/bg_white_top_39_radius">
 
     <TextView
             android:layout_width="wrap_content"

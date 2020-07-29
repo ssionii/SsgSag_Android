@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.icoo.ssgsag_android.R
@@ -13,6 +14,7 @@ import com.icoo.ssgsag_android.base.BaseFragment
 import com.icoo.ssgsag_android.data.local.pref.SharedPreferenceController
 import com.icoo.ssgsag_android.databinding.FragmentCalendarDialogPageBinding
 import com.icoo.ssgsag_android.ui.main.calendar.calendarDialog.CalendarDialogFragment
+import com.icoo.ssgsag_android.ui.main.calendar.posterBookmark.PosterBookmarkBottomSheet
 import com.icoo.ssgsag_android.util.DateUtil.dateFormat
 import com.icoo.ssgsag_android.util.DateUtil.monthFormat
 import com.icoo.ssgsag_android.util.DateUtil.yearFormat
@@ -26,7 +28,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class CalendarDialogPageFragment : BaseFragment<FragmentCalendarDialogPageBinding, CalendarDialogPageViewModel>() ,
-     CalendarDialogPageDeleteDialogFragment.OnDialogDismissedListener{
+    CalendarDialogPageDeleteDialogFragment.OnDialogDismissedListener{
 
     override val layoutResID: Int
         get() = R.layout.fragment_calendar_dialog_page
@@ -148,7 +150,7 @@ class CalendarDialogPageFragment : BaseFragment<FragmentCalendarDialogPageBindin
                 }
             })
 
-           layoutManager = WrapContentLinearLayoutManager()
+            layoutManager = WrapContentLinearLayoutManager()
         }
     }
 
@@ -169,28 +171,43 @@ class CalendarDialogPageFragment : BaseFragment<FragmentCalendarDialogPageBindin
                 dialogFragment.show(fragmentManager!!, "schedule delete dialog")
             }
 
-            override fun onBookmarkClicked(posterIdx: Int, isFavorite: Int) {
-                viewModel.bookmark(posterIdx, isFavorite, year, month, day, showFavorite)
-                CalendarDialogFragment.GetUpdate.isUpdated = true
+            override fun onBookmarkClicked(posterIdx: Int, isFavorite: Int, dday: Int, position:Int) {
+                val posterBookmarkBottomSheet =  PosterBookmarkBottomSheet(posterIdx, dday,  isFavorite, "grid") {
+                    bookmarkToggle(position, isFavorite, it)
+                }
+                posterBookmarkBottomSheet.isCancelable = false
+                posterBookmarkBottomSheet.show(childFragmentManager, null)
 
+                CalendarDialogFragment.GetUpdate.isUpdated = true
             }
 
-            override fun onSelectorClicked(posterIdx: Int, posterName: String, isSelected: Boolean) {
+            override fun onSelectorClicked(posterIdx: Int, posterName: String, position: Int) {
 
                 (viewDataBinding.fragCalendarDialogPageRv
                     .adapter as CalendarDialogPageRecyclerViewAdapter).apply {
+
+                    Log.e("클릭", "!!")
+                    Log.e("getSelectType", getSelectType().toString())
+
+                    when(items[position].selectType){
+                        1 ->{
+                            items[position].selectType = 2
+                            deletePosterIdxList.add(posterIdx)
+                            deletePosterNameList.add(posterName)
+                        }
+                        2 ->{
+                            items[position].selectType = 1
+                            deletePosterIdxList.remove(posterIdx)
+                            deletePosterNameList.remove(posterName)
+                        }
+                    }
+
+                    notifyItemChanged(position)
+
                     if(getSelectType()){
                         viewDataBinding.fragCalendarDialogPageTvDelete.visibility = VISIBLE
                         viewDataBinding.fragCalendarDialogPageIvEdit.visibility = INVISIBLE
                         viewDataBinding.fragCalendarDialogPageIvBack.visibility = INVISIBLE
-
-                        if(isSelected){
-                            deletePosterIdxList.add(posterIdx)
-                            deletePosterNameList.add(posterName)
-                        } else {
-                            deletePosterIdxList.remove(posterIdx)
-                            deletePosterNameList.remove(posterName)
-                        }
 
                     }else{
                         viewDataBinding.fragCalendarDialogPageTvDelete.visibility = INVISIBLE
@@ -204,6 +221,20 @@ class CalendarDialogPageFragment : BaseFragment<FragmentCalendarDialogPageBindin
                 }
             }
         }
+
+    private fun bookmarkToggle(position : Int, isFavorite : Int, toggle: Int){
+        (viewDataBinding.fragCalendarDialogPageRv.adapter as CalendarDialogPageRecyclerViewAdapter).apply {
+            items[position].isFavorite = toggle
+            notifyItemChanged(position)
+        }
+
+        when(toggle){
+            0 -> Toast.makeText(activity, "즐겨찾기에서 삭제되었습니다.", Toast.LENGTH_SHORT).show()
+            1 -> {
+                if(isFavorite == 0) Toast.makeText(activity, "즐겨찾기에 추가되었습니다.", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
 
     private fun setEditButton(){
         viewDataBinding.fragCalendarDialogPageIvEdit.setSafeOnClickListener {
