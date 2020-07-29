@@ -93,11 +93,12 @@ class SignupViewModel(
             })
     }
 
-    fun autoLogin(param: String?){
-        addDisposable(loginRepository.autoLogin()
+    fun autoLogin(token : String, param: String?){
+        addDisposable(loginRepository.autoLoginFromSignup(token)
             .subscribeOn(schedulerProvider.io())
             .observeOn(schedulerProvider.mainThread())
             .subscribe({
+                Log.e("signup 뒤 autoLogin", it.toString())
                 it.run{
                     if(this == 200){
                         AdBrixRm.login(SharedPreferenceController.getAuthorization(context))
@@ -107,7 +108,7 @@ class SignupViewModel(
                             val bundle = Bundle().apply { putString("param", param) }
                             _activityToStart.postValue(Pair(MainActivity::class, bundle))
                         }
-                    } else if(this == 404){
+                    } else if(this == 404 || this == 401 || this == 600){
                         SharedPreferenceController.setAuthorization(context, "")
                         _activityToStart.postValue(Pair(LoginActivity::class, null))
                     }

@@ -60,7 +60,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, SsgSagViewModel>() {
         mainContext = this
 
         backPressHandler = BackPressHandler(this)
-        Fabric.with(this, Crashlytics())
 
         //myAuth를 원래 토큰으로 사용했는데 2.0버전은 실수로 TOKEN이라고 지음... 이미 TOKEN을 받아서 사용하는것도 많고 myAuth를 받아서 사용하는것도
         //많아가지고 일단 이렇게 했슴다... 점진적으로 다른 클래스에서 서버통신할때 토큰받아오는거 TOKEN으로 수정합시당

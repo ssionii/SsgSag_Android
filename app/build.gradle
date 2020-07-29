@@ -24,7 +24,7 @@ android {
 
     defaultConfig {
         applicationId "com.icoo.ssgsag_android"
-        minSdkVersion 23
+        minSdkVersion 24
         targetSdkVersion 28
         versionCode 52 // application에 adjust environment 바꾸기!
         versionName "3.3.1.0"
@@ -32,13 +32,18 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            manifestPlaceholders = [crashlyticsCollectionEnabled:"true"]
+            manifestPlaceholders = [enableCrashReporting:"true"]
         }
         debug {
             signingConfig signingConfigs.release
-            manifestPlaceholders = [crashlyticsCollectionEnabled:"false"]
+            // crashlytics 실행하지 않음
+            manifestPlaceholders = [enableCrashReporting:"false"]
+            // crashlytics 플러그인을 사용하지 않음
+            ext.enableCrashlytics = false
+            // crashlytics 빌드 ID 업데이트 막기
+            ext.alwatsUpdateBuildId = false
 
         }
 
@@ -66,17 +71,18 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     //util
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation "com.android.support:support-compat:28.0.0"
+    implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.annotation:annotation:1.1.0'
-    implementation 'androidx.core:core-ktx:1.0.0'
+    implementation 'androidx.core:core-ktx:1.3.0'
     implementation 'org.jetbrains.anko:anko:0.10.7'
     implementation 'org.jsoup:jsoup:1.11.3'
     //ui
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    implementation 'com.google.android.material:material:1.1.0-alpha09'
-    implementation 'com.github.bumptech.glide:glide:4.1.1'
+    implementation 'com.google.android.material:material:1.3.0-alpha01'
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
     implementation 'jp.wasabeef:glide-transformations:4.1.0'
-    implementation 'com.airbnb.android:lottie:3.0.0'
+    implementation 'com.airbnb.android:lottie:3.4.0'
     implementation 'com.yuyakaido.android:card-stack-view:2.3.3'
     implementation 'de.hdodenhof:circleimageview:3.0.0'
     implementation 'com.makeramen:roundedimageview:2.3.0'
@@ -145,6 +151,8 @@ dependencies {
     implementation('com.crashlytics.sdk.android:crashlytics:2.10.1-SNAPSHOT@aar') {
         transitive = true;
     }
+//    implementation 'com.android.tools.build:gradle:4.0.1'
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
 
 
     //test
@@ -156,9 +164,6 @@ dependencies {
     testImplementation 'org.koin:koin-test:2.0.1'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-
-//    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.2'
-//    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
 
 
 }

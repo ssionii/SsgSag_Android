@@ -11,5 +11,6 @@ interface LoginRepository {
 
     fun login(body: JsonObject): Observable<LoginResponse>
     fun autoLogin() : Single<Int>
+    fun autoLoginFromSignup(token : String) : Single<Int>
     fun getUpdate() : Single<IntResponse>
 }

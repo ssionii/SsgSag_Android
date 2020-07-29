@@ -103,10 +103,6 @@ class ClubInfoPhotoRecyclerViewAdapter(
 
             holder.dataBinding.itemSquarePhotoIv.requestLayout()
 
-            holder.dataBinding.root.setSafeOnClickListener {
-                listener?.onItemClickListener(itemList!![position].toUri(), position)
-            }
-
             holder.dataBinding.itemSquarePhotoIvRemove.setSafeOnClickListener {
                 listener?.onItemRemoveClickListener(itemList!![position])
             }

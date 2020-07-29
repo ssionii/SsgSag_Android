@@ -31,6 +31,7 @@ import com.icoo.ssgsag_android.util.DialogPlusAdapter
 import com.igaworks.v2.core.AdBrixRm
 import com.orhanobut.dialogplus.DialogPlus
 import com.orhanobut.dialogplus.ViewHolder
+import org.jetbrains.anko.toast
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.lang.ref.WeakReference
 
@@ -132,7 +133,6 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, LoginViewModel>() {
            update()
 
         } else {*/
-
             // 앱 처음 설치
             if(SharedPreferenceController.getWalkthroughs(thisActivity)== "false"){
                 startActivity<WalkthroughActivity>()
@@ -169,9 +169,11 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, LoginViewModel>() {
 
 
     private fun getUpdateResponse() {
-
         viewModel.getUpdate()
         viewModel.isUpdated.observe(this@SplashActivity, Observer { value ->
+
+            Log.e("isUpdate 값", value.toString())
+
             if(value == 0) {
                 mBackgroundThread = BackgroundThread()
                 mBackgroundThread!!.start()
