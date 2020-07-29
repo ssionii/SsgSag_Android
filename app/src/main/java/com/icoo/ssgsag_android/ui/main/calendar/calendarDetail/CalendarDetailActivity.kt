@@ -58,42 +58,7 @@ class CalendarDetailActivity : BaseActivity<ActivityCalendarDetailBinding, Calen
 
     private val KAKAO_BASE_LINK = "https://developers.kakao.com"
 
-    private val onCommentItemClickListener = object : OnCommentItemClickListener {
-        override fun onEditClicked(commentIdx: Int, position: Int) {
-            commentBehaviorNum = 2
-            commentToEdit = viewModel.posterDetail.value?.commentList!![position]
-            viewDataBinding.actCalDetailEtComment.run {
-                setText(commentToEdit?.commentContent)
-                setSelection(text.toString().length)
-            }
-            viewDataBinding.actCalDetailEtComment.post(Runnable {
-                viewDataBinding.actCalDetailEtComment.setFocusableInTouchMode(true)
-                viewDataBinding.actCalDetailEtComment.requestFocus()
-                val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.showSoftInput(viewDataBinding.actCalDetailEtComment, 0)
-            })
-        }
-
-        override fun onDeleteClicked(commentIdx: Int, position: Int) {
-            commentBehaviorNum = 3
-            viewModel.deleteComment(commentIdx, posterIdx)
-        }
-
-        override fun onLikeClicked(commentIdx: Int, like: Int) {
-            if (like == 0)
-                viewModel.likeComment(commentIdx, 1, posterIdx)
-            else
-                viewModel.likeComment(commentIdx, 0, posterIdx)
-        }
-
-        override fun onCautionClicked(commentIdx: Int) {
-            viewModel.cautionComment(commentIdx)
-        }
-
-    }
-
     lateinit private var deleteDialogFragment : CalendarDetailDeletePosterDialogFragment
-    lateinit private var favoriteCancelDialogFragment : CalendarDetailDeletePosterDialogFragment
 
     private var scheduleDeleteClick = false
 
@@ -149,19 +114,12 @@ class CalendarDetailActivity : BaseActivity<ActivityCalendarDetailBinding, Calen
         writeComment()
 
         moveWebSite()
-        directApply()
-
 
         viewModel.analytics.observe(this, androidx.lifecycle.Observer {
             setPieChart()
         })
 
-        viewModel.posterDetail.observe(this, Observer {
-            if (it.posterWebSite2 == null){
-                viewDataBinding.actCalDetailIvApply.setColorFilter(resources.getColor(R.color.grey_3), android.graphics.PorterDuff.Mode.MULTIPLY)
-                viewDataBinding.actCalDetailTvApply.setTextColor(resources.getColor(R.color.grey_3))
-            }
-        })
+
 
         navigator()
 
@@ -278,9 +236,29 @@ class CalendarDetailActivity : BaseActivity<ActivityCalendarDetailBinding, Calen
             }
             posterBookmarkBottomSheet.isCancelable = false
             posterBookmarkBottomSheet.show(supportFragmentManager, null)
-
-
         }
+
+        viewModel.posterDetail.observe(this, Observer {
+            if (it.posterWebSite2 == null){
+                viewDataBinding.actCalDetailIvApply.setColorFilter(Color.parseColor("#4dffffff"), android.graphics.PorterDuff.Mode.MULTIPLY)
+                viewDataBinding.actCalDetailTvApply.setTextColor(Color.parseColor("#4dffffff"))
+
+                viewDataBinding.actCalDetailClApply.isClickable = false
+
+            } else{
+                directApply(it.posterWebSite2!!)
+            }
+
+            if(it.posterWebSite == null){
+                viewDataBinding.actCalDetailIvGoWebsite.setColorFilter(Color.parseColor("#4dffffff") , android.graphics.PorterDuff.Mode.MULTIPLY)
+                viewDataBinding.actCalDetailTvGoWebsite.setTextColor(Color.parseColor("#4dffffff"))
+
+                viewDataBinding.actCalDetailClGoWebsite.isClickable = false
+            }else {
+                moveWebSite()
+            }
+
+        })
     }
 
     private fun bookmarkToggle(isFavorite : Int, toggle: Int){
@@ -351,6 +329,40 @@ class CalendarDetailActivity : BaseActivity<ActivityCalendarDetailBinding, Calen
         }
     }
 
+    private val onCommentItemClickListener = object : OnCommentItemClickListener {
+        override fun onEditClicked(commentIdx: Int, position: Int) {
+            commentBehaviorNum = 2
+            commentToEdit = viewModel.posterDetail.value?.commentList!![position]
+            viewDataBinding.actCalDetailEtComment.run {
+                setText(commentToEdit?.commentContent)
+                setSelection(text.toString().length)
+            }
+            viewDataBinding.actCalDetailEtComment.post(Runnable {
+                viewDataBinding.actCalDetailEtComment.setFocusableInTouchMode(true)
+                viewDataBinding.actCalDetailEtComment.requestFocus()
+                val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.showSoftInput(viewDataBinding.actCalDetailEtComment, 0)
+            })
+        }
+
+        override fun onDeleteClicked(commentIdx: Int, position: Int) {
+            commentBehaviorNum = 3
+            viewModel.deleteComment(commentIdx, posterIdx)
+        }
+
+        override fun onLikeClicked(commentIdx: Int, like: Int) {
+            if (like == 0)
+                viewModel.likeComment(commentIdx, 1, posterIdx)
+            else
+                viewModel.likeComment(commentIdx, 0, posterIdx)
+        }
+
+        override fun onCautionClicked(commentIdx: Int) {
+            viewModel.cautionComment(commentIdx)
+        }
+
+    }
+
     private fun writeComment() {
         viewDataBinding.actCalDetailIvCommentWrite.setSafeOnClickListener {
             if (viewDataBinding.actCalDetailEtComment.text.toString().isNotEmpty()) {
@@ -400,9 +412,14 @@ class CalendarDetailActivity : BaseActivity<ActivityCalendarDetailBinding, Calen
 
     }
 
-    private fun directApply() {
+    private fun directApply(url : String) {
         viewDataBinding.actCalDetailTvApply.setSafeOnClickListener {
-            toast("기능 준비중입니다:)")
+            try {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse((url)))
+                startActivity(intent)
+            } catch (e: Exception) {
+                Log.e("error: ", e.toString());
+            }
         }
     }
 

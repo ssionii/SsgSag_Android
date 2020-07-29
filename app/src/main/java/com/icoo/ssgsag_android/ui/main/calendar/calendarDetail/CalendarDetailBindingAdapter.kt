@@ -87,14 +87,6 @@ fun setSavePoster(view: TextView, isSave: Int){
         view.text = "캘린더에서 삭제"
 }
 
-@BindingAdapter("webSiteText")
-fun setWebSiteText(view: TextView, webUrl: String?){
-    if(webUrl != null){
-        view.textColor = Color.parseColor("#ffffff")
-    }else
-        view.textColor = Color.parseColor("#33ffffff")
-}
-
 @BindingAdapter("posterDetailDday")
 fun setPosterDday(view: TextView, dday: String?) {
     dday?.let {
