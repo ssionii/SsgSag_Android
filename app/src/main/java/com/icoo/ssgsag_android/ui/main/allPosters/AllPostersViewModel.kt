@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import com.icoo.ssgsag_android.base.BaseViewModel
 import com.icoo.ssgsag_android.data.model.category.Category
 import com.icoo.ssgsag_android.data.model.poster.PosterRepository
+import com.icoo.ssgsag_android.data.model.poster.allPoster.AdPosterCollection
 import com.icoo.ssgsag_android.data.model.poster.posterDetail.PosterDetail
 import com.icoo.ssgsag_android.ui.main.calendar.calendarDetail.CalendarDetailActivity
 import com.icoo.ssgsag_android.util.scheduler.SchedulerProvider
@@ -33,23 +34,9 @@ class AllPostersViewModel(
     val categorySort: LiveData<ArrayList<Category>> get() = _categorySort
     private val _activityToStart = MutableLiveData<Pair<KClass<*>, Bundle?>>()
     val activityToStart: LiveData<Pair<KClass<*>, Bundle?>> get() = _activityToStart
-    private var _posterList = MutableLiveData<ArrayList<ArrayList<PosterDetail>>>()
-    val posterList: LiveData<ArrayList<ArrayList<PosterDetail>>> get() = _posterList
 
-    private var _clubPosterList = MutableLiveData<ArrayList<PosterDetail>>()
-    val clubPosterList: LiveData<ArrayList<PosterDetail>> get() = _clubPosterList
-    private var _actPosterList = MutableLiveData<ArrayList<PosterDetail>>()
-    val actPosterList: LiveData<ArrayList<PosterDetail>> get() = _actPosterList
-    private var _contestPosterList = MutableLiveData<ArrayList<PosterDetail>>()
-    val contestPosterList: LiveData<ArrayList<PosterDetail>> get() = _contestPosterList
-    private var _internPosterList = MutableLiveData<ArrayList<PosterDetail>>()
-    val internPosterList: LiveData<ArrayList<PosterDetail>> get() = _internPosterList
-    private var _educationPosterList = MutableLiveData<ArrayList<PosterDetail>>()
-    val educationPosterList: LiveData<ArrayList<PosterDetail>> get() = _educationPosterList
-    private var _etcPosterList = MutableLiveData<ArrayList<PosterDetail>>()
-    val etcPosterList: LiveData<ArrayList<PosterDetail>> get() = _etcPosterList
-
-
+    private var _posterList = MutableLiveData<ArrayList<AdPosterCollection>>()
+    val posterList : LiveData<ArrayList<AdPosterCollection>> = _posterList
 
     private val _category = MutableLiveData<Int>()
     val category: LiveData<Int> get() = _category
@@ -61,178 +48,23 @@ class AllPostersViewModel(
         _sortType.setValue(0)
         _categorySort.setValue(categorySet)
 
-        getClubPosters()
-        getActPosters()
-        getContestPosters()
-        getInternPosters()
-        getEducationPosters()
-        getEtcPosters()
+
+        getAdPosterCollection()
+
     }
 
-    fun getClubPosters(){
-        addDisposable(
-            repository.getWhatPosters(2)
-                .subscribeOn(schedulerProvider.io())
-                .observeOn(schedulerProvider.mainThread())
-                .subscribe({
-                    it.run {
-                        _clubPosterList.postValue(this)
-
-                    }
-                }, {
-                    it.printStackTrace()
-                })
-        )
-    }
-
-
-    fun getActPosters(){
-
-        addDisposable(
-            repository.getWhatPosters(1)
-                .subscribeOn(schedulerProvider.io())
-                .observeOn(schedulerProvider.mainThread())
-                .subscribe({
-                    it.run {
-                        _actPosterList.postValue(this)
-                    }
-                }, {
-                    it.printStackTrace()
-                })
-        )
-    }
-
-    fun getContestPosters(){
-        addDisposable(
-            repository.getWhatPosters(0)
-                .subscribeOn(schedulerProvider.io())
-                .observeOn(schedulerProvider.mainThread())
-                .subscribe({
-                    it.run {
-                        _contestPosterList.postValue(this)
-                    }
-                }, {
-
-                })
-        )
-    }
-
-    fun getInternPosters(){
-        addDisposable(
-            repository.getWhatPosters(4)
-                .subscribeOn(schedulerProvider.io())
-                .observeOn(schedulerProvider.mainThread())
-                .subscribe({
-                    it.run {
-                        _internPosterList.postValue(this)
-                    }
-                }, {
-
-                })
-        )
-    }
-
-    fun getEducationPosters(){
-        addDisposable(
-            repository.getWhatPosters(7)
-                .subscribeOn(schedulerProvider.io())
-                .observeOn(schedulerProvider.mainThread())
-                .subscribe({
-                    it.run {
-                        _educationPosterList.postValue(this)
-                    }
-                }, {
-
-                })
-        )
-    }
-
-    fun getEtcPosters(){
-        addDisposable(
-            repository.getWhatPosters(5)
-                .subscribeOn(schedulerProvider.io())
-                .observeOn(schedulerProvider.mainThread())
-                .subscribe({
-                    it.run {
-                        _etcPosterList.postValue(this)
-                    }
-                }, {
-
-                })
-        )
-    }
-
-    fun getPosters(){
-
-        /*
-        addDisposable(repository.getAllPostersCategory(this.categoryList.value!!, this.sortType.value!!, 0)
+    private fun getAdPosterCollection(){
+        addDisposable(repository.getAllPosterAd()
             .subscribeOn(schedulerProvider.io())
             .observeOn(schedulerProvider.mainThread())
+            .doOnError {
+                Log.e("getAllPosterAd error", it.message)
+            }
             .subscribe({
-                it.run {
-                    _posters.setValue(this)
-                }
+                _posterList.value = it.posterList
             }, {
-
-            })
-        )*/
-
-        var index = 0
-        var count = 0
-        var tempList = ArrayList<ArrayList<PosterDetail>>()
-        while(index > 7) {
-
-            if(index == 2)
-                index = 4
-            else if(index == 6)
-                index = 7
-
-            addDisposable(
-                repository.getWhatPosters(index)
-                    .subscribeOn(schedulerProvider.io())
-                    .observeOn(schedulerProvider.mainThread())
-                    .subscribe({
-                        it.run {
-                            tempList[count++] = this
-                        }
-                    }, {
-
-                    })
-            )
-
-            index++
-
-        }
-
-        _posterList.postValue(tempList)
-    }
-
-
-    fun checkCate(categoryIdx : Int){
-        for(i in 0..categorySet.size -1)
-            categorySet[i].isChecked = false
-
-        if(categoryIdx < 3) {
-            categorySet[categoryIdx].isChecked = true
-        }else if(categoryIdx == 4){
-            categorySet[2].isChecked = true
-        }else if(categoryIdx == 7){
-            categorySet[3].isChecked = true
-        } else if(categoryIdx == 5){
-            categorySet[categorySet.size -1 ].isChecked = true
-        }
-
-        _categorySort.postValue(categorySet)
-        _category.setValue(categoryIdx)
-
-        getPosters()
-
-    }
-
-    fun checkSort(sortType: Int){
-        _sortType.setValue(sortType)
-
-        getPosters()
+                it.printStackTrace()
+            }))
     }
 
     fun navigate(idx: Int) {

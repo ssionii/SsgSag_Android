@@ -1,13 +1,14 @@
 package com.icoo.ssgsag_android.data.model.poster
 
 import com.google.gson.JsonObject
+import com.icoo.ssgsag_android.data.model.poster.allPoster.AllPosterAd
 import com.icoo.ssgsag_android.data.model.poster.posterDetail.PosterDetail
 import io.reactivex.Single
 
 interface PosterRepository {
     //poster
     //fun getAllPostersCategory(): Single<ArrayList<PosterDetail>>
-    fun getWhatPosters(category: Int): Single<ArrayList<PosterDetail>>
+    fun getAllPosterAd() : Single<AllPosterAd>
     fun getAllPostersCategory(category: Int, sortType: Int, curPage: Int) : Single<ArrayList<PosterDetail>>
     fun getAllPostersField(category: Int, interestNum:String, sortType:Int, curPage: Int): Single<ArrayList<PosterDetail>>
     fun getAllPosters(): Single<Poster>
