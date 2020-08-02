@@ -116,14 +116,11 @@ fun setAllPosterCardGlideImg(view: ImageView, imgUrl: String?) {
 
     Glide.with(view.context)
         .load(imgUrl)
-       // .listener(createLoggerListener("allPosterCardGlideImg"))
+//        .listener(createLoggerListener("allPosterCardGlideImg"))
         .placeholder(R.drawable.img_default)
         .thumbnail(0.1f)
-        .error(R.drawable.img_default) //에러시 나올 이미지 적용
-        .override(390, 370)
-        .apply(requestOptions)
+        .apply(RequestOptions.bitmapTransform(CropTransformation(view.width, view.height, CropTransformation.CropType.TOP)))
         .into(view)
-
 }
 
 @BindingAdapter("imgResId")

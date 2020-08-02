@@ -12,6 +12,7 @@ import androidx.viewpager.widget.PagerAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
 import com.icoo.ssgsag_android.R
+import com.icoo.ssgsag_android.data.model.ads.AdItem
 import com.icoo.ssgsag_android.data.model.poster.posterDetail.PosterDetail
 import com.icoo.ssgsag_android.databinding.ItemAllPostersCardBinding
 import com.icoo.ssgsag_android.ui.main.subscribe.subscribeDialog.SubscribeInternDialogFragment
@@ -19,10 +20,12 @@ import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 
 class CardViewPagerAdapter(
     private val context : Context,
-    private val posterList: ArrayList<PosterDetail>?
+    private val posterList: ArrayList<AdItem>?
 ) : PagerAdapter() {
 
     private var mOnItemClickListener: OnItemClickListener? = null
+    var posterWidth = 0
+    var den = 0f
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
 
@@ -33,10 +36,11 @@ class CardViewPagerAdapter(
 
         if(posterList!= null){
             viewDataBinding.poster = posterList[position]
+            viewDataBinding.itemAllPostersCardCvPoster.layoutParams.height = (posterWidth * 1.4).toInt()
 
-            viewDataBinding.itemAllPostersCardCvContainer.setSafeOnClickListener {
-                mOnItemClickListener?.onItemClick(posterList[position].posterIdx)
-            }
+//            viewDataBinding.itemAllPostersCardCvContainer.setSafeOnClickListener {
+//                mOnItemClickListener?.onItemClick(posterList[position].posterIdx)
+//            }
         }
 
         viewDataBinding.root.setTag(position)
