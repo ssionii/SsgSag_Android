@@ -186,11 +186,9 @@ class AllCategoryViewModel(
             putString("from","main")
             putString("fromDetail", "all")
         }
-        _activityToStart.postValue(Pair(CalendarDetailActivity::class, bundle))
         refreshedPosterPosition = position
         refreshedPosterIdx = idx
-
-        Log.e("position", refreshedPosterPosition.toString())
+        _activityToStart.postValue(Pair(CalendarDetailActivity::class, bundle))
     }
 
     private fun showProgress() {

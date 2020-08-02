@@ -97,8 +97,10 @@ class AllCategoryActivity : BaseActivity<ActivityAllCategoryBinding, AllCategory
 
         viewModel.refreshedPoster.observe(this, Observer { value ->
             (viewDataBinding.actAllCategoryRv.adapter as? BaseRecyclerViewAdapter<Any, *>)?.run {
-                refreshItem(value, viewModel.refreshedPosterPosition)
-                notifyItemChanged(viewModel.refreshedPosterPosition)
+                if(this.itemCount > viewModel.refreshedPosterPosition) {
+                    refreshItem(value, viewModel.refreshedPosterPosition)
+                    notifyItemChanged(viewModel.refreshedPosterPosition)
+                }
             }
         })
 
