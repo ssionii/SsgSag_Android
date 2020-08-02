@@ -28,7 +28,6 @@ import com.icoo.ssgsag_android.ui.login.LoginActivity
 import com.icoo.ssgsag_android.databinding.ActivitySplashBinding
 import com.icoo.ssgsag_android.ui.login.LoginViewModel
 import com.icoo.ssgsag_android.util.DialogPlusAdapter
-import com.igaworks.v2.core.AdBrixRm
 import com.orhanobut.dialogplus.DialogPlus
 import com.orhanobut.dialogplus.ViewHolder
 import org.jetbrains.anko.toast
@@ -56,9 +55,6 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, LoginViewModel>() {
         super.onCreate(savedInstanceState)
 
         viewDataBinding.vm = viewModel
-
-        //adbrix
-        onNewIntent(this.intent)
 
         if(SharedPreferenceController.getFireBaseInstanceId(this) == ""){
             getFirebaseInstanceId()
@@ -312,12 +308,6 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, LoginViewModel>() {
                     Log.e("fire token", token)
                 }
             })
-    }
-
-    override fun onNewIntent(intent: Intent?) {
-        super.onNewIntent(intent)
-        setIntent(intent)
-        AdBrixRm.deeplinkEvent(this)
     }
 
     private fun logoutFirstTimeVersion231(){

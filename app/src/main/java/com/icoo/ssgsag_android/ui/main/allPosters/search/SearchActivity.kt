@@ -22,8 +22,6 @@ import com.icoo.ssgsag_android.ui.main.review.ReviewListRecyclerViewAdapter
 import com.icoo.ssgsag_android.ui.main.review.club.registration.ClubManagerCheckActivity
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import com.icoo.ssgsag_android.util.view.WrapContentLinearLayoutManager
-import com.igaworks.v2.core.AdBrixRm
-import org.jetbrains.anko.startActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(),
@@ -226,11 +224,6 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(),
 
     override fun onItemClicked(item: Any?, position: Int?) {
         viewModel.navigate((item as PosterDetail).posterIdx, position!!, from)
-        //adbrix
-        AdBrixRm.event(
-            "touchUp_PosterDetail",
-            AdBrixRm.AttrModel().setAttrs("posterIdx", (item as PosterDetail).posterIdx.toLong())
-        )
     }
 
     val onReviewClickListener = object : ReviewListRecyclerViewAdapter.OnReviewClickListener{

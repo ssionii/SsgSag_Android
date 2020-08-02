@@ -17,7 +17,6 @@ import com.icoo.ssgsag_android.data.model.subscribe.SubscribeRepository
 import com.icoo.ssgsag_android.ui.login.LoginActivity
 import com.icoo.ssgsag_android.ui.main.MainActivity
 import com.icoo.ssgsag_android.util.scheduler.SchedulerProvider
-import com.igaworks.v2.core.AdBrixRm
 import io.reactivex.Observable
 import org.jetbrains.anko.toast
 import org.json.JSONObject
@@ -84,7 +83,6 @@ class SignupViewModel(
             .subscribe({responseToken ->
                 SharedPreferenceController.setAuthorization(context, responseToken)
                 SharedPreferenceController.setType(context, "user")
-                AdBrixRm.login(responseToken)
                 Toast.makeText(context, "로그인 성공." ,Toast.LENGTH_SHORT).show();
                 _activityToStart.postValue(Pair(MainActivity::class, null))
             }) {
@@ -101,7 +99,6 @@ class SignupViewModel(
                 Log.e("signup 뒤 autoLogin", it.toString())
                 it.run{
                     if(this == 200){
-                        AdBrixRm.login(SharedPreferenceController.getAuthorization(context))
                         if(param == null){
                             _activityToStart.postValue(Pair(MainActivity::class, null))
                         }else{

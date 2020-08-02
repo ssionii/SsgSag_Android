@@ -14,7 +14,6 @@ import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.data.model.user.DeviceInfo
 import com.icoo.ssgsag_android.ui.main.MainActivity
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
-import com.igaworks.v2.core.AdBrixRm
 import io.realm.Realm
 import kotlinx.android.synthetic.main.fragment_logout.*
 
@@ -32,7 +31,6 @@ class LogoutDialogFragment: androidx.fragment.app.DialogFragment(){
             SharedPreferenceController.setAuthorization(activity!!, "")
             SharedPreferenceController.deleteType(activity!!)
 
-            AdBrixRm.login("")
             //activity!!.finishAffinity()
             ActivityCompat.finishAffinity(activity!!)
             val intent = Intent(activity!!, LoginActivity::class.java)

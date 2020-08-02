@@ -20,7 +20,6 @@ import com.icoo.ssgsag_android.ui.main.calendar.posterBookmark.PosterBookmarkBot
 import com.icoo.ssgsag_android.util.DateUtil
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import com.icoo.ssgsag_android.util.view.WrapContentLinearLayoutManager
-import com.igaworks.v2.core.AdBrixRm
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 import kotlin.collections.ArrayList
@@ -156,10 +155,6 @@ class CalendarListPageFragment : BaseFragment<FragmentCalendarListPageBinding, C
                 }
 
                 startActivity(intent)
-
-                //adbrix
-                AdBrixRm.event("touchUp_PosterDetail",
-                    AdBrixRm.AttrModel().setAttrs("posterIdx",posterIdx.toLong()))
             }
 
             override fun onBookmarkClicked(posterIdx: Int, isFavorite: Int, dday : Int, position: Int) {
