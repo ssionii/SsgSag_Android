@@ -35,7 +35,7 @@ class AllPostersFragment : BaseFragment<FragmentAllPosterBinding, AllPostersView
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewDataBinding.vm = viewModel
-        
+
         setTopButtonRv()
         setCollectionRv()
 //        setViewPager()
@@ -84,7 +84,21 @@ class AllPostersFragment : BaseFragment<FragmentAllPosterBinding, AllPostersView
 
     private fun setCollectionRv(){
 
+        val d = resources.displayMetrics.density
+
+        // 화면 전체 사이즈
+        val display = activity!!.windowManager.defaultDisplay
+        val size = Point()
+        display.getSize(size)
+        val width = (size.x / d).toInt()
+
+        val contentDpValue = (width - 44 - 10) / 2
+        val leftDpValue = 22
+        val middleDpValue = 10
+        val rightDpValue = width - leftDpValue - contentDpValue
+
         allPosterCollectionRvAdapter = AllPosterCollectionRecyclerViewAdapter()
+        allPosterCollectionRvAdapter.setMargin(d, leftDpValue, middleDpValue, rightDpValue, contentDpValue)
         viewDataBinding.fragAllPosterPostersCollectionRv.run {
             adapter = allPosterCollectionRvAdapter
 
@@ -92,7 +106,6 @@ class AllPostersFragment : BaseFragment<FragmentAllPosterBinding, AllPostersView
         }
 
         viewModel.posterList.observe(this, Observer {
-            Log.e("posterList", it[0].categoryName)
             allPosterCollectionRvAdapter.run{
                 replaceAll(it)
                 notifyDataSetChanged()
@@ -102,150 +115,6 @@ class AllPostersFragment : BaseFragment<FragmentAllPosterBinding, AllPostersView
 
 
     }
-
-//
-//    private fun setViewPager(){
-//
-//        val d = resources.displayMetrics.density
-//
-//        // 화면 전체 사이즈
-//        val display = activity!!.windowManager.defaultDisplay
-//        val size = Point()
-//        display.getSize(size)
-//        val width = (size.x / d).toInt()
-//
-//        val contentDpValue = 180
-//        val leftDpValue = 26
-//        val middleDpValue = 15
-//        val rightDpValue = width - (leftDpValue + contentDpValue + middleDpValue)
-//
-//        val leftMargin = (leftDpValue * d).toInt()
-//        val rightMargin = (rightDpValue * d).toInt()
-//        val middleMargin = (middleDpValue * d).toInt()
-//
-//        viewModel.clubPosterList.observe(this, Observer {value ->
-//            Log.e("clubPosterList observer", "들어옴")
-//
-//            var cardViewPagerAdapter = CardViewPagerAdapter(activity!!, value)
-//            cardViewPagerAdapter.setOnItemClickListener(this)
-//
-//            if(value.size > 0) {
-//                viewDataBinding.fragAllPosterVpClub.run {
-//
-//                    clipToPadding = false
-//                    setPadding(leftMargin, 20, rightMargin, 30)
-//                    pageMargin = middleMargin
-//
-//
-//                    adapter = cardViewPagerAdapter
-//
-//                }
-//            }else {
-//                viewDataBinding.fragAllPosterLlClubContainer.visibility = GONE
-//                viewDataBinding.fragAllPosterVpClub.visibility = GONE
-//            }
-//        })
-//
-//
-//        viewModel.actPosterList.observe(this, Observer {value ->
-//
-//            var cardViewPagerAdapter = CardViewPagerAdapter(activity!!, value)
-//            cardViewPagerAdapter.setOnItemClickListener(this)
-//
-//            if(value.size > 0) {
-//                viewDataBinding.fragAllPosterVpAct.run {
-//
-//                    clipToPadding = false
-//                    setPadding(leftMargin, 20, rightMargin, 30)
-//                    pageMargin = middleMargin
-//
-//
-//                    adapter = cardViewPagerAdapter
-//
-//                }
-//            }else {
-//                viewDataBinding.fragAllPosterLlActContainer.visibility = GONE
-//                viewDataBinding.fragAllPosterVpAct.visibility = GONE
-//            }
-//        })
-//
-//        viewModel.contestPosterList.observe(this, Observer {value ->
-//
-//            var cardViewPagerAdapter = CardViewPagerAdapter(activity!!, value)
-//            cardViewPagerAdapter.setOnItemClickListener(this)
-//
-//            if(value.size > 0) {
-//                viewDataBinding.fragAllPosterVpContest.run {
-//                    clipToPadding = false
-//                    setPadding(leftMargin, 20, rightMargin, 30)
-//                    pageMargin = middleMargin
-//
-//                    adapter = cardViewPagerAdapter
-//
-//                }
-//            }else {
-//                viewDataBinding.fragAllPosterLlContestContainer.visibility = GONE
-//                viewDataBinding.fragAllPosterVpContest.visibility = GONE
-//            }
-//        })
-//
-//        viewModel.internPosterList.observe(this, Observer {value ->
-//            var cardViewPagerAdapter = CardViewPagerAdapter(activity!!, value)
-//            cardViewPagerAdapter.setOnItemClickListener(this)
-//
-//            if(value.size > 0) {
-//                viewDataBinding.fragAllPosterVpIntern.run {
-//                    clipToPadding = false
-//                    setPadding(leftMargin, 20, rightMargin, 30)
-//                    pageMargin = middleMargin
-//
-//                    adapter = cardViewPagerAdapter
-//
-//                }
-//            }else {
-//                viewDataBinding.fragAllPosterLlInternContainer.visibility = GONE
-//                viewDataBinding.fragAllPosterVpIntern.visibility = GONE
-//            }
-//        })
-//        viewModel.educationPosterList.observe(this, Observer {value ->
-//            var cardViewPagerAdapter = CardViewPagerAdapter(activity!!, value)
-//            cardViewPagerAdapter.setOnItemClickListener(this)
-//
-//            if(value.size > 0) {
-//                viewDataBinding.fragAllPosterVpEducation.run {
-//                    clipToPadding = false
-//                    setPadding(leftMargin, 20, rightMargin, 30)
-//                    pageMargin = middleMargin
-//
-//                    adapter = cardViewPagerAdapter
-//
-//                }
-//            }else {
-//                viewDataBinding.fragAllPosterLlEducationContainer.visibility = GONE
-//                viewDataBinding.fragAllPosterVpEducation.visibility = GONE
-//            }
-//        })
-//
-//        viewModel.etcPosterList.observe(this, Observer {value ->
-//            var cardViewPagerAdapter = CardViewPagerAdapter(activity!!, value)
-//            cardViewPagerAdapter.setOnItemClickListener(this)
-//            if(value.size > 0) {
-//                viewDataBinding.fragAllPosterLlEtcContainer.visibility = VISIBLE
-//                viewDataBinding.fragAllPosterVpEtc.run {
-//                    clipToPadding = false
-//                    setPadding(leftMargin, 20, rightMargin, 30)
-//                    pageMargin = middleMargin
-//
-//                    adapter = cardViewPagerAdapter
-//
-//                }
-//            }else {
-//                viewDataBinding.fragAllPosterLlEtcContainer.visibility = GONE
-//                viewDataBinding.fragAllPosterVpEtc.visibility = GONE
-//            }
-//        })
-//
-//    }
 
     override fun onItemClick(posterIdx: Int) {
         viewModel.navigate(posterIdx)
