@@ -20,7 +20,7 @@ import com.icoo.ssgsag_android.util.DateUtil.yearFormat
 import com.icoo.ssgsag_android.util.view.NonScrollGridLayoutManager
 
 class CalendarGridPageFragment : BaseFragment<FragmentCalendarPageBinding, CalendarViewModel>(),
-    BaseRecyclerViewAdapter.OnItemClickListener, CalendarDialogFragment.OnDialogDismissedListener {
+    BaseRecyclerViewAdapter.OnItemClickListener {
 
     override val layoutResID: Int
         get() = R.layout.fragment_calendar_page
@@ -56,10 +56,6 @@ class CalendarGridPageFragment : BaseFragment<FragmentCalendarPageBinding, Calen
 
     }
 
-    override fun onDialogDismissed(dataChanged: Boolean) {
-        viewModel.setIsUpdated(dataChanged)
-    }
-
     override fun onItemClicked(item: Any?, position: Int?){
 
         val dialogFragment = CalendarDialogFragment()
@@ -69,9 +65,16 @@ class CalendarGridPageFragment : BaseFragment<FragmentCalendarPageBinding, Calen
 
 
         dialogFragment.arguments = args
-        dialogFragment.setOnDialogDismissedListener(this)
+        dialogFragment.setOnDialogDismissedListener(calendarDialogDismissedListener)
         dialogFragment.setTargetFragment(this, 0)
         dialogFragment.show(fragmentManager!!, "frag_dialog_cal")
+    }
+
+    private val calendarDialogDismissedListener
+            = object : CalendarDialogFragment.OnDialogDismissedListener {
+        override fun onDialogDismissed(isUpdated: Boolean) {
+            viewModel.setIsUpdated(isUpdated)
+        }
     }
 
     private fun setCalendar() {
