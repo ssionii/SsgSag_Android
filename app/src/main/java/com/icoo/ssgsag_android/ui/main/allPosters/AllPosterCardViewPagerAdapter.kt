@@ -21,7 +21,7 @@ import com.icoo.ssgsag_android.databinding.ItemAllPostersCardBinding
 import com.icoo.ssgsag_android.ui.main.subscribe.subscribeDialog.SubscribeInternDialogFragment
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 
-class CardViewPagerAdapter(
+class AllPosterCardViewPagerAdapter(
     private val context : Context,
     private val posterList: ArrayList<AdItem>?
 ) : PagerAdapter() {

@@ -6,11 +6,8 @@ import android.graphics.Color
 import android.graphics.Point
 import android.os.Bundle
 import android.util.Log
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.icoo.ssgsag_android.BR
@@ -23,6 +20,7 @@ import com.icoo.ssgsag_android.databinding.ItemAllPosterCategoryBinding
 import com.icoo.ssgsag_android.ui.main.allPosters.category.AllCategoryActivity
 import com.icoo.ssgsag_android.ui.main.allPosters.collection.AllPosterCollectionRecyclerViewAdapter
 import com.icoo.ssgsag_android.ui.main.calendar.calendarDetail.CalendarDetailActivity
+import com.icoo.ssgsag_android.ui.main.feed.FeedWebActivity
 import com.icoo.ssgsag_android.util.view.NonScrollGridLayoutManager
 import com.icoo.ssgsag_android.util.view.WrapContentLinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -36,6 +34,7 @@ class AllPostersFragment : BaseFragment<FragmentAllPosterBinding, AllPostersView
     override val viewModel: AllPostersViewModel by viewModel()
 
     lateinit private var allPosterCollectionRvAdapter : AllPosterCollectionRecyclerViewAdapter
+    lateinit private var allPosterEventCardViewPagerAdapter : AllPosterEventCardViewPagerAdapter
 
     var requestRowIdx = 0
     var requestPosition = 0
@@ -61,6 +60,7 @@ class AllPostersFragment : BaseFragment<FragmentAllPosterBinding, AllPostersView
 
         setTopButtonRv()
         setCollectionRv()
+        setEventVp()
         navigator()
     }
 
@@ -166,6 +166,54 @@ class AllPostersFragment : BaseFragment<FragmentAllPosterBinding, AllPostersView
         override fun onManagePosterItem(posterIdx: Int, isSave : Int) {
             viewModel.managePoster(posterIdx, isSave)
         }
+    }
+
+    private fun setEventVp(){
+
+        val d = resources.displayMetrics.density
+
+        // 화면 전체 사이즈
+        val display = requireActivity().windowManager.defaultDisplay
+        val size = Point()
+        display.getSize(size)
+        val width = (size.x / d).toInt()
+
+        val leftMargin = (19 * d).toInt()
+        val middleMargin = (7 * d).toInt()
+        val rightMargin = (65 * d).toInt()
+        val contentWidth = ((width - 19 - 7 - 65) * d).toInt()
+
+        viewModel.eventList.observe(viewLifecycleOwner, Observer {
+            if(it.size > 0){
+                allPosterEventCardViewPagerAdapter = AllPosterEventCardViewPagerAdapter(requireActivity(), it[0].adViewItemList)
+                allPosterEventCardViewPagerAdapter.apply{
+                    eventWidth = contentWidth
+                    setOnItemClickListener(eventItemClickListener)
+                }
+
+                viewDataBinding.fragAllPosterEventVp.run{
+                    clipToPadding = false
+                    setPadding(leftMargin, 0, rightMargin, 0)
+                    pageMargin = middleMargin
+                    adapter = allPosterEventCardViewPagerAdapter
+                }
+            }
+        })
+
+    }
+
+    val eventItemClickListener
+            = object : AllPosterEventCardViewPagerAdapter.OnItemClickListener{
+            override fun onEventClick(adUrl: String?, title: String) {
+                if(adUrl != null ){
+                    val intent = Intent(activity!!, FeedWebActivity::class.java)
+                    intent.putExtra("url", adUrl)
+                    intent.putExtra("title", title)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+                    startActivity(intent)
+                }
+            }
     }
 
     private fun navigator() {

@@ -9,6 +9,7 @@ import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import com.icoo.ssgsag_android.SsgSagApplication
 import com.icoo.ssgsag_android.base.BaseViewModel
+import com.icoo.ssgsag_android.data.model.ads.AdItem
 import com.icoo.ssgsag_android.data.model.category.Category
 import com.icoo.ssgsag_android.data.model.poster.PosterRepository
 import com.icoo.ssgsag_android.data.model.poster.allPoster.AdPosterCollection
@@ -45,6 +46,8 @@ class AllPostersViewModel(
 
     private var _posterList = MutableLiveData<ArrayList<AdPosterCollection>>()
     val posterList : LiveData<ArrayList<AdPosterCollection>> = _posterList
+    private var _eventList = MutableLiveData<ArrayList<AdPosterCollection>>()
+    val eventList : LiveData<ArrayList<AdPosterCollection>> = _eventList
 
     private val _category = MutableLiveData<Int>()
     val category: LiveData<Int> get() = _category
@@ -70,6 +73,7 @@ class AllPostersViewModel(
             }
             .subscribe({
                 _posterList.value = it.posterList
+                _eventList.value = it.eventList
             }, {
                 it.printStackTrace()
             }))

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+                name="event"
+                type="com.icoo.ssgsag_android.data.model.ads.AdItem" />
+    </data>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="270dp"
+        android:layout_height="193dp">
+    <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="2dp"
+            android:layout_margin="3dp"
+            android:layout_centerInParent="true">
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+            <ImageView
+                    android:id="@+id/item_all_poster_event_iv"
+                    android:layout_width="match_parent"
+                    android:layout_height="135dp"
+                    glideCenterCrop="@{event.photoUrl}"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                <TextView
+                        android:id="@+id/item_all_poster_event_tv"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="12dp"
+                        android:fontFamily="@font/noto_sans_kr_medium"
+                        android:textColor="@color/black_1"
+                        android:letterSpacing="-0.02"
+                        android:text="@{event.contentTitle}"
+                        tools:text="튜터링 AI/미드패스 50% 할인! 두 줄 일시 여기까지 내려갑니다."
+                        android:lines="2"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/item_all_poster_event_cv"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="8dp"/>
+
+                <androidx.cardview.widget.CardView
+                        android:id="@+id/item_all_poster_event_cv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:cardBackgroundColor="#14656ef0"
+                        app:cardElevation="0dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginRight="10dp">
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="10dp"
+                            android:textColor="@color/ssgsag"
+                            android:letterSpacing="-0.02"
+                            android:gravity="center_horizontal"
+                            posterDetailDday="@{event.dday}"
+                            tools:text="D-43"
+                            android:layout_marginHorizontal="4dp"
+                            android:layout_marginTop="1dp"
+                            android:layout_marginBottom="2dp"
+                            />
+
+                </androidx.cardview.widget.CardView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+    </RelativeLayout>
+</layout>

@@ -1,18 +1,13 @@
 package com.icoo.ssgsag_android.ui.main.allPosters.collection
 
-import android.content.Intent
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat.startActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.SimpleItemAnimator
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.data.model.poster.allPoster.AdPosterCollection
 import com.icoo.ssgsag_android.databinding.ItemAllPosterCollectionBinding
-import com.icoo.ssgsag_android.ui.main.allPosters.CardViewPagerAdapter
-import com.icoo.ssgsag_android.ui.main.calendar.calendarDetail.CalendarDetailActivity
+import com.icoo.ssgsag_android.ui.main.allPosters.AllPosterCardViewPagerAdapter
 import com.icoo.ssgsag_android.ui.main.feed.context
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 
@@ -64,7 +59,7 @@ class AllPosterCollectionRecyclerViewAdapter : RecyclerView.Adapter<AllPosterCol
             listener?.onMoreClick(itemList[position].categoryIdx)
         }
 
-        val cardViewPagerAdapter = CardViewPagerAdapter(context, itemList[position].adViewItemList)
+        val cardViewPagerAdapter = AllPosterCardViewPagerAdapter(context, itemList[position].adViewItemList)
         cardViewPagerAdapter.apply {
             setOnItemClickListener(onPosterItemClickListener)
             rowIdx = position
@@ -81,7 +76,7 @@ class AllPosterCollectionRecyclerViewAdapter : RecyclerView.Adapter<AllPosterCol
     }
 
     val onPosterItemClickListener
-            = object : CardViewPagerAdapter.OnItemClickListener{
+            = object : AllPosterCardViewPagerAdapter.OnItemClickListener{
         override fun onPosterClick(posterIdx: Int, rowIdx : Int, position: Int) {
             listener?.onPosterItemClick(posterIdx, rowIdx, position)
         }

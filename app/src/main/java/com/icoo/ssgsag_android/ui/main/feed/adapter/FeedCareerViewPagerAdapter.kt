@@ -141,12 +141,14 @@ class FeedCareerViewPagerAdapter(
                 feedIdx: Int, feedUrl: String, feedName: String, isSave: Int, position: Int
             ) {
                 val bundle = Bundle().apply {
-                    putString("clubWebsite", feedUrl)
+                    putString("url", feedUrl)
+                    putString("from", "feed")
                     putInt("idx", feedIdx)
                 }
 
                 val intent = Intent(com.icoo.ssgsag_android.ui.main.feed.context, FeedWebActivity::class.java)
-                intent.putExtra("clubWebsite", feedUrl)
+                intent.putExtra("url", feedUrl)
+                intent.putExtra("from", "feed")
                 intent.putExtra("idx", feedIdx)
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
