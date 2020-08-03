@@ -18,7 +18,6 @@ import com.icoo.ssgsag_android.data.model.user.DeviceInfo
 import com.icoo.ssgsag_android.ui.main.MainActivity
 import com.icoo.ssgsag_android.ui.signUp.SignupActivity
 import com.icoo.ssgsag_android.util.scheduler.SchedulerProvider
-import com.igaworks.v2.core.AdBrixRm
 import io.reactivex.Observable
 import io.realm.Realm
 import org.json.JSONObject
@@ -76,7 +75,6 @@ class LoginViewModel (
             .subscribe({responseToken ->
                 SharedPreferenceController.setAuthorization(context, responseToken)
                 SharedPreferenceController.setType(context, "user")
-                AdBrixRm.login(responseToken)
                 _activityToStart.postValue(Pair(MainActivity::class, null))
             }) {
                 Toast.makeText(context, "서버 점검 중입니다.",Toast.LENGTH_SHORT).show()
@@ -95,7 +93,6 @@ class LoginViewModel (
             .subscribe({
                 it.run{
                     if(this == 200){
-//                        AdBrixRm.login(SharedPreferenceController.getAuthorization(context))
                         if(param == null){
                             _activityToStart.postValue(Pair(MainActivity::class, null))
                         }else{

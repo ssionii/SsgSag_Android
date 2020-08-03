@@ -24,7 +24,6 @@ import com.icoo.ssgsag_android.ui.main.feed.FeedFragment
 import com.icoo.ssgsag_android.ui.main.review.main.ReviewMainFragment
 import com.icoo.ssgsag_android.ui.main.ssgSag.SsgSagViewModel
 import com.icoo.ssgsag_android.util.listener.BackPressHandler
-import com.igaworks.v2.core.AdBrixRm
 import io.fabric.sdk.android.Fabric
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -138,10 +137,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, SsgSagViewModel>() {
         }
 
         startActivity(intent)
-
-        //adbrix
-        AdBrixRm.event("touchUp_PosterDetail",
-            AdBrixRm.AttrModel().setAttrs("posterIdx",posterIdx.toLong()))
     }
 
     private fun getWindowWidth() {

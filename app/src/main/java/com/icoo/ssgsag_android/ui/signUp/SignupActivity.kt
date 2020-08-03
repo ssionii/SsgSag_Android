@@ -36,7 +36,6 @@ import com.icoo.ssgsag_android.ui.main.myPage.serviceInfo.term.TermActivity
 import com.icoo.ssgsag_android.ui.splash.SplashActivity
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import com.igaworks.v2.abxExtensionApi.AbxCommon
-import com.igaworks.v2.core.AdBrixRm
 import io.reactivex.disposables.CompositeDisposable
 import io.realm.Realm
 import io.realm.RealmObject
@@ -526,48 +525,6 @@ class SignupActivity : BaseActivity<ActivitySignupBinding, SignupViewModel>() {
 
         viewModel.loginToken.observe(this, androidx.lifecycle.Observer {
             viewModel.autoLogin(it, null)
-
-            //adbrix
-            try {
-                // 회원가입 이벤트 추가 정보를 설정합니다.
-                val signUpAttr = AdBrixRm.AttrModel()
-                    .setAttrs("userNickname",GetSignupProfile.nickname)
-                    .setAttrs("accessToken",realmDeviceInfo.token )
-                    .setAttrs("uuid", realmDeviceInfo.uuid)
-                    .setAttrs("userUniv", GetSignupProfile.school)
-                    .setAttrs("userMajor", GetSignupProfile.major)
-                    .setAttrs("userStudentNum", GetSignupProfile.stduentNumber)
-                    .setAttrs("userGender", GetSignupProfile.gender)
-                    .setAttrs("userBirth", GetSignupProfile.birth)
-                    .setAttrs("userPushAllow", 1)
-                    .setAttrs("userInfoAllow", 1)
-                    .setAttrs("userGrade", GetSignupProfile.grade.toLong())
-                    .setAttrs("osType", 0)
-
-                // 이벤트 추가 정보를 회원가입 이벤트 정보로 설정합니다.
-                val properties = AdBrixRm.CommonProperties.SignUp()
-                    .setAttrModel(signUpAttr)
-
-                // 회원 가입 API 호출
-                AbxCommon.signUp(AdBrixRm.CommonSignUpChannel.Google, properties)
-            } catch (e: java.lang.Exception) {
-                e.printStackTrace()
-            }
-
-            // 유저 정보
-            if (GetSignupProfile.gender == "female")
-                AdBrixRm.setGender(AdBrixRm.AbxGender.FEMALE)
-            else
-                AdBrixRm.setGender(AdBrixRm.AbxGender.MALE)
-
-            val userProperties = AdBrixRm.UserProperties()
-                .setAttrs("birth", GetSignupProfile.birth)
-                .setAttrs("major", GetSignupProfile.major)
-                .setAttrs("univ", GetSignupProfile.school)
-
-            AdBrixRm.saveUserProperties(userProperties)
-            logEVENT_NAME_COMPELTE_REGISTRATIONEvent()
-
         })
     }
 

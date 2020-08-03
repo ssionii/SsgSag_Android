@@ -33,7 +33,7 @@ class PosterBookmarkBottomSheet (
     val viewModel: PosterBookmarkViewModel by viewModel()
 
     lateinit var rvAdapter: PosterBookmarkRecyclerViewAdapter
-    lateinit private var alarmList : ArrayList<PosterAlarmData>
+    private var alarmList = arrayListOf<PosterAlarmData>()
 
     lateinit private var deleteDialogFragment : CalendarDetailDeletePosterDialogFragment
 
@@ -44,8 +44,8 @@ class PosterBookmarkBottomSheet (
     ): View? {
         viewDataBinding = BottomSheetPosterBookmarkBinding.inflate(layoutInflater, container, false)
 
-        setButton()
         setAlarmList()
+        setButton()
 
 
         return viewDataBinding.root
