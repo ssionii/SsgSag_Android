@@ -11,7 +11,7 @@ data class AdItem(
     val openEndDate : String,
     val regDate : String,
     val dday : Int,
-    val isSave : Int,
+    var isSave : Int,
     val categoryIdx : Int,
     val categoryName: String,
     val categoryOrder : Int,

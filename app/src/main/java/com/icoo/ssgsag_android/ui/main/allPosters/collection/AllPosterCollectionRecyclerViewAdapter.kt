@@ -1,20 +1,25 @@
 package com.icoo.ssgsag_android.ui.main.allPosters.collection
 
+import android.content.Intent
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat.startActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.SimpleItemAnimator
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.data.model.poster.allPoster.AdPosterCollection
 import com.icoo.ssgsag_android.databinding.ItemAllPosterCollectionBinding
 import com.icoo.ssgsag_android.ui.main.allPosters.CardViewPagerAdapter
+import com.icoo.ssgsag_android.ui.main.calendar.calendarDetail.CalendarDetailActivity
 import com.icoo.ssgsag_android.ui.main.feed.context
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 
 class AllPosterCollectionRecyclerViewAdapter : RecyclerView.Adapter<AllPosterCollectionRecyclerViewAdapter.ViewHolder>() {
 
-    private var listener: onAllPosterCollectionClickListener? = null
-    private var itemList = arrayListOf<AdPosterCollection>()
+    private var listener: OnAllPosterCollectionClickListener? = null
+    var itemList = arrayListOf<AdPosterCollection>()
 
     private var density = 0f
     private var leftMargin = 0
@@ -22,7 +27,7 @@ class AllPosterCollectionRecyclerViewAdapter : RecyclerView.Adapter<AllPosterCol
     private var rightMargin = 0
     private var contentWidth= 0
 
-    fun setOnAllPosterCollectionClickListener(listener: onAllPosterCollectionClickListener) {
+    fun setOnAllPosterCollectionClickListener(listener: OnAllPosterCollectionClickListener) {
         this.listener = listener
     }
 
@@ -61,8 +66,9 @@ class AllPosterCollectionRecyclerViewAdapter : RecyclerView.Adapter<AllPosterCol
 
         val cardViewPagerAdapter = CardViewPagerAdapter(context, itemList[position].adViewItemList)
         cardViewPagerAdapter.apply {
+            setOnItemClickListener(onPosterItemClickListener)
+            rowIdx = position
             posterWidth = contentWidth
-            this.den = density
         }
 
         holder.dataBinding.itemAllPosterCollectionVp.run{
@@ -72,7 +78,21 @@ class AllPosterCollectionRecyclerViewAdapter : RecyclerView.Adapter<AllPosterCol
             adapter = cardViewPagerAdapter
         }
 
-        holder.dataBinding.itemAllPosterCollectionVp.layoutParams.height =
+    }
+
+    val onPosterItemClickListener
+            = object : CardViewPagerAdapter.OnItemClickListener{
+        override fun onPosterClick(posterIdx: Int, rowIdx : Int, position: Int) {
+            listener?.onPosterItemClick(posterIdx, rowIdx, position)
+        }
+
+        override fun onPosterStore(posterIdx: Int, isSave: Int) {
+            listener?.onManagePosterItem(posterIdx, isSave)
+        }
+
+        override fun onPosterStoreCancel(posterIdx: Int, isSave: Int) {
+            listener?.onManagePosterItem(posterIdx, isSave)
+        }
     }
 
 
@@ -82,9 +102,10 @@ class AllPosterCollectionRecyclerViewAdapter : RecyclerView.Adapter<AllPosterCol
 
     inner class ViewHolder(val dataBinding: ItemAllPosterCollectionBinding) : RecyclerView.ViewHolder(dataBinding.root)
 
-    interface onAllPosterCollectionClickListener{
+    interface OnAllPosterCollectionClickListener{
         fun onMoreClick(categoryIdx: Int)
-
+        fun onPosterItemClick(posterIdx: Int, rowIdx : Int, position: Int)
+        fun onManagePosterItem(posterIdx : Int, isSave : Int)
     }
 
 }

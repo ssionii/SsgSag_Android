@@ -2,19 +2,27 @@ package com.icoo.ssgsag_android.ui.main.allPosters
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.gson.JsonObject
+import com.google.gson.JsonParser
+import com.icoo.ssgsag_android.SsgSagApplication
 import com.icoo.ssgsag_android.base.BaseViewModel
 import com.icoo.ssgsag_android.data.model.category.Category
 import com.icoo.ssgsag_android.data.model.poster.PosterRepository
 import com.icoo.ssgsag_android.data.model.poster.allPoster.AdPosterCollection
 import com.icoo.ssgsag_android.data.model.poster.posterDetail.PosterDetail
+import com.icoo.ssgsag_android.data.model.schedule.ScheduleRepository
 import com.icoo.ssgsag_android.ui.main.calendar.calendarDetail.CalendarDetailActivity
 import com.icoo.ssgsag_android.util.scheduler.SchedulerProvider
+import org.json.JSONArray
+import org.json.JSONObject
 import kotlin.reflect.KClass
 
 class AllPostersViewModel(
-    private val repository: PosterRepository,
+    private val posterRepository: PosterRepository,
+    private val scheduleRepository : ScheduleRepository,
     private val schedulerProvider: SchedulerProvider
 ) : BaseViewModel() {
 
@@ -54,7 +62,7 @@ class AllPostersViewModel(
     }
 
     private fun getAdPosterCollection(){
-        addDisposable(repository.getAllPosterAd()
+        addDisposable(posterRepository.getAllPosterAd()
             .subscribeOn(schedulerProvider.io())
             .observeOn(schedulerProvider.mainThread())
             .doOnError {
@@ -65,6 +73,51 @@ class AllPostersViewModel(
             }, {
                 it.printStackTrace()
             }))
+    }
+
+
+    fun managePoster(posterIdx: Int, isSave: Int) {
+        if(isSave == 0) {
+            addDisposable(
+                posterRepository.saveAtPosterDetail(posterIdx)
+                    .subscribeOn(schedulerProvider.io())
+                    .observeOn(schedulerProvider.mainThread())
+                    .subscribe({
+//                        getAdPosterCollection()
+                        Toast.makeText(
+                            SsgSagApplication.getGlobalApplicationContext(),
+                            "캘린더에 저장되었습니다.", Toast.LENGTH_SHORT).show()
+                    }, {
+
+                    })
+            )
+        }else if(isSave == 1){
+            var posterIdxList = arrayListOf(posterIdx)
+
+            val jsonObject = JSONObject()
+            val jsonArray = JSONArray(posterIdxList)
+            jsonObject.put("posterIdxList", jsonArray)
+
+            val body = JsonParser().parse(jsonObject.toString()) as JsonObject
+
+            addDisposable(scheduleRepository.deleteSchedule(body)
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.mainThread())
+                .subscribe({
+//                    getAdPosterCollection()
+                    Toast.makeText(
+                        SsgSagApplication.getGlobalApplicationContext(),
+                        "캘린더에서 삭제되었습니다!", Toast.LENGTH_SHORT).show()
+                }, {
+                    it.printStackTrace()
+                })
+            )
+
+        }else{
+            Toast.makeText(
+                SsgSagApplication.getGlobalApplicationContext(),
+                "포스터 정보가 없습니다", Toast.LENGTH_SHORT).show();
+        }
     }
 
     fun navigate(idx: Int) {

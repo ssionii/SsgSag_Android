@@ -4,9 +4,12 @@ import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.VisibleForTesting
 import androidx.databinding.DataBindingUtil
 import androidx.viewpager.widget.PagerAdapter
 import com.bumptech.glide.Glide
@@ -25,7 +28,7 @@ class CardViewPagerAdapter(
 
     private var mOnItemClickListener: OnItemClickListener? = null
     var posterWidth = 0
-    var den = 0f
+    var rowIdx = 0
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
 
@@ -35,15 +38,32 @@ class CardViewPagerAdapter(
         )
 
         if(posterList!= null){
-            viewDataBinding.poster = posterList[position]
-            viewDataBinding.itemAllPostersCardCvPoster.layoutParams.height = (posterWidth * 1.4).toInt()
+            val posterItem = posterList[position]
 
-//            viewDataBinding.itemAllPostersCardCvContainer.setSafeOnClickListener {
-//                mOnItemClickListener?.onItemClick(posterList[position].posterIdx)
-//            }
+            viewDataBinding.poster = posterItem
+            viewDataBinding.itemAllPostersCardCvPoster.layoutParams.height = (posterWidth * 1.42).toInt()
+
+            viewDataBinding.itemAllPostersCardLlContainer.setSafeOnClickListener {
+                mOnItemClickListener?.onPosterClick(posterItem.contentIdx, rowIdx, position)
+            }
+            viewDataBinding.itemAllPosterCardRlCancel.setSafeOnClickListener {
+                mOnItemClickListener?.onPosterStoreCancel(posterItem.contentIdx, posterItem.isSave)
+                posterItem.isSave = 0
+
+                viewDataBinding.itemAllPosterCardRlStore.visibility = VISIBLE
+                viewDataBinding.itemAllPosterCardRlCancel.visibility = GONE
+
+            }
+            viewDataBinding.itemAllPosterCardRlStore.setSafeOnClickListener {
+                mOnItemClickListener?.onPosterStore(posterItem.contentIdx, posterItem.isSave)
+                posterItem.isSave = 1
+
+                viewDataBinding.itemAllPosterCardRlStore.visibility = GONE
+                viewDataBinding.itemAllPosterCardRlCancel.visibility = VISIBLE
+            }
         }
 
-        viewDataBinding.root.setTag(position)
+        viewDataBinding.root.tag = position
         container.addView(viewDataBinding.root)
         container.clipToPadding= false
 
@@ -58,7 +78,6 @@ class CardViewPagerAdapter(
             return 0
     }
 
-
     override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
         container.removeView(`object` as View)
     }
@@ -72,7 +91,9 @@ class CardViewPagerAdapter(
     }
 
     interface OnItemClickListener {
-        fun onItemClick(posterIdx: Int)
+        fun onPosterClick(posterIdx: Int, rowIdx : Int, position: Int)
+        fun onPosterStoreCancel(posterIdx: Int, isSave : Int)
+        fun onPosterStore(posterIdx: Int, isSave: Int)
     }
 
 }

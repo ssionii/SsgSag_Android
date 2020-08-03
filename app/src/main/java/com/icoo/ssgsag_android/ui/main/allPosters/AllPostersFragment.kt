@@ -1,5 +1,6 @@
 package com.icoo.ssgsag_android.ui.main.allPosters
 
+import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Point
@@ -7,7 +8,11 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.SimpleItemAnimator
 import com.icoo.ssgsag_android.BR
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseFragment
@@ -17,14 +22,14 @@ import com.icoo.ssgsag_android.databinding.FragmentAllPosterBinding
 import com.icoo.ssgsag_android.databinding.ItemAllPosterCategoryBinding
 import com.icoo.ssgsag_android.ui.main.allPosters.category.AllCategoryActivity
 import com.icoo.ssgsag_android.ui.main.allPosters.collection.AllPosterCollectionRecyclerViewAdapter
-import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
+import com.icoo.ssgsag_android.ui.main.calendar.calendarDetail.CalendarDetailActivity
 import com.icoo.ssgsag_android.util.view.NonScrollGridLayoutManager
 import com.icoo.ssgsag_android.util.view.WrapContentLinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class AllPostersFragment : BaseFragment<FragmentAllPosterBinding, AllPostersViewModel>(),
-    CardViewPagerAdapter.OnItemClickListener, BaseRecyclerViewAdapter.OnItemClickListener{
+    BaseRecyclerViewAdapter.OnItemClickListener{
 
     override val layoutResID: Int
         get() = R.layout.fragment_all_poster
@@ -32,13 +37,30 @@ class AllPostersFragment : BaseFragment<FragmentAllPosterBinding, AllPostersView
 
     lateinit private var allPosterCollectionRvAdapter : AllPosterCollectionRecyclerViewAdapter
 
+    var requestRowIdx = 0
+    var requestPosition = 0
+
+    val requestFromDetail = prepareCall(ActivityResultContracts.StartActivityForResult()) { activityResult : ActivityResult ->
+        val resultCode : Int = activityResult.resultCode
+        val data : Intent? = activityResult.data
+
+        if(resultCode == Activity.RESULT_OK) {
+            allPosterCollectionRvAdapter.itemList[requestRowIdx].adViewItemList[requestPosition].isSave =
+                data!!.getIntExtra("isSave", 0)
+
+            allPosterCollectionRvAdapter.apply{
+                notifyItemChanged(requestRowIdx)
+            }
+        }
+
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewDataBinding.vm = viewModel
 
         setTopButtonRv()
         setCollectionRv()
-//        setViewPager()
         navigator()
     }
 
@@ -63,7 +85,7 @@ class AllPostersFragment : BaseFragment<FragmentAllPosterBinding, AllPostersView
                     get() = this@AllPostersFragment
             }
 
-            layoutManager = NonScrollGridLayoutManager(activity!!, 3)
+            layoutManager = NonScrollGridLayoutManager(requireActivity(), 3)
 
 
             (adapter as BaseRecyclerViewAdapter<PosterCategory, *>).run{
@@ -74,20 +96,18 @@ class AllPostersFragment : BaseFragment<FragmentAllPosterBinding, AllPostersView
     }
 
     override fun onItemClicked(item: Any?, position: Int?) {
-        val intent = Intent(activity!!, AllCategoryActivity::class.java)
+        val intent = Intent(requireActivity(), AllCategoryActivity::class.java)
         intent.putExtra("category", (item as PosterCategory).categoryIdx)
 
         startActivity(intent)
     }
-
-
 
     private fun setCollectionRv(){
 
         val d = resources.displayMetrics.density
 
         // 화면 전체 사이즈
-        val display = activity!!.windowManager.defaultDisplay
+        val display = requireActivity().windowManager.defaultDisplay
         val size = Point()
         display.getSize(size)
         val width = (size.x / d).toInt()
@@ -98,35 +118,63 @@ class AllPostersFragment : BaseFragment<FragmentAllPosterBinding, AllPostersView
         val rightDpValue = width - leftDpValue - contentDpValue
 
         allPosterCollectionRvAdapter = AllPosterCollectionRecyclerViewAdapter()
-        allPosterCollectionRvAdapter.setMargin(d, leftDpValue, middleDpValue, rightDpValue, contentDpValue)
+        allPosterCollectionRvAdapter.apply {
+            setOnAllPosterCollectionClickListener(onPosterCollectionClickListener)
+            setMargin(d, leftDpValue, middleDpValue, rightDpValue, contentDpValue)
+        }
         viewDataBinding.fragAllPosterPostersCollectionRv.run {
             adapter = allPosterCollectionRvAdapter
 
             layoutManager = WrapContentLinearLayoutManager()
+
+            (this.itemAnimator as SimpleItemAnimator).run {
+                changeDuration = 0
+                supportsChangeAnimations = false
+            }
         }
 
-        viewModel.posterList.observe(this, Observer {
+        viewModel.posterList.observe(viewLifecycleOwner, Observer {
             allPosterCollectionRvAdapter.run{
                 replaceAll(it)
                 notifyDataSetChanged()
             }
         })
-
-
-
     }
 
-    override fun onItemClick(posterIdx: Int) {
-        viewModel.navigate(posterIdx)
+    private val onPosterCollectionClickListener
+            = object : AllPosterCollectionRecyclerViewAdapter.OnAllPosterCollectionClickListener{
+        override fun onPosterItemClick(posterIdx: Int, rowIdx : Int, position: Int) {
+
+            requestRowIdx = rowIdx
+            requestPosition = position
+
+            val intent = Intent(requireActivity(), CalendarDetailActivity::class.java)
+            intent.putExtra("Idx", posterIdx)
+            intent.putExtra("from", "main")
+            intent.putExtra("from", "what")
+
+            requestFromDetail.launch(intent)
+        }
+
+        override fun onMoreClick(categoryIdx: Int) {
+            val intent = Intent(activity!!, AllCategoryActivity::class.java)
+            intent.putExtra("category", categoryIdx)
+
+            startActivity(intent)
+        }
+
+        override fun onManagePosterItem(posterIdx: Int, isSave : Int) {
+            viewModel.managePoster(posterIdx, isSave)
+        }
     }
 
     private fun navigator() {
-        viewModel.activityToStart.observe(this, Observer { value ->
+        viewModel.activityToStart.observe(viewLifecycleOwner, Observer { value ->
             val intent = Intent(activity, value.first.java)
             value.second?.let {
                 intent.putExtras(it)
             }
-            view!!.context.startActivity(intent)
+            requireView().context.startActivity(intent)
 
         })
     }

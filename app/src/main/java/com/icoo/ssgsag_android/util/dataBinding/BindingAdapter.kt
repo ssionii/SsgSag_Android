@@ -7,6 +7,7 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -376,6 +377,25 @@ fun CardView.setVisibilityByInt(num: Int){
         else -> this.visibility = GONE
     }
 }
+
+@BindingAdapter("rlVisibilityByInt")
+fun RelativeLayout.setVisibilityByInt(num: Int){
+    when(num){
+        0 -> this.visibility = GONE
+        1 -> this.visibility = VISIBLE
+
+    }
+}
+
+
+@BindingAdapter("rlVisibilityByIntR")
+fun RelativeLayout.setVisibilityByIntR(num: Int){
+    when(num){
+        0 -> this.visibility = VISIBLE
+        1 -> this.visibility = GONE
+    }
+}
+
 
 private fun createLoggerListener(name: String): RequestListener<Drawable> {
     return object : RequestListener<Drawable> {
