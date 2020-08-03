@@ -21,7 +21,6 @@ import com.icoo.ssgsag_android.util.DateUtil.yearFormat
 import com.icoo.ssgsag_android.util.extensionFunction.getDayOfWeek
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import com.icoo.ssgsag_android.util.view.WrapContentLinearLayoutManager
-import com.igaworks.v2.core.AdBrixRm
 import org.jetbrains.anko.support.v4.toast
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
@@ -158,10 +157,6 @@ class CalendarDialogPageFragment : BaseFragment<FragmentCalendarDialogPageBindin
         object : CalendarDialogPageRecyclerViewAdapter.OnScheduleItemClickListener {
             override fun onItemClicked(posterIdx: Int){
                 viewModel.navigate(posterIdx)
-
-                //adbrix
-                AdBrixRm.event("touchUp_PosterDetail",
-                    AdBrixRm.AttrModel().setAttrs("posterIdx",posterIdx.toLong()))
             }
 
             override fun onItemLongClicked(posterIdx: Int, posterName: String) {

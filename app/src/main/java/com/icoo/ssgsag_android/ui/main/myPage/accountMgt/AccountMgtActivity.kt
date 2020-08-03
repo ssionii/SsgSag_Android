@@ -35,7 +35,6 @@ import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.ui.main.myPage.accountMgt.logout.LogoutDialogFragment
 import com.icoo.ssgsag_android.ui.main.myPage.serviceInfo.ServiceInfoActivity
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
-import com.igaworks.v2.core.AdBrixRm
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -459,12 +458,6 @@ class AccountMgtActivity : AppCompatActivity() {
                         intent.putExtra("result", "0")
                         setResult(Activity.RESULT_OK, intent)
                         finish()
-
-                        val userProperties = AdBrixRm.UserProperties()
-                            .setAttrs("major", major)
-                            .setAttrs("univ", school)
-
-                        AdBrixRm.saveUserProperties(userProperties)
                     }
                 }
             }

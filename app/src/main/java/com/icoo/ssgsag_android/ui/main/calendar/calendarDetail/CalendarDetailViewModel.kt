@@ -17,7 +17,6 @@ import com.icoo.ssgsag_android.data.model.poster.posterDetail.analytics.Analytic
 import com.icoo.ssgsag_android.data.model.schedule.ScheduleRepository
 import com.icoo.ssgsag_android.ui.main.feed.context
 import com.icoo.ssgsag_android.util.scheduler.SchedulerProvider
-import com.igaworks.v2.core.AdBrixRm
 import io.reactivex.Single
 import org.json.JSONArray
 import org.json.JSONObject
@@ -212,24 +211,10 @@ class CalendarDetailViewModel(
 
         if(posterDetail.value?.isFavorite == 0) {
             response = scheduleRepository.bookmarkSchedule(posterIdx)
-
-            val bookmarkAttr = AdBrixRm.AttrModel()
-                .setAttrs("posterIdx",posterIdx.toLong())
-                .setAttrs("bookmarked",true)
-
-            AdBrixRm.event("touchUp_Favorite", bookmarkAttr)
-
             Toast.makeText(context, "즐겨찾기에 추가되었습니다.",Toast.LENGTH_SHORT).show();
         }
         else if(posterDetail.value?.isFavorite == 1) {
             response = scheduleRepository.unbookmarkSchedule(posterIdx)
-
-            val bookmarkAttr = AdBrixRm.AttrModel()
-                .setAttrs("posterIdx",posterIdx.toLong())
-                .setAttrs("bookmarked",false)
-
-            AdBrixRm.event("touchUp_Favorite", bookmarkAttr)
-
             Toast.makeText(context, "즐겨찾기에서 삭제되었습니다.",Toast.LENGTH_SHORT).show();
         }
         addDisposable(response
