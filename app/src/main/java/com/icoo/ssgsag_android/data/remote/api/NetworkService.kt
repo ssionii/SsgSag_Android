@@ -513,6 +513,7 @@ interface NetworkService {
     // 광고
     @GET("/ads/v2")
     fun getAds(
+        @Header("Authorization") token: String,
         @Query("viewName") viewName: String
     ): Single<AdsDataResponse>
 

@@ -44,6 +44,8 @@ class AllPostersViewModel(
     private val _activityToStart = MutableLiveData<Pair<KClass<*>, Bundle?>>()
     val activityToStart: LiveData<Pair<KClass<*>, Bundle?>> get() = _activityToStart
 
+    private var _mainAdList = MutableLiveData<ArrayList<AdPosterCollection>>()
+    val mainAdList : LiveData<ArrayList<AdPosterCollection>> = _mainAdList
     private var _posterList = MutableLiveData<ArrayList<AdPosterCollection>>()
     val posterList : LiveData<ArrayList<AdPosterCollection>> = _posterList
     private var _eventList = MutableLiveData<ArrayList<AdPosterCollection>>()
@@ -72,6 +74,7 @@ class AllPostersViewModel(
                 Log.e("getAllPosterAd error", it.message)
             }
             .subscribe({
+                _mainAdList.value = it.mainAdList
                 _posterList.value = it.posterList
                 _eventList.value = it.eventList
             }, {

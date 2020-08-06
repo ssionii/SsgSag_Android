@@ -23,7 +23,7 @@ class ReviewRepositoryImpl(val api: NetworkService, val pref: PreferenceManager)
         .map { it.status }
 
     override fun getAds(): Single<ArrayList<AdItem>> = api
-        .getAds("review-00")
+        .getAds(pref.findPreference("TOKEN", ""), "review-00")
         .doOnError { throwable ->
             Log.e("getAds API : ", throwable.message)
         }

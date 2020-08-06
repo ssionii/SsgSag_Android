@@ -2,10 +2,8 @@ package com.icoo.ssgsag_android.ui.main.allPosters
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Color
 import android.graphics.Point
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.Observer
@@ -21,6 +19,8 @@ import com.icoo.ssgsag_android.ui.main.allPosters.category.AllCategoryActivity
 import com.icoo.ssgsag_android.ui.main.allPosters.collection.AllPosterCollectionRecyclerViewAdapter
 import com.icoo.ssgsag_android.ui.main.calendar.calendarDetail.CalendarDetailActivity
 import com.icoo.ssgsag_android.ui.main.feed.FeedWebActivity
+import com.icoo.ssgsag_android.ui.main.review.main.AutoScrollAdapter
+import com.icoo.ssgsag_android.util.view.AutoScrollViewPagerAdapter
 import com.icoo.ssgsag_android.util.view.NonScrollGridLayoutManager
 import com.icoo.ssgsag_android.util.view.WrapContentLinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -58,10 +58,40 @@ class AllPostersFragment : BaseFragment<FragmentAllPosterBinding, AllPostersView
         super.onActivityCreated(savedInstanceState)
         viewDataBinding.vm = viewModel
 
+        val d = resources.displayMetrics.density
+
+        // 화면 전체 사이즈
+        val display = requireActivity().windowManager.defaultDisplay
+        val size = Point()
+        display.getSize(size)
+        val width = (size.x / d).toInt()
+
+        setTopBanner(d, width)
         setTopButtonRv()
         setCollectionRv()
-        setEventVp()
+        setEventVp(d, width)
         navigator()
+    }
+
+    private fun setTopBanner(d : Float, width: Int){
+
+        val vpAdapter = AutoScrollAdapter(requireActivity())
+
+        viewDataBinding.fragAllPosterAsvpBanner.run{
+            adapter = vpAdapter
+            setInterval(3000)
+
+            layoutParams.height = ( width * 0.5 * d ).toInt()
+        }
+
+        viewModel.mainAdList.observe(viewLifecycleOwner, Observer {
+            vpAdapter.apply{
+                replaceAll(it[0].adViewItemList)
+                notifyDataSetChanged()
+            }
+
+            viewDataBinding.fragAllPosterAsvpBanner.startAutoScroll()
+        })
     }
 
     private fun setTopButtonRv(){
@@ -168,15 +198,7 @@ class AllPostersFragment : BaseFragment<FragmentAllPosterBinding, AllPostersView
         }
     }
 
-    private fun setEventVp(){
-
-        val d = resources.displayMetrics.density
-
-        // 화면 전체 사이즈
-        val display = requireActivity().windowManager.defaultDisplay
-        val size = Point()
-        display.getSize(size)
-        val width = (size.x / d).toInt()
+    private fun setEventVp(d : Float, width: Int){
 
         val leftMargin = (19 * d).toInt()
         val middleMargin = (7 * d).toInt()
