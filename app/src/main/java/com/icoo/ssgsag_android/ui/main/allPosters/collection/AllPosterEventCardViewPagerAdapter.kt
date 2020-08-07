@@ -1,4 +1,4 @@
-package com.icoo.ssgsag_android.ui.main.allPosters
+package com.icoo.ssgsag_android.ui.main.allPosters.collection
 
 import android.content.Context
 import android.view.LayoutInflater

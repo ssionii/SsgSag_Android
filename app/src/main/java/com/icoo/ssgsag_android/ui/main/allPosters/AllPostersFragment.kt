@@ -17,10 +17,10 @@ import com.icoo.ssgsag_android.databinding.FragmentAllPosterBinding
 import com.icoo.ssgsag_android.databinding.ItemAllPosterCategoryBinding
 import com.icoo.ssgsag_android.ui.main.allPosters.category.AllCategoryActivity
 import com.icoo.ssgsag_android.ui.main.allPosters.collection.AllPosterCollectionRecyclerViewAdapter
+import com.icoo.ssgsag_android.ui.main.allPosters.collection.AllPosterEventCardViewPagerAdapter
 import com.icoo.ssgsag_android.ui.main.calendar.calendarDetail.CalendarDetailActivity
 import com.icoo.ssgsag_android.ui.main.feed.FeedWebActivity
 import com.icoo.ssgsag_android.ui.main.review.main.AutoScrollAdapter
-import com.icoo.ssgsag_android.util.view.AutoScrollViewPagerAdapter
 import com.icoo.ssgsag_android.util.view.NonScrollGridLayoutManager
 import com.icoo.ssgsag_android.util.view.WrapContentLinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -207,7 +207,11 @@ class AllPostersFragment : BaseFragment<FragmentAllPosterBinding, AllPostersView
 
         viewModel.eventList.observe(viewLifecycleOwner, Observer {
             if(it.size > 0){
-                allPosterEventCardViewPagerAdapter = AllPosterEventCardViewPagerAdapter(requireActivity(), it[0].adViewItemList)
+                allPosterEventCardViewPagerAdapter =
+                    AllPosterEventCardViewPagerAdapter(
+                        requireActivity(),
+                        it[0].adViewItemList
+                    )
                 allPosterEventCardViewPagerAdapter.apply{
                     eventWidth = contentWidth
                     setOnItemClickListener(eventItemClickListener)

@@ -24,6 +24,8 @@
                 android:orientation="vertical"
                 android:paddingBottom="30dp">
 
+
+
             <pl.pzienowicz.autoscrollviewpager.AutoScrollViewPager
                     android:id="@+id/frag_all_poster_asvp_banner"
                     android:layout_width="match_parent"

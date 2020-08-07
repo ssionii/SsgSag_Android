@@ -1,24 +1,16 @@
-package com.icoo.ssgsag_android.ui.main.allPosters
+package com.icoo.ssgsag_android.ui.main.allPosters.collection
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.annotation.VisibleForTesting
 import androidx.databinding.DataBindingUtil
 import androidx.viewpager.widget.PagerAdapter
-import com.bumptech.glide.Glide
-import com.bumptech.glide.RequestManager
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.data.model.ads.AdItem
-import com.icoo.ssgsag_android.data.model.poster.posterDetail.PosterDetail
 import com.icoo.ssgsag_android.databinding.ItemAllPostersCardBinding
-import com.icoo.ssgsag_android.ui.main.subscribe.subscribeDialog.SubscribeInternDialogFragment
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 
 class AllPosterCardViewPagerAdapter(
