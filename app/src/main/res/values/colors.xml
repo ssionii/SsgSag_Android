@@ -87,6 +87,19 @@
 
     <color name="ssgsag8">#14656ef0</color>
 
+    <color name="categoryActText">#5424b1</color>
+    <color name="categoryActBg">#145424b1</color>
+    <color name="categoryContestText">#3f77fa</color>
+    <color name="categoryContestBg">#143f77fa</color>
+    <color name="categoryInternText">#f67976</color>
+    <color name="categoryInternBg">#14f67976</color>
+    <color name="categoryClubText">#f4bf10</color>
+    <color name="categoryClubBg">#14f4bf10</color>
+    <color name="categoryEduText">#f79b4c</color>
+    <color name="categoryEduBg">#14f79b4c</color>
+    <color name="categoryEtcText">#444444</color>
+    <color name="categoryEtcBg">#14121415</color>
+
 
 
 

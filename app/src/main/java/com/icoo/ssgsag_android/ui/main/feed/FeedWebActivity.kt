@@ -68,14 +68,14 @@ class FeedWebActivity : BaseActivity<ActivityFeedWebDetailBinding, FeedViewModel
 
         }
 
-        if(intent.getStringExtra("from") == "review") {
+        if(intent.getStringExtra("from") == "feed"){
+            viewModel.getFeed(intent.getIntExtra("idx", 0))
+        }else{
             viewDataBinding.actFeedWebDetailIvBookmark.visibility = INVISIBLE
             viewDataBinding.actFeedWebDetailTvName.text = intent.getStringExtra("title")
-        }else {
-            viewModel.getFeed(intent.getIntExtra("idx", 0))
         }
 
-        viewDataBinding.actFeedWebDetailWv.loadUrl(intent.getStringExtra("clubWebsite"))
+        viewDataBinding.actFeedWebDetailWv.loadUrl(intent.getStringExtra("url"))
 
         setButton()
 

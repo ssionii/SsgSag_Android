@@ -109,8 +109,7 @@ class MoreReviewViewModel (
 
     fun navigate(url: String) {
         val bundle = Bundle().apply {
-            putString("clubWebsite", url)
-            putString("from", "review")
+            putString("url", url)
         }
 
         _activityToStart.postValue(Pair(FeedWebActivity::class, bundle))

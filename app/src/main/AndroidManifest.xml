@@ -133,15 +133,19 @@
                    android:value="@string/adbrix_app_key"/>
         <meta-data android:name="AdBrixRmSecretKey"
                    android:value="@string/adbrix_secret_key"/>
-        <meta-data
-                android:name="com.google.android.gms.ads.APPLICATION_ID"
-                android:value="ca-app-pub-6888357719311971~5202997355"/>
+<!--        <meta-data-->
+<!--                android:name="com.google.android.gms.ads.APPLICATION_ID"-->
+<!--                android:value="ca-app-pub-6888357719311971~5202997355"/>-->
         <meta-data
                 android:name="com.google.android.gms.ads.AD_MANAGER_APP"
                 android:value="true"/>
         <meta-data
                 android:name="firebase_crashlytics_collection_enabled"
                 android:value="${enableCrashReporting}" />
+
+        <meta-data
+                android:name="com.google.android.gms.ads.APPLICATION_ID"
+                android:value="@string/admob_app_id"/>
 
         <!--receiver-->
         <receiver

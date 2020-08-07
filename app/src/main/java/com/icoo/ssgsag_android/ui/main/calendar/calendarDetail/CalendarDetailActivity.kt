@@ -1,5 +1,6 @@
 package com.icoo.ssgsag_android.ui.main.calendar.calendarDetail
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -27,6 +28,7 @@ import android.view.Gravity
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import com.github.mikephil.charting.data.*
 import com.icoo.ssgsag_android.ui.main.calendar.posterBookmark.PosterBookmarkBottomSheet
 import com.icoo.ssgsag_android.ui.main.photoEnlarge.PhotoExpandActivity
@@ -68,6 +70,7 @@ class CalendarDetailActivity : BaseActivity<ActivityCalendarDetailBinding, Calen
     private var from: String = "calendar"
     private var fromDetail : String = ""
     private var param: String = ""
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -126,8 +129,10 @@ class CalendarDetailActivity : BaseActivity<ActivityCalendarDetailBinding, Calen
 
     override fun onDialogDismissed(isDeleted:Boolean) {
         if(isDeleted) {
-            if (scheduleDeleteClick) viewModel.managePoster(posterIdx)
-            else if (favoriteDeleteClick) {
+            if (scheduleDeleteClick) {
+                viewModel.managePoster(posterIdx)
+                managePoster(0)
+            } else if (favoriteDeleteClick) {
                 viewModel.unBookmarkWithAlarm(posterIdx)
                 favoriteDialog.dismiss()
             }
@@ -200,6 +205,8 @@ class CalendarDetailActivity : BaseActivity<ActivityCalendarDetailBinding, Calen
     private fun setButton(){
         viewDataBinding.actCalDetailCvStore.setSafeOnClickListener {
             viewModel.managePoster(posterIdx)
+
+            managePoster(1)
         }
 
         viewDataBinding.actCalDetailCvCancelStore.setSafeOnClickListener {
@@ -258,6 +265,16 @@ class CalendarDetailActivity : BaseActivity<ActivityCalendarDetailBinding, Calen
             }
 
         })
+    }
+
+    private fun managePoster(isSave : Int){
+        val result = Intent().apply{
+            putExtras(bundleOf(
+                "isSave" to isSave
+            ))
+        }
+
+        setResult(Activity.RESULT_OK, result)
     }
 
     private fun bookmarkToggle(isFavorite : Int, toggle: Int){

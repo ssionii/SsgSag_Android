@@ -122,13 +122,15 @@ LifecycleOwner, LifecycleObserver{
             ) {
 
                 val intent = Intent(context, FeedWebActivity::class.java)
-                intent.putExtra("clubWebsite", feedUrl)
+                intent.putExtra("url", feedUrl)
+                intent.putExtra("from", "feed")
                 intent.putExtra("idx", feedIdx)
                 intent.addFlags(FLAG_ACTIVITY_NEW_TASK)
                 intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
 
                 val bundle = Bundle().apply {
-                    putString("clubWebsite", feedUrl)
+                    putString("url", feedUrl)
+                    putString("from", "feed")
                     putInt("idx", feedIdx)
                 }
 

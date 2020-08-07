@@ -1,45 +1,46 @@
-package com.icoo.ssgsag_android.ui.main.allPosters
+package com.icoo.ssgsag_android.ui.main.allPosters.collection
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.viewpager.widget.PagerAdapter
-import com.bumptech.glide.Glide
-import com.bumptech.glide.RequestManager
 import com.icoo.ssgsag_android.R
-import com.icoo.ssgsag_android.data.model.poster.posterDetail.PosterDetail
-import com.icoo.ssgsag_android.databinding.ItemAllPostersCardBinding
-import com.icoo.ssgsag_android.ui.main.subscribe.subscribeDialog.SubscribeInternDialogFragment
+import com.icoo.ssgsag_android.data.model.ads.AdItem
+import com.icoo.ssgsag_android.databinding.ItemAllPosterEventBinding
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 
-class CardViewPagerAdapter(
+
+class AllPosterEventCardViewPagerAdapter(
     private val context : Context,
-    private val posterList: ArrayList<PosterDetail>?
+    private val eventList: ArrayList<AdItem>?
 ) : PagerAdapter() {
 
     private var mOnItemClickListener: OnItemClickListener? = null
+    var eventWidth = 0
+    var rowIdx = 0
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
 
-        val viewDataBinding = DataBindingUtil.inflate<ItemAllPostersCardBinding>(
+        val viewDataBinding = DataBindingUtil.inflate<ItemAllPosterEventBinding>(
             LayoutInflater.from(context),
-            R.layout.item_all_posters_card, container, false
+            R.layout.item_all_poster_event, container, false
         )
 
-        if(posterList!= null){
-            viewDataBinding.poster = posterList[position]
+        if(eventList!= null){
+            val eventItem = eventList[position]
 
-            viewDataBinding.itemAllPostersCardCvContainer.setSafeOnClickListener {
-                mOnItemClickListener?.onItemClick(posterList[position].posterIdx)
+            viewDataBinding.event = eventItem
+            viewDataBinding.itemAllPosterEventIv.layoutParams.height = (eventWidth * 0.5).toInt()
+
+            viewDataBinding.root.setSafeOnClickListener {
+                mOnItemClickListener?.onEventClick(eventItem.adUrl, eventItem.contentTitle)
             }
+
         }
 
-        viewDataBinding.root.setTag(position)
+        viewDataBinding.root.tag = position
         container.addView(viewDataBinding.root)
         container.clipToPadding= false
 
@@ -48,12 +49,11 @@ class CardViewPagerAdapter(
     }
 
     override fun getCount(): Int {
-        if(posterList!= null)
-            return posterList.size
+        if(eventList!= null)
+            return eventList.size
         else
             return 0
     }
-
 
     override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
         container.removeView(`object` as View)
@@ -68,7 +68,7 @@ class CardViewPagerAdapter(
     }
 
     interface OnItemClickListener {
-        fun onItemClick(posterIdx: Int)
+        fun onEventClick(adUrl : String?, title: String)
     }
 
 }
