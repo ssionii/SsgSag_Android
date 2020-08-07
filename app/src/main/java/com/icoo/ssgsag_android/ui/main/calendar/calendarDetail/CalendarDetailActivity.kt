@@ -33,7 +33,6 @@ import com.github.mikephil.charting.data.*
 import com.icoo.ssgsag_android.ui.main.calendar.posterBookmark.PosterBookmarkBottomSheet
 import com.icoo.ssgsag_android.ui.main.photoEnlarge.PhotoExpandActivity
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
-import com.igaworks.v2.core.AdBrixRm
 import com.kakao.kakaolink.v2.KakaoLinkResponse
 import com.kakao.kakaolink.v2.KakaoLinkService
 import com.kakao.message.template.ButtonObject
@@ -409,11 +408,6 @@ class CalendarDetailActivity : BaseActivity<ActivityCalendarDetailBinding, Calen
         viewDataBinding.actCalDetailClGoWebsite.setSafeOnClickListener {
             viewModel.webUrl.value?.let {
                 viewModel.recordClickHistory(posterIdx)
-                AdBrixRm.event(
-                    "touchUp_MoveToWebsite",
-                    AdBrixRm.AttrModel().setAttrs("posterIdx", posterIdx.toLong())
-                )
-
                 if(it != null) {
                     try {
                         val intent = Intent(Intent.ACTION_VIEW, Uri.parse((it)))
@@ -443,8 +437,6 @@ class CalendarDetailActivity : BaseActivity<ActivityCalendarDetailBinding, Calen
     private fun share(){
         viewDataBinding.actCalDetailIvShare.setSafeOnClickListener {
 
-            AdBrixRm.AttrModel().setAttrs("adv_keyword", posterIdx.toString())
-
             val params = FeedTemplate
                 .newBuilder(
                     ContentObject.newBuilder(
@@ -473,13 +465,7 @@ class CalendarDetailActivity : BaseActivity<ActivityCalendarDetailBinding, Calen
                     toast("포스터 공유에 실패했습니다.")
                 }
 
-                override fun onSuccess(result: KakaoLinkResponse?) {
-                    // adbrix
-                    AdBrixRm.event(
-                        "touchUp_Share", AdBrixRm.AttrModel()
-                            .setAttrs("posterIdx", posterIdx.toLong())
-                    )
-                }
+                override fun onSuccess(result: KakaoLinkResponse?) {}
             })
         }
     }
