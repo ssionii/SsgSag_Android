@@ -33,6 +33,7 @@ import com.icoo.ssgsag_android.databinding.ActivitySignupBinding
 import com.icoo.ssgsag_android.ui.login.LoginActivity
 import com.icoo.ssgsag_android.ui.main.myPage.serviceInfo.privacy.PrivacyActivity
 import com.icoo.ssgsag_android.ui.main.myPage.serviceInfo.term.TermActivity
+import com.icoo.ssgsag_android.ui.signUp.searchUniv.SearchUnivActivity
 import com.icoo.ssgsag_android.ui.splash.SplashActivity
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import com.igaworks.v2.abxExtensionApi.AbxCommon
@@ -98,6 +99,8 @@ class SignupActivity : BaseActivity<ActivitySignupBinding, SignupViewModel>() {
 
         realmDeviceInfo = realm.where(DeviceInfo::class.java).equalTo("id", 1 as Int).findFirst()!!
 
+        setUnivSearch()
+
         setButton()
         checkNicknameValidate()
         getJsonList()
@@ -105,17 +108,6 @@ class SignupActivity : BaseActivity<ActivitySignupBinding, SignupViewModel>() {
         setEditTextChange()
         navigator()
         logEVENT_NAME_REGISTRATION_OPENEvent()
-        viewDataBinding.actSignupAtSchool.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                viewDataBinding.actSignupAtMajor.setText("")
-                val text = s.toString()
-                if (checkUnivValidate(text))
-                    onMajorSetByUniv()
-            }
-
-            override fun afterTextChanged(s: Editable) {}
-        })
     }
 
     inner class CustomAdapter : ArrayAdapter<String>(this@SignupActivity, R.layout.item_spinner) {
@@ -211,8 +203,15 @@ class SignupActivity : BaseActivity<ActivitySignupBinding, SignupViewModel>() {
             univMap.put(univName, majorArr)
         }
 
-        setAutoCompleteTextList()
+//        setAutoCompleteTextList()
 
+    }
+
+    private fun setUnivSearch(){
+        viewDataBinding.actSignupLlUniv.setSafeOnClickListener {
+            val intent = Intent(this, SearchUnivActivity::class.java)
+            startActivity(intent)
+        }
     }
 
 
@@ -328,16 +327,6 @@ class SignupActivity : BaseActivity<ActivitySignupBinding, SignupViewModel>() {
             toast("학교 이름을 리스트에서 골라 주세요")
         }
 
-        univMap.get(viewDataBinding.actSignupAtSchool.text.toString())?.let {
-            for (majorName in it) {
-                if (majorName == GetSignupProfile.major) {
-                    checkMajorList = true
-                    break
-                } else
-                    checkMajorList = false
-            }
-        }
-
         if (!checkMajorList) {
             toast("학과 이름을 리스트 에서 골라 주세요")
         }
@@ -411,7 +400,6 @@ class SignupActivity : BaseActivity<ActivitySignupBinding, SignupViewModel>() {
     private fun getEditText() {
         GetSignupProfile.nickname = viewDataBinding.actSignupEtNickname.text.toString()
         GetSignupProfile.birth = viewDataBinding.actSignupEtBirth.text.toString()
-        GetSignupProfile.school = viewDataBinding.actSignupAtSchool.text.toString()
         GetSignupProfile.major = viewDataBinding.actSignupAtMajor.text.toString()
     }
 
@@ -436,7 +424,6 @@ class SignupActivity : BaseActivity<ActivitySignupBinding, SignupViewModel>() {
     private fun setEditTextChange() {
         viewDataBinding.actSignupEtNickname.onChange { onDataCheck() }
         viewDataBinding.actSignupEtBirth.onChange { onDataCheck() }
-        viewDataBinding.actSignupAtSchool.onChange { onDataCheck() }
         viewDataBinding.actSignupAtMajor.onChange { onDataCheck() }
     }
 
@@ -452,15 +439,6 @@ class SignupActivity : BaseActivity<ActivitySignupBinding, SignupViewModel>() {
         return json
     }
 
-    private fun setAutoCompleteTextList() {
-
-        val schoolAdapter = ArrayAdapter<String>(
-            this, // Context
-            android.R.layout.simple_dropdown_item_1line, // Layout
-            univList // Array
-        )
-        viewDataBinding.actSignupAtSchool.setAdapter(schoolAdapter)
-    }
 
     fun checkUnivValidate(text: String): Boolean {
         for (i in univList.indices) {
@@ -475,7 +453,7 @@ class SignupActivity : BaseActivity<ActivitySignupBinding, SignupViewModel>() {
             this, // Context
             android.R.layout.simple_dropdown_item_1line, // Layout
             univMap.get(
-                viewDataBinding.actSignupAtSchool.text.toString()
+                viewDataBinding.actSignupTvSchool.text.toString()
             ) // Array
         )
         viewDataBinding.actSignupAtMajor.setAdapter(majorAdapter)

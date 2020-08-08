@@ -7,4 +7,5 @@ import io.reactivex.Single
 interface SignupRepository {
     fun signup(body: JsonObject): Single<SignUpResponse>
     fun validateNickname(userNickname: String): Single<BooleanResponse>
+    fun getUnivList() : Single<ArrayList<University>>
 }

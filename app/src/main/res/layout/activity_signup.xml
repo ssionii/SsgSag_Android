@@ -230,22 +230,21 @@
                             android:orientation="horizontal">
 
                         <LinearLayout
+                                android:id="@+id/act_signup_ll_univ"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:layout_marginTop="5dp"
                                 android:orientation="vertical">
 
-                            <AutoCompleteTextView
-                                    android:id="@+id/act_signup_at_school"
+                            <TextView
+                                    android:id="@+id/act_signup_tv_school_name"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="7dp"
                                     android:background="@null"
                                     android:completionThreshold="1"
                                     android:fontFamily="@font/noto_sans_kr_regular"
-                                    android:hint="학교 선택"
-                                    android:imeOptions="actionNext"
                                     android:letterSpacing="-0.02"
                                     android:singleLine="true"
                                     android:textColor="#000"

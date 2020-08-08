@@ -53,6 +53,7 @@ import com.icoo.ssgsag_android.ui.main.ssgSag.filter.SsgSagFilterViewModel
 import com.icoo.ssgsag_android.ui.main.ssgSag.todaySwipePoster.TodaySwipePosterViewModel
 import com.icoo.ssgsag_android.ui.main.subscribe.subscribeDialog.SubscribeDialogViewModel
 import com.icoo.ssgsag_android.ui.signUp.SignupViewModel
+import com.icoo.ssgsag_android.ui.signUp.searchUniv.SearchUnivViewModel
 import com.icoo.ssgsag_android.util.scheduler.AndroidSchedulerProvider
 import com.icoo.ssgsag_android.util.scheduler.SchedulerProvider
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -137,6 +138,7 @@ val viewModule = module {
     //Login
     viewModel {LoginViewModel(get(), get())}
     viewModel { SignupViewModel(get(), get(), get()) }
+    viewModel {SearchUnivViewModel(get(), get())}
     //Feed
     viewModel { FeedViewModel(get(),get()) }
     //MyPage
