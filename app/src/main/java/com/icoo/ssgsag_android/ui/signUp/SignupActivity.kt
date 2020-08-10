@@ -29,12 +29,14 @@ import com.icoo.ssgsag_android.base.BaseActivity
 import com.icoo.ssgsag_android.data.local.pref.SharedPreferenceController
 import com.icoo.ssgsag_android.data.model.user.DeviceInfo
 import com.icoo.ssgsag_android.databinding.ActivitySignupBinding
+import com.icoo.ssgsag_android.ui.main.feed.context
 import com.icoo.ssgsag_android.ui.main.myPage.serviceInfo.privacy.PrivacyActivity
 import com.icoo.ssgsag_android.ui.main.myPage.serviceInfo.term.TermActivity
 import com.icoo.ssgsag_android.ui.signUp.searchUniv.SearchUnivActivity
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import io.reactivex.disposables.CompositeDisposable
 import io.realm.Realm
+import org.jetbrains.anko.backgroundColor
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.textColor
 import org.jetbrains.anko.toast
@@ -67,6 +69,8 @@ class SignupActivity : BaseActivity<ActivitySignupBinding, SignupViewModel>() {
     private var checkStudentNumber = false
     private var checkGrade = false
 
+    private var isNotRegisteredUniv = false
+
     override val layoutResID: Int
         get() = R.layout.activity_signup
     override val viewModel: SignupViewModel by viewModel()
@@ -94,6 +98,10 @@ class SignupActivity : BaseActivity<ActivitySignupBinding, SignupViewModel>() {
             when(data.getStringExtra("from")){
                 "search" -> {
                     majorList = data.getStringArrayListExtra("majorList")
+                    isNotRegisteredUniv = false
+                }
+                "register" -> {
+                    isNotRegisteredUniv = true
                 }
             }
 
@@ -140,6 +148,7 @@ class SignupActivity : BaseActivity<ActivitySignupBinding, SignupViewModel>() {
                 (v.findViewById<View>(android.R.id.text1) as TextView).text = ""
                 //아이템의 마지막 값을 불러와 hint로 추가해 줍니다.
                 (v.findViewById<View>(android.R.id.text1) as TextView).hint = getItem(count)
+                (v.findViewById<View>(android.R.id.text1) as TextView).textSize = 14f
             }
             return v
         }
@@ -169,7 +178,7 @@ class SignupActivity : BaseActivity<ActivitySignupBinding, SignupViewModel>() {
 
     private fun setButton() {
 
-        viewDataBinding.actSignupIvBack.setSafeOnClickListener {
+        viewDataBinding.actSignupClBack.setSafeOnClickListener {
             finish()
         }
 
@@ -194,7 +203,7 @@ class SignupActivity : BaseActivity<ActivitySignupBinding, SignupViewModel>() {
         viewDataBinding.actSignupRlDone.setSafeOnClickListener {
             if (isClickable) {
                 if (checkValidity()) {
-//                    postSignUpResponseData()
+                    postSignUpResponseData()
                 }
             }
         }
@@ -274,9 +283,13 @@ class SignupActivity : BaseActivity<ActivitySignupBinding, SignupViewModel>() {
             toast("학교를 선택해주세요")
         }
 
-        checkMajorList = majorList.contains(viewDataBinding.actSignupAtMajor.text.toString())
-        if (!checkMajorList) {
-            toast("학과 이름을 리스트 에서 골라 주세요")
+        if(isNotRegisteredUniv){
+            checkMajorList = true
+        }else {
+            checkMajorList = majorList.contains(viewDataBinding.actSignupAtMajor.text.toString())
+            if (!checkMajorList) {
+                toast("학과 이름을 리스트 에서 골라 주세요")
+            }
         }
 
         checkStudentNumber = GetSignupProfile.studentNumber != ""
@@ -365,20 +378,18 @@ class SignupActivity : BaseActivity<ActivitySignupBinding, SignupViewModel>() {
     private fun onDataCheck() {
         getEditText()
 
-        Log.e("grade", GetSignupProfile.grade.toString())
-
         if (GetSignupProfile.birth.isEmpty() || GetSignupProfile.nickname.isEmpty() || GetSignupProfile.gender.isNullOrEmpty()
             || GetSignupProfile.school.isEmpty() || GetSignupProfile.major.isEmpty() || GetSignupProfile.studentNumber == "" || GetSignupProfile.grade == 6
             || !viewDataBinding.actSignupCbTerms.isChecked || (checkNickNameValidation == false)
         ) {
             isClickable = false
-            viewDataBinding.actSignupIvDone.setBackgroundColor(Color.parseColor("#c9c9c9"))
+            viewDataBinding.actSignupIvDone.backgroundColor = context.resources.getColor(R.color.grey_2)
         } else if (GetSignupProfile.birth.isNotEmpty() && GetSignupProfile.nickname.isNotEmpty() && GetSignupProfile.gender!!.isNotEmpty()
             && GetSignupProfile.school.isNotEmpty() && GetSignupProfile.major.isNotEmpty() && GetSignupProfile.studentNumber.isNotEmpty() && GetSignupProfile.grade != 0
             && viewDataBinding.actSignupCbTerms.isChecked && checkNickNameValidation
         ) {
             isClickable = true
-            viewDataBinding.actSignupIvDone.setBackgroundResource(R.drawable.background_signup_done)
+            viewDataBinding.actSignupIvDone.backgroundColor = context.resources.getColor(R.color.ssgsag)
         }
     }
 
