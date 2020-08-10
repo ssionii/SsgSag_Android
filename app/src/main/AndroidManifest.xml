@@ -75,6 +75,8 @@
         </activity>
 
         <activity android:name=".ui.signUp.searchUniv.SearchUnivActivity"/>
+        <activity android:name=".ui.signUp.searchUniv.RegisterUnivActivity"
+                android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".ui.main.myPage.career.CareerActivity"/>
         <activity android:name=".ui.main.myPage.career.careerEdit.CareerEditActivity"/>
         <activity android:name=".ui.main.allPosters.search.SearchActivity"/>

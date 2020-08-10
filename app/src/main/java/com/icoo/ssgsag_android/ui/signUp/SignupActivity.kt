@@ -1,5 +1,6 @@
 package com.icoo.ssgsag_android.ui.signUp
 
+import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -17,6 +18,8 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.TextView
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import com.adjust.sdk.Adjust
 import com.adjust.sdk.AdjustEvent
 import com.facebook.appevents.AppEventsLogger
@@ -89,6 +92,19 @@ class SignupActivity : BaseActivity<ActivitySignupBinding, SignupViewModel>() {
     override fun onStop() {
         super.onStop()
         disposable.clear()
+    }
+
+    val univNameFromRegister = prepareCall(ActivityResultContracts.StartActivityForResult()) { activityResult : ActivityResult ->
+        val resultCode : Int = activityResult.resultCode
+        val data : Intent? = activityResult.data
+
+        if(resultCode == Activity.RESULT_OK) {
+            val registerUnivName = data!!.getStringExtra("univName")
+            viewDataBinding.actSignupTvSchoolName.text = registerUnivName
+
+            onDataCheck()
+        }
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -210,7 +226,7 @@ class SignupActivity : BaseActivity<ActivitySignupBinding, SignupViewModel>() {
     private fun setUnivSearch(){
         viewDataBinding.actSignupLlUniv.setSafeOnClickListener {
             val intent = Intent(this, SearchUnivActivity::class.java)
-            startActivity(intent)
+            univNameFromRegister.launch(intent)
         }
     }
 
@@ -401,6 +417,8 @@ class SignupActivity : BaseActivity<ActivitySignupBinding, SignupViewModel>() {
         GetSignupProfile.nickname = viewDataBinding.actSignupEtNickname.text.toString()
         GetSignupProfile.birth = viewDataBinding.actSignupEtBirth.text.toString()
         GetSignupProfile.major = viewDataBinding.actSignupAtMajor.text.toString()
+
+        GetSignupProfile.school = viewDataBinding.actSignupTvSchool.text.toString()
     }
 
     private fun onDataCheck() {

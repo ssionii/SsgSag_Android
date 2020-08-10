@@ -1,5 +1,7 @@
 package com.icoo.ssgsag_android.ui.signUp.searchUniv
 
+import android.app.Activity
+import android.content.Intent
 import android.opengl.Visibility
 import android.os.Bundle
 import android.text.Editable
@@ -10,6 +12,9 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.ArrayAdapter
 import android.widget.EditText
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.icoo.ssgsag_android.R
@@ -29,6 +34,24 @@ class SearchUnivActivity : BaseActivity<ActivitySearchUnivBinding, SearchUnivVie
     override val viewModel: SearchUnivViewModel by viewModel()
 
     lateinit var univContainerRecyclerViewAdapter : UnivContainerRecyclerViewAdapter
+
+    val univNameFromRegister = prepareCall(ActivityResultContracts.StartActivityForResult()) { activityResult : ActivityResult ->
+        val resultCode : Int = activityResult.resultCode
+        val data : Intent? = activityResult.data
+
+        if(resultCode == Activity.RESULT_OK) {
+            val name = data!!.getStringExtra("univName")
+
+            val result = Intent().apply{
+                putExtras(
+                    bundleOf("univName" to name)
+                )
+            }
+
+            setResult(Activity.RESULT_OK, result)
+            finish()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,6 +101,11 @@ class SearchUnivActivity : BaseActivity<ActivitySearchUnivBinding, SearchUnivVie
     private fun setButton(){
         viewDataBinding.actSearchUnivClCancel.setSafeOnClickListener {
             finish()
+        }
+
+        viewDataBinding.actSearchUnivCvRegUniv.setSafeOnClickListener {
+            val intent = Intent(this, RegisterUnivActivity::class.java)
+            univNameFromRegister.launch(intent)
         }
     }
 
