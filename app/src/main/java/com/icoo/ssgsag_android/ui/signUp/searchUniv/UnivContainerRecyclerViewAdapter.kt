@@ -21,7 +21,7 @@ import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import com.icoo.ssgsag_android.util.view.NonScrollLinearLayoutManager
 import com.icoo.ssgsag_android.util.view.WrapContentLinearLayoutManager
 
-class UnivContainerRecyclerViewAdapter : RecyclerView.Adapter<UnivContainerRecyclerViewAdapter.ViewHolder>(), Filterable {
+class UnivContainerRecyclerViewAdapter(activity : SearchUnivActivity) : RecyclerView.Adapter<UnivContainerRecyclerViewAdapter.ViewHolder>(), Filterable {
 
     // 전체 data 보관
     var itemList= arrayListOf<University>()
@@ -49,6 +49,23 @@ class UnivContainerRecyclerViewAdapter : RecyclerView.Adapter<UnivContainerRecyc
             R.layout.item_univ_container, parent, false
         )
         return ViewHolder(viewDataBinding)
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.dataBinding.univ = filteredItemList[position]
+
+        holder.dataBinding.itemUnivContainerRv.run{
+            adapter = UnivNameRecyclerViewAdapter(filteredItemList[position].univInfoList)
+            (adapter as UnivNameRecyclerViewAdapter).setOnItemClickListener(onItemClickListener)
+            layoutManager = NonScrollLinearLayoutManager(context)
+        }
+    }
+
+    val onItemClickListener
+            = object : UnivNameRecyclerViewAdapter.OnItemClickListener{
+        override fun onItemClicked(univInfo: UnivInfo) {
+            activity.univNameClicked(univInfo)
+        }
     }
 
     override fun getFilter(): Filter {
@@ -95,15 +112,6 @@ class UnivContainerRecyclerViewAdapter : RecyclerView.Adapter<UnivContainerRecyc
     }
 
     override fun getItemCount() = filteredItemList.size
-
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.dataBinding.univ = filteredItemList[position]
-
-        holder.dataBinding.itemUnivContainerRv.run{
-            adapter = UnivNameRecyclerViewAdapter(filteredItemList[position].univInfoList)
-            layoutManager = NonScrollLinearLayoutManager(context)
-        }
-    }
 
     inner class ViewHolder(val dataBinding: ItemUnivContainerBinding) : RecyclerView.ViewHolder(dataBinding.root)
 

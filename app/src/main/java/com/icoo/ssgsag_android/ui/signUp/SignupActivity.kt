@@ -4,8 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.os.Handler
-import android.os.Message
 import android.text.Editable
 import android.text.InputFilter
 import android.text.TextWatcher
@@ -23,9 +21,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import com.adjust.sdk.Adjust
 import com.adjust.sdk.AdjustEvent
 import com.facebook.appevents.AppEventsLogger
-import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.google.firebase.iid.FirebaseInstanceId
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import com.icoo.ssgsag_android.R
@@ -33,25 +29,17 @@ import com.icoo.ssgsag_android.base.BaseActivity
 import com.icoo.ssgsag_android.data.local.pref.SharedPreferenceController
 import com.icoo.ssgsag_android.data.model.user.DeviceInfo
 import com.icoo.ssgsag_android.databinding.ActivitySignupBinding
-import com.icoo.ssgsag_android.ui.login.LoginActivity
 import com.icoo.ssgsag_android.ui.main.myPage.serviceInfo.privacy.PrivacyActivity
 import com.icoo.ssgsag_android.ui.main.myPage.serviceInfo.term.TermActivity
 import com.icoo.ssgsag_android.ui.signUp.searchUniv.SearchUnivActivity
-import com.icoo.ssgsag_android.ui.splash.SplashActivity
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
-import com.igaworks.v2.abxExtensionApi.AbxCommon
 import io.reactivex.disposables.CompositeDisposable
 import io.realm.Realm
-import io.realm.RealmObject
 import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.textColor
 import org.jetbrains.anko.toast
 import org.json.JSONObject
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.io.BufferedReader
-import java.io.InputStream
-import java.io.InputStreamReader
-import java.lang.ref.WeakReference
-import java.net.URL
 import java.util.*
 import java.util.regex.Pattern
 
@@ -61,22 +49,23 @@ class SignupActivity : BaseActivity<ActivitySignupBinding, SignupViewModel>() {
         lateinit var nickname: String
         var gender: String = "male"
         lateinit var birth: String
-        lateinit var school: String
-        lateinit var stduentNumber: String
+        var school = "학교 선택"
+        var studentNumber = ""
         lateinit var major: String
-        var grade = 0
+        var grade = 6
     }
 
-    val univMap = HashMap<String, List<String>>()
-    val univList = ArrayList<String>()
+    var majorList = arrayListOf<String>()
     private val gradeList = ArrayList<String>()
     private val admissionYearList = ArrayList<String>()
     private var isClickable = false
     private var checkBirth = false
     private var checkNickName = false
     private var checkNickNameValidation = false
-    private var checkSchoolList = false
+    private var checkSchool = false
     private var checkMajorList = false
+    private var checkStudentNumber = false
+    private var checkGrade = false
 
     override val layoutResID: Int
         get() = R.layout.activity_signup
@@ -97,12 +86,27 @@ class SignupActivity : BaseActivity<ActivitySignupBinding, SignupViewModel>() {
     val univNameFromRegister = prepareCall(ActivityResultContracts.StartActivityForResult()) { activityResult : ActivityResult ->
         val resultCode : Int = activityResult.resultCode
         val data : Intent? = activityResult.data
+        var univName = ""
 
         if(resultCode == Activity.RESULT_OK) {
-            val registerUnivName = data!!.getStringExtra("univName")
-            viewDataBinding.actSignupTvSchoolName.text = registerUnivName
+            univName = data!!.getStringExtra("univName")
 
+            when(data.getStringExtra("from")){
+                "search" -> {
+                    majorList = data.getStringArrayListExtra("majorList")
+                }
+            }
+
+            viewDataBinding.actSignupTvSchoolName.apply {
+                text = univName
+                textColor = context.resources.getColor(R.color.black)
+            }
+
+            GetSignupProfile.school = univName
+
+            setMajorList()
             onDataCheck()
+
         }
 
     }
@@ -115,12 +119,14 @@ class SignupActivity : BaseActivity<ActivitySignupBinding, SignupViewModel>() {
 
         realmDeviceInfo = realm.where(DeviceInfo::class.java).equalTo("id", 1 as Int).findFirst()!!
 
-        setUnivSearch()
+
 
         setButton()
         checkNicknameValidate()
-        getJsonList()
+        setUnivSearch()
+        setMajorList()
         setGradeListAndAdmissionYearList()
+
         setEditTextChange()
         navigator()
         logEVENT_NAME_REGISTRATION_OPENEvent()
@@ -144,85 +150,7 @@ class SignupActivity : BaseActivity<ActivitySignupBinding, SignupViewModel>() {
         }
     }
 
-
-    // 학교 리스트 가져오기
-    fun getJsonList() {
-        val thread = Thread(Runnable {
-            try {
-                val inputStream= URL("http://ssgsag-alb-2141317761.ap-northeast-2.elb.amazonaws.com/validUnivList").openStream()
-                val bufferedReader = BufferedReader(InputStreamReader(inputStream, "UTF-8"))
-
-                var str : String? = ""
-                val buffer = StringBuffer()
-
-                str = bufferedReader.readLine()
-                while(str != null){
-                    buffer.append(str)
-                    str = bufferedReader.readLine()
-                }
-
-                val bundle = Bundle()
-                bundle.putString("UnivListJson", buffer.toString())
-
-                val msg = getUnivListHandler.obtainMessage()
-                msg.data = bundle
-                getUnivListHandler.sendMessage(msg)
-
-
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        })
-
-        thread.start()
-
-    }
-
-    private val getUnivListHandler= GetUnivListHandler(this)
-
-    // 핸들러 객체 만들기
-    private class GetUnivListHandler(signupActivity: SignupActivity) : Handler() {
-
-        private val signupActivityWeakReference: WeakReference<SignupActivity>
-
-        init {
-            signupActivityWeakReference = WeakReference<SignupActivity>(signupActivity)
-        }
-
-        override fun handleMessage(msg: Message) {
-            val activity = signupActivityWeakReference.get()
-            if (activity != null) {
-                activity.handleMessage(msg)
-                // 핸들메세지로 결과값 전달
-            }
-        }
-    }
-
-    private fun handleMessage(msg: Message){
-        val bundle = msg.data
-
-        val univObj = JSONObject(bundle.getString("UnivListJson"))
-        val univJsonArr = univObj.getJSONArray("data")
-
-        for (i in 0 until univJsonArr.length()) {
-            val univJsonObj = univJsonArr.getJSONObject(i)
-
-            val univName = univJsonObj.getString("학교명")
-            val majorName = univJsonObj.getString("학부·과(전공)명")
-            val majorArr = majorName
-                .replace("[", "")
-                .replace("]", "")
-                .replace("\"", "")
-                .split(",")
-
-            univList.add(univName)
-            univMap.put(univName, majorArr)
-        }
-
-//        setAutoCompleteTextList()
-
-    }
-
+    // 학교 검색으로 찾기
     private fun setUnivSearch(){
         viewDataBinding.actSignupLlUniv.setSafeOnClickListener {
             val intent = Intent(this, SearchUnivActivity::class.java)
@@ -230,6 +158,14 @@ class SignupActivity : BaseActivity<ActivitySignupBinding, SignupViewModel>() {
         }
     }
 
+    private fun setMajorList(){
+        val majorAdapter = ArrayAdapter(
+            this, // Context
+            android.R.layout.simple_dropdown_item_1line, // Layout
+            majorList
+        )
+        viewDataBinding.actSignupAtMajor.setAdapter(majorAdapter)
+    }
 
     private fun setButton() {
 
@@ -258,7 +194,7 @@ class SignupActivity : BaseActivity<ActivitySignupBinding, SignupViewModel>() {
         viewDataBinding.actSignupRlDone.setSafeOnClickListener {
             if (isClickable) {
                 if (checkValidity()) {
-                    postSignUpResponseData()
+//                    postSignUpResponseData()
                 }
             }
         }
@@ -331,23 +267,30 @@ class SignupActivity : BaseActivity<ActivitySignupBinding, SignupViewModel>() {
             toast("생년월일을 6자리로 입력해주세요")
         }
 
-        for (schoolName in univList) {
-            if (schoolName == GetSignupProfile.school) {
-                checkSchoolList = true
-                break
-            } else
-                checkSchoolList = false
+        if(GetSignupProfile.school.isNotEmpty() && viewDataBinding.actSignupTvSchool.text != "학교 선택"){
+            checkSchool = true
+        }else{
+            checkSchool = false
+            toast("학교를 선택해주세요")
         }
 
-        if (!checkSchoolList) {
-            toast("학교 이름을 리스트에서 골라 주세요")
-        }
-
+        checkMajorList = majorList.contains(viewDataBinding.actSignupAtMajor.text.toString())
         if (!checkMajorList) {
             toast("학과 이름을 리스트 에서 골라 주세요")
         }
 
-        return checkBirth && checkNickName && checkSchoolList && checkMajorList
+        checkStudentNumber = GetSignupProfile.studentNumber != ""
+        if (!checkStudentNumber) {
+            toast("학번을 입력해주세요")
+        }
+
+        checkGrade = GetSignupProfile.grade != 0
+        if (!checkGrade) {
+            toast("학년을 입력해주세요")
+        }
+
+
+        return checkBirth && checkNickName && checkMajorList && checkStudentNumber && checkGrade && checkSchool
     }
 
     private fun setGradeListAndAdmissionYearList() {
@@ -383,7 +326,7 @@ class SignupActivity : BaseActivity<ActivitySignupBinding, SignupViewModel>() {
                         id: Long
                     ) {
                         onDataCheck()
-                        GetSignupProfile.stduentNumber =
+                        GetSignupProfile.studentNumber =
                             (position + freshman.toInt() - 10).toString()
                     }
                 }
@@ -417,20 +360,21 @@ class SignupActivity : BaseActivity<ActivitySignupBinding, SignupViewModel>() {
         GetSignupProfile.nickname = viewDataBinding.actSignupEtNickname.text.toString()
         GetSignupProfile.birth = viewDataBinding.actSignupEtBirth.text.toString()
         GetSignupProfile.major = viewDataBinding.actSignupAtMajor.text.toString()
-
-        GetSignupProfile.school = viewDataBinding.actSignupTvSchool.text.toString()
     }
 
     private fun onDataCheck() {
         getEditText()
+
+        Log.e("grade", GetSignupProfile.grade.toString())
+
         if (GetSignupProfile.birth.isEmpty() || GetSignupProfile.nickname.isEmpty() || GetSignupProfile.gender.isNullOrEmpty()
-            || GetSignupProfile.school.isEmpty() || GetSignupProfile.major.isEmpty() || GetSignupProfile.stduentNumber.isEmpty() || GetSignupProfile.grade == 0
+            || GetSignupProfile.school.isEmpty() || GetSignupProfile.major.isEmpty() || GetSignupProfile.studentNumber == "" || GetSignupProfile.grade == 6
             || !viewDataBinding.actSignupCbTerms.isChecked || (checkNickNameValidation == false)
         ) {
             isClickable = false
             viewDataBinding.actSignupIvDone.setBackgroundColor(Color.parseColor("#c9c9c9"))
         } else if (GetSignupProfile.birth.isNotEmpty() && GetSignupProfile.nickname.isNotEmpty() && GetSignupProfile.gender!!.isNotEmpty()
-            && GetSignupProfile.school.isNotEmpty() && GetSignupProfile.major.isNotEmpty() && GetSignupProfile.stduentNumber.isNotEmpty() && GetSignupProfile.grade != 0
+            && GetSignupProfile.school.isNotEmpty() && GetSignupProfile.major.isNotEmpty() && GetSignupProfile.studentNumber.isNotEmpty() && GetSignupProfile.grade != 0
             && viewDataBinding.actSignupCbTerms.isChecked && checkNickNameValidation
         ) {
             isClickable = true
@@ -438,43 +382,10 @@ class SignupActivity : BaseActivity<ActivitySignupBinding, SignupViewModel>() {
         }
     }
 
-
     private fun setEditTextChange() {
         viewDataBinding.actSignupEtNickname.onChange { onDataCheck() }
         viewDataBinding.actSignupEtBirth.onChange { onDataCheck() }
         viewDataBinding.actSignupAtMajor.onChange { onDataCheck() }
-    }
-
-    private fun loadJSONFromAsset(fileName: String): String? {
-        var json: String? = null
-        try {
-            val inputStream: InputStream = assets.open(fileName)
-            json = inputStream.bufferedReader().use { it.readText() }
-        } catch (ex: Exception) {
-            ex.printStackTrace()
-            return null
-        }
-        return json
-    }
-
-
-    fun checkUnivValidate(text: String): Boolean {
-        for (i in univList.indices) {
-            if (text == univList[i])
-                return true
-        }
-        return false
-    }
-
-    private fun onMajorSetByUniv() {
-        val majorAdapter = ArrayAdapter(
-            this, // Context
-            android.R.layout.simple_dropdown_item_1line, // Layout
-            univMap.get(
-                viewDataBinding.actSignupTvSchool.text.toString()
-            ) // Array
-        )
-        viewDataBinding.actSignupAtMajor.setAdapter(majorAdapter)
     }
 
     private fun EditText.onChange(cb: (String) -> Unit) {
@@ -507,7 +418,7 @@ class SignupActivity : BaseActivity<ActivitySignupBinding, SignupViewModel>() {
         jsonObject.put("uuid", realmDeviceInfo.uuid)
         jsonObject.put("userUniv", GetSignupProfile.school)
         jsonObject.put("userMajor", GetSignupProfile.major)
-        jsonObject.put("userStudentNum", GetSignupProfile.stduentNumber)
+        jsonObject.put("userStudentNum", GetSignupProfile.studentNumber)
         jsonObject.put("userGender", GetSignupProfile.gender)
         jsonObject.put("userBirth", GetSignupProfile.birth)
         jsonObject.put("userGrade", GetSignupProfile.grade)

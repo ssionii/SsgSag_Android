@@ -243,11 +243,12 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="7dp"
                                     android:background="@null"
+                                    android:text="학교 선택"
                                     android:completionThreshold="1"
                                     android:fontFamily="@font/noto_sans_kr_regular"
                                     android:letterSpacing="-0.02"
                                     android:singleLine="true"
-                                    android:textColor="#000"
+                                    android:textColor="@color/grey_2"
                                     android:textSize="16sp"
                                     android:textStyle="normal"
                                     android:layout_marginBottom="1dp"/>

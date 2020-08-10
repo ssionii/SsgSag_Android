@@ -19,6 +19,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseActivity
+import com.icoo.ssgsag_android.data.model.signUp.UnivInfo
 import com.icoo.ssgsag_android.databinding.ActivitySearchUnivBinding
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import com.icoo.ssgsag_android.util.view.NonScrollLinearLayoutManager
@@ -43,6 +44,7 @@ class SearchUnivActivity : BaseActivity<ActivitySearchUnivBinding, SearchUnivVie
             val name = data!!.getStringExtra("univName")
 
             val result = Intent().apply{
+                putExtra("from", "register")
                 putExtras(
                     bundleOf("univName" to name)
                 )
@@ -65,7 +67,7 @@ class SearchUnivActivity : BaseActivity<ActivitySearchUnivBinding, SearchUnivVie
 
     private fun setUnivRv(){
 
-        univContainerRecyclerViewAdapter = UnivContainerRecyclerViewAdapter()
+        univContainerRecyclerViewAdapter = UnivContainerRecyclerViewAdapter(this)
 
         viewDataBinding.actSearchUnivRv.run{
             adapter = univContainerRecyclerViewAdapter
@@ -96,6 +98,16 @@ class SearchUnivActivity : BaseActivity<ActivitySearchUnivBinding, SearchUnivVie
                univContainerRecyclerViewAdapter.filter.filter(s)
            }
        })
+    }
+
+    fun univNameClicked(univInfo : UnivInfo){
+        val result = Intent().apply{
+            putExtra("from", "search")
+            putExtra("univName", univInfo.univName)
+            putExtra("majorList", univInfo.majorList)
+        }
+        setResult(Activity.RESULT_OK, result)
+        finish()
     }
 
     private fun setButton(){
