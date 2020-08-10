@@ -46,7 +46,7 @@ class SearchUnivViewModel(
     }
 
     private fun hideProgress() {
-        _isProgress.value = View.INVISIBLE
+        _isProgress.value = View.GONE
     }
 
 }

@@ -1,7 +1,15 @@
 package com.icoo.ssgsag_android.ui.signUp.searchUniv
 
+import android.opengl.Visibility
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
+import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.ArrayAdapter
+import android.widget.EditText
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.icoo.ssgsag_android.R
@@ -25,8 +33,11 @@ class SearchUnivActivity : BaseActivity<ActivitySearchUnivBinding, SearchUnivVie
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        viewDataBinding.vm = viewModel
+
         setButton()
         setUnivRv()
+        setUnivSearch()
     }
 
     private fun setUnivRv(){
@@ -46,11 +57,30 @@ class SearchUnivActivity : BaseActivity<ActivitySearchUnivBinding, SearchUnivVie
         })
     }
 
+    private fun setUnivSearch(){
+       viewDataBinding.actSearchUnivEtName.addTextChangedListener(object : TextWatcher{
+           override fun afterTextChanged(s: Editable?) {
+               if(s.toString().isNotEmpty()){
+                   viewDataBinding.actSearchUnivCvRegUniv.visibility = VISIBLE
+                   viewDataBinding.actSearchUnivTvEmptyName.visibility = GONE
+               }else{
+                   viewDataBinding.actSearchUnivCvRegUniv.visibility = GONE
+                   viewDataBinding.actSearchUnivTvEmptyName.visibility = VISIBLE
+               }
+           }
+           override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+           override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+               univContainerRecyclerViewAdapter.filter.filter(s)
+           }
+       })
+    }
+
     private fun setButton(){
         viewDataBinding.actSearchUnivClCancel.setSafeOnClickListener {
             finish()
         }
     }
+
 
 
 
