@@ -76,7 +76,7 @@ class AllPosterCollectionRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if(holder is SsgSagAdsViewHolder) {
             var tempPosition = 0
-            if(position == 3) tempPosition = position - 1
+            if(position >= 3) tempPosition = position - 1
             else tempPosition = position
             holder.dataBinding.adPosterCollection = itemList[tempPosition]
             holder.dataBinding.itemAllPosterCollectionLlMore.setSafeOnClickListener {
