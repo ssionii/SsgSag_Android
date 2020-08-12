@@ -43,6 +43,7 @@ class MainBlockViewModel(
             }
             .subscribe({
                 it.run{
+                    Log.e("block view auto status", it.toString())
                     if(this == 200){
                         Toast.makeText(context, R.string.main_block_toast_success, Toast.LENGTH_SHORT).show()
                         if(param == null){

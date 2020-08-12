@@ -50,9 +50,10 @@ class SignupViewModel(
             .observeOn(schedulerProvider.mainThread())
             .subscribe({
                 if(it.status == 201 || it.status == 202){
-                    _loginToken.postValue(it.data!!.token)
+
                     SharedPreferenceController.setAuthorization(context, it.data!!.token)
                     SharedPreferenceController.setType(context, "user")
+                    _loginToken.postValue(it.data!!.token)
                 } else {
                     Toast.makeText(context, "입력 정보를 확인해주세요.", Toast.LENGTH_SHORT).show()
                     Log.e("signup status:" , it.status.toString())

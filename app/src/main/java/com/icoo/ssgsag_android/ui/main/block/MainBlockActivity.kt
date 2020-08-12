@@ -40,7 +40,6 @@ class MainBlockActivity : BaseActivity<ActivityMainBlockBinding, MainBlockViewMo
             val address = arrayOf("ssgsag.univ@gmail.com")
             email.putExtra(Intent.EXTRA_EMAIL, address)
             email.putExtra(Intent.EXTRA_SUBJECT, "문의사항: 학교 정보")
-            email.putExtra(Intent.EXTRA_TEXT, act_contact_et_contents.text)
             startActivity(email)
         }
     }

@@ -28,7 +28,6 @@ class LogoutDialogFragment: androidx.fragment.app.DialogFragment(){
         super.onActivityCreated(savedInstanceState)
 
         frag_logout_tv_yes.setSafeOnClickListener {
-            SharedPreferenceController.setAuthorization(activity!!, "")
             SharedPreferenceController.deleteType(activity!!)
 
             //activity!!.finishAffinity()
