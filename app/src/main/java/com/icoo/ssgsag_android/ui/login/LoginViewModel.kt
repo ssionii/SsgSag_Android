@@ -68,10 +68,12 @@ class LoginViewModel (
                     200 -> {
                         _activityToStart.postValue(Pair(MainActivity::class, null))
                         SharedPreferenceController.setType(context, "user")
+                        SharedPreferenceController.setAuthorization(context, it.data!!.token)
                     }
                     202 -> {
                         _activityToStart.postValue(Pair(MainBlockActivity::class, null))
                         SharedPreferenceController.setType(context, "user")
+                        SharedPreferenceController.setAuthorization(context, it.data!!.token)
                     }
                     404 -> _activityToStart.postValue(Pair(SignupActivity::class, null))
                     400 -> {
