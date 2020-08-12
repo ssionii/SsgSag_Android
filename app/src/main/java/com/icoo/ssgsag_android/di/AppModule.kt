@@ -29,6 +29,7 @@ import com.icoo.ssgsag_android.ui.main.MainViewModel
 import com.icoo.ssgsag_android.ui.main.allPosters.AllPostersViewModel
 import com.icoo.ssgsag_android.ui.main.allPosters.category.AllCategoryViewModel
 import com.icoo.ssgsag_android.ui.main.allPosters.search.SearchViewModel
+import com.icoo.ssgsag_android.ui.main.block.MainBlockViewModel
 import com.icoo.ssgsag_android.ui.main.calendar.CalendarViewModel
 import com.icoo.ssgsag_android.ui.main.calendar.calendarDetail.CalendarDetailViewModel
 import com.icoo.ssgsag_android.ui.main.calendar.calendarDialog.CalendarDialogViewModel
@@ -135,6 +136,7 @@ val factoryModule = module {
 val viewModule = module {
     //Common
     viewModel { MainViewModel() }
+    viewModel { MainBlockViewModel(get(), get()) }
     //Login
     viewModel {LoginViewModel(get(), get())}
     viewModel { SignupViewModel(get(), get(), get()) }

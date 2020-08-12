@@ -16,6 +16,7 @@ import com.icoo.ssgsag_android.data.local.pref.SharedPreferenceController
 import com.icoo.ssgsag_android.data.model.login.LoginRepository
 import com.icoo.ssgsag_android.data.model.user.DeviceInfo
 import com.icoo.ssgsag_android.ui.main.MainActivity
+import com.icoo.ssgsag_android.ui.main.block.MainBlockActivity
 import com.icoo.ssgsag_android.ui.signUp.SignupActivity
 import com.icoo.ssgsag_android.util.scheduler.SchedulerProvider
 import io.reactivex.Observable
@@ -60,7 +61,10 @@ class LoginViewModel (
             .flatMap {
                 if (it.status == 200) {
                     Observable.just(it.data.token)
-                } else if(it.status == 404) {
+                } else if(it.status == 202){
+                    _activityToStart.postValue(Pair(MainBlockActivity::class, null))
+                    Observable.just(it.data.token)
+                }else if(it.status == 404) {
                     _activityToStart.postValue(Pair(SignupActivity::class, null))
                     Observable.empty()
                 } else {
@@ -99,7 +103,9 @@ class LoginViewModel (
                             val bundle = Bundle().apply { putString("param", param) }
                             _activityToStart.postValue(Pair(MainActivity::class, bundle))
                         }
-                    } else if(this == 404 || this == 401 || this == 600){
+                    } else if(this == 202){
+                        _activityToStart.postValue(Pair(MainBlockActivity::class, null))
+                    }else if(this == 404 || this == 401 || this == 600){
                         SharedPreferenceController.setAuthorization(context, "")
                         _activityToStart.postValue(Pair(LoginActivity::class, null))
                     }
