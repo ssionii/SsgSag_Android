@@ -15,4 +15,8 @@ class SignupRepositoryImpl (val api: NetworkService, val pref: PreferenceManager
     override fun validateNickname(userNickname: String): Single<BooleanResponse> = api
         .validateNickname(userNickname)
         .map { it }
+
+    override fun getUnivList(): Single<ArrayList<University>> = api
+        .getUnivList()
+        .map { it.data }
 }

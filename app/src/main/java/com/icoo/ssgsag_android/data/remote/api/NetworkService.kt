@@ -19,6 +19,7 @@ import com.icoo.ssgsag_android.data.model.poster.allPoster.AllPosterAd
 import com.icoo.ssgsag_android.data.model.poster.allPoster.AllPosterAdResponse
 import com.icoo.ssgsag_android.data.model.review.club.response.*
 import com.icoo.ssgsag_android.data.model.signUp.SignUpResponse
+import com.icoo.ssgsag_android.data.model.signUp.UniversityListResponse
 import com.icoo.ssgsag_android.data.model.subscribe.SubscribeResponse
 import com.icoo.ssgsag_android.data.model.user.userInfo.UserInfoResponse
 import io.reactivex.*
@@ -66,6 +67,10 @@ interface NetworkService {
     fun userInfoResponse(
         @Header("Authorization") token : String
     ): Single<UserInfoResponse>
+    // 대학교 리스트 가져오기
+    @GET("/v2/validUnivList")
+    fun getUnivList(
+    ): Single<UniversityListResponse>
     //회원 관심분야 및 관심직무 조회
     //회원 관심직무 재등록
     //회원 관심분야 재등록

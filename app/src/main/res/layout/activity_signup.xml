@@ -18,12 +18,21 @@
             android:layout_width="match_parent"
             android:layout_height="48dp">
 
-        <ImageView
-                android:id="@+id/act_signup_iv_back"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/back"
-                android:layout_marginLeft="12dp"/>
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/act_signup_cl_back"
+                android:layout_width="48dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="12dp">
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_arrow_back"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </RelativeLayout>
 
 
@@ -36,7 +45,8 @@
     <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:overScrollMode="never">
         <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -52,15 +62,15 @@
                         android:layout_marginTop="34dp"
                         android:fontFamily="@font/noto_sans_kr_regular"
                         android:text="편리한 서비스 제공을 위해 간단한 정보가 필요해요!"
-                        android:textColor="#656ef0"
-                        android:textSize="13sp" />
+                        android:textColor="@color/grey_1"
+                        android:textSize="14sp" />
 
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/noto_sans_kr_medium"
+                        android:fontFamily="@font/noto_sans_kr_bold"
                         android:text="프로필 정보를 입력해주세요"
-                        android:textColor="#2f2f2f"
+                        android:textColor="@color/black_1"
                         android:textSize="24sp" />
 
                 <ImageView
@@ -68,7 +78,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="50dp"
-                        android:src="@drawable/school_info" />
+                        android:src="@drawable/img_school_info" />
 
                 <RelativeLayout
                         android:layout_width="match_parent"
@@ -89,22 +99,35 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/act_signup_tv_nickname"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:layout_marginTop="3dp">
+
+                        <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_weight="1">
 
                         <EditText
                                 android:id="@+id/act_signup_et_nickname"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:backgroundTint="#e0e0e0"
+                                android:background="@null"
                                 android:fontFamily="@font/noto_sans_kr_regular"
                                 android:hint="닉네임"
+                                android:textColorHint="@color/grey_2"
                                 android:imeOptions="actionNext"
                                 android:singleLine="true"
                                 android:textColor="#000"
-                                android:textSize="16sp"
-                                android:textStyle="normal"
-                                android:layout_marginLeft="-5dp"/>
+                                android:textSize="14sp"
+                                android:textStyle="normal"/>
+
+                            <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:background="@color/grey_4"
+                                    android:layout_marginTop="9dp"/>
+                        </LinearLayout>
 
                         <LinearLayout
                                 android:layout_width="wrap_content"
@@ -134,8 +157,8 @@
                                         android:layout_marginLeft="4dp"
                                         android:fontFamily="@font/noto_sans_kr_regular"
                                         android:text="남"
-                                        android:textColor="#dddddd"
-                                        android:textSize="16sp" />
+                                        android:textColor="@color/grey_3"
+                                        android:textSize="14sp" />
                             </LinearLayout>
 
                             <LinearLayout
@@ -158,8 +181,8 @@
                                         android:layout_marginLeft="4dp"
                                         android:fontFamily="@font/noto_sans_kr_regular"
                                         android:text="여"
-                                        android:textColor="#dddddd"
-                                        android:textSize="16sp" />
+                                        android:textColor="@color/grey_3"
+                                        android:textSize="14sp" />
                             </LinearLayout>
 
                         </LinearLayout>
@@ -198,21 +221,28 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/act_signup_tv_birth"
-                            android:backgroundTint="#e0e0e0"
+                            android:background="@null"
                             android:fontFamily="@font/noto_sans_kr_regular"
                             android:hint="생년월일 6자리"
+                            android:textColorHint="@color/grey_2"
                             android:imeOptions="actionNext"
-                            android:layout_marginLeft="-5dp"
                             android:singleLine="true"
                             android:textColor="#000"
-                            android:textSize="16sp"
-                            android:textStyle="normal" />
+                            android:textSize="14sp"
+                            android:textStyle="normal"
+                            android:layout_marginTop="3dp"
+                            android:layout_marginBottom="9dp"/>
+                    <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/grey_4"
+                            android:layout_alignParentBottom="true"/>
                 </RelativeLayout>
 
                 <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp">
+                        android:layout_marginTop="12dp">
 
                     <TextView
                             android:id="@+id/act_signup_tv_school"
@@ -227,53 +257,55 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/act_signup_tv_school"
+                            android:layout_marginTop="3dp"
                             android:orientation="horizontal">
 
                         <LinearLayout
+                                android:id="@+id/act_signup_ll_univ"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:layout_marginTop="5dp"
                                 android:orientation="vertical">
 
-                            <AutoCompleteTextView
-                                    android:id="@+id/act_signup_at_school"
+                            <TextView
+                                    android:id="@+id/act_signup_tv_school_name"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="7dp"
                                     android:background="@null"
+                                    android:text="학교 선택"
                                     android:completionThreshold="1"
                                     android:fontFamily="@font/noto_sans_kr_regular"
-                                    android:hint="학교 선택"
-                                    android:imeOptions="actionNext"
                                     android:letterSpacing="-0.02"
                                     android:singleLine="true"
-                                    android:textColor="#000"
-                                    android:textSize="16sp"
+                                    android:textColor="@color/grey_2"
+                                    android:textSize="14sp"
                                     android:textStyle="normal"
                                     android:layout_marginBottom="1dp"/>
 
                             <View
                                     android:layout_width="match_parent"
                                     android:layout_height="1dp"
-                                    android:background="#e0e0e0" />
+                                    android:background="@color/grey_4"
+                                    android:layout_marginTop="9dp"/>
                         </LinearLayout>
 
                         <LinearLayout
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_height="match_parent"
                                 android:orientation="vertical"
                                 android:layout_marginLeft="15dp">
 
                             <Spinner
                                     android:id="@+id/act_signup_sn_student_number"
                                     android:layout_width="90dp"
-                                    android:layout_height="35dp" />
+                                    android:layout_weight="1"
+                                    android:layout_height="wrap_content"/>
 
                             <View
                                     android:layout_width="match_parent"
                                     android:layout_height="1dp"
-                                    android:background="#e0e0e0" />
+                                    android:background="@color/grey_4"
+                                    android:layout_marginTop="9dp"/>
                         </LinearLayout>
                     </LinearLayout>
 
@@ -281,7 +313,7 @@
                 <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp">
+                        android:layout_marginTop="12dp">
 
                     <TextView
                             android:id="@+id/act_signup_tv_major"
@@ -296,53 +328,56 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/act_signup_tv_major"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:layout_marginTop="3dp">
 
                         <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:layout_marginTop="5dp"
                                 android:orientation="vertical">
 
                             <AutoCompleteTextView
                                     android:id="@+id/act_signup_at_major"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="7dp"
                                     android:background="@null"
                                     android:completionThreshold="1"
                                     android:fontFamily="@font/noto_sans_kr_regular"
                                     android:hint="학과 선택"
+                                    android:textColorHint="@color/grey_2"
                                     android:imeOptions="actionNext"
                                     android:letterSpacing="-0.02"
                                     android:singleLine="true"
                                     android:textColor="#000"
-                                    android:textSize="16sp"
+                                    android:textSize="14sp"
                                     android:textStyle="normal"
                                     android:layout_marginBottom="1dp"/>
 
                             <View
                                     android:layout_width="match_parent"
                                     android:layout_height="1dp"
-                                    android:background="#e0e0e0" />
+                                    android:background="@color/grey_4"
+                                    android:layout_marginTop="9dp"/>
                         </LinearLayout>
 
                         <LinearLayout
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_height="match_parent"
                                 android:orientation="vertical"
                                 android:layout_marginLeft="15dp">
 
                             <Spinner
                                     android:id="@+id/act_signup_sn_grade"
                                     android:layout_width="90dp"
-                                    android:layout_height="35dp" />
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"/>
 
                             <View
                                     android:layout_width="match_parent"
                                     android:layout_height="1dp"
-                                    android:background="#e0e0e0" />
+                                    android:background="@color/grey_4"
+                                    android:layout_marginTop="9dp"/>
                         </LinearLayout>
                     </LinearLayout>
 
@@ -374,7 +409,7 @@
                                 android:textColor="@color/brown_grey"
                                 android:textStyle="normal"
                                 android:fontFamily="sans-serif-medium"
-                                android:textSize="13sp"
+                                android:textSize="12sp"
                                 android:layout_marginLeft="8dp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"/>
@@ -385,7 +420,7 @@
                                 android:textColor="@color/brown_grey"
                                 android:textStyle="normal"
                                 android:fontFamily="sans-serif-medium"
-                                android:textSize="13sp"
+                                android:textSize="12sp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"/>
                     </LinearLayout>
