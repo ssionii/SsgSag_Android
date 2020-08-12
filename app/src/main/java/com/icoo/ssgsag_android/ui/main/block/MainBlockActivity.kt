@@ -2,18 +2,13 @@ package com.icoo.ssgsag_android.ui.main.block
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseActivity
-import com.icoo.ssgsag_android.data.model.user.DeviceInfo
 import com.icoo.ssgsag_android.databinding.ActivityMainBlockBinding
-import com.icoo.ssgsag_android.databinding.ActivityRegisterUnivBinding
-import com.icoo.ssgsag_android.ui.main.MainActivity
-import com.icoo.ssgsag_android.ui.signUp.searchUniv.SearchUnivViewModel
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import io.realm.Realm
+import kotlinx.android.synthetic.main.activity_contact.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.util.Observer
 
 
 class MainBlockActivity : BaseActivity<ActivityMainBlockBinding, MainBlockViewModel>() {
@@ -40,7 +35,13 @@ class MainBlockActivity : BaseActivity<ActivityMainBlockBinding, MainBlockViewMo
         }
 
         viewDataBinding.actMainBlockTvMail.setSafeOnClickListener {
-
+            val email = Intent(Intent.ACTION_SEND)
+            email.type = "plain/text"
+            val address = arrayOf("ssgsag.univ@gmail.com")
+            email.putExtra(Intent.EXTRA_EMAIL, address)
+            email.putExtra(Intent.EXTRA_SUBJECT, "문의사항: 학교 정보")
+            email.putExtra(Intent.EXTRA_TEXT, act_contact_et_contents.text)
+            startActivity(email)
         }
     }
 
