@@ -8,6 +8,7 @@ import android.view.View.VISIBLE
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
@@ -88,14 +89,18 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(),
         viewDataBinding.actSearchEtSearch.setOnEditorActionListener { v, actionId, event ->
             hideKeyboard(viewDataBinding.actSearchEtSearch)
             if(actionId == EditorInfo.IME_ACTION_SEARCH){
-                curPage = 0
-                viewDataBinding.actSearchRv.apply{
-                    if(from == "main") {
-                        (adapter as BaseRecyclerViewAdapter<PosterDetail, ItemAllPostersBinding>).clearAll()
-                        viewModel.getSearchedPosters(viewDataBinding.actSearchEtSearch.text.toString(), curPage)
-                    }else if(from == "club"){
-                        reviewListRecyclerViewAdapter?.clearAll()
-                        viewModel.getSearchedClubs(viewDataBinding.actSearchEtSearch.text.toString(), clubType, curPage)
+                if(viewDataBinding.actSearchEtSearch.text.toString().length < 2){
+                    Toast.makeText(this, "2글자 이상 입력해주세요", Toast.LENGTH_SHORT).show()
+                }else{
+                    curPage = 0
+                    viewDataBinding.actSearchRv.apply{
+                        if(from == "main") {
+                            (adapter as BaseRecyclerViewAdapter<PosterDetail, ItemAllPostersBinding>).clearAll()
+                            viewModel.getSearchedPosters(viewDataBinding.actSearchEtSearch.text.toString(), curPage)
+                        }else if(from == "club"){
+                            reviewListRecyclerViewAdapter?.clearAll()
+                            viewModel.getSearchedClubs(viewDataBinding.actSearchEtSearch.text.toString(), clubType, curPage)
+                        }
                     }
                 }
 
@@ -104,6 +109,7 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(),
                 false
         }
     }
+
 
     private fun setPosterRv() {
         //RecyclerView
