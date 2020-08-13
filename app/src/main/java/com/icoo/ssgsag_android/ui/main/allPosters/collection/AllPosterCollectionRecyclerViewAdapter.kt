@@ -80,7 +80,7 @@ class AllPosterCollectionRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView
             else tempPosition = position
             holder.dataBinding.adPosterCollection = itemList[tempPosition]
             holder.dataBinding.itemAllPosterCollectionLlMore.setSafeOnClickListener {
-                listener?.onMoreClick(itemList[tempPosition].categoryIdx)
+                listener?.onMoreClick(itemList[tempPosition].categoryIdx, tempPosition)
             }
 
             val cardViewPagerAdapter =
@@ -130,7 +130,7 @@ class AllPosterCollectionRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView
     }
 
     interface OnAllPosterCollectionClickListener{
-        fun onMoreClick(categoryIdx: Int)
+        fun onMoreClick(categoryIdx: Int , rowIdx : Int)
         fun onPosterItemClick(posterIdx: Int, rowIdx : Int, position: Int)
         fun onManagePosterItem(posterIdx : Int, isSave : Int)
     }

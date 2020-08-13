@@ -1,5 +1,6 @@
 package com.icoo.ssgsag_android.ui.main.allPosters.category
 
+import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -15,8 +16,11 @@ import com.icoo.ssgsag_android.util.view.WrapContentLinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import android.view.*
 import android.widget.TextView
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.cardview.widget.CardView
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.icoo.ssgsag_android.SsgSagApplication
 import com.icoo.ssgsag_android.base.BaseActivity
@@ -42,6 +46,23 @@ class AllCategoryActivity : BaseActivity<ActivityAllCategoryBinding, AllCategory
     private var isEnterprise = true
 
     lateinit var mAdapter: DialogPlusAdapter
+
+    val requestFromDetail = prepareCall(ActivityResultContracts.StartActivityForResult()) { activityResult : ActivityResult ->
+        val resultCode : Int = activityResult.resultCode
+        val data : Intent? = activityResult.data
+
+        if(resultCode == Activity.RESULT_OK) {
+            if(data != null) {
+                val result = Intent().apply {
+                    putExtra("posterIdx", data!!.getIntExtra("posterIdx", 0))
+                    putExtra("isSave", data!!.getIntExtra("isSave", 0))
+                }
+                setResult(Activity.RESULT_OK, result)
+            }else {
+                setResult(Activity.RESULT_OK)
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -223,7 +244,7 @@ class AllCategoryActivity : BaseActivity<ActivityAllCategoryBinding, AllCategory
             value.second?.let {
                 intent.putExtras(it)
             }
-            startActivity(intent)
+            requestFromDetail.launch(intent)
         })
     }
 

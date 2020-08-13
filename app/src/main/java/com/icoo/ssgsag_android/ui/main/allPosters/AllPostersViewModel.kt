@@ -66,7 +66,7 @@ class AllPostersViewModel(
 
     }
 
-    private fun getAdPosterCollection(){
+    fun getAdPosterCollection(){
         addDisposable(posterRepository.getAllPosterAd()
             .subscribeOn(schedulerProvider.io())
             .observeOn(schedulerProvider.mainThread())
