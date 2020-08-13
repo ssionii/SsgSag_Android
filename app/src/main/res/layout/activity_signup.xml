@@ -110,8 +110,8 @@
 
                         <EditText
                                 android:id="@+id/act_signup_et_nickname"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
                                 android:background="@null"
                                 android:fontFamily="@font/noto_sans_kr_regular"
                                 android:hint="닉네임"
@@ -119,14 +119,14 @@
                                 android:imeOptions="actionNext"
                                 android:singleLine="true"
                                 android:textColor="#000"
-                                android:textSize="14sp"
-                                android:textStyle="normal"/>
+                                android:textSize="14dp"
+                                android:textStyle="normal"
+                                android:paddingBottom="9dp"/>
 
                             <View
                                     android:layout_width="match_parent"
                                     android:layout_height="1dp"
-                                    android:background="@color/grey_4"
-                                    android:layout_marginTop="9dp"/>
+                                    android:background="@color/grey_4"/>
                         </LinearLayout>
 
                         <LinearLayout
@@ -148,7 +148,7 @@
                                         android:id="@+id/act_signup_iv_male"
                                         android:layout_width="wrap_content"
                                         android:layout_height="17dp"
-                                        android:src="@drawable/select_all" />
+                                        android:src="@drawable/select_all_passive_0" />
 
                                 <TextView
                                         android:id="@+id/act_signup_tv_male"
@@ -228,10 +228,10 @@
                             android:imeOptions="actionNext"
                             android:singleLine="true"
                             android:textColor="#000"
-                            android:textSize="14sp"
+                            android:textSize="14dp"
                             android:textStyle="normal"
                             android:layout_marginTop="3dp"
-                            android:layout_marginBottom="9dp"/>
+                            android:paddingBottom="9dp"/>
                     <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
@@ -278,15 +278,15 @@
                                     android:letterSpacing="-0.02"
                                     android:singleLine="true"
                                     android:textColor="@color/grey_2"
-                                    android:textSize="14sp"
+                                    android:textSize="14dp"
                                     android:textStyle="normal"
-                                    android:layout_marginBottom="1dp"/>
+                                    android:layout_marginBottom="1dp"
+                                    android:paddingBottom="9dp"/>
 
                             <View
                                     android:layout_width="match_parent"
                                     android:layout_height="1dp"
-                                    android:background="@color/grey_4"
-                                    android:layout_marginTop="9dp"/>
+                                    android:background="@color/grey_4"/>
                         </LinearLayout>
 
                         <LinearLayout
@@ -350,15 +350,15 @@
                                     android:letterSpacing="-0.02"
                                     android:singleLine="true"
                                     android:textColor="#000"
-                                    android:textSize="14sp"
+                                    android:textSize="14dp"
                                     android:textStyle="normal"
-                                    android:layout_marginBottom="1dp"/>
+                                    android:layout_marginBottom="1dp"
+                                    android:paddingBottom="9dp"/>
 
                             <View
                                     android:layout_width="match_parent"
                                     android:layout_height="1dp"
-                                    android:background="@color/grey_4"
-                                    android:layout_marginTop="9dp"/>
+                                    android:background="@color/grey_4"/>
                         </LinearLayout>
 
                         <LinearLayout

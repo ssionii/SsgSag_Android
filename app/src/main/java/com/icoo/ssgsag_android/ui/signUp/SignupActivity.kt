@@ -49,7 +49,7 @@ class SignupActivity : BaseActivity<ActivitySignupBinding, SignupViewModel>() {
 
     object GetSignupProfile {
         lateinit var nickname: String
-        var gender: String = "male"
+        var gender = ""
         lateinit var birth: String
         var school = "학교 선택"
         var studentNumber = ""
@@ -62,6 +62,7 @@ class SignupActivity : BaseActivity<ActivitySignupBinding, SignupViewModel>() {
     private val admissionYearList = ArrayList<String>()
     private var isClickable = false
     private var checkBirth = false
+    private var checkGender = false
     private var checkNickName = false
     private var checkNickNameValidation = false
     private var checkSchool = false
@@ -101,6 +102,7 @@ class SignupActivity : BaseActivity<ActivitySignupBinding, SignupViewModel>() {
                     isNotRegisteredUniv = false
                 }
                 "register" -> {
+                    majorList = arrayListOf()
                     isNotRegisteredUniv = true
                 }
             }
@@ -189,6 +191,8 @@ class SignupActivity : BaseActivity<ActivitySignupBinding, SignupViewModel>() {
             viewDataBinding.actSignupIvFemale.setImageResource(R.drawable.select_all_passive_0)
             GetSignupProfile.gender = "male"
 
+            onDataCheck()
+
         }
 
         viewDataBinding.actSignupLlFemale.setSafeOnClickListener {
@@ -197,6 +201,8 @@ class SignupActivity : BaseActivity<ActivitySignupBinding, SignupViewModel>() {
             viewDataBinding.actSignupTvFemale.setTextColor(Color.parseColor("#656ef0"))
             viewDataBinding.actSignupIvFemale.setImageResource(R.drawable.select_all)
             GetSignupProfile.gender = "female"
+
+            onDataCheck()
 
         }
 
@@ -257,7 +263,7 @@ class SignupActivity : BaseActivity<ActivitySignupBinding, SignupViewModel>() {
     }
 
     private fun checkValidity(): Boolean {
-        val patternBirth: Pattern = Pattern.compile("^[0-9]*\$")
+        val patternBirth: Pattern = Pattern.compile("[0-9]{2}[0-1][0-9][0-3][0-9]")
         val filtersBirth = arrayOf(InputFilter.LengthFilter(6))
 
         /*
@@ -273,7 +279,7 @@ class SignupActivity : BaseActivity<ActivitySignupBinding, SignupViewModel>() {
             checkBirth = true
         } else {
             checkBirth = false
-            toast("생년월일을 6자리로 입력해주세요")
+            toast("생년월일을 확인해주세요")
         }
 
         if(GetSignupProfile.school.isNotEmpty() && viewDataBinding.actSignupTvSchool.text != "학교 선택"){
@@ -302,8 +308,13 @@ class SignupActivity : BaseActivity<ActivitySignupBinding, SignupViewModel>() {
             toast("학년을 입력해주세요")
         }
 
+        checkGender = GetSignupProfile.gender != ""
+        if (!checkGender) {
+            toast("성별을 선택해주세요")
+        }
 
-        return checkBirth && checkNickName && checkMajorList && checkStudentNumber && checkGrade && checkSchool
+
+        return checkBirth && checkNickName && checkMajorList && checkStudentNumber && checkGrade && checkSchool && checkGender
     }
 
     private fun setGradeListAndAdmissionYearList() {
@@ -378,13 +389,13 @@ class SignupActivity : BaseActivity<ActivitySignupBinding, SignupViewModel>() {
     private fun onDataCheck() {
         getEditText()
 
-        if (GetSignupProfile.birth.isEmpty() || GetSignupProfile.nickname.isEmpty() || GetSignupProfile.gender.isNullOrEmpty()
+        if (GetSignupProfile.birth.isEmpty() || GetSignupProfile.nickname.isEmpty() || GetSignupProfile.gender == ""
             || GetSignupProfile.school.isEmpty() || GetSignupProfile.major.isEmpty() || GetSignupProfile.studentNumber == "" || GetSignupProfile.grade == 6
             || !viewDataBinding.actSignupCbTerms.isChecked || (checkNickNameValidation == false)
         ) {
             isClickable = false
             viewDataBinding.actSignupIvDone.backgroundColor = context.resources.getColor(R.color.grey_2)
-        } else if (GetSignupProfile.birth.isNotEmpty() && GetSignupProfile.nickname.isNotEmpty() && GetSignupProfile.gender!!.isNotEmpty()
+        } else if (GetSignupProfile.birth.isNotEmpty() && GetSignupProfile.nickname.isNotEmpty() && GetSignupProfile.gender != ""
             && GetSignupProfile.school.isNotEmpty() && GetSignupProfile.major.isNotEmpty() && GetSignupProfile.studentNumber.isNotEmpty() && GetSignupProfile.grade != 0
             && viewDataBinding.actSignupCbTerms.isChecked && checkNickNameValidation
         ) {

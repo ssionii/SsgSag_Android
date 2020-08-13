@@ -25,6 +25,7 @@ import com.icoo.ssgsag_android.base.BaseActivity
 import com.icoo.ssgsag_android.data.local.pref.SharedPreferenceController
 import com.icoo.ssgsag_android.data.model.user.DeviceInfo
 import com.icoo.ssgsag_android.databinding.ActivityLoginBinding
+import com.icoo.ssgsag_android.ui.signUp.SignupActivity
 import com.kakao.auth.ISessionCallback
 import com.kakao.auth.Session
 import com.kakao.network.ErrorResult
@@ -270,7 +271,10 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(){
         viewModel.activityToStart.observe(this, Observer { value ->
             val intent = Intent(this, value.first.java)
             startActivity(intent)
-            finishAffinity()
+
+            if(value.first != SignupActivity::class){
+                finishAffinity()
+            }
         })
     }
 
