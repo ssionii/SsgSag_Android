@@ -40,7 +40,7 @@
                        tools:textColor="@color/categoryActText"
                        android:fontFamily="@font/noto_sans_kr_bold"
                        android:letterSpacing="-0.02"
-                       android:textSize="14dp"
+                       android:textSize="@dimen/_14sp"
                        android:textAlignment="center"/>
            </LinearLayout>
 

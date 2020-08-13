@@ -124,6 +124,7 @@ class CalendarDetailActivity : BaseActivity<ActivityCalendarDetailBinding, Calen
 
 
         navigator()
+        setResult(Activity.RESULT_OK)
 
     }
 
@@ -268,10 +269,10 @@ class CalendarDetailActivity : BaseActivity<ActivityCalendarDetailBinding, Calen
     }
 
     private fun managePoster(isSave : Int){
+
         val result = Intent().apply{
-            putExtras(bundleOf(
-                "isSave" to isSave
-            ))
+            putExtra("isSave", isSave)
+            putExtra("posterIdx", posterIdx)
         }
 
         setResult(Activity.RESULT_OK, result)

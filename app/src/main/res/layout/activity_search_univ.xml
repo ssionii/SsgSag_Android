@@ -71,6 +71,7 @@
                 android:textColor="@color/black_1"
                 android:fontFamily="@font/noto_sans_kr_regular"
                 android:background="@null"
+                android:singleLine="true"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"/>
