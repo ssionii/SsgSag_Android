@@ -74,15 +74,16 @@
                     android:layout_height="wrap_content"
                     android:textSize="14sp"
                     android:layout_marginTop="7dp"
-                    android:layout_marginBottom="9dp"
                     android:hint="대학교 이름"
+                    android:singleLine="true"
                     android:textColorHint="@color/grey_2"
                     android:textColor="@color/black_1"
                     android:fontFamily="@font/noto_sans_kr_regular"
                     android:background="@null"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"/>
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:paddingBottom="9dp"/>
             <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
@@ -121,7 +122,8 @@
             android:layout_height="@dimen/bottom_btn_height"
             android:background="@color/grey_2"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:clickable="false">
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

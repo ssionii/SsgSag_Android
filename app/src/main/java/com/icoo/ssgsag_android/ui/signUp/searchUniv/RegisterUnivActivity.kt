@@ -7,6 +7,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.widget.EditText
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseActivity
@@ -34,21 +35,29 @@ class RegisterUnivActivity : BaseActivity<ActivityRegisterUnivBinding, SearchUni
     }
 
     private fun setButton(){
+
         viewDataBinding.actRegisterUnivClCancel.setSafeOnClickListener {
             finish()
         }
 
+
         viewDataBinding.actRegisterUnivClAdd.setSafeOnClickListener {
             val name = viewDataBinding.actRegisterUnivEtName.text.toString()
+            if(name != "") {
 
-            val result = Intent().apply{
-                putExtras(
-                    bundleOf("univName" to name)
-                )
+                if(name.contains(" ")){
+                    Toast.makeText(this, "학교 이름에서 공백을 제거해주세요", Toast.LENGTH_SHORT).show()
+                }else {
+                    val result = Intent().apply {
+                        putExtras(
+                            bundleOf("univName" to name)
+                        )
+                    }
+
+                    setResult(Activity.RESULT_OK, result)
+                    finish()
+                }
             }
-
-            setResult(Activity.RESULT_OK, result)
-            finish()
         }
     }
 
