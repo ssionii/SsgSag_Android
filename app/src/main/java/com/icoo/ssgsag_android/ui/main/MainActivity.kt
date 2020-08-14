@@ -20,6 +20,7 @@ import com.icoo.ssgsag_android.ui.main.MainActivity.mainActivityContext.mainCont
 import com.icoo.ssgsag_android.ui.main.calendar.CalendarFragment
 import com.icoo.ssgsag_android.ui.main.calendar.calendarDetail.CalendarDetailActivity
 import com.icoo.ssgsag_android.ui.main.coachmark.FilterCoachmarkDialogFragment
+import com.icoo.ssgsag_android.ui.main.community.CommunityFragment
 import com.icoo.ssgsag_android.ui.main.feed.FeedFragment
 import com.icoo.ssgsag_android.ui.main.review.main.ReviewMainFragment
 import com.icoo.ssgsag_android.ui.main.ssgSag.SsgSagViewModel
@@ -87,14 +88,15 @@ class MainActivity : BaseActivity<ActivityMainBinding, SsgSagViewModel>() {
         //ViewPager
         viewDataBinding.actMainVp.run {
             adapter = BasePagerAdapter(supportFragmentManager).apply {
-                addFragment(FeedFragment())
                 addFragment(MainFragment())
                 addFragment(CalendarFragment())
+                addFragment(CommunityFragment())
+                addFragment(ReviewMainFragment())
                 addFragment(ReviewMainFragment())
                 isSaveEnabled = false
             }
-            currentItem = 1
-            offscreenPageLimit = 3
+            currentItem = 0
+            offscreenPageLimit = 4
         }
     }
 
@@ -106,13 +108,15 @@ class MainActivity : BaseActivity<ActivityMainBinding, SsgSagViewModel>() {
         viewDataBinding.actMainTl.run {
             setupWithViewPager(viewDataBinding.actMainVp)
             getTabAt(0)!!.customView =
-                bottomNavigationLayout.findViewById(R.id.top_navigation_rl_feed) as RelativeLayout
+                bottomNavigationLayout.findViewById(R.id.top_navigation_rl_home) as RelativeLayout
             getTabAt(1)!!.customView =
-                bottomNavigationLayout.findViewById(R.id.top_navigation_rl_ssg_sag) as RelativeLayout
-            getTabAt(2)!!.customView =
                 bottomNavigationLayout.findViewById(R.id.top_navigation_rl_calendar) as RelativeLayout
+            getTabAt(2)!!.customView =
+                bottomNavigationLayout.findViewById(R.id.top_navigation_rl_community) as RelativeLayout
             getTabAt(3)!!.customView =
-                bottomNavigationLayout.findViewById(R.id.top_navigation_rl_review) as RelativeLayout
+                bottomNavigationLayout.findViewById(R.id.top_navigation_rl_notification) as RelativeLayout
+            getTabAt(4)!!.customView =
+                bottomNavigationLayout.findViewById(R.id.top_navigation_rl_mypage) as RelativeLayout
 
             setTabRippleColor(null)
         }

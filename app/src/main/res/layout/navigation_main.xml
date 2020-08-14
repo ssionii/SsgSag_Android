@@ -12,29 +12,7 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
         <RelativeLayout
-                android:id="@+id/top_navigation_rl_feed"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-            <ImageView
-                    android:id="@+id/navi_main_iv_feed"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:src="@drawable/selector_navigation_feed"/>
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="추천뉴스"
-                    android:textSize="8sp"
-                    android:fontFamily="@font/noto_sans_kr_regular"
-                    android:textColor="@drawable/selector_navigation_text"
-                    android:layout_centerHorizontal="true"
-                    android:layout_below="@+id/navi_main_iv_feed"
-                    android:layout_marginBottom="2dp"/>
-        </RelativeLayout>
-        <RelativeLayout
-                android:id="@+id/top_navigation_rl_ssg_sag"
+                android:id="@+id/top_navigation_rl_home"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
@@ -47,8 +25,8 @@
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="슥삭"
-                    android:textSize="8sp"
+                    android:text="홈"
+                    android:textSize="8dp"
                     android:fontFamily="@font/noto_sans_kr_regular"
                     android:textColor="@drawable/selector_navigation_text"
                     android:layout_centerHorizontal="true"
@@ -95,7 +73,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="캘린더"
-                    android:textSize="8sp"
+                    android:textSize="8dp"
                     android:fontFamily="@font/noto_sans_kr_regular"
                     android:textColor="@drawable/selector_navigation_text"
                     android:layout_centerHorizontal="true"
@@ -103,24 +81,79 @@
                     android:layout_marginBottom="2dp"/>
         </RelativeLayout>
         <RelativeLayout
-                android:id="@+id/top_navigation_rl_review"
+                android:id="@+id/top_navigation_rl_community"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+            <ImageView
+                    android:id="@+id/navi_main_iv_community"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/selector_navigation_community"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="커뮤니티"
+                    android:textSize="8dp"
+                    android:fontFamily="@font/noto_sans_kr_regular"
+                    android:textColor="@drawable/selector_navigation_text"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/navi_main_iv_community"
+                    android:layout_marginBottom="2dp"/>
+        </RelativeLayout>
+
+
+        <RelativeLayout
+                android:id="@+id/top_navigation_rl_notification"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:visibility="visible">
             <ImageView
-                    android:id="@+id/navi_main_iv_review"
+                    android:id="@+id/navi_main_iv_notification"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="2dp"
-                    android:src="@drawable/selector_navigation_review"/>
+                    android:src="@drawable/selector_navigation_notification"/>
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/navi_main_iv_review"
-                    android:text="후기"
-                    android:textSize="8sp"
+                    android:layout_below="@+id/navi_main_iv_notification"
+                    android:text="알림"
+                    android:textSize="8dp"
+                    android:fontFamily="@font/noto_sans_kr_regular"
+                    android:textColor="@drawable/selector_navigation_text"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="2dp"/>
+        </RelativeLayout>
+        <RelativeLayout
+                android:id="@+id/top_navigation_rl_mypage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:visibility="visible">
+            <RelativeLayout
+                    android:id="@+id/navi_main_rl_mypage_image_container"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="2dp">
+                <ImageView
+                        android:id="@+id/navi_main_iv_mypage"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_margin="6dp"
+                        android:background="@color/grey_3" />
+            </RelativeLayout>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/navi_main_rl_mypage_image_container"
+                    android:text="내 정보"
+                    android:textSize="8dp"
                     android:fontFamily="@font/noto_sans_kr_regular"
                     android:textColor="@drawable/selector_navigation_text"
                     android:layout_centerHorizontal="true"
