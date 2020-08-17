@@ -7,11 +7,16 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.data.model.poster.Poster
+import com.icoo.ssgsag_android.databinding.ActivityMainBlockBinding
+import com.icoo.ssgsag_android.databinding.ActivityRegisterUnivBinding
 import com.icoo.ssgsag_android.databinding.BottomSheetPosterBookmarkBinding
+import com.icoo.ssgsag_android.ui.main.block.MainBlockActivity
 import com.icoo.ssgsag_android.ui.main.calendar.calendarDetail.CalendarDetailDeletePosterDialogFragment
 import com.icoo.ssgsag_android.ui.main.calendar.calendarDetail.CalendarDetailViewModel
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
@@ -26,8 +31,9 @@ class PosterBookmarkBottomSheet (
     private val isFavorite : Int,
     private val from : String,
     val buttonClick: (Int) -> Unit
-) : BottomSheetDialogFragment(), CalendarDetailDeletePosterDialogFragment.OnDialogDismissedListener {
-
+) : BottomSheetDialogFragment()
+    , CalendarDetailDeletePosterDialogFragment.OnDialogDismissedListener
+{
 
     lateinit var viewDataBinding: BottomSheetPosterBookmarkBinding
     val viewModel: PosterBookmarkViewModel by viewModel()
@@ -37,16 +43,21 @@ class PosterBookmarkBottomSheet (
 
     lateinit private var deleteDialogFragment : CalendarDetailDeletePosterDialogFragment
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewDataBinding = BottomSheetPosterBookmarkBinding.inflate(layoutInflater, container, false)
+
+        viewDataBinding = DataBindingUtil.inflate(inflater, R.layout.bottom_sheet_poster_bookmark, container, false)
+        viewDataBinding.lifecycleOwner = this
 
         setAlarmList()
         setButton()
-
 
         return viewDataBinding.root
     }
@@ -64,9 +75,8 @@ class PosterBookmarkBottomSheet (
 
         viewModel.getPushAlarm(posterIdx)
 
+        viewModel.pushAlarmList.observe(viewLifecycleOwner, Observer {
 
-
-        viewModel.pushAlarmList.observe(this, Observer {
             alarmList = arrayListOf(
                 PosterAlarmData(-1, "알림 없음", false, false),
                 PosterAlarmData(0, "마감 당일 알림(오전 10시)", false, false),
@@ -110,7 +120,10 @@ class PosterBookmarkBottomSheet (
             setOnAlarmItemClickListener(onAlarmItemClickListener)
         }
 
-        viewDataBinding.bottomSheetPosterBookmarkRv.adapter = rvAdapter
+        viewDataBinding.bottomSheetPosterBookmarkRv.run{
+            adapter = rvAdapter
+            layoutManager = LinearLayoutManager(requireContext())
+        }
 
     }
 
