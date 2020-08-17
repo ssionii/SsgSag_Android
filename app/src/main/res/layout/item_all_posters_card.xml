@@ -22,7 +22,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="218dp"
                 app:cardCornerRadius="4dp"
-                app:cardElevation="2dp">
+                app:cardElevation="2dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginHorizontal="2dp">
             <ImageView
                     android:id="@+id/item_all_posters_card_iv_poster"
                     android:layout_width="match_parent"
@@ -109,7 +111,7 @@
                 android:id="@+id/item_all_poster_card_rl_cancel"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/border_aaaaaa_4_thin"
+                android:background="@drawable/border_aaaaaa_4"
                 rlVisibilityByInt="@{poster.isSave}">
             <LinearLayout
                     android:layout_width="wrap_content"

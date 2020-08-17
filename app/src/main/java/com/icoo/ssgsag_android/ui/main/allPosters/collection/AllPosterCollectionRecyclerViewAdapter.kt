@@ -79,7 +79,7 @@ class AllPosterCollectionRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView
             if(position >= 3) tempPosition = position - 1
             else tempPosition = position
             holder.dataBinding.adPosterCollection = itemList[tempPosition]
-            holder.dataBinding.itemAllPosterCollectionLlMore.setSafeOnClickListener {
+            holder.dataBinding.itemAllPosterCollectionLlMore.setOnClickListener {
                 listener?.onMoreClick(itemList[tempPosition].categoryIdx, tempPosition)
             }
 

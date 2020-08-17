@@ -26,6 +26,7 @@ import com.icoo.ssgsag_android.SsgSagApplication
 import com.icoo.ssgsag_android.base.BaseActivity
 import com.icoo.ssgsag_android.databinding.ActivityAllCategoryBinding
 import com.icoo.ssgsag_android.ui.main.allPosters.AllPostersRecyclerViewAdapter
+import com.icoo.ssgsag_android.ui.main.calendar.calendarDetail.CalendarDetailActivity
 import com.icoo.ssgsag_android.util.DialogPlusAdapter
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import com.orhanobut.dialogplus.DialogPlus
@@ -81,7 +82,6 @@ class AllCategoryActivity : BaseActivity<ActivityAllCategoryBinding, AllCategory
         setRv()
         refreshRv()
         setButton()
-        navigator()
     }
 
     override fun onResume() {
@@ -194,11 +194,19 @@ class AllCategoryActivity : BaseActivity<ActivityAllCategoryBinding, AllCategory
 
     override fun onItemClicked(item: Any?, position: Int?) {
         var posterIdx = (item as PosterDetail).posterIdx
+
+        val intent = Intent(this, CalendarDetailActivity::class.java)
+        intent.apply{
+            putExtra("Idx", posterIdx)
+            putExtra("from","main")
+            putExtra("fromDetail", "all")
+        }
+        requestFromDetail.launch(intent)
         viewModel.navigate(posterIdx, position!!)
     }
 
     private fun setButton(){
-        viewDataBinding.actAllCategoryIvBack.setSafeOnClickListener {
+        viewDataBinding.actAllCategoryIvBack.setOnClickListener {
             finish()
         }
 
@@ -237,16 +245,6 @@ class AllCategoryActivity : BaseActivity<ActivityAllCategoryBinding, AllCategory
         }
     }
 
-
-    private fun navigator() {
-        viewModel.activityToStart.observe(this, Observer { value ->
-            val intent = Intent(this, value.first.java)
-            value.second?.let {
-                intent.putExtras(it)
-            }
-            requestFromDetail.launch(intent)
-        })
-    }
 
     private fun showDialog(){
         var isChanged = false

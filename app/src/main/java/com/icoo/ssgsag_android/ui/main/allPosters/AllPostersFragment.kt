@@ -46,19 +46,13 @@ class AllPostersFragment : BaseFragment<FragmentAllPosterBinding, AllPostersView
         val data : Intent? = activityResult.data
 
         if(resultCode == Activity.RESULT_OK) {
-            if(data != null) {
-                allPosterCollectionRvAdapter.itemList[requestRowIdx].adViewItemList[requestPosition].isSave =
-                    data!!.getIntExtra("isSave", 0)
+            allPosterCollectionRvAdapter.itemList[requestRowIdx].adViewItemList[requestPosition].isSave =
+                data!!.getIntExtra("isSave", 0)
 
-                allPosterCollectionRvAdapter.apply {
-                    notifyItemChanged(requestRowIdx)
-                }
-            }else {
-                Log.e("고냥", "나갔다 ")
-                viewModel.getAdPosterCollection()
+            allPosterCollectionRvAdapter.apply {
+                notifyItemChanged(requestRowIdx)
             }
         }
-
     }
 
     val requestFromMore = prepareCall(ActivityResultContracts.StartActivityForResult()) {activityResult : ActivityResult ->
@@ -214,6 +208,8 @@ class AllPostersFragment : BaseFragment<FragmentAllPosterBinding, AllPostersView
             = object : AllPosterCollectionRecyclerViewAdapter.OnAllPosterCollectionClickListener{
         override fun onPosterItemClick(posterIdx: Int, rowIdx : Int, position: Int) {
 
+            Log.e("posterItem click", rowIdx.toString())
+
             requestRowIdx = rowIdx
             requestPosition = position
 
@@ -226,6 +222,8 @@ class AllPostersFragment : BaseFragment<FragmentAllPosterBinding, AllPostersView
         }
 
         override fun onMoreClick(categoryIdx: Int, rowIdx : Int) {
+
+            Log.e("more click", rowIdx.toString())
 
             requestRowIdx = rowIdx
 
