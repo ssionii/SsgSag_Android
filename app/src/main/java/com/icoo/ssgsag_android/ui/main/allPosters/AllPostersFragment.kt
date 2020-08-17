@@ -10,6 +10,7 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.SimpleItemAnimator
+import androidx.viewpager.widget.ViewPager
 import com.icoo.ssgsag_android.BR
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseFragment
@@ -23,6 +24,7 @@ import com.icoo.ssgsag_android.ui.main.allPosters.collection.AllPosterEventCardV
 import com.icoo.ssgsag_android.ui.main.calendar.calendarDetail.CalendarDetailActivity
 import com.icoo.ssgsag_android.ui.main.feed.FeedWebActivity
 import com.icoo.ssgsag_android.ui.main.review.main.AutoScrollAdapter
+import com.icoo.ssgsag_android.util.view.CircleAnimIndicator
 import com.icoo.ssgsag_android.util.view.NonScrollGridLayoutManager
 import com.icoo.ssgsag_android.util.view.WrapContentLinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -35,8 +37,8 @@ class AllPostersFragment : BaseFragment<FragmentAllPosterBinding, AllPostersView
         get() = R.layout.fragment_all_poster
     override val viewModel: AllPostersViewModel by viewModel()
 
-    lateinit private var allPosterCollectionRvAdapter : AllPosterCollectionRecyclerViewAdapter
-    lateinit private var allPosterEventCardViewPagerAdapter : AllPosterEventCardViewPagerAdapter
+    private lateinit var allPosterCollectionRvAdapter : AllPosterCollectionRecyclerViewAdapter
+    private lateinit var allPosterEventCardViewPagerAdapter : AllPosterEventCardViewPagerAdapter
 
     var requestRowIdx = 0
     var requestPosition = 0
@@ -104,6 +106,8 @@ class AllPostersFragment : BaseFragment<FragmentAllPosterBinding, AllPostersView
             setCycle(true)
 
             layoutParams.height = ( width * 0.5 * d ).toInt()
+
+            addOnPageChangeListener(onBannerPageChangeListener)
         }
 
         viewModel.mainAdList.observe(viewLifecycleOwner, Observer {
@@ -111,6 +115,9 @@ class AllPostersFragment : BaseFragment<FragmentAllPosterBinding, AllPostersView
                 replaceAll(it[0].adViewItemList)
                 notifyDataSetChanged()
             }
+
+            Log.e("it.size", it[0].adViewItemList.size.toString())
+            viewDataBinding.fragAllPosterCai.createDotPanel(it[0].adViewItemList.size, R.drawable.dot_1, R.drawable.dot_2)
 
             viewDataBinding.fragAllPosterAsvpBanner.startAutoScroll()
         })
@@ -124,6 +131,17 @@ class AllPostersFragment : BaseFragment<FragmentAllPosterBinding, AllPostersView
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
                 startActivity(intent)
             }
+        }
+    }
+
+    val onBannerPageChangeListener
+            = object : ViewPager.OnPageChangeListener{
+        override fun onPageScrollStateChanged(state: Int) { }
+
+        override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
+
+        override fun onPageSelected(position: Int) {
+            viewDataBinding.fragAllPosterCai.selectDot(position)
         }
     }
 
