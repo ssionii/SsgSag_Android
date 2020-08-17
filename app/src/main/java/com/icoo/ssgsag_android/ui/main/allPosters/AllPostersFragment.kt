@@ -115,8 +115,6 @@ class AllPostersFragment : BaseFragment<FragmentAllPosterBinding, AllPostersView
                 replaceAll(it[0].adViewItemList)
                 notifyDataSetChanged()
             }
-
-            Log.e("it.size", it[0].adViewItemList.size.toString())
             viewDataBinding.fragAllPosterCai.createDotPanel(it[0].adViewItemList.size, R.drawable.dot_1, R.drawable.dot_2)
 
             viewDataBinding.fragAllPosterAsvpBanner.startAutoScroll()
@@ -198,7 +196,7 @@ class AllPostersFragment : BaseFragment<FragmentAllPosterBinding, AllPostersView
         val middleDpValue = 10
         val rightDpValue = width - leftDpValue - contentDpValue
 
-        allPosterCollectionRvAdapter = AllPosterCollectionRecyclerViewAdapter()
+        allPosterCollectionRvAdapter = AllPosterCollectionRecyclerViewAdapter(this.lifecycle)
         allPosterCollectionRvAdapter.apply {
             setOnAllPosterCollectionClickListener(onPosterCollectionClickListener)
             setMargin(d, leftDpValue, middleDpValue, rightDpValue, contentDpValue)
