@@ -99,7 +99,7 @@ class AllPostersViewModel(
                     })
             )
         }else if(isSave == 1){
-            var posterIdxList = arrayListOf(posterIdx)
+            val posterIdxList = arrayListOf(posterIdx)
 
             val jsonObject = JSONObject()
             val jsonArray = JSONArray(posterIdxList)
@@ -111,7 +111,6 @@ class AllPostersViewModel(
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.mainThread())
                 .subscribe({
-//                    getAdPosterCollection()
                     Toast.makeText(
                         SsgSagApplication.getGlobalApplicationContext(),
                         "캘린더에서 삭제되었습니다!", Toast.LENGTH_SHORT).show()

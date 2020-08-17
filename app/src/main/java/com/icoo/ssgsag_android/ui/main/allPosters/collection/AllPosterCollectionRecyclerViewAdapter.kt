@@ -87,7 +87,7 @@ class AllPosterCollectionRecyclerViewAdapter(private val lifecycle: Lifecycle) :
             else tempPosition = position
             holder.dataBinding.adPosterCollection = itemList[tempPosition]
             holder.dataBinding.itemAllPosterCollectionLlMore.setOnClickListener {
-                listener?.onMoreClick(itemList[tempPosition].categoryIdx, tempPosition)
+                listener?.onMoreClick(itemList[tempPosition].categoryIdx, position)
             }
 
             val cardViewPagerAdapter =

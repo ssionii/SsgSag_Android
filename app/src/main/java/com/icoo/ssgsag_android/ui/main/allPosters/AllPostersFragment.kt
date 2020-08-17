@@ -52,7 +52,11 @@ class AllPostersFragment : BaseFragment<FragmentAllPosterBinding, AllPostersView
                 data!!.getIntExtra("isSave", 0)
 
             allPosterCollectionRvAdapter.apply {
-                notifyItemChanged(requestRowIdx)
+                var tempIdx = 0
+                if(requestRowIdx >= 2) tempIdx = requestRowIdx + 1
+                else tempIdx = requestRowIdx
+
+                notifyItemChanged(tempIdx)
             }
         }
     }
@@ -224,8 +228,6 @@ class AllPostersFragment : BaseFragment<FragmentAllPosterBinding, AllPostersView
             = object : AllPosterCollectionRecyclerViewAdapter.OnAllPosterCollectionClickListener{
         override fun onPosterItemClick(posterIdx: Int, rowIdx : Int, position: Int) {
 
-            Log.e("posterItem click", rowIdx.toString())
-
             requestRowIdx = rowIdx
             requestPosition = position
 
@@ -238,8 +240,6 @@ class AllPostersFragment : BaseFragment<FragmentAllPosterBinding, AllPostersView
         }
 
         override fun onMoreClick(categoryIdx: Int, rowIdx : Int) {
-
-            Log.e("more click", rowIdx.toString())
 
             requestRowIdx = rowIdx
 
