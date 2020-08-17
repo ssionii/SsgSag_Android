@@ -1,7 +1,6 @@
 package com.icoo.ssgsag_android.ui.main.review
 
 import android.graphics.Color
-import android.util.Log
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -9,10 +8,8 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
-import androidx.recyclerview.widget.RecyclerView
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.ui.main.feed.context
 import org.jetbrains.anko.backgroundColor
@@ -52,7 +49,7 @@ fun setClubRgstrButton(layout: ConstraintLayout, isClickable: Boolean){
 @BindingAdapter("clubRgstrCategoryBg")
 fun setClubRgstrCategoryBg(layout: ConstraintLayout, isSelected: Boolean){
     if(isSelected)
-        layout.setBackgroundResource(R.drawable.border_656ef0_4)
+        layout.setBackgroundResource(R.drawable.bg_656ef0_4)
     else
         layout.setBackgroundColor(context.resources.getColor(R.color.grey_4))
 

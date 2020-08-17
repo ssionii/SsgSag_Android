@@ -32,6 +32,7 @@ class AllPosterEventCardViewPagerAdapter(
             val eventItem = eventList[position]
 
             viewDataBinding.event = eventItem
+            viewDataBinding.root.layoutParams.height = (eventWidth * 0.73).toInt()
             viewDataBinding.itemAllPosterEventIv.layoutParams.height = (eventWidth * 0.5).toInt()
 
             viewDataBinding.root.setSafeOnClickListener {

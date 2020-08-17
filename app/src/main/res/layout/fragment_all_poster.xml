@@ -21,8 +21,7 @@
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingBottom="30dp">
+                android:orientation="vertical">
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -70,8 +69,8 @@
                     android:id="@+id/frag_all_poster_posters_collection_rv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:overScrollMode="never">
+                    android:overScrollMode="never"
+                    android:layout_marginTop="16dp">
 
             </androidx.recyclerview.widget.RecyclerView>
 
@@ -79,11 +78,10 @@
                     android:id="@+id/frag_all_poster_ll_event_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginTop="13dp">
+                    android:orientation="vertical">
                 <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="61dp"
+                        android:layout_height="52dp"
                         android:orientation="horizontal"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -96,8 +94,8 @@
                             android:layout_marginTop="14dp"
                             android:text="추천정보"
                             android:fontFamily="@font/noto_sans_kr_bold"
-                            android:textSize="24sp"
-                            android:textColor="@color/black_2"/>
+                            android:textSize="18sp"
+                            android:textColor="@color/black_1"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
                 <com.icoo.ssgsag_android.util.view.AutoHeightViewPager
