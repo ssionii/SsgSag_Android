@@ -100,6 +100,20 @@
     <!-- Login text -->
     <string name="login_toast_content_authorization_failed">회원정보 확인에 실패했습니다.\n다시 로그인해주세요!</string>
 
+    <!--Community tab text -->
+    <string name="community_tab_header">커뮤니티</string>
+    <string name="community_ssgsag_news_btn_text">추천정보</string>
+    <string name="community_team_btn_text">팀원모집</string>
+    <string name="community_counseling_btn_text">고민상담</string>
+    <string name="community_talk_btn_text">자유수다</string>
+    <string name="community_review_btn_text">활동후기</string>
+
+    <string name="community_ssgsag_news_title">이번 주 추천정보</string>
+
+
+    <!-- Common text -->
+    <string name="show_more">더보기</string>
+
     <!-- setting -->
     <string name="com.crashlytics.useFirebaseAppId">true</string>
 
