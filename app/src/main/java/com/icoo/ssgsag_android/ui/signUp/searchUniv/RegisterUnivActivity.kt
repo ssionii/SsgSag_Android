@@ -44,19 +44,14 @@ class RegisterUnivActivity : BaseActivity<ActivityRegisterUnivBinding, SearchUni
         viewDataBinding.actRegisterUnivClAdd.setSafeOnClickListener {
             val name = viewDataBinding.actRegisterUnivEtName.text.toString()
             if(name != "") {
-
-                if(name.contains(" ")){
-                    Toast.makeText(this, "학교 이름에서 공백을 제거해주세요", Toast.LENGTH_SHORT).show()
-                }else {
-                    val result = Intent().apply {
-                        putExtras(
-                            bundleOf("univName" to name)
-                        )
-                    }
-
-                    setResult(Activity.RESULT_OK, result)
-                    finish()
+                val result = Intent().apply {
+                    putExtras(
+                        bundleOf("univName" to name)
+                    )
                 }
+
+                setResult(Activity.RESULT_OK, result)
+                finish()
             }
         }
     }
@@ -64,7 +59,7 @@ class RegisterUnivActivity : BaseActivity<ActivityRegisterUnivBinding, SearchUni
     private fun setEditText(){
         viewDataBinding.actRegisterUnivEtName.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                if(s.toString().isEmpty()){
+                if(s.toString().isEmpty() || s.toString().contains(" ")){
                     viewDataBinding.actRegisterUnivClAdd.run{
                         backgroundColor = context.resources.getColor(R.color.grey_2)
                         isClickable = false

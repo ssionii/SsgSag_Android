@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.SimpleItemAnimator
 import androidx.viewpager.widget.ViewPager
@@ -129,10 +130,16 @@ class AllPostersFragment : BaseFragment<FragmentAllPosterBinding, AllPostersView
             = object : AutoScrollAdapter.OnItemClickListener{
         override fun onItemClick(url: String?) {
 
-            if(url != "") {
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-                startActivity(intent)
+            val intent = Intent(context, FeedWebActivity::class.java)
+            intent.putExtra("url",url)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+
+            val bundle = Bundle().apply {
+                putString("url", url)
             }
+
+            ContextCompat.startActivity(activity!!, intent, bundle)
         }
     }
 

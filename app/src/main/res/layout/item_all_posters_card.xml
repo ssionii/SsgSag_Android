@@ -29,8 +29,6 @@
                     android:id="@+id/item_all_posters_card_iv_poster"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:adjustViewBounds="true"
-                    allPosterCardGlideImg="@{poster.photoUrl}"
                     tools:src="@drawable/img_poster"/>
         </androidx.cardview.widget.CardView>
 
@@ -49,6 +47,7 @@
                 android:text="@{poster.contentTitle}"
                 android:textColor="@color/black_1"
                 android:textSize="14dp"
+                android:ellipsize="end"
                 tools:text="대상홀딩스\n세줄이 되면 어떻게 될까요? 정말정말 궁금하죠오오오?" />
 
         <LinearLayout

@@ -93,7 +93,8 @@ class AllPosterCollectionRecyclerViewAdapter(private val lifecycle: Lifecycle) :
             val cardViewPagerAdapter =
                 AllPosterCardViewPagerAdapter(
                     context,
-                    itemList[tempPosition].adViewItemList
+                    itemList[tempPosition].adViewItemList,
+                    itemList[tempPosition].categoryIdx == 4
                 )
             cardViewPagerAdapter.apply {
                 setOnItemClickListener(onPosterItemClickListener)
