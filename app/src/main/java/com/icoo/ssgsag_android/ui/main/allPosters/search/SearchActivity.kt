@@ -3,6 +3,7 @@ package com.icoo.ssgsag_android.ui.main.allPosters.search
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.inputmethod.EditorInfo
@@ -67,18 +68,20 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(),
     private fun setButton(){
         viewDataBinding.actSearchIvSearch.setSafeOnClickListener {
             hideKeyboard(viewDataBinding.actSearchEtSearch)
-            curPage = 0
-            viewDataBinding.actSearchRv.apply{
-                if(from == "main") {
-                    (adapter as BaseRecyclerViewAdapter<PosterDetail, ItemAllPostersBinding>).clearAll()
-                    viewModel.getSearchedPosters(viewDataBinding.actSearchEtSearch.text.toString(), curPage)
-                }else if(from == "club"){
-                    reviewListRecyclerViewAdapter?.clearAll()
-                    viewModel.getSearchedClubs(viewDataBinding.actSearchEtSearch.text.toString(), clubType, curPage)
+            if(viewDataBinding.actSearchEtSearch.text.toString().length < 2) {
+                viewDataBinding.actSearchTvKeyword.visibility = GONE
+            }else{
+                curPage = 0
+                viewDataBinding.actSearchRv.apply{
+                    if(from == "main") {
+                        (adapter as BaseRecyclerViewAdapter<PosterDetail, ItemAllPostersBinding>).clearAll()
+                        viewModel.getSearchedPosters(viewDataBinding.actSearchEtSearch.text.toString(), curPage)
+                    }else if(from == "club"){
+                        reviewListRecyclerViewAdapter?.clearAll()
+                        viewModel.getSearchedClubs(viewDataBinding.actSearchEtSearch.text.toString(), clubType, curPage)
+                    }
                 }
             }
-
-
 
         }
 
@@ -90,8 +93,9 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(),
             hideKeyboard(viewDataBinding.actSearchEtSearch)
             if(actionId == EditorInfo.IME_ACTION_SEARCH){
                 if(viewDataBinding.actSearchEtSearch.text.toString().length < 2){
-                    Toast.makeText(this, "2글자 이상 입력해주세요", Toast.LENGTH_SHORT).show()
+                    viewDataBinding.actSearchTvKeyword.visibility = GONE
                 }else{
+                    viewDataBinding.actSearchTvKeyword.visibility = VISIBLE
                     curPage = 0
                     viewDataBinding.actSearchRv.apply{
                         if(from == "main") {
