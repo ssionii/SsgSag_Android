@@ -14,7 +14,8 @@ import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 
 class AllPosterEventCardViewPagerAdapter(
     private val context : Context,
-    private val eventList: ArrayList<AdItem>?
+    private val eventList: ArrayList<AdItem>?,
+    private val density : Float
 ) : PagerAdapter() {
 
     private var mOnItemClickListener: OnItemClickListener? = null
@@ -32,8 +33,8 @@ class AllPosterEventCardViewPagerAdapter(
             val eventItem = eventList[position]
 
             viewDataBinding.event = eventItem
-            viewDataBinding.root.layoutParams.height = (eventWidth * 0.73).toInt()
             viewDataBinding.itemAllPosterEventIv.layoutParams.height = (eventWidth * 0.5).toInt()
+            viewDataBinding.root.layoutParams.height = (viewDataBinding.itemAllPosterEventIv.layoutParams.height +  60 * density).toInt()
 
             viewDataBinding.root.setSafeOnClickListener {
                 mOnItemClickListener?.onEventClick(eventItem.adUrl, eventItem.contentTitle)

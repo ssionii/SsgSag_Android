@@ -120,7 +120,7 @@ class AllPostersFragment : BaseFragment<FragmentAllPosterBinding, AllPostersView
                 replaceAll(it[0].adViewItemList)
                 notifyDataSetChanged()
             }
-            viewDataBinding.fragAllPosterCai.createDotPanel(it[0].adViewItemList.size, R.drawable.dot_1, R.drawable.dot_2)
+            viewDataBinding.fragAllPosterCai.createDotPanel(it[0].adViewItemList.size, R.drawable.dot_2, R.drawable.dot_1)
 
             viewDataBinding.fragAllPosterAsvpBanner.startAutoScroll()
         })
@@ -273,7 +273,8 @@ class AllPostersFragment : BaseFragment<FragmentAllPosterBinding, AllPostersView
                 allPosterEventCardViewPagerAdapter =
                     AllPosterEventCardViewPagerAdapter(
                         requireActivity(),
-                        it[0].adViewItemList
+                        it[0].adViewItemList,
+                        d
                     )
                 allPosterEventCardViewPagerAdapter.apply{
                     eventWidth = contentWidth
