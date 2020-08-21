@@ -6,6 +6,4 @@
     <dimen name="toolbar_height">48dp</dimen>
     <dimen name="bottom_btn_height">56dp</dimen>
 
-    <dimen name="_14sp">14dp</dimen>
-
 </resources>

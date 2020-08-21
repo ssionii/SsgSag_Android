@@ -32,7 +32,7 @@
                        android:src="@{posterCategory.categoryImage}"
                        tools:src="@drawable/ic_category_activity"/>
                <TextView
-                       android:layout_width="56dp"
+                       android:layout_width="62dp"
                        android:layout_height="wrap_content"
                        android:text="@{posterCategory.categoryName}"
                        android:textColor="@{posterCategory.categoryTextColor}"
@@ -40,7 +40,7 @@
                        tools:textColor="@color/categoryActText"
                        android:fontFamily="@font/noto_sans_kr_bold"
                        android:letterSpacing="-0.02"
-                       android:textSize="@dimen/_14sp"
+                       android:textSize="13sp"
                        android:textAlignment="center"/>
            </LinearLayout>
 
