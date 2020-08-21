@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.InputFilter
+import android.text.SpannableStringBuilder
 import android.text.TextWatcher
 import android.util.Log
 import android.util.TypedValue
@@ -111,6 +112,8 @@ class SignupActivity : BaseActivity<ActivitySignupBinding, SignupViewModel>() {
                 text = univName
                 textColor = context.resources.getColor(R.color.black)
             }
+
+            viewDataBinding.actSignupAtMajor.text = SpannableStringBuilder("")
 
             GetSignupProfile.school = univName
 
@@ -453,6 +456,7 @@ class SignupActivity : BaseActivity<ActivitySignupBinding, SignupViewModel>() {
         viewModel.signup(gsonObject)
 
         viewModel.loginToken.observe(this, androidx.lifecycle.Observer {
+            SharedPreferenceController.setIsFirstOpen(this, true)
             viewModel.autoLogin(it, null)
         })
     }
