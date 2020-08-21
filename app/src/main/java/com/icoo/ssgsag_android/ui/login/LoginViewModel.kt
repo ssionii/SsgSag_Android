@@ -83,7 +83,6 @@ class LoginViewModel (
 
             }) {
                 Toast.makeText(context, "서버 점검 중입니다.",Toast.LENGTH_SHORT).show()
-                Log.e("login error", it.message)
             })
     }
 
@@ -116,7 +115,6 @@ class LoginViewModel (
 
             }) {
                 Toast.makeText(context, "네트워크 상태를 확인해주세요.",Toast.LENGTH_SHORT).show()
-                Log.e("auto login error:", it.message)
             })
 
     }
