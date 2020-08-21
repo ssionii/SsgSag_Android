@@ -37,6 +37,7 @@ import com.icoo.ssgsag_android.ui.main.calendar.calendarDialog.calendarDialogPag
 import com.icoo.ssgsag_android.ui.main.calendar.calendarPage.list.CalendarListDeleteViewModel
 import com.icoo.ssgsag_android.ui.main.calendar.calendarPage.list.CalendarListViewModel
 import com.icoo.ssgsag_android.ui.main.calendar.posterBookmark.PosterBookmarkViewModel
+import com.icoo.ssgsag_android.ui.main.community.CommunityViewModel
 import com.icoo.ssgsag_android.ui.main.feed.FeedViewModel
 import com.icoo.ssgsag_android.ui.main.myPage.MyPageViewModel
 import com.icoo.ssgsag_android.ui.main.myPage.myReview.MyReviewViewModel
@@ -173,6 +174,8 @@ val viewModule = module {
     viewModel { MoreReviewViewModel(get(), get(), get()) }
     viewModel { ReviewEventViewModel(get(), get()) }
     viewModel { ReviewMainViewModel(get(), get()) }
+    // community
+    viewModel { CommunityViewModel() }
 
 }
 

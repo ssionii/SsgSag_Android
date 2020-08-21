@@ -108,7 +108,7 @@ fun setGlideSsgSagImg(view: ImageView, imgUrl: String?) {
 
 }
 
-@BindingAdapter("allPosterCardGlideImg")
+@BindingAdapter("topCropGlideImg")
 fun setAllPosterCardGlideImg(view: ImageView, imgUrl: String?) {
 
     val requestOptions = RequestOptions
@@ -119,7 +119,6 @@ fun setAllPosterCardGlideImg(view: ImageView, imgUrl: String?) {
         .load(imgUrl)
 //        .listener(createLoggerListener("allPosterCardGlideImg"))
         .placeholder(R.drawable.img_default)
-        .thumbnail(0.1f)
         .apply(RequestOptions.bitmapTransform(CropTransformation(view.width, view.height, CropTransformation.CropType.TOP)))
         .into(view)
 }
