@@ -110,9 +110,15 @@
 
     <string name="community_ssgsag_news_title">이번 주 추천정보</string>
 
+    <!-- Community Board text -->
+    <string name="counsel_title">고민 상담</string>
+
+
 
     <!-- Common text -->
     <string name="show_more">더보기</string>
+    <string name="post_article">글 쓰기</string>
+    <string name="no_post">표시할 게시글이 존재하지 않습니다.</string>
 
     <!-- setting -->
     <string name="com.crashlytics.useFirebaseAppId">true</string>
