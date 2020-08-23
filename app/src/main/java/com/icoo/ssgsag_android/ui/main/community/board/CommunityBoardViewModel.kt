@@ -38,7 +38,8 @@ class CommunityBoardViewModel(
         when(type){
             0 -> _postList.postValue(dummuyAllCounselList)
             1 -> _postList.postValue(dummyActList)
-            else ->  _postList.postValue(dummuyAllCounselList)
+            2 ->  _postList.postValue(arrayListOf())
+            else -> _postList.postValue(dummyActList)
         }
     }
 

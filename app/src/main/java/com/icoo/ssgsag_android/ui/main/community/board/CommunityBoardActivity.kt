@@ -3,6 +3,7 @@ package com.icoo.ssgsag_android.ui.main.community.board
 import android.os.Bundle
 import android.util.Log
 import android.view.View.GONE
+import android.view.View.VISIBLE
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.tabs.TabLayout
@@ -87,11 +88,21 @@ class CommunityBoardActivity : BaseActivity<ActivityCommunityBoardBinding, Commu
             layoutManager = LinearLayoutManager(this@CommunityBoardActivity)
         }
 
+        val emptyView = viewDataBinding.actCommunityBoardLlEmpty
+        val recyclerView = viewDataBinding.actCommunityBoardRv
+
         viewModel.postList.observe(this, Observer {
             (viewDataBinding.actCommunityBoardRv.adapter as BaseRecyclerViewAdapter<CommunityBoardPostDetail, *>).run{
-                Log.e("item", it.toString())
                 replaceAll(it)
                 notifyDataSetChanged()
+                if(it.size > 0) {
+                    emptyView.visibility = GONE
+                    recyclerView.visibility = VISIBLE
+                }else{
+                    emptyView.visibility = VISIBLE
+                    recyclerView.visibility = GONE
+                }
+
             }
         })
     }

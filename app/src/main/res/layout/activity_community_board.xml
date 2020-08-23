@@ -95,6 +95,7 @@
                         app:layout_constraintStart_toStartOf="parent"/>
 
                 <LinearLayout
+                        android:id="@+id/act_community_board_ll_empty"
                         android:visibility="visible"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
