@@ -1,6 +1,7 @@
 package com.icoo.ssgsag_android.ui.main.community
 
 import SsgSagNewsViewPagerAdapter
+import android.content.Intent
 import android.graphics.Point
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,10 +11,13 @@ import androidx.lifecycle.Observer
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseFragment
 import com.icoo.ssgsag_android.databinding.FragmentCommunityBinding
+import com.icoo.ssgsag_android.ui.main.community.board.CommunityBoardActivity
+import com.icoo.ssgsag_android.ui.main.community.board.CommunityBoardType
 import com.icoo.ssgsag_android.ui.main.feed.FeedViewModel
 import com.icoo.ssgsag_android.ui.main.feed.adapter.FeedAnchorRecyclerViewAdapter
 import com.icoo.ssgsag_android.ui.main.feed.adapter.FeedCareerViewPagerAdapter
 import com.icoo.ssgsag_android.ui.main.feed.category.FeedCategoryRecyclerViewAdapter
+import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import com.icoo.ssgsag_android.util.view.WrapContentLinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -37,6 +41,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
 
         setSsgsagNewsVp(d, width)
         setRv()
+        setButton()
 
 
     }
@@ -71,6 +76,17 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
             }
         })
 
+    }
+
+    private fun setButton(){
+
+        viewDataBinding.fragCommunityLlCounselBoard.setSafeOnClickListener {
+            val intent = Intent(requireActivity(), CommunityBoardActivity::class.java)
+            intent.putExtra("type", CommunityBoardType.COUNSEL)
+
+            startActivity(intent)
+
+        }
     }
 
 }
