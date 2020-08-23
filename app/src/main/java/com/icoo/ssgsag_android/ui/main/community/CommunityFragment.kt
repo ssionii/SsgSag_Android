@@ -87,6 +87,14 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
             startActivity(intent)
 
         }
+
+        viewDataBinding.fragCommunityLlTalkBoard.setSafeOnClickListener {
+            val intent = Intent(requireActivity(), CommunityBoardActivity::class.java)
+            intent.putExtra("type", CommunityBoardType.TALK)
+
+            startActivity(intent)
+
+        }
     }
 
 }
