@@ -393,6 +393,15 @@ fun RelativeLayout.setVisibilityByIntR(num: Int){
     }
 }
 
+@BindingAdapter("cvVisibilityByString")
+fun CardView.setVisibilityByInt(str: String?){
+    if(str == null || str == ""){
+        this.visibility = GONE
+    }else{
+        this.visibility = VISIBLE
+    }
+}
+
 
 private fun createLoggerListener(name: String): RequestListener<Drawable> {
     return object : RequestListener<Drawable> {

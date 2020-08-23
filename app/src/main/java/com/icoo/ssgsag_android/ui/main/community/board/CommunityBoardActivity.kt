@@ -1,6 +1,10 @@
 package com.icoo.ssgsag_android.ui.main.community.board
 
 import android.os.Bundle
+import android.util.Log
+import android.view.View.GONE
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.tabs.TabLayout
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.BR
@@ -10,6 +14,7 @@ import com.icoo.ssgsag_android.data.model.community.board.CommunityBoardPostDeta
 import com.icoo.ssgsag_android.data.model.community.board.CounselBoardCategory
 import com.icoo.ssgsag_android.databinding.ActivityCommunityBoardBinding
 import com.icoo.ssgsag_android.databinding.ItemBoardBinding
+import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import com.icoo.ssgsag_android.util.view.WrapContentLinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -34,15 +39,17 @@ class CommunityBoardActivity : BaseActivity<ActivityCommunityBoardBinding, Commu
 
         when(intent.getIntExtra("type", CommunityBoardType.TALK)){
             CommunityBoardType.COUNSEL -> {
-
+                setTab()
+                viewModel.getCounselList(0)
             }
             CommunityBoardType.TALK -> {
-
+                viewDataBinding.actCommunityBoardTl.visibility = GONE
+                viewModel.getTalkList()
             }
         }
 
-        setTab()
         setRv()
+        setButton()
 
     }
 
@@ -77,7 +84,22 @@ class CommunityBoardActivity : BaseActivity<ActivityCommunityBoardBinding, Commu
                     get() = null
             }
 
-            layoutManager = WrapContentLinearLayoutManager()
+            layoutManager = LinearLayoutManager(this@CommunityBoardActivity)
+        }
+
+        viewModel.postList.observe(this, Observer {
+            (viewDataBinding.actCommunityBoardRv.adapter as BaseRecyclerViewAdapter<CommunityBoardPostDetail, *>).run{
+                Log.e("item", it.toString())
+                replaceAll(it)
+                notifyDataSetChanged()
+            }
+        })
+    }
+
+    private fun setButton(){
+
+        viewDataBinding.actCommunityBoardClBack.setSafeOnClickListener {
+            finish()
         }
     }
 

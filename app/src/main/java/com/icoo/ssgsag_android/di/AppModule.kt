@@ -3,6 +3,8 @@ package com.icoo.ssgsag_android.di
 import com.icoo.ssgsag_android.data.local.pref.PreferenceManager
 import com.icoo.ssgsag_android.data.model.clickHistory.UserLogRepository
 import com.icoo.ssgsag_android.data.model.clickHistory.UserLogRepositoryImpl
+import com.icoo.ssgsag_android.data.model.community.CommunityRepository
+import com.icoo.ssgsag_android.data.model.community.CommunityRepositoryImpl
 import com.icoo.ssgsag_android.data.model.event.EventRepository
 import com.icoo.ssgsag_android.data.model.event.EventRepositoryImpl
 import com.icoo.ssgsag_android.data.model.feed.FeedRepository
@@ -131,6 +133,11 @@ val factoryModule = module {
     }
     factory<EventRepository>{
         EventRepositoryImpl(
+            get(), get()
+        )
+    }
+    factory<CommunityRepository>{
+        CommunityRepositoryImpl(
             get(), get()
         )
     }
