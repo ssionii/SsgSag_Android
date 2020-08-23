@@ -1,6 +1,6 @@
 package com.icoo.ssgsag_android.data.model.community.board
 
-data class CommunityBoardPostDetail(
+data class BoardPostDetail(
     val boardIndex : Int,
     val category : String,
     val type : Int,
@@ -9,5 +9,9 @@ data class CommunityBoardPostDetail(
     val viewCount : Int,
     val commentCount : Int,
     val time : String,
-    val photoUrl : String?
-)
+    val profileUrl : String?,
+    val isBest : Int,
+    val userName : String?,
+    val photoUrl : String?,
+    val likeNum : Int?
+    )

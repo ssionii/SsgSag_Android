@@ -117,6 +117,8 @@
         <activity android:name=".ui.main.block.MainBlockActivity"/>
 
         <activity android:name=".ui.main.community.board.CommunityBoardActivity"/>
+        <activity android:name=".ui.main.community.board.postDetail.BoardPostDetailActivity"
+                android:windowSoftInputMode="adjustResize"/>
 
 
 

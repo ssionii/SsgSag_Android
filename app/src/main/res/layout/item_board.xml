@@ -4,7 +4,7 @@
     <data>
         <variable
                 name="postDetail"
-                type="com.icoo.ssgsag_android.data.model.community.board.CommunityBoardPostDetail" />
+                type="com.icoo.ssgsag_android.data.model.community.board.BoardPostDetail" />
     </data>
 <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -27,6 +27,7 @@
                 android:orientation="horizontal"
                 android:gravity="center_vertical">
             <androidx.cardview.widget.CardView
+                    cvVisibilityByInt="@{postDetail.isBest}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:cardBackgroundColor="#14fe6d6d"

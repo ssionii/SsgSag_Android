@@ -42,6 +42,7 @@ import com.icoo.ssgsag_android.ui.main.calendar.posterBookmark.PosterBookmarkVie
 import com.icoo.ssgsag_android.ui.main.community.CommunityViewModel
 import com.icoo.ssgsag_android.ui.main.community.board.CommunityBoardActivity
 import com.icoo.ssgsag_android.ui.main.community.board.CommunityBoardViewModel
+import com.icoo.ssgsag_android.ui.main.community.board.postDetail.BoardPostDetailViewModel
 import com.icoo.ssgsag_android.ui.main.feed.FeedViewModel
 import com.icoo.ssgsag_android.ui.main.myPage.MyPageViewModel
 import com.icoo.ssgsag_android.ui.main.myPage.myReview.MyReviewViewModel
@@ -186,6 +187,7 @@ val viewModule = module {
     // community
     viewModel { CommunityViewModel() }
     viewModel { CommunityBoardViewModel(get(), get()) }
+    viewModel { BoardPostDetailViewModel() }
 
 }
 

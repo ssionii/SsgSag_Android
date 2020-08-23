@@ -1,25 +1,26 @@
 package com.icoo.ssgsag_android.ui.main.community.board
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayout
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.BR
 import com.icoo.ssgsag_android.base.BaseActivity
 import com.icoo.ssgsag_android.base.BaseRecyclerViewAdapter
-import com.icoo.ssgsag_android.data.model.community.board.CommunityBoardPostDetail
+import com.icoo.ssgsag_android.data.model.community.board.BoardPostDetail
 import com.icoo.ssgsag_android.data.model.community.board.CounselBoardCategory
 import com.icoo.ssgsag_android.databinding.ActivityCommunityBoardBinding
 import com.icoo.ssgsag_android.databinding.ItemBoardBinding
+import com.icoo.ssgsag_android.ui.main.community.board.postDetail.BoardPostDetailActivity
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
-import com.icoo.ssgsag_android.util.view.WrapContentLinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class CommunityBoardActivity : BaseActivity<ActivityCommunityBoardBinding, CommunityBoardViewModel>(){
+class CommunityBoardActivity : BaseActivity<ActivityCommunityBoardBinding, CommunityBoardViewModel>(), BaseRecyclerViewAdapter.OnItemClickListener{
 
     override val layoutResID: Int
         get() = R.layout.activity_community_board
@@ -76,13 +77,13 @@ class CommunityBoardActivity : BaseActivity<ActivityCommunityBoardBinding, Commu
 
     private fun setRv(){
         viewDataBinding.actCommunityBoardRv.run{
-            adapter = object : BaseRecyclerViewAdapter<CommunityBoardPostDetail, ItemBoardBinding>(){
+            adapter = object : BaseRecyclerViewAdapter<BoardPostDetail, ItemBoardBinding>(){
                 override val layoutResID: Int
                     get() = R.layout.item_board
                 override val bindingVariableId: Int
                     get() = BR.postDetail
                 override val listener: OnItemClickListener?
-                    get() = null
+                    get() = this@CommunityBoardActivity
             }
 
             layoutManager = LinearLayoutManager(this@CommunityBoardActivity)
@@ -92,7 +93,7 @@ class CommunityBoardActivity : BaseActivity<ActivityCommunityBoardBinding, Commu
         val recyclerView = viewDataBinding.actCommunityBoardRv
 
         viewModel.postList.observe(this, Observer {
-            (viewDataBinding.actCommunityBoardRv.adapter as BaseRecyclerViewAdapter<CommunityBoardPostDetail, *>).run{
+            (viewDataBinding.actCommunityBoardRv.adapter as BaseRecyclerViewAdapter<BoardPostDetail, *>).run{
                 replaceAll(it)
                 notifyDataSetChanged()
                 if(it.size > 0) {
@@ -105,6 +106,11 @@ class CommunityBoardActivity : BaseActivity<ActivityCommunityBoardBinding, Commu
 
             }
         })
+    }
+
+    override fun onItemClicked(item: Any?, position: Int?) {
+        val intent = Intent(this, BoardPostDetailActivity::class.java)
+        startActivity(intent)
     }
 
     private fun setButton(){
