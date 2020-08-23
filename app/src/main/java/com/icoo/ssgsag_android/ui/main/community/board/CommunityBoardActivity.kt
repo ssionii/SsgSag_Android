@@ -27,6 +27,8 @@ class CommunityBoardActivity : BaseActivity<ActivityCommunityBoardBinding, Commu
 
     override val viewModel: CommunityBoardViewModel by viewModel()
 
+    var communityBoardType = CommunityBoardType.TALK
+
     val counselBoardCategoryList = arrayListOf(
         CounselBoardCategory("전체", 0),
         CounselBoardCategory("공모전/대외활동", 1),
@@ -39,12 +41,15 @@ class CommunityBoardActivity : BaseActivity<ActivityCommunityBoardBinding, Commu
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        when(intent.getIntExtra("type", CommunityBoardType.TALK)){
+        communityBoardType = intent.getIntExtra("type", CommunityBoardType.TALK)
+        when(communityBoardType){
             CommunityBoardType.COUNSEL -> {
+                viewDataBinding.actCommunityBoardTvTitle.text = this.resources.getString(R.string.counsel_title)
                 setTab()
                 viewModel.getCounselList(0)
             }
             CommunityBoardType.TALK -> {
+                viewDataBinding.actCommunityBoardTvTitle.text = this.resources.getString(R.string.talk_title)
                 viewDataBinding.actCommunityBoardTl.visibility = GONE
                 viewModel.getTalkList()
             }
@@ -110,6 +115,7 @@ class CommunityBoardActivity : BaseActivity<ActivityCommunityBoardBinding, Commu
 
     override fun onItemClicked(item: Any?, position: Int?) {
         val intent = Intent(this, BoardPostDetailActivity::class.java)
+        intent.putExtra("type", communityBoardType)
         startActivity(intent)
     }
 

@@ -30,6 +30,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
+                android:id="@+id/act_community_board_tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="16dp"
