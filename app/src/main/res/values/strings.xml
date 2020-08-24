@@ -87,7 +87,24 @@
     <string name="review_main_intern">👩‍💻 인턴 후기</string>
 
 
+    <!-- Main Block text -->
+    <string name="main_block_title">학교 정보 확인 중!</string>
+    <string name="main_block_description">조금만 기다려 주세요.(최대 7일 소요)</string>
+    <string name="main_block_refresh">새로고침</string>
+    <string name="main_block_not_recognize">기다려도 승인이 되지 않나요?</string>
+    <string name="main_block_send_mail"><u>📮 슥삭팀에게 메일 보내기</u></string>
 
+    <string name="main_block_toast_success">학교/학과 정보를 확인되었습니다.</string>
+    <string name="main_block_toast_pending">학교/학과 정보를 확인 중 입니다.:sob:\n조금만 기다려 주세요.</string>
+    
+    <!-- Login text -->
+    <string name="login_toast_content_authorization_failed">회원정보 확인에 실패했습니다.\n다시 로그인해주세요!</string>
+
+    <!-- setting -->
     <string name="com.crashlytics.useFirebaseAppId">true</string>
+
+    <string name="admob_app_id">ca-app-pub-6888357719311971~5202997355</string>
+    <string name="banner_ad_unit_id">ca-app-pub-6888357719311971/1199558187</string>
+    <string name="banner_ad_unit_id_for_test">ca-app-pub-3940256099942544/6300978111</string>
 
 </resources>

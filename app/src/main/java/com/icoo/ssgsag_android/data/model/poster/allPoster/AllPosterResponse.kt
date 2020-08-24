@@ -1,4 +1,4 @@
-package com.icoo.ssgsag_android.data.model.poster
+package com.icoo.ssgsag_android.data.model.poster.allPoster
 
 import com.icoo.ssgsag_android.data.model.poster.posterDetail.PosterDetail
 

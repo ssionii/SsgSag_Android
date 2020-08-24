@@ -38,9 +38,6 @@ class AllCategoryViewModel(
     private val _subCategory = MutableLiveData<Int>()
     val subCategory: LiveData<Int> get() = _subCategory
 
-    private val _activityToStart = MutableLiveData<Pair<KClass<*>, Bundle?>>()
-    val activityToStart: LiveData<Pair<KClass<*>, Bundle?>> get() = _activityToStart
-
     var category = 0
     private val _isUnivClub = MutableLiveData<Boolean>()
     val isUnivClub: LiveData<Boolean> get() = _isUnivClub
@@ -181,14 +178,10 @@ class AllCategoryViewModel(
 
 
     fun navigate(idx: Int, position: Int) {
-        val bundle = Bundle().apply {
-            putInt("Idx", idx)
-            putString("from","main")
-            putString("fromDetail", "all")
-        }
+
         refreshedPosterPosition = position
         refreshedPosterIdx = idx
-        _activityToStart.postValue(Pair(CalendarDetailActivity::class, bundle))
+
     }
 
     private fun showProgress() {

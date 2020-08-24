@@ -7,11 +7,8 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.viewpager.widget.PagerAdapter
 import com.icoo.ssgsag_android.R
-import com.icoo.ssgsag_android.data.model.feed.Feed
-import com.icoo.ssgsag_android.data.model.review.Banner
+import com.icoo.ssgsag_android.data.model.ads.AdItem
 import com.icoo.ssgsag_android.databinding.ItemBannerImageBinding
-import com.icoo.ssgsag_android.databinding.ItemFeedBestBinding
-import com.icoo.ssgsag_android.ui.main.feed.adapter.FeedBestCardViewPagerAdapter
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 
 class AutoScrollAdapter(
@@ -19,9 +16,9 @@ class AutoScrollAdapter(
 ) : PagerAdapter(){
 
     private var mOnItemClickListener: AutoScrollAdapter.OnItemClickListener? = null
-    private val itemList = ArrayList<Banner>()
+    private val itemList = ArrayList<AdItem>()
 
-    fun replaceAll(items: ArrayList<Banner>){
+    fun replaceAll(items: ArrayList<AdItem>){
         itemList.clear()
         itemList.addAll(items)
     }

@@ -3,11 +3,21 @@ package com.icoo.ssgsag_android.data.model.poster
 import android.util.Log
 import com.google.gson.JsonObject
 import com.icoo.ssgsag_android.data.local.pref.PreferenceManager
+import com.icoo.ssgsag_android.data.model.poster.allPoster.AllPosterAd
+import com.icoo.ssgsag_android.data.model.poster.allPoster.AllPosterAdResponse
 import com.icoo.ssgsag_android.data.model.poster.posterDetail.PosterDetail
 import com.icoo.ssgsag_android.data.remote.api.NetworkService
 import io.reactivex.Single
 
 class PosterRepositoryImpl(val api: NetworkService, val pref: PreferenceManager) : PosterRepository {
+
+    override fun getAllPosterAd(): Single<AllPosterAd> = api
+        .getAllPosterAds(pref.findPreference("TOKEN",""), "main_all-00")
+        .doOnError {throwable ->
+            Log.e("token", pref.findPreference("TOKEN",""))
+            Log.e("getAllPosterAds API : ", throwable.message)
+        }
+        .map { it.data }
 
     override fun getAllPostersCategory(category: Int, sortType: Int, curPage: Int): Single<ArrayList<PosterDetail>> = api
         .allPosterCategoryResponse(pref.findPreference("TOKEN",""), category, sortType, curPage)
@@ -25,12 +35,6 @@ class PosterRepositoryImpl(val api: NetworkService, val pref: PreferenceManager)
             Log.e("all posters 분야 status", it.status.toString())
             it.data}
 
-    override fun getWhatPosters(category: Int): Single<ArrayList<PosterDetail>> = api
-        .allPosterResponse(pref.findPreference("TOKEN", ""), category)
-        .doOnError { throwable ->
-            Log.e("getWhatPosters API : ", throwable.message)
-        }
-        .map { it.data }
 
     override fun getAllPosters(): Single<Poster> = api
         .posterResponse(pref.findPreference("TOKEN", ""))

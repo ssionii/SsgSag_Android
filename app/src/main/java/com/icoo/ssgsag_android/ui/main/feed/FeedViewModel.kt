@@ -188,7 +188,8 @@ class FeedViewModel(
 
     fun navigate(url: String, idx:Int, position: Int) {
         val bundle = Bundle().apply {
-            putString("clubWebsite", url)
+            putString("url", url)
+            putString("from", "feed")
             putInt("idx", idx)
         }
 

@@ -93,8 +93,7 @@ class ClubInfoFragment : BaseFragment<FragmentClubInfoBinding, ReviewDetailViewM
                 //viewModel.navigate(viewDataBinding.fragReviewDetailInfoIvUrl.text.toString())
 
                 val intent = Intent(activity!!, FeedWebActivity::class.java)
-                intent.putExtra("clubWebsite", viewModel.reviewDetail.value?.clubWebsite)
-                intent.putExtra("from", "review")
+                intent.putExtra("url", viewModel.reviewDetail.value?.clubWebsite)
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
                 startActivity(intent)

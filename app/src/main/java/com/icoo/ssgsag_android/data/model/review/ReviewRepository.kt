@@ -1,6 +1,7 @@
 package com.icoo.ssgsag_android.data.model.review
 
 import com.google.gson.JsonObject
+import com.icoo.ssgsag_android.data.model.ads.AdItem
 import com.icoo.ssgsag_android.data.model.review.club.ClubPost
 import io.reactivex.Single
 
@@ -11,5 +12,5 @@ interface ReviewRepository {
     fun updateReview(body: JsonObject, clubPostIdx: Int) : Single<Int>
     fun deleteReview(clubPostIdx: Int) : Single<Int>
 
-    fun getAds() : Single<ArrayList<Banner>>
+    fun getAds() : Single<ArrayList<AdItem>>
 }

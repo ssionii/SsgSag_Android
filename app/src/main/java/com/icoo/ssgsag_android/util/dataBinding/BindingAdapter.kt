@@ -7,6 +7,7 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -116,14 +117,11 @@ fun setAllPosterCardGlideImg(view: ImageView, imgUrl: String?) {
 
     Glide.with(view.context)
         .load(imgUrl)
-       // .listener(createLoggerListener("allPosterCardGlideImg"))
+//        .listener(createLoggerListener("allPosterCardGlideImg"))
         .placeholder(R.drawable.img_default)
         .thumbnail(0.1f)
-        .error(R.drawable.img_default) //에러시 나올 이미지 적용
-        .override(390, 370)
-        .apply(requestOptions)
+        .apply(RequestOptions.bitmapTransform(CropTransformation(view.width, view.height, CropTransformation.CropType.TOP)))
         .into(view)
-
 }
 
 @BindingAdapter("imgResId")
@@ -377,6 +375,25 @@ fun CardView.setVisibilityByInt(num: Int){
         else -> this.visibility = GONE
     }
 }
+
+@BindingAdapter("rlVisibilityByInt")
+fun RelativeLayout.setVisibilityByInt(num: Int){
+    when(num){
+        0 -> this.visibility = GONE
+        1 -> this.visibility = VISIBLE
+
+    }
+}
+
+
+@BindingAdapter("rlVisibilityByIntR")
+fun RelativeLayout.setVisibilityByIntR(num: Int){
+    when(num){
+        0 -> this.visibility = VISIBLE
+        1 -> this.visibility = GONE
+    }
+}
+
 
 private fun createLoggerListener(name: String): RequestListener<Drawable> {
     return object : RequestListener<Drawable> {

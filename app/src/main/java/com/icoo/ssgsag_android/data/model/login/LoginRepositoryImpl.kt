@@ -23,9 +23,8 @@ class LoginRepositoryImpl (val api: NetworkService, val pref: PreferenceManager)
         .map { it }
 
     override fun autoLogin(): Single<Int> {
-
         return api
-            .postAutoLoginResponse("application/json", pref.findPreference("TOKEN", ""), SharedPreferenceController.getFireBaseInstanceId(context))
+            .postAutoLoginResponse("application/json", SharedPreferenceController.getAuthorization(context), SharedPreferenceController.getFireBaseInstanceId(context))
             .map { it.status }
     }
 

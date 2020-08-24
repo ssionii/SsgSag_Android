@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+                name="adPosterCollection"
+                type="com.icoo.ssgsag_android.data.model.poster.allPoster.AdPosterCollection" />
+    </data>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:background="@color/white">
+
+    <LinearLayout
+            android:id="@+id/item_all_poster_collection_ll_header"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="22dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/noto_sans_kr_bold"
+                android:text="@{adPosterCollection.categoryDetail}"
+                android:textColor="@color/black_2"
+                android:textSize="18sp"
+                tools:text="대외활동 제목" />
+
+        <LinearLayout
+                android:id="@+id/item_all_poster_collection_ll_more"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingRight="20dp">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/noto_sans_kr_regular"
+                    android:text="더보기"
+                    android:textColor="@color/ssgsag"
+                    android:textSize="13sp" />
+
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_arrow_next_active" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <com.icoo.ssgsag_android.util.view.AutoHeightViewPager
+            android:id="@+id/item_all_poster_collection_vp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/item_all_poster_collection_ll_header"
+            android:saveEnabled="false">
+
+    </com.icoo.ssgsag_android.util.view.AutoHeightViewPager>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

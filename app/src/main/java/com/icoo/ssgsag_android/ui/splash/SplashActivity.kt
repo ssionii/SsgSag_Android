@@ -42,7 +42,6 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, LoginViewModel>() {
     override val viewModel: LoginViewModel by viewModel()
 
     lateinit var mAdapter: DialogPlusAdapter
-    private val thisActivity = this as Context
     var storeVersion: String? = null
     var deviceVersion: String? = null
     private var mBackgroundThread: BackgroundThread? = null
@@ -129,13 +128,17 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, LoginViewModel>() {
            update()
 
         } else {*/
+
+        Log.e("shared type", SharedPreferenceController.getType(this) )
+        Log.e("shared auth", SharedPreferenceController.getAuthorization(this)  + "!!!!!!!")
+
             // 앱 처음 설치
-            if(SharedPreferenceController.getWalkthroughs(thisActivity)== "false"){
+            if(SharedPreferenceController.getWalkthroughs(this)== "false"){
                 startActivity<WalkthroughActivity>()
                 finish()
             } // 자동 로그인
-            else if (SharedPreferenceController.getAuthorization(thisActivity)!=""
-                &&SharedPreferenceController.getType(thisActivity) =="user") {
+            else if (SharedPreferenceController.getAuthorization(this)!=""
+                &&SharedPreferenceController.getType(this) =="user") {
                 // 카카오톡 포스터 공유를 통해 넘어온 경우, main을 거쳤다가 가기 위해서
                 if(!(intent.action == Intent.ACTION_VIEW
                     && intent.scheme.startsWith("kakao", false))) {
@@ -309,18 +312,6 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, LoginViewModel>() {
                 }
             })
     }
-
-    private fun logoutFirstTimeVersion231(){
-        if(!SharedPreferenceController.getIsLogout(thisActivity)){
-            SharedPreferenceController.setAuthorization(thisActivity, "")
-            SharedPreferenceController.deleteType(thisActivity)
-
-            SharedPreferenceController.setIsLogout(thisActivity, true)
-        }
-    }
-
-
-
     companion object {
         private val TAG = "SplashActivity"
     }

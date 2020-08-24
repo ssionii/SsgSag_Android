@@ -9,14 +9,17 @@ import com.icoo.ssgsag_android.data.model.feed.FeedTodayResponse
 import com.icoo.ssgsag_android.data.model.feed.FeedsResponse
 import com.icoo.ssgsag_android.data.model.interest.InterestResponse
 import com.icoo.ssgsag_android.data.model.login.LoginResponse
-import com.icoo.ssgsag_android.data.model.poster.AllPosterResponse
+import com.icoo.ssgsag_android.data.model.poster.allPoster.AllPosterResponse
 import com.icoo.ssgsag_android.data.model.schedule.ScheduleResponse
 import com.icoo.ssgsag_android.data.model.poster.PosterResponse
 import com.icoo.ssgsag_android.data.model.poster.TodaySsgSagResponse
 import com.icoo.ssgsag_android.data.model.poster.posterDetail.PosterDetailResponse
-import com.icoo.ssgsag_android.data.model.review.AdsDataResponse
+import com.icoo.ssgsag_android.data.model.ads.AdsDataResponse
+import com.icoo.ssgsag_android.data.model.poster.allPoster.AllPosterAd
+import com.icoo.ssgsag_android.data.model.poster.allPoster.AllPosterAdResponse
 import com.icoo.ssgsag_android.data.model.review.club.response.*
 import com.icoo.ssgsag_android.data.model.signUp.SignUpResponse
+import com.icoo.ssgsag_android.data.model.signUp.UniversityListResponse
 import com.icoo.ssgsag_android.data.model.subscribe.SubscribeResponse
 import com.icoo.ssgsag_android.data.model.user.userInfo.UserInfoResponse
 import io.reactivex.*
@@ -64,6 +67,10 @@ interface NetworkService {
     fun userInfoResponse(
         @Header("Authorization") token : String
     ): Single<UserInfoResponse>
+    // 대학교 리스트 가져오기
+    @GET("/v2/validUnivList")
+    fun getUnivList(
+    ): Single<UniversityListResponse>
     //회원 관심분야 및 관심직무 조회
     //회원 관심직무 재등록
     //회원 관심분야 재등록
@@ -132,12 +139,12 @@ interface NetworkService {
     fun posterResponse(
         @Header("Authorization") token: String
     ): Single<PosterResponse>
-    // 뭐하지 포스터 조회
-    @GET("/poster/what")
-    fun allPosterResponse(
+    // 전체 광고 포스터 조회
+    @GET("/ads/v2")
+    fun getAllPosterAds(
         @Header("Authorization") token: String,
-        @Query("category") category : Int
-    ):Single<AllPosterResponse>
+        @Query("viewName") viewName: String
+    ): Single<AllPosterAdResponse>
     //전체 포스터 카테고리 조회(전체 -> 카테고리)
     @GET("/poster/v2/all")
     fun allPosterCategoryResponse(
@@ -509,8 +516,9 @@ interface NetworkService {
 
 
     // 광고
-    @GET("/ads")
+    @GET("/ads/v2")
     fun getAds(
+        @Header("Authorization") token: String,
         @Query("viewName") viewName: String
     ): Single<AdsDataResponse>
 

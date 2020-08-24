@@ -47,7 +47,7 @@ class ReviewMainFragment : BaseFragment<FragmentReviewMainBinding, ReviewMainVie
 
         setButton()
         setRollingViewPager()
-        if(!SharedPreferenceController.getReviewCoachMark(activity!!))
+        if(!SharedPreferenceController.getReviewCoachMark(requireContext()))
             setCoachMark()
     }
 
@@ -78,8 +78,8 @@ class ReviewMainFragment : BaseFragment<FragmentReviewMainBinding, ReviewMainVie
         }
 
         viewDataBinding.fragReviewMainIvMyPage.setSafeOnClickListener {
-            view!!.context.startActivity<MyPageActivity>()
-            (view!!.context as Activity).overridePendingTransition(
+            startActivity<MyPageActivity>()
+            requireActivity().overridePendingTransition(
                 R.anim.anim_slide_in_left,
                 R.anim.anim_not_move
             )
@@ -89,7 +89,7 @@ class ReviewMainFragment : BaseFragment<FragmentReviewMainBinding, ReviewMainVie
     private fun setRollingViewPager(){
 
         // UI
-        val display = activity!!.windowManager.defaultDisplay
+        val display = requireActivity().windowManager.defaultDisplay
         val size = Point()
         display.getSize(size)
         val width =size.x
@@ -101,7 +101,7 @@ class ReviewMainFragment : BaseFragment<FragmentReviewMainBinding, ReviewMainVie
         }
 
         viewDataBinding.fragReviewMainAsvpBanner.apply{
-            val autoScrollAdapter = AutoScrollAdapter(activity!!)
+            val autoScrollAdapter = AutoScrollAdapter(requireActivity())
             autoScrollAdapter.setOnItemClickListener(onBannerItemClickListener)
             adapter = autoScrollAdapter
             setInterval(3000)
@@ -110,7 +110,7 @@ class ReviewMainFragment : BaseFragment<FragmentReviewMainBinding, ReviewMainVie
 
 
         //data
-        viewModel.adList.observe(this, Observer {
+        viewModel.adList.observe(viewLifecycleOwner, Observer {
             (viewDataBinding.fragReviewMainAsvpBanner.adapter as AutoScrollAdapter).apply{
                 replaceAll(it)
                 notifyDataSetChanged()
@@ -136,7 +136,7 @@ class ReviewMainFragment : BaseFragment<FragmentReviewMainBinding, ReviewMainVie
     private fun setCoachMark(){
 
         viewDataBinding.fragReviewMainClCoachmarkContainer.visibility = View.VISIBLE
-        SharedPreferenceController.setReviewCoachMark(activity!!, true)
+        SharedPreferenceController.setReviewCoachMark(requireActivity(), true)
 
         val d = resources.displayMetrics.density
 

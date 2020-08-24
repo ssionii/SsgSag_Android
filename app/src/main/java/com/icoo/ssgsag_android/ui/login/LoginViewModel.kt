@@ -9,6 +9,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
+import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.SsgSagApplication
 import com.icoo.ssgsag_android.base.BaseViewModel
 import com.icoo.ssgsag_android.data.local.pref.PreferenceManager
@@ -16,6 +17,7 @@ import com.icoo.ssgsag_android.data.local.pref.SharedPreferenceController
 import com.icoo.ssgsag_android.data.model.login.LoginRepository
 import com.icoo.ssgsag_android.data.model.user.DeviceInfo
 import com.icoo.ssgsag_android.ui.main.MainActivity
+import com.icoo.ssgsag_android.ui.main.block.MainBlockActivity
 import com.icoo.ssgsag_android.ui.signUp.SignupActivity
 import com.icoo.ssgsag_android.util.scheduler.SchedulerProvider
 import io.reactivex.Observable
@@ -57,25 +59,28 @@ class LoginViewModel (
 
         addDisposable(loginRepository.login(body)
             .subscribeOn(schedulerProvider.io())
-            .flatMap {
-                if (it.status == 200) {
-                    Observable.just(it.data.token)
-                } else if(it.status == 404) {
-                    _activityToStart.postValue(Pair(SignupActivity::class, null))
-                    Observable.empty()
-                } else {
-                    Log.e("status", it.status.toString())
-                    Log.e("message", it.message)
-                    Observable.error(IllegalStateException("Invalid Token"))
-                }
-            }
             .observeOn(schedulerProvider.mainThread())
             .doOnSubscribe { showProgress() }
+            .doOnError { Log.e("login at Login error", it.message) }
             .doOnTerminate { hideProgress() }
-            .subscribe({responseToken ->
-                SharedPreferenceController.setAuthorization(context, responseToken)
-                SharedPreferenceController.setType(context, "user")
-                _activityToStart.postValue(Pair(MainActivity::class, null))
+            .subscribe({
+                when(it.status){
+                    200 -> {
+                        _activityToStart.postValue(Pair(MainActivity::class, null))
+                        SharedPreferenceController.setType(context, "user")
+                        SharedPreferenceController.setAuthorization(context, it.data!!.token)
+                    }
+                    202 -> {
+                        _activityToStart.postValue(Pair(MainBlockActivity::class, null))
+                        SharedPreferenceController.setType(context, "user")
+                        SharedPreferenceController.setAuthorization(context, it.data!!.token)
+                    }
+                    404 -> _activityToStart.postValue(Pair(SignupActivity::class, null))
+                    400 -> {
+                        Toast.makeText(context, R.string.login_toast_content_authorization_failed,Toast.LENGTH_SHORT).show()
+                    }
+                }
+
             }) {
                 Toast.makeText(context, "서버 점검 중입니다.",Toast.LENGTH_SHORT).show()
             })
@@ -92,6 +97,7 @@ class LoginViewModel (
             }
             .subscribe({
                 it.run{
+                    Log.e("auto login status", it.toString())
                     if(this == 200){
                         if(param == null){
                             _activityToStart.postValue(Pair(MainActivity::class, null))
@@ -99,7 +105,9 @@ class LoginViewModel (
                             val bundle = Bundle().apply { putString("param", param) }
                             _activityToStart.postValue(Pair(MainActivity::class, bundle))
                         }
-                    } else if(this == 404 || this == 401 || this == 600){
+                    } else if(this == 202){
+                        _activityToStart.postValue(Pair(MainBlockActivity::class, null))
+                    }else if(this == 404 || this == 401 || this == 600){
                         SharedPreferenceController.setAuthorization(context, "")
                         _activityToStart.postValue(Pair(LoginActivity::class, null))
                     }
@@ -107,7 +115,6 @@ class LoginViewModel (
 
             }) {
                 Toast.makeText(context, "네트워크 상태를 확인해주세요.",Toast.LENGTH_SHORT).show()
-                Log.e("auto login error:", it.message)
             })
 
     }

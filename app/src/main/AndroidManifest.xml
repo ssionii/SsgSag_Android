@@ -17,7 +17,8 @@
             android:roundIcon="@drawable/launcher_roundxxxhdpi"
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
-            android:usesCleartextTraffic="true">
+            android:usesCleartextTraffic="true"
+            android:networkSecurityConfig="@xml/network_security_config">
 
         <!--activity-->
         <activity
@@ -74,6 +75,9 @@
                 android:launchMode="singleTop">
         </activity>
 
+        <activity android:name=".ui.signUp.searchUniv.SearchUnivActivity"/>
+        <activity android:name=".ui.signUp.searchUniv.RegisterUnivActivity"
+                android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".ui.main.myPage.career.CareerActivity"/>
         <activity android:name=".ui.main.myPage.career.careerEdit.CareerEditActivity"/>
         <activity android:name=".ui.main.allPosters.search.SearchActivity"/>
@@ -111,13 +115,10 @@
                 android:windowSoftInputMode="adjustResize"/>
 
         <activity android:name=".ui.main.calendar.calendarPage.list.CalendarListDeleteActivity"/>
+        <activity android:name=".ui.main.block.MainBlockActivity"/>
 
-        <activity android:name="me.iwf.photopicker.PhotoPickerActivity"
-                android:theme="@style/Theme.AppCompat.NoActionBar"
-                />
 
-        <activity android:name="me.iwf.photopicker.PhotoPagerActivity"
-                android:theme="@style/Theme.AppCompat.NoActionBar"/>
+
 
         <!--meta data-->
         <meta-data
@@ -133,15 +134,19 @@
                    android:value="@string/adbrix_app_key"/>
         <meta-data android:name="AdBrixRmSecretKey"
                    android:value="@string/adbrix_secret_key"/>
-        <meta-data
-                android:name="com.google.android.gms.ads.APPLICATION_ID"
-                android:value="ca-app-pub-6888357719311971~5202997355"/>
+<!--        <meta-data-->
+<!--                android:name="com.google.android.gms.ads.APPLICATION_ID"-->
+<!--                android:value="ca-app-pub-6888357719311971~5202997355"/>-->
         <meta-data
                 android:name="com.google.android.gms.ads.AD_MANAGER_APP"
                 android:value="true"/>
         <meta-data
                 android:name="firebase_crashlytics_collection_enabled"
                 android:value="${enableCrashReporting}" />
+
+        <meta-data
+                android:name="com.google.android.gms.ads.APPLICATION_ID"
+                android:value="@string/admob_app_id"/>
 
         <!--receiver-->
         <receiver

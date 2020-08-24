@@ -8,7 +8,6 @@ import io.reactivex.Single
 import retrofit2.Call
 
 interface LoginRepository {
-
     fun login(body: JsonObject): Observable<LoginResponse>
     fun autoLogin() : Single<Int>
     fun autoLoginFromSignup(token : String) : Single<Int>

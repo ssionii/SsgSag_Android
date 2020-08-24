@@ -98,6 +98,16 @@ fun setPosterDday(view: TextView, dday: String?) {
 }
 
 @BindingAdapter("posterDetailDday")
+fun setPosterDday(view: TextView, dday: Int?) {
+    dday?.let {
+        if (it != 0)
+            view.text = "D-${dday}"
+        else
+            view.text = "D-day"
+    }
+}
+
+@BindingAdapter("posterDetailDday")
 fun setPosterDday(view: CardView, dday: String?) {
     dday?.let {
         if (it.toInt() > 0)
