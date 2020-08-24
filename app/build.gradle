@@ -26,10 +26,8 @@ android {
         applicationId "com.icoo.ssgsag_android"
         minSdkVersion 23
         targetSdkVersion 28
-        versionCode 52 // application에 adjust environment 바꾸기!
-        versionName "3.3.2.0"
-        versionCode 54 // application에 adjust environment 바꾸기!
-        versionName "3.3.3.0"
+        versionCode 55 // application에 adjust environment 바꾸기!
+        versionName "3.4.1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
