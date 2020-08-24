@@ -30,6 +30,7 @@ import android.view.View.VISIBLE
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import com.github.mikephil.charting.data.*
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.icoo.ssgsag_android.ui.main.calendar.posterBookmark.PosterBookmarkBottomSheet
 import com.icoo.ssgsag_android.ui.main.photoEnlarge.PhotoExpandActivity
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
@@ -124,7 +125,6 @@ class CalendarDetailActivity : BaseActivity<ActivityCalendarDetailBinding, Calen
 
 
         navigator()
-
     }
 
     override fun onDialogDismissed(isDeleted:Boolean) {
@@ -221,9 +221,12 @@ class CalendarDetailActivity : BaseActivity<ActivityCalendarDetailBinding, Calen
             var isFavorite = 0
             if(viewDataBinding.actCalDetailCvBookmarked.visibility == VISIBLE) isFavorite = 1
 
+
+
             val posterBookmarkBottomSheet =  PosterBookmarkBottomSheet(posterIdx, viewModel.posterDetail.value!!.dday.toInt(),isFavorite, "detail"
             ) {
                 bookmarkToggle(isFavorite, it)
+
             }
             posterBookmarkBottomSheet.isCancelable = false
             posterBookmarkBottomSheet.show(supportFragmentManager, null)
@@ -268,10 +271,10 @@ class CalendarDetailActivity : BaseActivity<ActivityCalendarDetailBinding, Calen
     }
 
     private fun managePoster(isSave : Int){
+
         val result = Intent().apply{
-            putExtras(bundleOf(
-                "isSave" to isSave
-            ))
+            putExtra("isSave", isSave)
+            putExtra("posterIdx", posterIdx)
         }
 
         setResult(Activity.RESULT_OK, result)

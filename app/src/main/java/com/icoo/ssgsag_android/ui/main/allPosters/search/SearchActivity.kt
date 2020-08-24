@@ -3,11 +3,13 @@ package com.icoo.ssgsag_android.ui.main.allPosters.search
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
@@ -66,28 +68,9 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(),
     private fun setButton(){
         viewDataBinding.actSearchIvSearch.setSafeOnClickListener {
             hideKeyboard(viewDataBinding.actSearchEtSearch)
-            curPage = 0
-            viewDataBinding.actSearchRv.apply{
-                if(from == "main") {
-                    (adapter as BaseRecyclerViewAdapter<PosterDetail, ItemAllPostersBinding>).clearAll()
-                    viewModel.getSearchedPosters(viewDataBinding.actSearchEtSearch.text.toString(), curPage)
-                }else if(from == "club"){
-                    reviewListRecyclerViewAdapter?.clearAll()
-                    viewModel.getSearchedClubs(viewDataBinding.actSearchEtSearch.text.toString(), clubType, curPage)
-                }
-            }
-
-
-
-        }
-
-        viewDataBinding.actSearchIvBack.setSafeOnClickListener {
-            finish()
-        }
-
-        viewDataBinding.actSearchEtSearch.setOnEditorActionListener { v, actionId, event ->
-            hideKeyboard(viewDataBinding.actSearchEtSearch)
-            if(actionId == EditorInfo.IME_ACTION_SEARCH){
+            if(viewDataBinding.actSearchEtSearch.text.toString().length < 2) {
+                viewDataBinding.actSearchTvKeyword.visibility = GONE
+            }else{
                 curPage = 0
                 viewDataBinding.actSearchRv.apply{
                     if(from == "main") {
@@ -98,12 +81,39 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(),
                         viewModel.getSearchedClubs(viewDataBinding.actSearchEtSearch.text.toString(), clubType, curPage)
                     }
                 }
+            }
+
+        }
+
+        viewDataBinding.actSearchIvBack.setSafeOnClickListener {
+            finish()
+        }
+
+        viewDataBinding.actSearchEtSearch.setOnEditorActionListener { v, actionId, event ->
+            hideKeyboard(viewDataBinding.actSearchEtSearch)
+            if(actionId == EditorInfo.IME_ACTION_SEARCH){
+                if(viewDataBinding.actSearchEtSearch.text.toString().length < 2){
+                    viewDataBinding.actSearchTvKeyword.visibility = GONE
+                }else{
+                    viewDataBinding.actSearchTvKeyword.visibility = VISIBLE
+                    curPage = 0
+                    viewDataBinding.actSearchRv.apply{
+                        if(from == "main") {
+                            (adapter as BaseRecyclerViewAdapter<PosterDetail, ItemAllPostersBinding>).clearAll()
+                            viewModel.getSearchedPosters(viewDataBinding.actSearchEtSearch.text.toString(), curPage)
+                        }else if(from == "club"){
+                            reviewListRecyclerViewAdapter?.clearAll()
+                            viewModel.getSearchedClubs(viewDataBinding.actSearchEtSearch.text.toString(), clubType, curPage)
+                        }
+                    }
+                }
 
                 true
             }else
                 false
         }
     }
+
 
     private fun setPosterRv() {
         //RecyclerView

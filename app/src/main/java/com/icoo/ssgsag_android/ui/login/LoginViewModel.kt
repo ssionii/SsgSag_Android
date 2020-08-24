@@ -68,10 +68,12 @@ class LoginViewModel (
                     200 -> {
                         _activityToStart.postValue(Pair(MainActivity::class, null))
                         SharedPreferenceController.setType(context, "user")
+                        SharedPreferenceController.setAuthorization(context, it.data!!.token)
                     }
                     202 -> {
                         _activityToStart.postValue(Pair(MainBlockActivity::class, null))
                         SharedPreferenceController.setType(context, "user")
+                        SharedPreferenceController.setAuthorization(context, it.data!!.token)
                     }
                     404 -> _activityToStart.postValue(Pair(SignupActivity::class, null))
                     400 -> {
@@ -81,7 +83,6 @@ class LoginViewModel (
 
             }) {
                 Toast.makeText(context, "서버 점검 중입니다.",Toast.LENGTH_SHORT).show()
-                Log.e("login error", it.message)
             })
     }
 
@@ -114,7 +115,6 @@ class LoginViewModel (
 
             }) {
                 Toast.makeText(context, "네트워크 상태를 확인해주세요.",Toast.LENGTH_SHORT).show()
-                Log.e("auto login error:", it.message)
             })
 
     }

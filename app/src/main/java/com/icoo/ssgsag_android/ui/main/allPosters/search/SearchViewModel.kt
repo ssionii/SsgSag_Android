@@ -44,7 +44,6 @@ class SearchViewModel(
     private val _activityToStart = MutableLiveData<Pair<KClass<*>, Bundle?>>()
     val activityToStart: LiveData<Pair<KClass<*>, Bundle?>> get() = _activityToStart
 
-
     fun getSearchedPosters(keyword:String, curPage:Int){
         addDisposable(posterRepository.getSearchPosters(keyword, curPage)
             .subscribeOn(schedulerProvider.io())

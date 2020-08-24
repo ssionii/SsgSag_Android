@@ -1,5 +1,6 @@
 package com.icoo.ssgsag_android.ui.main.allPosters.category
 
+import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -15,13 +16,17 @@ import com.icoo.ssgsag_android.util.view.WrapContentLinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import android.view.*
 import android.widget.TextView
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.cardview.widget.CardView
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.icoo.ssgsag_android.SsgSagApplication
 import com.icoo.ssgsag_android.base.BaseActivity
 import com.icoo.ssgsag_android.databinding.ActivityAllCategoryBinding
 import com.icoo.ssgsag_android.ui.main.allPosters.AllPostersRecyclerViewAdapter
+import com.icoo.ssgsag_android.ui.main.calendar.calendarDetail.CalendarDetailActivity
 import com.icoo.ssgsag_android.util.DialogPlusAdapter
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import com.orhanobut.dialogplus.DialogPlus
@@ -43,6 +48,23 @@ class AllCategoryActivity : BaseActivity<ActivityAllCategoryBinding, AllCategory
 
     lateinit var mAdapter: DialogPlusAdapter
 
+    val requestFromDetail = prepareCall(ActivityResultContracts.StartActivityForResult()) { activityResult : ActivityResult ->
+        val resultCode : Int = activityResult.resultCode
+        val data : Intent? = activityResult.data
+
+        if(resultCode == Activity.RESULT_OK) {
+            if(data != null) {
+                val result = Intent().apply {
+                    putExtra("posterIdx", data!!.getIntExtra("posterIdx", 0))
+                    putExtra("isSave", data!!.getIntExtra("isSave", 0))
+                }
+                setResult(Activity.RESULT_OK, result)
+            }else {
+                setResult(Activity.RESULT_OK)
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -60,7 +82,6 @@ class AllCategoryActivity : BaseActivity<ActivityAllCategoryBinding, AllCategory
         setRv()
         refreshRv()
         setButton()
-        navigator()
     }
 
     override fun onResume() {
@@ -173,11 +194,19 @@ class AllCategoryActivity : BaseActivity<ActivityAllCategoryBinding, AllCategory
 
     override fun onItemClicked(item: Any?, position: Int?) {
         var posterIdx = (item as PosterDetail).posterIdx
+
+        val intent = Intent(this, CalendarDetailActivity::class.java)
+        intent.apply{
+            putExtra("Idx", posterIdx)
+            putExtra("from","main")
+            putExtra("fromDetail", "all")
+        }
+        requestFromDetail.launch(intent)
         viewModel.navigate(posterIdx, position!!)
     }
 
     private fun setButton(){
-        viewDataBinding.actAllCategoryIvBack.setSafeOnClickListener {
+        viewDataBinding.actAllCategoryIvBack.setOnClickListener {
             finish()
         }
 
@@ -216,16 +245,6 @@ class AllCategoryActivity : BaseActivity<ActivityAllCategoryBinding, AllCategory
         }
     }
 
-
-    private fun navigator() {
-        viewModel.activityToStart.observe(this, Observer { value ->
-            val intent = Intent(this, value.first.java)
-            value.second?.let {
-                intent.putExtras(it)
-            }
-            startActivity(intent)
-        })
-    }
 
     private fun showDialog(){
         var isChanged = false
