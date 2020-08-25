@@ -1,11 +1,13 @@
 package com.icoo.ssgsag_android.ui.main.community.board.postDetail
 
+import android.content.Intent
 import android.os.Bundle
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseActivity
 import com.icoo.ssgsag_android.data.model.community.board.BoardPostDetailBottomSheet
 import com.icoo.ssgsag_android.databinding.ActivityBoardPostDetailBinding
 import com.icoo.ssgsag_android.ui.main.community.board.CommunityBoardType
+import com.icoo.ssgsag_android.ui.main.photoEnlarge.PhotoExpandActivity
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -35,6 +37,12 @@ class BoardPostDetailActivity : BaseActivity<ActivityBoardPostDetailBinding, Boa
 
             bottomSheet.isCancelable = true
             bottomSheet.show(supportFragmentManager, null)
+        }
+
+        viewDataBinding.actBoardPostDetailIvPhoto.setSafeOnClickListener {
+            val intent = Intent(this, PhotoExpandActivity::class.java)
+            intent.putExtra("photoUrl", viewModel.postDetail.value?.photoUrl)
+            startActivity(intent)
         }
     }
 }
