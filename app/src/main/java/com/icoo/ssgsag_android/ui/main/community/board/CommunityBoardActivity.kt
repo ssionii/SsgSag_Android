@@ -1,12 +1,15 @@
 package com.icoo.ssgsag_android.ui.main.community.board
 
 import android.content.Intent
+import android.graphics.Point
 import android.os.Bundle
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.BR
@@ -17,6 +20,8 @@ import com.icoo.ssgsag_android.data.model.community.board.CounselBoardCategory
 import com.icoo.ssgsag_android.databinding.ActivityCommunityBoardBinding
 import com.icoo.ssgsag_android.databinding.ItemBoardBinding
 import com.icoo.ssgsag_android.ui.main.community.board.postDetail.BoardPostDetailActivity
+import com.icoo.ssgsag_android.ui.main.feed.FeedWebActivity
+import com.icoo.ssgsag_android.ui.main.review.main.AutoScrollAdapter
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -41,6 +46,8 @@ class CommunityBoardActivity : BaseActivity<ActivityCommunityBoardBinding, Commu
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        viewDataBinding.vm = viewModel
+
         communityBoardType = intent.getIntExtra("type", CommunityBoardType.TALK)
         when(communityBoardType){
             CommunityBoardType.COUNSEL -> {
@@ -55,11 +62,25 @@ class CommunityBoardActivity : BaseActivity<ActivityCommunityBoardBinding, Commu
             }
         }
 
+        setTopBanner()
         setRv()
         setButton()
 
     }
 
+    private fun setTopBanner(){
+
+        val d = resources.displayMetrics.density
+
+        // 화면 전체 사이즈
+        val display = windowManager.defaultDisplay
+        val size = Point()
+        display.getSize(size)
+        val width = (size.x / d).toInt()
+
+        viewDataBinding.actCommunityBoardIvTopBanner.layoutParams.height = (width * 0.32 * d).toInt()
+
+    }
     private fun setTab(){
 
         viewDataBinding.actCommunityBoardTl.apply{

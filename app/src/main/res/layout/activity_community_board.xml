@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+    <data>
+        <variable
+                name="vm"
+                type="com.icoo.ssgsag_android.ui.main.community.board.CommunityBoardViewModel" />
+    </data>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -89,13 +94,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
-                <pl.pzienowicz.autoscrollviewpager.AutoScrollViewPager
-                        android:id="@+id/act_community_board_asvp"
+                <ImageView
+                        android:id="@+id/act_community_board_iv_top_banner"
                         android:layout_width="match_parent"
-                        android:layout_height="115dp"
+                        android:layout_height="170dp"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        android:background="@color/grey_4"/>
+                        android:background="@color/grey_4"
+                        glideCenterCrop="@{vm.topBannerImage}"/>
+                <com.icoo.ssgsag_android.util.view.CircleAnimIndicator
+                        android:id="@+id/frag_all_poster_cai"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"/>
                 <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/act_community_board_ll_empty"
                         android:visibility="gone"
@@ -140,7 +153,7 @@
                         android:background="@color/grey_4"
                         android:overScrollMode="never"
                         android:layout_weight="1"
-                        app:layout_constraintTop_toBottomOf="@id/act_community_board_asvp"
+                        app:layout_constraintTop_toBottomOf="@id/act_community_board_iv_top_banner"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent" />
             </LinearLayout>

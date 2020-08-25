@@ -15,6 +15,9 @@ class CommunityBoardViewModel(
     private var _postList = MutableLiveData<ArrayList<BoardPostDetail>>()
     val postList : LiveData<ArrayList<BoardPostDetail>> = _postList
 
+    private var _topBannerImage = MutableLiveData<String>()
+    val topBannerImage : LiveData<String> = _topBannerImage
+
     val dummuyAllCounselList = arrayListOf(
         BoardPostDetail(0, "공모전/대외활동", 1, "공모전 대외활동 관련 게시글 1", "설명이다 와라랄랄라 과연 어떻게 끊길까?", 30, 10,"1시간 전", "https://img.theqoo.net/img/RVyXA.jpg", 1, null, "https://i.pinimg.com/564x/af/7a/aa/af7aaae1985221ec5155da6c42ed1985.jpg", null),
         BoardPostDetail(0, "취업/진로", 2, "취업 진로 관련 게시글 1", "설명이다 와라랄랄라 과연 어떻게 끊길까? 밍밍밍밍밍밍밍밍밍밍", 30, 10,"1시간 전", "http://cfile235.uf.daum.net/image/2536EB43596E4C5A0C28E1" ,1, null, null, null),
@@ -33,6 +36,10 @@ class CommunityBoardViewModel(
         BoardPostDetail(0, "자유게시판", 1, "자유게시판 관련 게시글 2", "설명이다 와라랄랄라 과연 어떻게 끊길까?", 30, 10,"1시간 전", null , 0, null, null, null),
         BoardPostDetail(0, "자유게시판", 1, "자유게시판 관련 게시글 3", "설명이다 와라랄랄라 과연 어떻게 끊길까?", 30, 10,"1시간 전", "https://img.theqoo.net/img/RVyXA.jpg" , 0, null, "https://i.pinimg.com/564x/af/7a/aa/af7aaae1985221ec5155da6c42ed1985.jpg", null))
 
+
+    init{
+        _topBannerImage.postValue("http://cfile235.uf.daum.net/image/2536EB43596E4C5A0C28E1")
+    }
 
     fun getCounselList(type : Int){
         when(type){
