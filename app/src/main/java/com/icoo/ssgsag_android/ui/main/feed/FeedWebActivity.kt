@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View.*
 import android.webkit.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseActivity
 import com.icoo.ssgsag_android.base.BaseFragment
@@ -70,7 +71,13 @@ class FeedWebActivity : BaseActivity<ActivityFeedWebDetailBinding, FeedViewModel
 
         if(intent.getStringExtra("from") == "feed"){
             viewModel.getFeed(intent.getIntExtra("idx", 0))
+
+            viewModel.feed.observe(this, Observer {
+                viewDataBinding.actFeedWebDetailTvName.text = it.feedName
+            })
+
         }else{
+
             viewDataBinding.actFeedWebDetailIvBookmark.visibility = INVISIBLE
             viewDataBinding.actFeedWebDetailTvName.text = intent.getStringExtra("title")
         }
@@ -78,6 +85,8 @@ class FeedWebActivity : BaseActivity<ActivityFeedWebDetailBinding, FeedViewModel
         viewDataBinding.actFeedWebDetailWv.loadUrl(intent.getStringExtra("url"))
 
         setButton()
+
+
 
     }
 

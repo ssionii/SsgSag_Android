@@ -8,14 +8,18 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.viewpager.widget.PagerAdapter
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.data.model.ads.AdItem
 import com.icoo.ssgsag_android.databinding.ItemAllPostersCardBinding
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
+import jp.wasabeef.glide.transformations.CropTransformation
 
 class AllPosterCardViewPagerAdapter(
     private val context : Context,
-    private val posterList: ArrayList<AdItem>?
+    private val posterList: ArrayList<AdItem>?,
+    private val isIntern : Boolean
 ) : PagerAdapter() {
 
     private var mOnItemClickListener: OnItemClickListener? = null
@@ -34,6 +38,25 @@ class AllPosterCardViewPagerAdapter(
 
             viewDataBinding.poster = posterItem
             viewDataBinding.itemAllPostersCardCvPoster.layoutParams.height = (posterWidth * 1.42).toInt()
+
+            if(isIntern){
+                val view = viewDataBinding.itemAllPostersCardIvPoster
+                Glide.with(context)
+                    .load(posterItem.photoUrl)
+                    .placeholder(R.drawable.img_default)
+                    .thumbnail(0.1f)
+                    .fitCenter()
+                    .into(view)
+            }else{
+                val view = viewDataBinding.itemAllPostersCardIvPoster
+                view.adjustViewBounds = true
+                Glide.with(context)
+                    .load(posterItem.photoUrl)
+                    .placeholder(R.drawable.img_default)
+                    .apply(RequestOptions.bitmapTransform(CropTransformation(view.width, view.height, CropTransformation.CropType.TOP)))
+                    .into(view)
+            }
+
 
             viewDataBinding.itemAllPostersCardLlContainer.setSafeOnClickListener {
                 mOnItemClickListener?.onPosterClick(posterItem.contentIdx, rowIdx, position)

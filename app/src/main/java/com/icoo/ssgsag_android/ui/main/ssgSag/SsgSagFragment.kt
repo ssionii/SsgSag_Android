@@ -124,9 +124,13 @@ class SsgSagFragment : BaseFragment<FragmentSsgSagBinding, SsgSagViewModel>() {
         override fun onCardDragging(direction: Direction?, ratio: Float) {}
         override fun onCardSwiped(direction: Direction?) {
             if (direction == Direction.Right) {
-                viewModel.ssgSag(viewModel.allPosters.value!![position].posterIdx, 1)
+                if(position < viewModel.allPosters.value!!.size) {
+                    viewModel.ssgSag(viewModel.allPosters.value!![position].posterIdx, 1)
+                }
             } else if (direction == Direction.Left) {
-                viewModel.ssgSag(viewModel.allPosters.value!![position].posterIdx, 0)
+                if(position < viewModel.allPosters.value!!.size) {
+                    viewModel.ssgSag(viewModel.allPosters.value!![position].posterIdx, 0)
+                }
             }
             viewModel.posterCountDown()
             (activity as MainActivity).isSsgSaged = true

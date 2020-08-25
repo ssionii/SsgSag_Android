@@ -100,12 +100,12 @@ class CalendarListPageFragment : BaseFragment<FragmentCalendarListPageBinding, C
 
         makeScheduleList(year, month)
 
-        viewModel.schedule.observe(this, Observer {
+        viewModel.schedule.observe(viewLifecycleOwner, Observer {
             makeScheduleList(year, month)
 
         })
 
-        viewModel.favoriteSchedule.observe(this, Observer {
+        viewModel.favoriteSchedule.observe(viewLifecycleOwner, Observer {
             makeScheduleList(year, month)
 
         })

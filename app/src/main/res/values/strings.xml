@@ -95,7 +95,7 @@
     <string name="main_block_send_mail"><u>📮 슥삭팀에게 메일 보내기</u></string>
 
     <string name="main_block_toast_success">학교/학과 정보를 확인되었습니다.</string>
-    <string name="main_block_toast_pending">학교/학과 정보를 확인 중 입니다.\n조금만 기다려 주세요.</string>
+    <string name="main_block_toast_pending">학교/학과 정보를 확인 중 입니다.:sob:\n조금만 기다려 주세요.</string>
     
     <!-- Login text -->
     <string name="login_toast_content_authorization_failed">회원정보 확인에 실패했습니다.\n다시 로그인해주세요!</string>

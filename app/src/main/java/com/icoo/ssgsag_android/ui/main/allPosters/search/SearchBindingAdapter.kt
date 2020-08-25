@@ -1,5 +1,6 @@
 package com.icoo.ssgsag_android.ui.main.allPosters.search
 
+import android.util.Log
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -18,7 +19,8 @@ fun setKeyword(view: TextView, keyword: String?, resultSize: Int?) {
             view.text = "'" + keyword + "'에 대한 검색 결과가 없습니다."
         }
     }
-    if(keyword == null)
+
+    if(keyword == null || keyword.length < 2)
         view.visibility = GONE
 }
 

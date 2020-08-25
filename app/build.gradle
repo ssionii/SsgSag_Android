@@ -26,9 +26,7 @@ android {
         applicationId "com.icoo.ssgsag_android"
         minSdkVersion 23
         targetSdkVersion 28
-        versionCode 52 // application에 adjust environment 바꾸기!
-        versionName "3.3.2.0"
-        versionCode 54 // application에 adjust environment 바꾸기!
+        versionCode 55 // application에 adjust environment 바꾸기!
         versionName "3.3.3.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -159,6 +157,11 @@ dependencies {
 
     // google ads
     implementation 'com.google.android.gms:play-services-ads:19.3.0'
+
+    // kakao adfit
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "com.google.android.gms:play-services-ads-identifier:17.0.0"
+    implementation "com.kakao.adfit:ads-base:3.0.6"
 
     //test
     testImplementation 'org.robolectric:robolectric:4.2.1'

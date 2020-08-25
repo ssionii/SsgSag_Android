@@ -192,10 +192,9 @@ class SsgSagFilterActivity : BaseActivity<ActivitySsgsagFilterBinding, SsgSagFil
     }
 
     override fun onBackPressed() {
-        if(SharedPreferenceController.getIsFirstOpen( this))
-            backPressHandler.onBackPressed()
-
-
+        if(!SharedPreferenceController.getIsFirstOpen( this)){
+           finish()
+        }
     }
 
     companion object {

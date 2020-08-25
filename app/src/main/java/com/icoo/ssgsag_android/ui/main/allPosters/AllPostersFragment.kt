@@ -3,11 +3,15 @@ package com.icoo.ssgsag_android.ui.main.allPosters
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Point
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.SimpleItemAnimator
+import androidx.viewpager.widget.ViewPager
 import com.icoo.ssgsag_android.BR
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseFragment
@@ -21,6 +25,7 @@ import com.icoo.ssgsag_android.ui.main.allPosters.collection.AllPosterEventCardV
 import com.icoo.ssgsag_android.ui.main.calendar.calendarDetail.CalendarDetailActivity
 import com.icoo.ssgsag_android.ui.main.feed.FeedWebActivity
 import com.icoo.ssgsag_android.ui.main.review.main.AutoScrollAdapter
+import com.icoo.ssgsag_android.util.view.CircleAnimIndicator
 import com.icoo.ssgsag_android.util.view.NonScrollGridLayoutManager
 import com.icoo.ssgsag_android.util.view.WrapContentLinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -33,8 +38,8 @@ class AllPostersFragment : BaseFragment<FragmentAllPosterBinding, AllPostersView
         get() = R.layout.fragment_all_poster
     override val viewModel: AllPostersViewModel by viewModel()
 
-    lateinit private var allPosterCollectionRvAdapter : AllPosterCollectionRecyclerViewAdapter
-    lateinit private var allPosterEventCardViewPagerAdapter : AllPosterEventCardViewPagerAdapter
+    private lateinit var allPosterCollectionRvAdapter : AllPosterCollectionRecyclerViewAdapter
+    private lateinit var allPosterEventCardViewPagerAdapter : AllPosterEventCardViewPagerAdapter
 
     var requestRowIdx = 0
     var requestPosition = 0
@@ -47,11 +52,33 @@ class AllPostersFragment : BaseFragment<FragmentAllPosterBinding, AllPostersView
             allPosterCollectionRvAdapter.itemList[requestRowIdx].adViewItemList[requestPosition].isSave =
                 data!!.getIntExtra("isSave", 0)
 
+            allPosterCollectionRvAdapter.apply {
+                var tempIdx = 0
+                if(requestRowIdx >= 2) tempIdx = requestRowIdx + 1
+                else tempIdx = requestRowIdx
+
+                notifyItemChanged(tempIdx)
+            }
+        }
+    }
+
+    val requestFromMore = prepareCall(ActivityResultContracts.StartActivityForResult()) {activityResult : ActivityResult ->
+        val resultCode : Int = activityResult.resultCode
+        val data : Intent? = activityResult.data
+
+        if(resultCode == Activity.RESULT_OK) {
+
+            val posterIdx = data!!.getIntExtra("posterIdx", 0)
+
+            for(item in allPosterCollectionRvAdapter.itemList[requestRowIdx].adViewItemList){
+                if(item.contentIdx == posterIdx){
+                    item.isSave = data.getIntExtra("isSave", 0)
+                }
+            }
             allPosterCollectionRvAdapter.apply{
                 notifyItemChanged(requestRowIdx)
             }
         }
-
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -76,12 +103,16 @@ class AllPostersFragment : BaseFragment<FragmentAllPosterBinding, AllPostersView
     private fun setTopBanner(d : Float, width: Int){
 
         val vpAdapter = AutoScrollAdapter(requireActivity())
+        vpAdapter.setOnItemClickListener(onBannerItemClickListener)
 
         viewDataBinding.fragAllPosterAsvpBanner.run{
             adapter = vpAdapter
             setInterval(3000)
+            setCycle(true)
 
             layoutParams.height = ( width * 0.5 * d ).toInt()
+
+            addOnPageChangeListener(onBannerPageChangeListener)
         }
 
         viewModel.mainAdList.observe(viewLifecycleOwner, Observer {
@@ -89,9 +120,38 @@ class AllPostersFragment : BaseFragment<FragmentAllPosterBinding, AllPostersView
                 replaceAll(it[0].adViewItemList)
                 notifyDataSetChanged()
             }
+            viewDataBinding.fragAllPosterCai.createDotPanel(it[0].adViewItemList.size, R.drawable.dot_2, R.drawable.dot_1)
 
             viewDataBinding.fragAllPosterAsvpBanner.startAutoScroll()
         })
+    }
+
+    val onBannerItemClickListener
+            = object : AutoScrollAdapter.OnItemClickListener{
+        override fun onItemClick(url: String?) {
+
+            val intent = Intent(context, FeedWebActivity::class.java)
+            intent.putExtra("url",url)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+
+            val bundle = Bundle().apply {
+                putString("url", url)
+            }
+
+            ContextCompat.startActivity(activity!!, intent, bundle)
+        }
+    }
+
+    val onBannerPageChangeListener
+            = object : ViewPager.OnPageChangeListener{
+        override fun onPageScrollStateChanged(state: Int) { }
+
+        override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
+
+        override fun onPageSelected(position: Int) {
+            viewDataBinding.fragAllPosterCai.selectDot(position)
+        }
     }
 
     private fun setTopButtonRv(){
@@ -147,7 +207,7 @@ class AllPostersFragment : BaseFragment<FragmentAllPosterBinding, AllPostersView
         val middleDpValue = 10
         val rightDpValue = width - leftDpValue - contentDpValue
 
-        allPosterCollectionRvAdapter = AllPosterCollectionRecyclerViewAdapter()
+        allPosterCollectionRvAdapter = AllPosterCollectionRecyclerViewAdapter(this.lifecycle)
         allPosterCollectionRvAdapter.apply {
             setOnAllPosterCollectionClickListener(onPosterCollectionClickListener)
             setMargin(d, leftDpValue, middleDpValue, rightDpValue, contentDpValue)
@@ -186,11 +246,14 @@ class AllPostersFragment : BaseFragment<FragmentAllPosterBinding, AllPostersView
             requestFromDetail.launch(intent)
         }
 
-        override fun onMoreClick(categoryIdx: Int) {
+        override fun onMoreClick(categoryIdx: Int, rowIdx : Int) {
+
+            requestRowIdx = rowIdx
+
             val intent = Intent(activity!!, AllCategoryActivity::class.java)
             intent.putExtra("category", categoryIdx)
 
-            startActivity(intent)
+            requestFromMore.launch(intent)
         }
 
         override fun onManagePosterItem(posterIdx: Int, isSave : Int) {
@@ -210,7 +273,8 @@ class AllPostersFragment : BaseFragment<FragmentAllPosterBinding, AllPostersView
                 allPosterEventCardViewPagerAdapter =
                     AllPosterEventCardViewPagerAdapter(
                         requireActivity(),
-                        it[0].adViewItemList
+                        it[0].adViewItemList,
+                        d
                     )
                 allPosterEventCardViewPagerAdapter.apply{
                     eventWidth = contentWidth

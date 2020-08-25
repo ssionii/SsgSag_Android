@@ -34,17 +34,27 @@
                     android:layout_centerVertical="true"
                     android:fontFamily="@font/noto_sans_kr_regular"
                     android:background="@android:color/transparent"
-                    android:layout_marginRight="15dp"
+                    android:layout_marginRight="9dp"
                     android:hint="포스터 이름으로 검색"
                     android:textColorHint="#c8c8c8"
                     android:imeOptions="actionSearch"
                     android:maxLength="20"/>
-            <ImageView
+            <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/act_search_iv_search"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/search"
-                    android:layout_alignParentRight="true"/>
+                    android:layout_width="@dimen/toolbar_height"
+                    android:layout_height="@dimen/toolbar_height"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="12dp">
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_search_active"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         </RelativeLayout>
 
