@@ -3,6 +3,7 @@ package com.icoo.ssgsag_android.ui.main.community.board
 import android.content.Intent
 import android.graphics.Point
 import android.os.Bundle
+import android.util.Log
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.core.content.ContextCompat
@@ -119,6 +120,7 @@ class CommunityBoardActivity : BaseActivity<ActivityCommunityBoardBinding, Commu
         val recyclerView = viewDataBinding.actCommunityBoardRv
 
         viewModel.postList.observe(this, Observer {
+            Log.e("it", it.toString())
             (viewDataBinding.actCommunityBoardRv.adapter as BaseRecyclerViewAdapter<BoardPostDetail, *>).run{
                 replaceAll(it)
                 notifyDataSetChanged()
