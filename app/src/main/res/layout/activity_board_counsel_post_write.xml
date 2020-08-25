@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+                name="activity"
+                type="com.icoo.ssgsag_android.ui.main.community.board.postDetail.write.BoardCounselPostWriteActivity" />
+    </data>
 <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -16,11 +21,14 @@
             app:layout_constraintTop_toBottomOf="@id/act_board_counsel_post_write_toolbar"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/act_board_counsel_post_write_cl_upload"
+            android:fillViewport="true"
             android:overScrollMode="never">
+
     <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
+
             android:layout_marginHorizontal="24dp">
         <LinearLayout
                 android:layout_width="match_parent"
@@ -31,7 +39,7 @@
             <ImageView
                     android:layout_width="22dp"
                     android:layout_height="22dp"
-                    android:background="@color/grey_3"/>
+                    android:src="@drawable/ic_num_1"/>
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -55,12 +63,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="24dp"
                 android:gravity="center_vertical">
             <ImageView
                     android:layout_width="22dp"
                     android:layout_height="22dp"
-                    android:background="@color/grey_3"/>
+                    android:src="@drawable/ic_num_2"/>
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -85,7 +93,7 @@
                     android:background="@null"
                     android:textColor="@color/grey_2"
                     android:letterSpacing="-0.01"
-                    android:text="상담 제목(최대 20자)"
+                    android:hint="상담 제목(최대 20자)"
                     android:fontFamily="@font/noto_sans_kr_regular"/>
 
             <View
@@ -100,7 +108,8 @@
         <EditText
                 android:id="@+id/act_board_counsel_post_write_et_description"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="100dp"
+                android:layout_weight="1"
                 android:inputType="textMultiLine|textNoSuggestions"
                 android:layout_marginTop="12dp"
                 android:background="@drawable/border_eeeeee_4"
@@ -109,7 +118,7 @@
                 android:paddingVertical="8dp"
                 android:paddingHorizontal="10dp"
                 android:fontFamily="@font/noto_sans_kr_regular"
-                android:textSize="12sp"
+                android:textSize="12dp"
                 android:textColorHint="@color/grey_2"
                 android:textColor="@color/black_1"
                 android:scrollbars="vertical"
