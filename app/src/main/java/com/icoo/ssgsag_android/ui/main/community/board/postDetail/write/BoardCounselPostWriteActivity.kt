@@ -9,8 +9,12 @@ import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -31,6 +35,7 @@ import com.icoo.ssgsag_android.util.view.NonScrollGridLayoutManager
 import com.icoo.ssgsag_android.util.view.SpacesItemDecoration
 import kotlinx.android.synthetic.main.activity_account_mgt.*
 import org.jetbrains.anko.image
+import org.jetbrains.anko.support.v4.toast
 import org.jetbrains.anko.toast
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.File
@@ -65,8 +70,10 @@ class  BoardCounselPostWriteActivity: BaseActivity<ActivityBoardCounselPostWrite
             }
         }
 
-    lateinit var photoURI : String
-
+    var selectedCategory : Category? = null
+    var photoURI : String = ""
+    var title : String = ""
+    var description : String = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -74,8 +81,10 @@ class  BoardCounselPostWriteActivity: BaseActivity<ActivityBoardCounselPostWrite
 
         viewDataBinding.actBoardCounselPostWriteToolbar.toolbarCancelTvTitle.text = "고민 상담톡 작성"
 
+        setEditTextChange()
         setCategoryRv()
         setButton()
+
     }
 
     fun setCategoryRv(){
@@ -113,6 +122,9 @@ class  BoardCounselPostWriteActivity: BaseActivity<ActivityBoardCounselPostWrite
                 replaceAll(categoryList)
                 notifyDataSetChanged()
             }
+
+            selectedCategory = item as Category
+            onDataCheck()
         }
     }
 
@@ -126,6 +138,50 @@ class  BoardCounselPostWriteActivity: BaseActivity<ActivityBoardCounselPostWrite
             viewDataBinding.actBoardCounselPostWriteClPhoto.visibility = GONE
 
             photoURI = ""
+        }
+
+        viewDataBinding.actBoardCounselPostWriteClUpload.setSafeOnClickListener {
+            Log.e("category", selectedCategory!!.categoryName)
+            Log.e("title", title)
+            Log.e("description", description)
+            if(photoURI != ""){
+                Log.e("photoURI", photoURI)
+            }
+        }
+    }
+
+    private fun EditText.onChange(cb: (String) -> Unit) {
+        this.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                cb(s.toString())
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                when(this@onChange){
+                    viewDataBinding.actBoardCounselPostWriteEtTitle -> title = s.toString()
+                    viewDataBinding.actBoardCounselPostWriteEtDescription -> description = s.toString()
+                }
+            }
+        })
+    }
+
+    private fun setEditTextChange(){
+        viewDataBinding.actBoardCounselPostWriteEtTitle.onChange { onDataCheck() }
+        viewDataBinding.actBoardCounselPostWriteEtDescription.onChange { onDataCheck() }
+    }
+
+    private fun onDataCheck(){
+        if(selectedCategory != null && title != "" && description != ""){
+            viewDataBinding.actBoardCounselPostWriteClUpload.run{
+                isClickable = true
+                setBackgroundColor(this.resources.getColor(R.color.ssgsag))
+            }
+        }else{
+            viewDataBinding.actBoardCounselPostWriteClUpload.run{
+                isClickable = false
+                setBackgroundColor(this.resources.getColor(R.color.grey_2))
+            }
         }
     }
 
