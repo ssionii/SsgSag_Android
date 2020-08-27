@@ -36,7 +36,7 @@ class SearchUnivActivity : BaseActivity<ActivitySearchUnivBinding, SearchUnivVie
 
     lateinit var univContainerRecyclerViewAdapter : UnivContainerRecyclerViewAdapter
 
-    val univNameFromRegister = prepareCall(ActivityResultContracts.StartActivityForResult()) { activityResult : ActivityResult ->
+    val univNameFromRegister = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult : ActivityResult ->
         val resultCode : Int = activityResult.resultCode
         val data : Intent? = activityResult.data
 

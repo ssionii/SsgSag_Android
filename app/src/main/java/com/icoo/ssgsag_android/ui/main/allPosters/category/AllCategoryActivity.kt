@@ -48,7 +48,7 @@ class AllCategoryActivity : BaseActivity<ActivityAllCategoryBinding, AllCategory
 
     lateinit var mAdapter: DialogPlusAdapter
 
-    val requestFromDetail = prepareCall(ActivityResultContracts.StartActivityForResult()) { activityResult : ActivityResult ->
+    val requestFromDetail = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult : ActivityResult ->
         val resultCode : Int = activityResult.resultCode
         val data : Intent? = activityResult.data
 

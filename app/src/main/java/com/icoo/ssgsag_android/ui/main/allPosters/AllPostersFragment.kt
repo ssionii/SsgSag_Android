@@ -7,6 +7,10 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultCallback
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.ActivityResultRegistry
+import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
@@ -44,7 +48,7 @@ class AllPostersFragment : BaseFragment<FragmentAllPosterBinding, AllPostersView
     var requestRowIdx = 0
     var requestPosition = 0
 
-    val requestFromDetail = prepareCall(ActivityResultContracts.StartActivityForResult()) { activityResult : ActivityResult ->
+    val requestFromDetail = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult : ActivityResult ->
         val resultCode : Int = activityResult.resultCode
         val data : Intent? = activityResult.data
 
@@ -62,7 +66,7 @@ class AllPostersFragment : BaseFragment<FragmentAllPosterBinding, AllPostersView
         }
     }
 
-    val requestFromMore = prepareCall(ActivityResultContracts.StartActivityForResult()) {activityResult : ActivityResult ->
+    val requestFromMore = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {activityResult : ActivityResult ->
         val resultCode : Int = activityResult.resultCode
         val data : Intent? = activityResult.data
 
