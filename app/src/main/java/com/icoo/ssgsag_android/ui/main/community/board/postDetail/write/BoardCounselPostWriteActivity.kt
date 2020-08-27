@@ -1,7 +1,24 @@
 package com.icoo.ssgsag_android.ui.main.community.board.postDetail.write
 
+import android.Manifest
+import android.app.Activity
+import android.content.CursorLoader
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.database.Cursor
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
+import android.view.View.GONE
+import android.view.View.VISIBLE
+import android.widget.Toast
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.icoo.ssgsag_android.BR
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseActivity
@@ -9,9 +26,15 @@ import com.icoo.ssgsag_android.base.BaseRecyclerViewAdapter
 import com.icoo.ssgsag_android.data.model.category.Category
 import com.icoo.ssgsag_android.databinding.ActivityBoardCounselPostWriteBinding
 import com.icoo.ssgsag_android.databinding.ItemBoardCounselPostWriteCategoryBinding
+import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import com.icoo.ssgsag_android.util.view.NonScrollGridLayoutManager
 import com.icoo.ssgsag_android.util.view.SpacesItemDecoration
+import kotlinx.android.synthetic.main.activity_account_mgt.*
+import org.jetbrains.anko.image
+import org.jetbrains.anko.toast
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.io.File
+import java.net.URI
 
 class  BoardCounselPostWriteActivity: BaseActivity<ActivityBoardCounselPostWriteBinding, BoardPostWriteViewModel>(){
 
@@ -28,12 +51,31 @@ class  BoardCounselPostWriteActivity: BaseActivity<ActivityBoardCounselPostWrite
         Category(0, false,"기타")
     )
 
+    val REQUEST_CODE_SELECT_IMAGE: Int = 1004
+    val My_READ_STORAGE_REQUEST_CODE: Int = 7777
+
+    val requestPermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { isGranted: Boolean ->
+            if (isGranted) {
+                showAlbum()
+            } else {
+                Toast.makeText(this, "권한을 허용해주세요", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+    lateinit var photoURI : String
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         viewDataBinding.actBoardCounselPostWriteToolbar.toolbarCancelTvTitle.text = "고민 상담톡 작성"
 
         setCategoryRv()
+        setButton()
     }
 
     fun setCategoryRv(){
@@ -73,4 +115,68 @@ class  BoardCounselPostWriteActivity: BaseActivity<ActivityBoardCounselPostWrite
             }
         }
     }
+
+    private fun setButton(){
+        viewDataBinding.actBoardCounselPostWriteCvUploadPhoto.setSafeOnClickListener {
+            requestReadExternalStoragePermission()
+        }
+
+        viewDataBinding.actBoardCounselPostWriteIvPhotoDelete.setSafeOnClickListener {
+           viewDataBinding.actBoardCounselPostWriteLlUploadPhoto.visibility = VISIBLE
+            viewDataBinding.actBoardCounselPostWriteClPhoto.visibility = GONE
+
+            photoURI = ""
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE_SELECT_IMAGE) {
+            if (resultCode == Activity.RESULT_OK && data != null) {
+                val selectedImageUri: Uri = data.data
+                photoURI = getRealPathFromURI(selectedImageUri)
+
+                Glide.with(this)
+                    .load(selectedImageUri)
+                    .centerCrop()
+                    .error(R.drawable.img_default) //에러시 나올 이미지 적용
+                    .into(viewDataBinding.actBoardCounselPostWriteIvPhoto)
+
+                viewDataBinding.actBoardCounselPostWriteLlUploadPhoto.visibility = GONE
+                viewDataBinding.actBoardCounselPostWriteClPhoto.visibility = VISIBLE
+            }
+        }
+    }
+
+    private fun getRealPathFromURI(content: Uri): String {
+        val proj = arrayOf(MediaStore.Images.Media.DATA)
+        val loader = CursorLoader(this, content, proj, null, null, null)
+        val cursor: Cursor = loader.loadInBackground()
+        val column_idx = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+        cursor.moveToFirst()
+        val result = cursor.getString(column_idx)
+        cursor.close()
+        return result
+    }
+
+    private fun requestReadExternalStoragePermission() {
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE)
+            != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.READ_EXTERNAL_STORAGE)) {
+
+            } else {
+                requestPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+            }
+        } else {
+            showAlbum()
+        }
+    }
+
+    private fun showAlbum() {
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = MediaStore.Images.Media.CONTENT_TYPE
+        intent.data = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+        startActivityForResult(intent, REQUEST_CODE_SELECT_IMAGE)
+    }
+    //endregion
 }
