@@ -48,6 +48,9 @@ class  BoardCounselPostWriteActivity: BaseActivity<ActivityBoardCounselPostWrite
 
     override val viewModel: BoardPostWriteViewModel by viewModel()
 
+    var postWriteType = 0
+    val REQUEST_CODE_SELECT_IMAGE: Int = 1004
+
     val categoryList = arrayListOf(
         Category(0, false,"취업/진로"),
         Category(0, false,"공모전/대외활동"),
@@ -55,9 +58,6 @@ class  BoardCounselPostWriteActivity: BaseActivity<ActivityBoardCounselPostWrite
         Category(0, false,"학교생활"),
         Category(0, false,"기타")
     )
-
-    val REQUEST_CODE_SELECT_IMAGE: Int = 1004
-    val My_READ_STORAGE_REQUEST_CODE: Int = 7777
 
     val requestPermissionLauncher =
         registerForActivityResult(
@@ -79,12 +79,39 @@ class  BoardCounselPostWriteActivity: BaseActivity<ActivityBoardCounselPostWrite
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewDataBinding.actBoardCounselPostWriteToolbar.toolbarCancelTvTitle.text = "고민 상담톡 작성"
+        postWriteType = intent.getIntExtra("postWriteType", PostWriteType.WRITE)
 
         setEditTextChange()
         setCategoryRv()
         setButton()
 
+        when(postWriteType){
+            PostWriteType.WRITE -> viewDataBinding.actBoardCounselPostWriteToolbar.toolbarCancelTvTitle.text = "고민 상담톡 작성"
+            PostWriteType.EDIT -> {
+                viewDataBinding.actBoardCounselPostWriteToolbar.toolbarCancelTvTitle.text = "고민 상담톡 수정"
+
+                setEditType()
+            }
+        }
+
+
+    }
+
+    fun setEditType(){
+        // 통신해서 가져오기
+        selectedCategory = categoryList[1]
+        title = "제목이지롱"
+        description = "하하"
+
+        viewDataBinding.actBoardCounselPostWriteEtTitle.setText(title)
+        viewDataBinding.actBoardCounselPostWriteEtDescription.setText(description)
+        (viewDataBinding.actBoardCounselPostWriteRvCategory.adapter as BaseRecyclerViewAdapter<Category, *>).run{
+            categoryList[1].isChecked = true
+            replaceAll(categoryList)
+            notifyDataSetChanged()
+        }
+
+        onDataCheck()
     }
 
     fun setCategoryRv(){
@@ -129,6 +156,10 @@ class  BoardCounselPostWriteActivity: BaseActivity<ActivityBoardCounselPostWrite
     }
 
     private fun setButton(){
+        viewDataBinding.actBoardCounselPostWriteToolbar.toolbarCancelClCancel.setSafeOnClickListener {
+            finish()
+        }
+
         viewDataBinding.actBoardCounselPostWriteCvUploadPhoto.setSafeOnClickListener {
             requestReadExternalStoragePermission()
         }
@@ -235,4 +266,9 @@ class  BoardCounselPostWriteActivity: BaseActivity<ActivityBoardCounselPostWrite
         startActivityForResult(intent, REQUEST_CODE_SELECT_IMAGE)
     }
     //endregion
+}
+
+object PostWriteType {
+    const val WRITE = 0
+    const val EDIT = 1
 }

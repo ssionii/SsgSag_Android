@@ -1,5 +1,6 @@
 package com.icoo.ssgsag_android.data.model.community.board
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,6 +15,8 @@ import com.icoo.ssgsag_android.ui.main.calendar.posterBookmark.PosterAlarmData
 import com.icoo.ssgsag_android.ui.main.calendar.posterBookmark.PosterBookmarkRecyclerViewAdapter
 import com.icoo.ssgsag_android.ui.main.calendar.posterBookmark.PosterBookmarkViewModel
 import com.icoo.ssgsag_android.ui.main.community.board.postDetail.BoardPostDetailViewModel
+import com.icoo.ssgsag_android.ui.main.community.board.postDetail.write.BoardCounselPostWriteActivity
+import com.icoo.ssgsag_android.ui.main.community.board.postDetail.write.PostWriteType
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -64,7 +67,9 @@ class BoardPostDetailBottomSheet (
 
     private fun setButton(){
         viewDataBinding.bottomSheetPostDetailCvEdit.setSafeOnClickListener {
-            Log.e("edit ", "click")
+            val intent = Intent(activity, BoardCounselPostWriteActivity::class.java)
+            intent.putExtra("postWriteType", PostWriteType.EDIT)
+            startActivity(intent)
         }
 
         viewDataBinding.bottomSheetPostDetailCvDelete.setSafeOnClickListener {

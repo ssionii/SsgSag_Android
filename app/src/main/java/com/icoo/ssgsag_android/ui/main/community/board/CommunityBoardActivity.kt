@@ -22,6 +22,7 @@ import com.icoo.ssgsag_android.databinding.ActivityCommunityBoardBinding
 import com.icoo.ssgsag_android.databinding.ItemBoardBinding
 import com.icoo.ssgsag_android.ui.main.community.board.postDetail.BoardPostDetailActivity
 import com.icoo.ssgsag_android.ui.main.community.board.postDetail.write.BoardCounselPostWriteActivity
+import com.icoo.ssgsag_android.ui.main.community.board.postDetail.write.PostWriteType
 import com.icoo.ssgsag_android.ui.main.feed.FeedWebActivity
 import com.icoo.ssgsag_android.ui.main.review.main.AutoScrollAdapter
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
@@ -151,6 +152,7 @@ class CommunityBoardActivity : BaseActivity<ActivityCommunityBoardBinding, Commu
 
         viewDataBinding.actCommunityBoardCvWrite.setSafeOnClickListener {
             val intent = Intent(this, BoardCounselPostWriteActivity::class.java)
+            intent.putExtra("postWriteType", PostWriteType.WRITE)
             startActivity(intent)
         }
     }
