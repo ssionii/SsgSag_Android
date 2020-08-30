@@ -6,11 +6,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.BR
@@ -22,9 +19,7 @@ import com.icoo.ssgsag_android.databinding.ActivityCommunityBoardBinding
 import com.icoo.ssgsag_android.databinding.ItemBoardBinding
 import com.icoo.ssgsag_android.ui.main.community.board.postDetail.BoardPostDetailActivity
 import com.icoo.ssgsag_android.ui.main.community.board.postDetail.write.BoardCounselPostWriteActivity
-import com.icoo.ssgsag_android.ui.main.community.board.postDetail.write.PostWriteType
-import com.icoo.ssgsag_android.ui.main.feed.FeedWebActivity
-import com.icoo.ssgsag_android.ui.main.review.main.AutoScrollAdapter
+import com.icoo.ssgsag_android.ui.main.community.board.postDetail.write.BoardTalkPostWriteActivity
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -151,15 +146,29 @@ class CommunityBoardActivity : BaseActivity<ActivityCommunityBoardBinding, Commu
         }
 
         viewDataBinding.actCommunityBoardCvWrite.setSafeOnClickListener {
-            val intent = Intent(this, BoardCounselPostWriteActivity::class.java)
-            intent.putExtra("postWriteType", PostWriteType.WRITE)
-            startActivity(intent)
+            when(communityBoardType){
+                CommunityBoardType.COUNSEL -> {
+                    val intent = Intent(this, BoardCounselPostWriteActivity::class.java)
+                    intent.putExtra("postWriteType", PostWriteType.WRITE)
+                    startActivity(intent)
+                }
+                CommunityBoardType.TALK -> {
+                    val intent = Intent(this, BoardTalkPostWriteActivity::class.java)
+                    intent.putExtra("postWriteType", PostWriteType.WRITE)
+                    startActivity(intent)
+                }
+            }
         }
     }
-
 }
 
 object CommunityBoardType{
     const val COUNSEL = 0
     const val TALK = 1
 }
+
+object PostWriteType {
+    const val WRITE = 0
+    const val EDIT = 1
+}
+

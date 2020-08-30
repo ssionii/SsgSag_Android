@@ -113,7 +113,7 @@
     <!-- Community Board text -->
     <string name="counsel_title">고민 상담</string>
     <string name="talk_title">자유 수다</string>
-    <string name="board_write_hint">&lt;커뮤니티 이용 규칙에 어긋나는 게시글은 안돼요! &gt;
+    <string name="board_counsel_write_hint">&lt;커뮤니티 이용 규칙에 어긋나는 게시글은 안돼요! &gt;
         \n\n- 욕설/인신공격/비방 금지
         \n\n- 개인정보/저작권 침해 금지
         \n\n- 음란성/선정성 게시물 금지
@@ -122,6 +122,15 @@
         \n\n- 게시판 성격에 부적절한 게시글 금지
         \n\n* 상담글이 아니라면 자유게시판을 이용해주세요!\n\n\n\n</string>
 
+    <string name="board_talk_write_hint">* 질문글은 상담 게시판을 이용하시면 더 빠른 답변을 받아 볼 수 있어요.
+        \n\n&lt;커뮤니티 이용 규칙에 어긋나는 게시글은 안돼요!&gt;
+        \n\n- 욕설/인신공격/비방 금지
+        \n\n- 개인정보/저작권 침해 금지
+        \n\n- 음란성/선정성 게시물 금지
+        \n\n- 영리목적/ 홍보성 게시물 금지
+        \n\n- 중복 내용 도배 금지
+        \n\n- 게시판 성격에 부적절한 게시글 금지
+    </string>
 
 
     <!-- Common text -->

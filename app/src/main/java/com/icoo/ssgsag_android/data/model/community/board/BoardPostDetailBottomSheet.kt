@@ -14,15 +14,18 @@ import com.icoo.ssgsag_android.ui.main.calendar.calendarDetail.CalendarDetailDel
 import com.icoo.ssgsag_android.ui.main.calendar.posterBookmark.PosterAlarmData
 import com.icoo.ssgsag_android.ui.main.calendar.posterBookmark.PosterBookmarkRecyclerViewAdapter
 import com.icoo.ssgsag_android.ui.main.calendar.posterBookmark.PosterBookmarkViewModel
+import com.icoo.ssgsag_android.ui.main.community.board.CommunityBoardType
+import com.icoo.ssgsag_android.ui.main.community.board.PostWriteType
 import com.icoo.ssgsag_android.ui.main.community.board.postDetail.BoardPostDetailViewModel
 import com.icoo.ssgsag_android.ui.main.community.board.postDetail.write.BoardCounselPostWriteActivity
-import com.icoo.ssgsag_android.ui.main.community.board.postDetail.write.PostWriteType
+import com.icoo.ssgsag_android.ui.main.community.board.postDetail.write.BoardTalkPostWriteActivity
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class BoardPostDetailBottomSheet (
     private val idx : Int,
     private val from: String,
+    private val type : Int,
     private val isMine : Boolean
 ) : BottomSheetDialogFragment() {
 
@@ -67,9 +70,19 @@ class BoardPostDetailBottomSheet (
 
     private fun setButton(){
         viewDataBinding.bottomSheetPostDetailCvEdit.setSafeOnClickListener {
-            val intent = Intent(activity, BoardCounselPostWriteActivity::class.java)
-            intent.putExtra("postWriteType", PostWriteType.EDIT)
-            startActivity(intent)
+            when(type){
+                CommunityBoardType.COUNSEL ->{
+                    val intent = Intent(activity, BoardCounselPostWriteActivity::class.java)
+                    intent.putExtra("postWriteType", PostWriteType.EDIT)
+                    startActivity(intent)
+                }
+                CommunityBoardType.TALK ->{
+                    val intent = Intent(activity, BoardTalkPostWriteActivity::class.java)
+                    intent.putExtra("postWriteType", PostWriteType.EDIT)
+                    startActivity(intent)
+                }
+            }
+
         }
 
         viewDataBinding.bottomSheetPostDetailCvDelete.setSafeOnClickListener {

@@ -8,68 +8,43 @@ import android.content.pm.PackageManager
 import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View.GONE
-import android.view.View.VISIBLE
+import android.view.View
 import android.widget.EditText
 import android.widget.Toast
-import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.os.bundleOf
-import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.google.android.gms.common.util.DataUtils
 import com.icoo.ssgsag_android.BR
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseActivity
 import com.icoo.ssgsag_android.base.BaseRecyclerViewAdapter
 import com.icoo.ssgsag_android.data.model.category.Category
 import com.icoo.ssgsag_android.databinding.ActivityBoardCounselPostWriteBinding
+import com.icoo.ssgsag_android.databinding.ActivityBoardTalkPostWriteBinding
 import com.icoo.ssgsag_android.databinding.ItemBoardCounselPostWriteCategoryBinding
-import com.icoo.ssgsag_android.databinding.ItemFeedAnchorBinding
 import com.icoo.ssgsag_android.ui.main.community.board.PostWriteType
-import com.icoo.ssgsag_android.ui.main.review.club.write.pages.ReviewWriteScoreFragment
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import com.icoo.ssgsag_android.util.view.NonScrollGridLayoutManager
 import com.icoo.ssgsag_android.util.view.SpacesItemDecoration
-import kotlinx.android.synthetic.main.activity_account_mgt.*
 import kotlinx.android.synthetic.main.activity_board_talk_post_write.*
 import kotlinx.android.synthetic.main.toolbar_cancel.view.*
-import org.jetbrains.anko.image
-import org.jetbrains.anko.support.v4.toast
-import org.jetbrains.anko.toast
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.io.File
-import java.net.URI
 
-class  BoardCounselPostWriteActivity: BaseActivity<ActivityBoardCounselPostWriteBinding, BoardPostWriteViewModel>(){
+
+class  BoardTalkPostWriteActivity : BaseActivity<ActivityBoardTalkPostWriteBinding, BoardPostWriteViewModel>(){
 
     override val layoutResID: Int
-        get() = R.layout.activity_board_counsel_post_write
-
+        get() = R.layout.activity_board_talk_post_write
 
     override val viewModel: BoardPostWriteViewModel by viewModel()
 
     var postWriteType = 0
     val REQUEST_CODE_SELECT_IMAGE: Int = 1004
-
-    val categoryList = arrayListOf(
-        Category(0, false,"취업/진로"),
-        Category(0, false,"공모전/대외활동"),
-        Category(0, false,"일상/연애"),
-        Category(0, false,"학교생활"),
-        Category(0, false,"기타")
-    )
 
     val requestPermissionLauncher =
         registerForActivityResult(
@@ -82,7 +57,6 @@ class  BoardCounselPostWriteActivity: BaseActivity<ActivityBoardCounselPostWrite
             }
         }
 
-    var selectedCategory : Category? = null
     var photoURI : String = ""
     var title : String = ""
     var description : String = ""
@@ -92,14 +66,14 @@ class  BoardCounselPostWriteActivity: BaseActivity<ActivityBoardCounselPostWrite
 
         postWriteType = intent.getIntExtra("postWriteType", PostWriteType.WRITE)
 
-        setCategoryRv()
         when(postWriteType){
-            PostWriteType.WRITE -> viewDataBinding.actBoardPostWriteToolbar.toolbarCancelTvTitle.text = "고민 상담톡 작성"
+            PostWriteType.WRITE -> viewDataBinding.actBoardPostWriteToolbar.toolbarCancelTvTitle.text = "자유 수다톡 작성"
             PostWriteType.EDIT -> {
-                viewDataBinding.actBoardPostWriteToolbar.toolbarCancelTvTitle.text = "고민 상담톡 수정"
+                viewDataBinding.actBoardPostWriteToolbar.toolbarCancelTvTitle.text = "자유 수다톡 수정"
                 setEditType()
             }
         }
+
         setEditTextChange()
         setButton()
 
@@ -107,60 +81,13 @@ class  BoardCounselPostWriteActivity: BaseActivity<ActivityBoardCounselPostWrite
 
     fun setEditType(){
         // 통신해서 가져오기
-        selectedCategory = categoryList[1]
         title = "제목이지롱"
         description = "하하"
 
         viewDataBinding.actBoardPostWriteEtTitle.setText(title)
         viewDataBinding.actBoardPostWriteEtDescription.setText(description)
-        (viewDataBinding.actBoardCounselPostWriteRvCategory.adapter as BaseRecyclerViewAdapter<Category, *>).run{
-            categoryList[1].isChecked = true
-            replaceAll(categoryList)
-            notifyDataSetChanged()
-        }
 
         onDataCheck()
-    }
-
-    fun setCategoryRv(){
-
-        val d = resources.displayMetrics.density
-
-        viewDataBinding.actBoardCounselPostWriteRvCategory.apply{
-            adapter = object : BaseRecyclerViewAdapter<Category, ItemBoardCounselPostWriteCategoryBinding>(){
-                override val layoutResID: Int
-                    get() = R.layout.item_board_counsel_post_write_category
-                override val bindingVariableId: Int
-                    get() = BR.category
-                override val listener: OnItemClickListener?
-                    get() = onCategoryClickListener
-            }
-
-            layoutManager = NonScrollGridLayoutManager(this@BoardCounselPostWriteActivity, 3)
-            addItemDecoration(SpacesItemDecoration(3, (8 * d).toInt()))
-        }
-
-        (viewDataBinding.actBoardCounselPostWriteRvCategory.adapter as BaseRecyclerViewAdapter<Category, *>).run{
-            replaceAll(categoryList)
-            notifyDataSetChanged()
-        }
-    }
-
-    val onCategoryClickListener = object : BaseRecyclerViewAdapter.OnItemClickListener{
-        override fun onItemClicked(item: Any?, position: Int?) {
-            for(category in categoryList){
-                category.isChecked = false
-            }
-            categoryList[position!!].isChecked = true
-
-            (viewDataBinding.actBoardCounselPostWriteRvCategory.adapter as BaseRecyclerViewAdapter<Category, *>).run{
-                replaceAll(categoryList)
-                notifyDataSetChanged()
-            }
-
-            selectedCategory = item as Category
-            onDataCheck()
-        }
     }
 
     private fun setButton(){
@@ -173,14 +100,13 @@ class  BoardCounselPostWriteActivity: BaseActivity<ActivityBoardCounselPostWrite
         }
 
         viewDataBinding.actBoardPostWriteIvPhotoDelete.setSafeOnClickListener {
-           viewDataBinding.actBoardPostWriteLlUploadPhoto.visibility = VISIBLE
-            viewDataBinding.actBoardPostWriteClPhoto.visibility = GONE
+            viewDataBinding.actBoardPostWriteLlUploadPhoto.visibility = View.VISIBLE
+            viewDataBinding.actBoardPostWriteClPhoto.visibility = View.GONE
 
             photoURI = ""
         }
 
         viewDataBinding.actBoardPostWriteClUpload.setSafeOnClickListener {
-            Log.e("category", selectedCategory!!.categoryName)
             Log.e("title", title)
             Log.e("description", description)
             if(photoURI != ""){
@@ -211,7 +137,7 @@ class  BoardCounselPostWriteActivity: BaseActivity<ActivityBoardCounselPostWrite
     }
 
     private fun onDataCheck(){
-        if(selectedCategory != null && title != "" && description != ""){
+        if(title != "" && description != ""){
             viewDataBinding.actBoardPostWriteClUpload.run{
                 isClickable = true
                 setBackgroundColor(this.resources.getColor(R.color.ssgsag))
@@ -237,8 +163,8 @@ class  BoardCounselPostWriteActivity: BaseActivity<ActivityBoardCounselPostWrite
                     .error(R.drawable.img_default) //에러시 나올 이미지 적용
                     .into(viewDataBinding.actBoardPostWriteIvPhoto)
 
-                viewDataBinding.actBoardPostWriteLlUploadPhoto.visibility = GONE
-                viewDataBinding.actBoardPostWriteClPhoto.visibility = VISIBLE
+                viewDataBinding.actBoardPostWriteLlUploadPhoto.visibility = View.GONE
+                viewDataBinding.actBoardPostWriteClPhoto.visibility = View.VISIBLE
             }
         }
     }
@@ -274,5 +200,5 @@ class  BoardCounselPostWriteActivity: BaseActivity<ActivityBoardCounselPostWrite
         startActivityForResult(intent, REQUEST_CODE_SELECT_IMAGE)
     }
     //endregion
-
 }
+

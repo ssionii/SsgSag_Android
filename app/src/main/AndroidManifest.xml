@@ -122,6 +122,8 @@
                 android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".ui.main.community.board.postDetail.write.BoardCounselPostWriteActivity"
             android:windowSoftInputMode="adjustResize"/>
+        <activity android:name=".ui.main.community.board.postDetail.write.BoardTalkPostWriteActivity"
+            android:windowSoftInputMode="adjustResize"/>
 
 
 

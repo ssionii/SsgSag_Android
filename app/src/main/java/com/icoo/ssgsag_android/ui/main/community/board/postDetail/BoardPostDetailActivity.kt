@@ -18,11 +18,15 @@ class BoardPostDetailActivity : BaseActivity<ActivityBoardPostDetailBinding, Boa
 
     override val viewModel: BoardPostDetailViewModel by viewModel()
 
+    var type = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewDataBinding.vm = viewModel
 
-        when(intent.getIntExtra("type", CommunityBoardType.TALK)){
+        type = intent.getIntExtra("type", CommunityBoardType.TALK)
+
+        when(type){
             CommunityBoardType.COUNSEL -> viewDataBinding.actBoardPostDetailTvTitle.text = this.resources.getString(R.string.counsel_title)
             CommunityBoardType.TALK -> viewDataBinding.actBoardPostDetailTvTitle.text = this.resources.getString(R.string.talk_title)
         }
@@ -33,7 +37,7 @@ class BoardPostDetailActivity : BaseActivity<ActivityBoardPostDetailBinding, Boa
 
     private fun setButton(){
         viewDataBinding.actBoardPostDetailClMenu.setSafeOnClickListener {
-            val bottomSheet = BoardPostDetailBottomSheet(0, "post", true)
+            val bottomSheet = BoardPostDetailBottomSheet(0, "post", type, true)
 
             bottomSheet.isCancelable = true
             bottomSheet.show(supportFragmentManager, null)
