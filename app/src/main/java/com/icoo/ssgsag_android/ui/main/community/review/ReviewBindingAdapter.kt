@@ -1,4 +1,4 @@
-package com.icoo.ssgsag_android.ui.main.review
+package com.icoo.ssgsag_android.ui.main.community.review
 
 import android.graphics.Color
 import android.view.View
@@ -19,8 +19,8 @@ import org.jetbrains.anko.textColor
 @BindingAdapter("reviewClubType")
 fun setReviewClubType(view: TextView, type: Int){
     when(type){
-        0 -> view.text = "연합"
-        1 -> view.text = "교내"
+        ReviewType.UNION_CLUB -> view.text = "연합"
+        ReviewType.UNIV_CLUB -> view.text = "교내"
     }
 }
 
@@ -81,7 +81,7 @@ fun setNoClubIntroduce(view: TextView, intro: String?){
 @BindingAdapter("clubBannerVisibility")
 fun ConstraintLayout.setClubBannerVisibility(reviewType: Int){
     when(reviewType){
-        0, 1 -> this.visibility = VISIBLE
+        ReviewType.UNIV_CLUB, ReviewType.UNION_CLUB -> this.visibility = VISIBLE
         else -> this.visibility = GONE
     }
 }
@@ -89,30 +89,30 @@ fun ConstraintLayout.setClubBannerVisibility(reviewType: Int){
 @BindingAdapter("reviewListTitle")
 fun TextView.setReviewListTitle(reviewType: Int){
     when(reviewType){
-        0, 1 -> this.text = "동아리 후기"
-        2 -> this.text = "대외활동 후기"
-        3 -> this.text = "인턴 후기"
+        ReviewType.UNIV_CLUB, ReviewType.UNION_CLUB -> this.text = "동아리 후기"
+        ReviewType.ACT -> this.text = "대외활동 후기"
+        ReviewType.INTERN -> this.text = "인턴 후기"
     }
 }
 
 @BindingAdapter("IvVisibilityByReviewType")
-fun ImageView.setVisibilityByReviewType(reviewType: String){
+fun ImageView.setVisibilityByReviewType(reviewType: Int){
     when(reviewType){
-        "club" -> this.visibility = VISIBLE
+        ReviewType.UNIV_CLUB, ReviewType.UNION_CLUB -> this.visibility = VISIBLE
         else -> this.visibility = GONE
     }
 }
 
 @BindingAdapter("IvVisibilityByReviewTypeR")
-fun ImageView.setVisibilityByReviewTypeR(reviewType: String){
+fun ImageView.setVisibilityByReviewTypeR(reviewType: Int){
     when(reviewType){
-        "club" -> this.visibility = GONE
+        ReviewType.UNIV_CLUB, ReviewType.UNION_CLUB -> this.visibility = GONE
         else -> this.visibility = VISIBLE
     }
 }
 
 @BindingAdapter("reviewWriteStartMent")
-fun TextView.setReviewWriteStartMent(reviewType: String){
+fun TextView.setReviewWriteStartMent(reviewType: Int){
 
     val strFront = "내가 했던 "
     val strMiddle = " \uD83E\uDD84이야~\n슨배님~ 이 "
@@ -121,15 +121,15 @@ fun TextView.setReviewWriteStartMent(reviewType: String){
     var clubFront =""
     var clubBack =""
     when(reviewType){
-        "club" -> {
+        ReviewType.UNION_CLUB, ReviewType.UNIV_CLUB -> {
             clubFront = "동아리는"
             clubBack = "동아리 "
         }
-        "act" ->{
+        ReviewType.ACT ->{
             clubFront = "대외활동은"
             clubBack = "대외활동 "
         }
-        "intern" -> {
+        ReviewType.INTERN -> {
             clubFront = "인턴은"
             clubBack = "인턴 "
         }
@@ -139,31 +139,31 @@ fun TextView.setReviewWriteStartMent(reviewType: String){
 }
 
 @BindingAdapter("reviewTypeString")
-fun TextView.setReviewTypeString(reviewType: String){
+fun TextView.setReviewTypeString(reviewType: Int){
     when(reviewType){
-        "club" -> {
+        ReviewType.UNION_CLUB, ReviewType.UNIV_CLUB -> {
            this.text = "동아리"
         }
-        "act" ->{
+        ReviewType.ACT ->{
           this.text = "대외활동"
         }
-        "intern" -> {
+        ReviewType.INTERN -> {
             this.text = "인턴십"
         }
     }
 }
 
 @BindingAdapter("reviewWriteSimpleEditTextHint")
-fun EditText.setReviewWriteSimpleEditTextHint(reviewType: String){
+fun EditText.setReviewWriteSimpleEditTextHint(reviewType: Int){
 
     when(reviewType){
-        "club" -> {
+        ReviewType.UNION_CLUB, ReviewType.UNIV_CLUB -> {
             this.hint = "이 동아리를 한줄로 표현하자면?"
         }
-        "act" ->{
+        ReviewType.ACT ->{
             this.hint ="이 대외활동을 한줄로 표현하자면?"
         }
-        "intern" -> {
+        ReviewType.INTERN -> {
             this.hint = "이 인턴을 한줄로 표현하자면?"
         }
     }
@@ -173,15 +173,15 @@ fun EditText.setReviewWriteSimpleEditTextHint(reviewType: String){
 @BindingAdapter("vVisibilityByClubType")
 fun View.setVVisivility(clubType: Int){
     when(clubType){
-        0,1 -> this.visibility = GONE
-        2,3 -> this.visibility = VISIBLE
+        ReviewType.UNIV_CLUB, ReviewType.UNION_CLUB -> this.visibility = GONE
+        else -> this.visibility = VISIBLE
     }
 }
 
 @BindingAdapter("llVisibilityByReviewType")
-fun LinearLayout.setVisibilityByReviewType(reviewType: String){
+fun LinearLayout.setVisibilityByReviewType(reviewType: Int){
     when(reviewType){
-        "intern" -> this.visibility = VISIBLE
+        ReviewType.INTERN -> this.visibility = VISIBLE
         else -> this.visibility = GONE
     }
 }

@@ -9,6 +9,7 @@ import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseViewModel
 import com.icoo.ssgsag_android.data.model.review.club.ClubInfo
 import com.icoo.ssgsag_android.data.model.review.club.ClubReviewRepository
+import com.icoo.ssgsag_android.ui.main.community.review.ReviewType
 import com.icoo.ssgsag_android.ui.main.feed.context
 import com.icoo.ssgsag_android.util.scheduler.SchedulerProvider
 import org.json.JSONObject
@@ -43,7 +44,7 @@ class ReviewWriteViewModel(
     private var _rateLabels = MutableLiveData<ArrayList<Array<String>>>()
     val rateLabels : LiveData<ArrayList<Array<String>>> get() = _rateLabels
 
-    var reviewType = ""
+    var reviewType = 0
     var clubIdx = -1
     var isRgstrClub = false
     var isAlreadyWrite = false
@@ -117,17 +118,17 @@ class ReviewWriteViewModel(
 
     fun setScoreQuestion(){
         when(reviewType){
-            "club" -> {
+            ReviewType.UNIV_CLUB, ReviewType.UNION_CLUB -> {
                 _questions.postValue(clubQuestions)
                 _rateLabels.postValue(arrayListOf(context.resources.getStringArray(R.array.fun_label), context.resources.getStringArray(R.array.degree_label)
                 ,context.resources.getStringArray(R.array.intense_label), context.resources.getStringArray(R.array.basic_label)))
             }
-            "act" -> {
+            ReviewType.ACT -> {
                 _questions.postValue(actQuestions)
                 _rateLabels.postValue(arrayListOf(context.resources.getStringArray(R.array.basic_label), context.resources.getStringArray(R.array.fun_label)
                     ,context.resources.getStringArray(R.array.intense_label), context.resources.getStringArray(R.array.basic_label)))
             }
-            "intern" -> {
+            ReviewType.INTERN -> {
                 _questions.postValue(internQuestions)
                 _rateLabels.postValue(arrayListOf(context.resources.getStringArray(R.array.growth_label), context.resources.getStringArray(R.array.basic_label)
                     ,context.resources.getStringArray(R.array.intense_label), context.resources.getStringArray(R.array.basic_label)))

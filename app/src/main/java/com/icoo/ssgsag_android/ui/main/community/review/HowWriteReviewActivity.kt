@@ -1,4 +1,4 @@
-package com.icoo.ssgsag_android.ui.main.review
+package com.icoo.ssgsag_android.ui.main.community.review
 
 import android.content.Intent
 import android.os.Bundle
@@ -22,7 +22,7 @@ class HowWriteReviewActivity :AppCompatActivity(){
             val reviewWriteIntent = Intent(this, ReviewWriteActivity::class.java)
             reviewWriteIntent.apply {
                 putExtra("from", intent.getStringExtra("from"))
-                putExtra("reviewType", intent.getStringExtra("reviewType"))
+                putExtra("reviewType", intent.getIntExtra("reviewType", ReviewType.ACT))
                 putExtra("clubName", intent.getStringExtra("clubName"))
                 putExtra("clubIdx", intent.getIntExtra("clubIdx", 0))
 

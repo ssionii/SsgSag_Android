@@ -5,6 +5,7 @@ import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.icoo.ssgsag_android.databinding.FragmentClubCategoryBinding
+import com.icoo.ssgsag_android.ui.main.community.review.ReviewType
 import com.icoo.ssgsag_android.ui.main.review.club.registration.ClubRgstrActivity
 import com.icoo.ssgsag_android.ui.main.review.club.registration.ClubRgstrViewModel
 import com.icoo.ssgsag_android.ui.main.review.club.write.ReviewWriteActivity
@@ -39,11 +40,11 @@ class ClubCategoryFragment : BaseFragment<FragmentClubCategoryBinding, ClubRgstr
 
         viewDataBinding.actClubManagerCheckLlCampus.setSafeOnClickListener {
             if(parent == "rgstr") {
-                viewModel.setClubType(1)
+                viewModel.setClubType(ReviewType.UNIV_CLUB)
                 (activity as ClubRgstrActivity).toNextPage(position)
             }
             else if(parent == "write") {
-                ReviewWriteViewModel.setClubType(1)
+                ReviewWriteViewModel.setClubType(ReviewType.UNIV_CLUB)
                 (activity as ReviewWriteActivity).toNextPage(position)
             }
 
@@ -51,10 +52,10 @@ class ClubCategoryFragment : BaseFragment<FragmentClubCategoryBinding, ClubRgstr
 
         viewDataBinding.actClubManagerCheckLlUnion.setSafeOnClickListener {
             if(parent == "rgstr") {
-                viewModel.setClubType(0)
+                viewModel.setClubType(ReviewType.UNION_CLUB)
                 (activity as ClubRgstrActivity).toNextPage(position)
             } else if(parent == "write") {
-                ReviewWriteViewModel.setClubType(0)
+                ReviewWriteViewModel.setClubType(ReviewType.UNION_CLUB)
                 (activity as ReviewWriteActivity).toNextPage(position)
             }
         }

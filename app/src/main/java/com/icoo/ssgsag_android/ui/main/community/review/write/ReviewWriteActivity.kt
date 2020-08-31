@@ -9,6 +9,7 @@ import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseActivity
 import com.icoo.ssgsag_android.data.model.review.ReviewWriteRelam
 import com.icoo.ssgsag_android.databinding.ActivityClubReviewWriteBinding
+import com.icoo.ssgsag_android.ui.main.community.review.ReviewType
 import io.realm.Realm
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -32,11 +33,11 @@ class ReviewWriteActivity : BaseActivity<ActivityClubReviewWriteBinding, ReviewW
         }
         realm.commitTransaction()
 
-        when(intent.getStringExtra("reviewType")){
-            "act" -> viewModel.setClubType(2)
-            "intern" -> viewModel.setClubType(3)
+        when(intent.getIntExtra("reviewType", ReviewType.ACT)){
+            ReviewType.ACT -> viewModel.setClubType(2)
+            ReviewType.INTERN -> viewModel.setClubType(3)
         }
-        viewModel.reviewType = intent.getStringExtra("reviewType")
+        viewModel.reviewType = intent.getIntExtra("reviewType", ReviewType.ACT)
 
         viewDataBinding.vm = viewModel
 

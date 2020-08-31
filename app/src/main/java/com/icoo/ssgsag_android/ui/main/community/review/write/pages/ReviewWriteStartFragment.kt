@@ -14,6 +14,7 @@ import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseFragment
 import com.icoo.ssgsag_android.data.model.review.ReviewWriteRelam
 import com.icoo.ssgsag_android.databinding.FragmentReviewWriteStartBinding
+import com.icoo.ssgsag_android.ui.main.community.review.ReviewType
 import com.icoo.ssgsag_android.ui.main.review.club.registration.NonRgstrClubActivity
 import com.icoo.ssgsag_android.ui.main.review.club.write.ReviewWriteActivity
 import com.icoo.ssgsag_android.ui.main.review.club.write.ReviewWriteViewModel
@@ -429,7 +430,7 @@ class ReviewWriteStartFragment :  BaseFragment<FragmentReviewWriteStartBinding, 
                             this.endMonth.length-1).toInt()))){
                         toast("활동시기 입력이 잘못되었습니다.")
                     }else {
-                        if (!viewModel.isRgstrClub && viewModel.reviewType == "club") {
+                        if (!viewModel.isRgstrClub && (viewModel.reviewType == ReviewType.UNION_CLUB || viewModel.reviewType == ReviewType.UNIV_CLUB)) {
 
                             // 등록되어 있지 않는 동아리면 NonRgstrClubActivity 띄우기
                             val intent = Intent(activity, NonRgstrClubActivity::class.java)
