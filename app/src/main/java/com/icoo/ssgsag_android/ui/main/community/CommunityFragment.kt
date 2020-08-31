@@ -13,6 +13,7 @@ import com.icoo.ssgsag_android.base.BaseFragment
 import com.icoo.ssgsag_android.databinding.FragmentCommunityBinding
 import com.icoo.ssgsag_android.ui.main.community.board.CommunityBoardActivity
 import com.icoo.ssgsag_android.ui.main.community.board.CommunityBoardType
+import com.icoo.ssgsag_android.ui.main.community.review.CommunityReviewActivity
 import com.icoo.ssgsag_android.ui.main.feed.FeedViewModel
 import com.icoo.ssgsag_android.ui.main.feed.adapter.FeedAnchorRecyclerViewAdapter
 import com.icoo.ssgsag_android.ui.main.feed.adapter.FeedCareerViewPagerAdapter
@@ -95,6 +96,12 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
             startActivity(intent)
 
         }
+
+        viewDataBinding.fragCommunityLlReview.setSafeOnClickListener {
+            val intent = Intent(requireActivity(), CommunityReviewActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 
 }
