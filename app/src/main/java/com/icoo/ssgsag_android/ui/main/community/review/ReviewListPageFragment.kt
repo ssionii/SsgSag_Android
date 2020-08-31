@@ -2,24 +2,23 @@ package com.icoo.ssgsag_android.ui.main.community.review
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View.VISIBLE
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseFragment
-import com.icoo.ssgsag_android.databinding.FragmentReviewPageBinding
+import com.icoo.ssgsag_android.databinding.FragmentReviewListPageBinding
 import com.icoo.ssgsag_android.ui.main.review.club.ReviewDetailActivity
-import com.icoo.ssgsag_android.ui.main.review.club.registration.ClubManagerCheckActivity
-import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import com.icoo.ssgsag_android.util.view.WrapContentLinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class ReviewListFragment : BaseFragment<FragmentReviewPageBinding, ReviewViewModel>() {
+class ReviewListPageFragment : BaseFragment<FragmentReviewListPageBinding, ReviewViewModel>() {
 
     override val layoutResID: Int
-        get() = R.layout.fragment_review_page
+        get() = R.layout.fragment_review_list_page
     override val viewModel: ReviewViewModel by viewModel()
 
     private var ReviewListRecyclerViewAdapter: ReviewListRecyclerViewAdapter? = null
@@ -34,17 +33,23 @@ class ReviewListFragment : BaseFragment<FragmentReviewPageBinding, ReviewViewMod
             reviewType = this
         }
 
-        viewModel.getClubReviews(curPage, reviewType)
+        if(reviewType == 0){
+            setTab()
+        }
 
+        viewModel.getClubReviews(curPage, reviewType)
         viewDataBinding.vm = viewModel
-        viewDataBinding.reviewListFragment = this
 
         setRv()
     }
 
+    private fun setTab(){
+        viewDataBinding.fragReviewListPageClClubTab.visibility = VISIBLE
+    }
+
     private fun setRv() {
 
-        viewModel.reviewList.observe(this, Observer { value ->
+        viewModel.reviewList.observe(requireActivity(), Observer { value ->
             if (ReviewListRecyclerViewAdapter != null) {
                 ReviewListRecyclerViewAdapter!!.apply {
                     addItem(value)
@@ -126,8 +131,8 @@ class ReviewListFragment : BaseFragment<FragmentReviewPageBinding, ReviewViewMod
 
     companion object {
 
-        fun newInstance(reviewType: Int): ReviewListFragment {
-            val fragment = ReviewListFragment()
+        fun newInstance(reviewType: Int): ReviewListPageFragment {
+            val fragment = ReviewListPageFragment()
             val bundle = Bundle()
             bundle.putInt("reviewType", reviewType)
             fragment.arguments = bundle
