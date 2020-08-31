@@ -24,10 +24,7 @@ import com.icoo.ssgsag_android.databinding.FragmentMainBinding
 import com.icoo.ssgsag_android.ui.login.LoginActivity
 import com.icoo.ssgsag_android.ui.main.allPosters.AllPostersFragment
 import com.icoo.ssgsag_android.ui.main.allPosters.search.SearchActivity
-import com.icoo.ssgsag_android.ui.main.calendar.CalendarFragment
-import com.icoo.ssgsag_android.ui.main.feed.FeedFragment
 import com.icoo.ssgsag_android.ui.main.myPage.MyPageActivity
-import com.icoo.ssgsag_android.ui.main.review.main.ReviewMainFragment
 import com.icoo.ssgsag_android.ui.main.ssgSag.SsgSagFragment
 import com.icoo.ssgsag_android.ui.main.ssgSag.filter.SsgSagFilterActivity
 import com.icoo.ssgsag_android.ui.main.subscribe.SubscribeActivity

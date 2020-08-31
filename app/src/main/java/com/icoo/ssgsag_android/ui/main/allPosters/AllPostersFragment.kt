@@ -3,14 +3,8 @@ package com.icoo.ssgsag_android.ui.main.allPosters
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Point
-import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.result.ActivityResult
-import androidx.activity.result.ActivityResultCallback
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.ActivityResultRegistry
-import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
@@ -28,8 +22,7 @@ import com.icoo.ssgsag_android.ui.main.allPosters.collection.AllPosterCollection
 import com.icoo.ssgsag_android.ui.main.allPosters.collection.AllPosterEventCardViewPagerAdapter
 import com.icoo.ssgsag_android.ui.main.calendar.calendarDetail.CalendarDetailActivity
 import com.icoo.ssgsag_android.ui.main.feed.FeedWebActivity
-import com.icoo.ssgsag_android.ui.main.review.main.AutoScrollAdapter
-import com.icoo.ssgsag_android.util.view.CircleAnimIndicator
+import com.icoo.ssgsag_android.util.view.AutoScrollAdapter
 import com.icoo.ssgsag_android.util.view.NonScrollGridLayoutManager
 import com.icoo.ssgsag_android.util.view.WrapContentLinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -106,7 +99,8 @@ class AllPostersFragment : BaseFragment<FragmentAllPosterBinding, AllPostersView
 
     private fun setTopBanner(d : Float, width: Int){
 
-        val vpAdapter = AutoScrollAdapter(requireActivity())
+        val vpAdapter =
+            AutoScrollAdapter(requireActivity())
         vpAdapter.setOnItemClickListener(onBannerItemClickListener)
 
         viewDataBinding.fragAllPosterAsvpBanner.run{

@@ -22,7 +22,7 @@ import com.icoo.ssgsag_android.ui.main.calendar.calendarDetail.CalendarDetailAct
 import com.icoo.ssgsag_android.ui.main.coachmark.FilterCoachmarkDialogFragment
 import com.icoo.ssgsag_android.ui.main.community.CommunityFragment
 import com.icoo.ssgsag_android.ui.main.feed.FeedFragment
-import com.icoo.ssgsag_android.ui.main.review.main.ReviewMainFragment
+import com.icoo.ssgsag_android.ui.main.community.review.main.ReviewMainFragment
 import com.icoo.ssgsag_android.ui.main.ssgSag.SsgSagViewModel
 import com.icoo.ssgsag_android.util.listener.BackPressHandler
 import io.fabric.sdk.android.Fabric

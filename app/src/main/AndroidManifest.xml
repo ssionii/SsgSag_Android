@@ -93,15 +93,15 @@
                 android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".ui.main.review.club.registration.ClubRgstrActivity"
                 android:windowSoftInputMode="adjustResize"/>
-        <activity android:name=".ui.main.review.HowWriteReviewActivity"/>
+        <activity android:name=".ui.main.community.review.HowWriteReviewActivity"/>
         <activity android:name=".ui.main.review.club.write.ReviewWriteActivity"
                 android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".ui.main.review.club.registration.NonRgstrClubActivity"/>
-        <activity android:name=".ui.main.review.ReviewDoneActivity"/>
-        <activity android:name=".ui.main.review.photoViewPager.PhotoViewPagerActivity"/>
+        <activity android:name=".ui.main.community.review.ReviewDoneActivity"/>
+        <activity android:name=".ui.main.community.review.photoViewPager.PhotoViewPagerActivity"/>
         <activity android:name=".ui.main.review.club.reviews.blogReview.RgstrBlogReviewActivity"
                 android:windowSoftInputMode="adjustResize"/>
-        <activity android:name=".ui.main.review.event.ReviewEventActivity"
+        <activity android:name=".ui.main.community.review.event.ReviewEventActivity"
                 android:windowSoftInputMode="adjustResize">
         </activity>
         <activity android:name=".ui.main.allPosters.category.AllCategoryActivity"/>
@@ -124,6 +124,7 @@
             android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".ui.main.community.board.postDetail.write.BoardTalkPostWriteActivity"
             android:windowSoftInputMode="adjustResize"/>
+        <activity android:name=".ui.main.community.review.CommunityReviewActivity"/>
 
 
 

@@ -4,7 +4,7 @@
     <data>
         <variable
                 name="vm"
-                type="com.icoo.ssgsag_android.ui.main.review.main.ReviewMainViewModel" />
+                type="com.icoo.ssgsag_android.ui.main.community.review.main.ReviewMainViewModel" />
     </data>
     <FrameLayout
             android:id="@+id/frag_review_main_fl_container"

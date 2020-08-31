@@ -3,7 +3,7 @@
     <data>
         <variable
                 name="vm"
-                type="com.icoo.ssgsag_android.ui.main.review.event.ReviewEventViewModel" />
+                type="com.icoo.ssgsag_android.ui.main.community.review.event.ReviewEventViewModel" />
     </data>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
