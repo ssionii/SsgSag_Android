@@ -31,7 +31,11 @@ class FeedWebActivity : BaseActivity<ActivityFeedWebDetailBinding, FeedViewModel
         viewDataBinding.vm = viewModel
 
         viewDataBinding.actFeedWebDetailWv.apply{
-            settings.javaScriptEnabled = true
+            settings.run {
+                javaScriptEnabled = true
+                domStorageEnabled = true
+                useWideViewPort = true
+            }
 
             webChromeClient = WebChromeClient()
 
@@ -64,9 +68,6 @@ class FeedWebActivity : BaseActivity<ActivityFeedWebDetailBinding, FeedViewModel
                     super.onPageFinished(view, url)
                 }
             }
-
-
-
         }
 
         if(intent.getStringExtra("from") == "feed"){
