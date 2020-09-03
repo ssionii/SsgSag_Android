@@ -89,7 +89,7 @@
                         android:layout_marginTop="4dp"
                         android:maxLines="1"
                         android:ellipsize="end"
-                        android:text="@{postDetail.description}"/>
+                        android:text="@{postDetail.content}"/>
 
                 <LinearLayout
                         android:layout_width="match_parent"
@@ -110,7 +110,7 @@
                             android:letterSpacing="-0.02"
                             tools:text="30"
                             android:layout_marginLeft="2dp"
-                            android:text="@{postDetail.viewCount}"/>
+                            android:text="@{postDetail.showNum}"/>
 
                     <ImageView
                             android:layout_width="wrap_content"
@@ -126,7 +126,7 @@
                             android:letterSpacing="-0.02"
                             tools:text="30"
                             android:layout_marginLeft="2dp"
-                            android:text="@{postDetail.commentCount}"/>
+                            android:text="@{postDetail.commentNum}"/>
 
                     <TextView
                             android:layout_width="wrap_content"
@@ -137,7 +137,7 @@
                             android:letterSpacing="-0.02"
                             tools:text="1시간 전"
                             android:layout_marginLeft="8dp"
-                            android:text="@{postDetail.time}"/>
+                            android:text="@{postDetail.regDate}"/>
                 </LinearLayout>
             </LinearLayout>
             <androidx.cardview.widget.CardView
@@ -148,11 +148,11 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:cardElevation="0dp"
                     app:cardBackgroundColor="@color/grey_4"
-                    cvVisibilityByString="@{postDetail.photoUrl}">
+                    cvVisibilityByString="@{postDetail.photoUrlList}">
                 <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        glideCenterCrop="@{postDetail.photoUrl}"/>
+                        glideCenterCrop="@{postDetail.photoUrlList}"/>
             </androidx.cardview.widget.CardView>
 
         </LinearLayout>

@@ -72,11 +72,8 @@
             app:tabTextColor="#bbbbbb"
             app:tabIndicatorColor="@color/ssgsag"
             app:tabIndicatorHeight="2dp"
-            app:tabMode="auto"
-            app:tabGravity="start"
-            app:tabMinWidth="50dp"
-            app:tabPaddingStart="12dp"
-            app:tabPaddingEnd="12dp"
+            app:tabMode="fixed"
+            app:tabGravity="fill"
             android:textAlignment="center"
             app:layout_constraintTop_toBottomOf="@+id/act_community_board_cl_toolbar"
             app:layout_constraintStart_toStartOf="parent"/>
@@ -101,7 +98,7 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         android:background="@color/grey_4"
-                        glideCenterCrop="@{vm.topBannerImage}"/>
+                        glideCenterCrop="@{vm.topBannerImage.photoUrl}"/>
                 <com.icoo.ssgsag_android.util.view.CircleAnimIndicator
                         android:id="@+id/frag_all_poster_cai"
                         android:layout_width="wrap_content"
@@ -109,55 +106,14 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"/>
-                <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/act_community_board_ll_empty"
-                        android:visibility="gone"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:gravity="center_horizontal">
-                    <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent">
-                        <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@drawable/img_empty"/>
-                        <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textSize="12sp"
-                                android:textColor="@color/grey_1"
-                                android:letterSpacing="-0.02"
-                                android:fontFamily="@font/noto_sans_kr_regular"
-                                android:gravity="center_horizontal"
-                                android:layout_marginTop="12dp"
-                                android:text="@string/no_post"
-                                />
-                    </LinearLayout>
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.recyclerview.widget.RecyclerView
-                        android:visibility="visible"
-                        android:id="@+id/act_community_board_rv"
+                <androidx.viewpager.widget.ViewPager
+                        android:id="@+id/act_community_board_vp"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        tools:listitem="@layout/item_board"
-                        tools:itemCount="3"
-                        android:background="@color/grey_4"
-                        android:overScrollMode="never"
-                        android:layout_weight="1"
+                        android:layout_height="match_parent"
                         app:layout_constraintTop_toBottomOf="@id/act_community_board_iv_top_banner"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        android:paddingBottom="90dp"
-                        android:clipToPadding="false"/>
+                        app:layout_constraintBottom_toBottomOf="parent"/>
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>

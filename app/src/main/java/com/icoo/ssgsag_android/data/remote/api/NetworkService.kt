@@ -15,6 +15,7 @@ import com.icoo.ssgsag_android.data.model.poster.PosterResponse
 import com.icoo.ssgsag_android.data.model.poster.TodaySsgSagResponse
 import com.icoo.ssgsag_android.data.model.poster.posterDetail.PosterDetailResponse
 import com.icoo.ssgsag_android.data.model.ads.AdsDataResponse
+import com.icoo.ssgsag_android.data.model.community.board.BoardPostListResponse
 import com.icoo.ssgsag_android.data.model.poster.allPoster.AllPosterAd
 import com.icoo.ssgsag_android.data.model.poster.allPoster.AllPosterAdResponse
 import com.icoo.ssgsag_android.data.model.review.club.response.*
@@ -514,6 +515,14 @@ interface NetworkService {
         @Path("clubPostIdx") clubPostIdx: Int
     ): Single<NullDataResponse>
 
+    // 커뮤니티
+    @GET("/community")
+    fun getBoardPost(
+        @Header("Authorization") token: String,
+        @Query("category") category: String,
+        @Query("curPage") curPage: Int,
+        @Query("pageSize") pageSize: Int
+    ): Single<BoardPostListResponse>
 
     // 광고
     @GET("/ads/v2")

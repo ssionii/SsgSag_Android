@@ -38,8 +38,6 @@ class ReviewWriteActivity : BaseActivity<ActivityClubReviewWriteBinding, ReviewW
 
         viewDataBinding.vm = viewModel
 
-        Log.e("review act reviewType", viewModel.reviewType.toString())
-
         if(intent.getStringExtra("from") == "reviewDetail"){
             setReviewWriteStringRealm("clubName", intent.getStringExtra("clubName"))
             viewModel.clubIdx = intent.getIntExtra("clubIdx", -1)

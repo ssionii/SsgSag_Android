@@ -1,4 +1,4 @@
-package com.icoo.ssgsag_android.data.model.community.board
+package com.icoo.ssgsag_android.ui.main.community.board
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,13 +9,6 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.icoo.ssgsag_android.databinding.BottomSheetPostDetailBinding
-import com.icoo.ssgsag_android.databinding.BottomSheetPosterBookmarkBinding
-import com.icoo.ssgsag_android.ui.main.calendar.calendarDetail.CalendarDetailDeletePosterDialogFragment
-import com.icoo.ssgsag_android.ui.main.calendar.posterBookmark.PosterAlarmData
-import com.icoo.ssgsag_android.ui.main.calendar.posterBookmark.PosterBookmarkRecyclerViewAdapter
-import com.icoo.ssgsag_android.ui.main.calendar.posterBookmark.PosterBookmarkViewModel
-import com.icoo.ssgsag_android.ui.main.community.board.CommunityBoardType
-import com.icoo.ssgsag_android.ui.main.community.board.PostWriteType
 import com.icoo.ssgsag_android.ui.main.community.board.postDetail.BoardPostDetailViewModel
 import com.icoo.ssgsag_android.ui.main.community.board.postDetail.write.BoardCounselPostWriteActivity
 import com.icoo.ssgsag_android.ui.main.community.board.postDetail.write.BoardTalkPostWriteActivity

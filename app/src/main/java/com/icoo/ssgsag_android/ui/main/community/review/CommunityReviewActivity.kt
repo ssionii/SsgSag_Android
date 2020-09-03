@@ -97,8 +97,6 @@ class CommunityReviewActivity : BaseActivity<ActivityCommunityReviewBinding, Rev
 
     private fun goToReviewWrite(){
 
-        Log.e("com act reviewType", reviewType.toString())
-
         val intent = Intent(this, HowWriteReviewActivity::class.java)
         intent.putExtra("from", "main")
         intent.putExtra("reviewType", reviewType)

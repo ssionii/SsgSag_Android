@@ -148,7 +148,7 @@
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:src="@drawable/profile"
-                            profileImg="@{vm.postDetail.profileUrl}"/>
+                            profileImg="@{vm.postDetail.photoUrlList}"/>
                     <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -158,7 +158,7 @@
                             android:fontFamily="@font/noto_sans_kr_regular"
                             tools:text="파이오오"
                             android:layout_marginLeft="8dp"
-                            android:text="@{vm.postDetail.userName}"/>
+                            android:text="@{vm.postDetail.userNickname}"/>
                     <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -175,7 +175,7 @@
                             android:letterSpacing="-0.02"
                             android:fontFamily="@font/noto_sans_kr_regular"
                             tools:text="3일 전"
-                            android:text="@{vm.postDetail.time}"/>
+                            android:text="@{vm.postDetail.regDate}"/>
                 </LinearLayout>
                 <TextView
                         android:layout_width="wrap_content"
@@ -187,7 +187,7 @@
                         android:layout_marginTop="16dp"
                         android:layout_marginBottom="16dp"
                         tools:text="글 내용"
-                        android:text="@{vm.postDetail.description}"
+                        android:text="@{vm.postDetail.content}"
                         />
             </LinearLayout>
 
@@ -198,7 +198,7 @@
                     android:adjustViewBounds="true"
                     app:layout_constraintTop_toBottomOf="@id/act_board_post_detail_ll_post_container"
                     app:layout_constraintStart_toStartOf="parent"
-                    glideImg="@{vm.postDetail.photoUrl}"/>
+                    glideImg="@{vm.postDetail.photoUrlList}"/>
             <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -215,7 +215,7 @@
                         android:textColor="@color/grey_2"
                         android:letterSpacing="-0.02"
                         android:fontFamily="@font/noto_sans_kr_regular"
-                        postDetailCommentNum="@{vm.postDetail.commentCount}" />
+                        postDetailCommentNum="@{vm.postDetail.commentNum}" />
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -225,7 +225,7 @@
                         android:fontFamily="@font/noto_sans_kr_regular"
                         android:layout_marginHorizontal="8dp"
                         android:layout_weight="1"
-                        postDetailViewNum="@{vm.postDetail.viewCount}"/>
+                        postDetailViewNum="@{vm.postDetail.showNum}"/>
 
                 <LinearLayout
                         android:layout_width="104dp"

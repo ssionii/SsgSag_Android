@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseActivity
-import com.icoo.ssgsag_android.data.model.community.board.BoardPostDetailBottomSheet
+import com.icoo.ssgsag_android.ui.main.community.board.BoardPostDetailBottomSheet
 import com.icoo.ssgsag_android.databinding.ActivityBoardPostDetailBinding
 import com.icoo.ssgsag_android.ui.main.community.board.CommunityBoardType
 import com.icoo.ssgsag_android.ui.main.photoEnlarge.PhotoExpandActivity
@@ -37,7 +37,13 @@ class BoardPostDetailActivity : BaseActivity<ActivityBoardPostDetailBinding, Boa
 
     private fun setButton(){
         viewDataBinding.actBoardPostDetailClMenu.setSafeOnClickListener {
-            val bottomSheet = BoardPostDetailBottomSheet(0, "post", type, true)
+            val bottomSheet =
+                BoardPostDetailBottomSheet(
+                    0,
+                    "post",
+                    type,
+                    true
+                )
 
             bottomSheet.isCancelable = true
             bottomSheet.show(supportFragmentManager, null)
@@ -45,7 +51,7 @@ class BoardPostDetailActivity : BaseActivity<ActivityBoardPostDetailBinding, Boa
 
         viewDataBinding.actBoardPostDetailIvPhoto.setSafeOnClickListener {
             val intent = Intent(this, PhotoExpandActivity::class.java)
-            intent.putExtra("photoUrl", viewModel.postDetail.value?.photoUrl)
+            intent.putExtra("photoUrl", viewModel.postDetail.value?.photoUrlList)
             startActivity(intent)
         }
     }
