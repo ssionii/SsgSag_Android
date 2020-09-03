@@ -50,3 +50,21 @@ fun setCategoryText(view : TextView, isChecked : Boolean){
         view.setTextColor(view.resources.getColor(R.color.grey_2))
     }
 }
+
+@BindingAdapter("unionClubBackgroundColor", "isUnion")
+fun setClubTabBackgroundColor(view : CardView, reviewType : Int, isUnion : Boolean){
+    if((isUnion && reviewType == 0) || (!isUnion && reviewType == 1)){
+        view.setCardBackgroundColor(Color.parseColor("#14656ef0"))
+    } else{
+        view.setCardBackgroundColor(Color.parseColor("#f7f7f7"))
+    }
+}
+
+@BindingAdapter("unionClubTextColor", "isUnion")
+fun setClubTabTextColor(view : TextView, reviewType : Int, isUnion : Boolean){
+    if((isUnion && reviewType == 0) || (!isUnion && reviewType == 1)){
+        view.setTextColor(view.resources.getColor(R.color.ssgsag))
+    }else{
+        view.setTextColor(view.resources.getColor(R.color.grey_2))
+    }
+}

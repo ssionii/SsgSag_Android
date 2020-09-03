@@ -3,6 +3,7 @@ package com.icoo.ssgsag_android.ui.main.community.review
 import android.content.Intent
 import android.os.Bundle
 import android.view.View.VISIBLE
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
@@ -11,6 +12,7 @@ import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseFragment
 import com.icoo.ssgsag_android.databinding.FragmentReviewListPageBinding
 import com.icoo.ssgsag_android.ui.main.review.club.ReviewDetailActivity
+import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import com.icoo.ssgsag_android.util.view.WrapContentLinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -21,23 +23,25 @@ class ReviewListPageFragment : BaseFragment<FragmentReviewListPageBinding, Revie
         get() = R.layout.fragment_review_list_page
     override val viewModel: ReviewViewModel by viewModel()
 
-    private var ReviewListRecyclerViewAdapter: ReviewListRecyclerViewAdapter? = null
+    private var reviewListRecyclerViewAdapter: ReviewListRecyclerViewAdapter? = null
 
+    var reviewType = MutableLiveData<Int>()
     private var curPage = 0
-    var reviewType = -1
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+
         arguments?.getInt("reviewType")?.apply{
-            reviewType = this
+            reviewType.value = this
         }
 
-        if(reviewType == 0){
+        if(reviewType.value == 0){
             setTab()
         }
 
-        viewModel.getClubReviews(curPage, reviewType)
+        viewModel.getClubReviews(curPage, reviewType.value!!)
+        viewDataBinding.fragment = this
         viewDataBinding.vm = viewModel
 
         setRv()
@@ -45,26 +49,44 @@ class ReviewListPageFragment : BaseFragment<FragmentReviewListPageBinding, Revie
 
     private fun setTab(){
         viewDataBinding.fragReviewListPageClClubTab.visibility = VISIBLE
+
+        viewDataBinding.fragReviewListPageCvUnion.setSafeOnClickListener {
+            reviewType.value = ReviewType.UNION_CLUB
+
+            curPage = 0
+            reviewListRecyclerViewAdapter?.clearAll()
+            viewModel.getClubReviews(curPage, reviewType.value!!)
+        }
+
+        viewDataBinding.fragReviewListPageCvUniv.setSafeOnClickListener {
+            reviewType.value = ReviewType.UNIV_CLUB
+
+            curPage = 0
+            reviewListRecyclerViewAdapter?.clearAll()
+            viewModel.getClubReviews(curPage, reviewType.value!!)
+        }
     }
+
 
     private fun setRv() {
 
         viewModel.reviewList.observe(requireActivity(), Observer { value ->
-            if (ReviewListRecyclerViewAdapter != null) {
-                ReviewListRecyclerViewAdapter!!.apply {
+            if (reviewListRecyclerViewAdapter != null) {
+                reviewListRecyclerViewAdapter!!.apply {
                     addItem(value)
                     notifyDataSetChanged()
+
                 }
             } else {
-                ReviewListRecyclerViewAdapter =
+                reviewListRecyclerViewAdapter =
                     ReviewListRecyclerViewAdapter(value)
-                ReviewListRecyclerViewAdapter!!.run {
+                reviewListRecyclerViewAdapter!!.run {
                     setOnReviewClickListener(onReviewClickListener)
                     setHasStableIds(true)
                 }
 
                 viewDataBinding.fragReviewPageRv.apply {
-                    adapter = ReviewListRecyclerViewAdapter
+                    adapter = reviewListRecyclerViewAdapter
 
                     (itemAnimator as SimpleItemAnimator).run {
                         changeDuration = 0
@@ -90,7 +112,7 @@ class ReviewListPageFragment : BaseFragment<FragmentReviewListPageBinding, Revie
                             if (itemCount > 0 && (10 * (curPage + 1) - 2 < position)) {
                                 curPage = (position + 1) / 10
 
-                                viewModel.getClubReviews(curPage, reviewType)
+                                viewModel.getClubReviews(curPage, reviewType.value!!)
                             }
                         }
 
@@ -108,7 +130,7 @@ class ReviewListPageFragment : BaseFragment<FragmentReviewListPageBinding, Revie
                         (this.adapter as ReviewListRecyclerViewAdapter).apply {
                             clearAll()
                             curPage = 0
-                            viewModel.getClubReviews(curPage, reviewType)
+                            viewModel.getClubReviews(curPage, reviewType.value!!)
 
                         }
                         viewDataBinding.fragReviewPageSrl.isRefreshing = false

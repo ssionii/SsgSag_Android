@@ -6,6 +6,9 @@
             <variable
                     name="vm"
                     type="com.icoo.ssgsag_android.ui.main.community.review.ReviewViewModel" />
+            <variable
+                    name="fragment"
+                    type="com.icoo.ssgsag_android.ui.main.community.review.ReviewListPageFragment" />
         </data>
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -14,6 +17,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
                 android:visibility="gone"
+                tools:visibility="visible"
                 android:id="@+id/frag_review_list_page_cl_club_tab"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
@@ -24,7 +28,8 @@
                     android:id="@+id/frag_review_list_page_cv_union"
                     android:layout_width="80dp"
                     android:layout_height="32dp"
-                    app:cardBackgroundColor="#14656ef0"
+                    unionClubBackgroundColor = "@{fragment.reviewType}"
+                    isUnion="@{true}"
                     app:cardElevation="0dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -36,7 +41,8 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/noto_sans_kr_medium"
                         android:textSize="12sp"
-                        android:textColor="@color/cornflower"
+                        unionClubTextColor ="@{fragment.reviewType}"
+                        isUnion="@{true}"
                         android:letterSpacing="-0.02"
                         android:gravity="center_horizontal"
                         android:text="연합 동아리"
@@ -50,6 +56,8 @@
                     android:layout_height="32dp"
                     app:cardBackgroundColor="#f7f7f7"
                     app:cardElevation="0dp"
+                    unionClubBackgroundColor = "@{fragment.reviewType}"
+                    isUnion="@{false}"
                     app:layout_constraintStart_toEndOf="@+id/frag_review_list_page_cv_union"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toTopOf="@+id/frag_review_list_page_v"
@@ -60,7 +68,8 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/noto_sans_kr_medium"
                         android:textSize="12sp"
-                        android:textColor="@color/grey_2"
+                        unionClubTextColor = "@{fragment.reviewType}"
+                        isUnion="@{false}"
                         android:letterSpacing="-0.02"
                         android:gravity="center_horizontal"
                         android:text="교내 동아리"

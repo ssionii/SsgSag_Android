@@ -53,7 +53,6 @@ import com.icoo.ssgsag_android.ui.main.review.club.reviews.MoreReviewViewModel
 import com.icoo.ssgsag_android.ui.main.review.club.reviews.blogReview.BlogReviewViewModel
 import com.icoo.ssgsag_android.ui.main.review.club.write.ReviewWriteViewModel
 import com.icoo.ssgsag_android.ui.main.community.review.event.ReviewEventViewModel
-import com.icoo.ssgsag_android.ui.main.community.review.main.ReviewMainViewModel
 import com.icoo.ssgsag_android.ui.main.community.review.reviewDetail.ReviewDetailViewModel
 import com.icoo.ssgsag_android.ui.main.subscribe.SubscribeViewModel
 import com.icoo.ssgsag_android.ui.main.ssgSag.SsgSagViewModel
@@ -184,7 +183,6 @@ val viewModule = module {
     viewModel { BlogReviewViewModel(get(), get()) }
     viewModel { MoreReviewViewModel(get(), get(), get()) }
     viewModel { ReviewEventViewModel(get(), get()) }
-    viewModel { ReviewMainViewModel(get(), get()) }
     // community
     viewModel { CommunityViewModel() }
     viewModel { CommunityBoardViewModel(get(), get()) }
