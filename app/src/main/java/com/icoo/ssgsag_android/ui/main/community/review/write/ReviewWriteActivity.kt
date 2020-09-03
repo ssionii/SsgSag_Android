@@ -33,13 +33,12 @@ class ReviewWriteActivity : BaseActivity<ActivityClubReviewWriteBinding, ReviewW
         }
         realm.commitTransaction()
 
-        when(intent.getIntExtra("reviewType", ReviewType.ACT)){
-            ReviewType.ACT -> viewModel.setClubType(2)
-            ReviewType.INTERN -> viewModel.setClubType(3)
-        }
         viewModel.reviewType = intent.getIntExtra("reviewType", ReviewType.ACT)
+        viewModel.setClubType( intent.getIntExtra("reviewType", ReviewType.ACT))
 
         viewDataBinding.vm = viewModel
+
+        Log.e("review act reviewType", viewModel.reviewType.toString())
 
         if(intent.getStringExtra("from") == "reviewDetail"){
             setReviewWriteStringRealm("clubName", intent.getStringExtra("clubName"))

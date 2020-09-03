@@ -2,9 +2,12 @@ package com.icoo.ssgsag_android.ui.main.community.review
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.widget.LinearLayout
+import androidx.viewpager.widget.ViewPager
+import com.google.android.material.tabs.TabLayout
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BasePagerAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -20,7 +23,7 @@ class CommunityReviewActivity : BaseActivity<ActivityCommunityReviewBinding, Rev
         get() = R.layout.activity_community_review
     override val viewModel: ReviewViewModel by viewModel()
 
-    var reviewType = ReviewType.UNION_CLUB
+    var reviewType = ReviewType.ACT
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +48,21 @@ class CommunityReviewActivity : BaseActivity<ActivityCommunityReviewBinding, Rev
             }
             currentItem = 0
             offscreenPageLimit = 2
+
+            addOnPageChangeListener(object : ViewPager.OnPageChangeListener{
+                override fun onPageScrollStateChanged(state: Int) {}
+
+                override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
+
+                override fun onPageSelected(position: Int) {
+                    when(position){
+                        0 -> reviewType = ReviewType.ACT
+                        1 -> reviewType = ReviewType.UNION_CLUB
+                        2 -> reviewType =  ReviewType.INTERN
+                    }
+
+                }
+            })
         }
     }
 
@@ -56,20 +74,7 @@ class CommunityReviewActivity : BaseActivity<ActivityCommunityReviewBinding, Rev
             getTabAt(1)!!.text = "동아리"
             getTabAt(2)!!.text = "인턴"
             setTabRippleColor(null)
-        }
 
-        val tabStrip = viewDataBinding.actCommunityReviewTlCategory.getChildAt(0) as LinearLayout
-        for (i in 0..2) {
-            tabStrip.getChildAt(i).setOnTouchListener(View.OnTouchListener { v, event ->
-                if (event?.action == MotionEvent.ACTION_UP) {
-                    when(i){
-                        0 -> reviewType = ReviewType.ACT
-                        1 -> reviewType = ReviewType.UNION_CLUB
-                        2 -> reviewType =  ReviewType.INTERN
-                    }
-                }
-                false
-            })
         }
     }
 
@@ -91,6 +96,9 @@ class CommunityReviewActivity : BaseActivity<ActivityCommunityReviewBinding, Rev
     }
 
     private fun goToReviewWrite(){
+
+        Log.e("com act reviewType", reviewType.toString())
+
         val intent = Intent(this, HowWriteReviewActivity::class.java)
         intent.putExtra("from", "main")
         intent.putExtra("reviewType", reviewType)

@@ -2,6 +2,7 @@ package com.icoo.ssgsag_android.ui.main.community.review
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.ui.main.review.club.write.ReviewWriteActivity
@@ -19,6 +20,9 @@ class HowWriteReviewActivity :AppCompatActivity(){
         }
 
         act_how_write_review_cl_done.setSafeOnClickListener {
+
+            Log.e("how act reviewType", intent.getIntExtra("reviewType", ReviewType.ACT).toString())
+
             val reviewWriteIntent = Intent(this, ReviewWriteActivity::class.java)
             reviewWriteIntent.apply {
                 putExtra("from", intent.getStringExtra("from"))
