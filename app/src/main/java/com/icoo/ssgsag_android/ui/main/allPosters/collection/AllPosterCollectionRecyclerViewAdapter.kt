@@ -1,6 +1,7 @@
 package com.icoo.ssgsag_android.ui.main.allPosters.collection
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -54,18 +55,19 @@ class AllPosterCollectionRecyclerViewAdapter(private val lifecycle: Lifecycle) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-
         if(viewType == ViewType.SSGSAG_ADS){
             val viewDataBinding = DataBindingUtil.inflate<ItemAllPosterCollectionBinding>(
                 LayoutInflater.from(parent.context),
                 R.layout.item_all_poster_collection, parent, false
             )
+
             return SsgSagAdsViewHolder(viewDataBinding)
         }else {
             val viewDataBinding = DataBindingUtil.inflate<ItemKakaoAdsBinding>(
                 LayoutInflater.from(parent.context),
                 R.layout.item_kakao_ads, parent, false
             )
+
             return GoogleAdsViewHolder(viewDataBinding)
         }
     }
@@ -87,7 +89,7 @@ class AllPosterCollectionRecyclerViewAdapter(private val lifecycle: Lifecycle) :
             else tempPosition = position
             holder.dataBinding.adPosterCollection = itemList[tempPosition]
             holder.dataBinding.itemAllPosterCollectionLlMore.setOnClickListener {
-                listener?.onMoreClick(itemList[tempPosition].categoryIdx, position)
+                listener?.onMoreClick(itemList[tempPosition].categoryIdx, tempPosition)
             }
 
             val cardViewPagerAdapter =
@@ -117,7 +119,8 @@ class AllPosterCollectionRecyclerViewAdapter(private val lifecycle: Lifecycle) :
 
                     override fun onAdFailed(p0: Int) {}
 
-                    override fun onAdLoaded() {}
+                    override fun onAdLoaded() {
+                    }
                 })
 
                 lifecycle.addObserver(object : LifecycleObserver {

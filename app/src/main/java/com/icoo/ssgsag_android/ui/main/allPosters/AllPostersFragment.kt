@@ -53,11 +53,8 @@ class AllPostersFragment : BaseFragment<FragmentAllPosterBinding, AllPostersView
                 data!!.getIntExtra("isSave", 0)
 
             allPosterCollectionRvAdapter.apply {
-                var tempIdx = 0
-                if(requestRowIdx >= 2) tempIdx = requestRowIdx + 1
-                else tempIdx = requestRowIdx
-
-                notifyItemChanged(tempIdx)
+                if(requestRowIdx >= 2) requestRowIdx++
+                notifyItemChanged(requestRowIdx)
             }
         }
     }
@@ -76,6 +73,7 @@ class AllPostersFragment : BaseFragment<FragmentAllPosterBinding, AllPostersView
                 }
             }
             allPosterCollectionRvAdapter.apply{
+                if(requestRowIdx >= 2) requestRowIdx++
                 notifyItemChanged(requestRowIdx)
             }
         }
