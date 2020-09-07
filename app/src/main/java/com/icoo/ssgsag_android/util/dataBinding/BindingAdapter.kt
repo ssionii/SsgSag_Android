@@ -1,6 +1,7 @@
 package com.icoo.ssgsag_android.util.dataBinding
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import android.os.Build
 import android.util.Log
 import android.view.View
 import android.view.View.GONE
@@ -9,6 +10,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.graphics.drawable.toDrawable
@@ -35,6 +37,10 @@ import org.jetbrains.anko.textColor
 import org.w3c.dom.Text
 import java.io.File
 import java.lang.ref.Reference
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 //View BindingAdapter
 @Suppress("UNCHECKED_CAST")
@@ -69,108 +75,6 @@ fun setNoDataDirective(view: TextView, data: List<Any>?) {
         if (size == 0) view.visibility = View.VISIBLE
         else view.visibility = View.GONE
     }
-}
-
-@BindingAdapter("glideImg")
-fun setGlideImg(view: ImageView, imgUrl: String?) {
-
-    val requestOptions = RequestOptions
-        .skipMemoryCacheOf(false)//memory cache 사용
-        .diskCacheStrategy(DiskCacheStrategy.NONE)//disk cache 사용하지 않음
-
-    Glide.with(view.context)
-        .load(imgUrl)
-        .placeholder(R.drawable.img_default)
-      //  .listener(createLoggerListener("glideImg"))
-        .thumbnail(0.1f)
-        .error(R.drawable.img_default) //에러시 나올 이미지 적용
-        .apply(requestOptions)
-        .into(view)
-
-}
-
-@BindingAdapter("glideSsgSagImg")
-fun setGlideSsgSagImg(view: ImageView, imgUrl: String?) {
-
-    val requestOptions = RequestOptions
-        .skipMemoryCacheOf(false)//memory cache 사용
-        .diskCacheStrategy(DiskCacheStrategy.NONE)//disk cache 사용하지 않음
-
-    Glide.with(view.context)
-        .load(imgUrl)
-        .placeholder(R.drawable.img_default)
-      //  .listener(createLoggerListener("glideSsgSagImg"))
-        .thumbnail(0.1f)
-        .override(501, 704)
-        .error(R.drawable.img_default) //에러시 나올 이미지 적용
-        .apply(requestOptions)
-        .into(view)
-
-}
-
-@BindingAdapter("topCropGlideImg")
-fun setAllPosterCardGlideImg(view: ImageView, imgUrl: String?) {
-
-    val requestOptions = RequestOptions
-        .skipMemoryCacheOf(false)//memory cache 사용
-        .diskCacheStrategy(DiskCacheStrategy.NONE)//disk cache 사용하지 않음
-
-    Glide.with(view.context)
-        .load(imgUrl)
-//        .listener(createLoggerListener("allPosterCardGlideImg"))
-        .placeholder(R.drawable.img_default)
-        .apply(RequestOptions.bitmapTransform(CropTransformation(view.width, view.height, CropTransformation.CropType.TOP)))
-        .into(view)
-}
-
-@BindingAdapter("imgResId")
-fun setImgResId(view: ImageView, resId: Reference<Any>) {
-
-    Log.e("imgResId", resId.toString())
-    Glide.with(view.context)
-        .load(resId)
-        .into(view)
-}
-
-@BindingAdapter("glideImgFromSquare")
-fun setGlideImgFromSquare(view: ImageView, string: String?) {
-    if(string != "") {
-
-        if (string!![0] == '/') {
-            Glide.with(view.context)
-                .load(File(string))
-                .placeholder(R.drawable.img_default)
-                .thumbnail(0.1f)
-                .error(R.drawable.img_default) //에러시 나올 이미지 적용
-                .into(view)
-        } else {
-            Glide.with(view.context)
-                .load(string)
-                .placeholder(R.drawable.img_default)
-                .thumbnail(0.1f)
-                .error(R.drawable.img_default) //에러시 나올 이미지 적용
-                .into(view)
-        }
-    }
-
-}
-
-@BindingAdapter("glideTopCrop")
-fun setGlideTopCropImg(view: ImageView, imgUrl: String?) {
-    Glide.with(view.context)
-        .load(imgUrl)
-        .listener(createLoggerListener("glideTopCrop"))
-        .apply(RequestOptions.bitmapTransform(CropTransformation(view.width, 1520, CropTransformation.CropType.TOP)))
-        .into(view)
-}
-
-@BindingAdapter("glideCenterCrop")
-fun setGlideCenterCropImg(view: ImageView, imgUrl: String?) {
-    Glide.with(view.context)
-        .load(imgUrl)
-        .centerCrop()
-        .error(R.drawable.img_poster) //에러시 나올 이미지 적용
-        .into(view)
 }
 
 
@@ -279,154 +183,39 @@ fun setSingleDateTextForm1(view: TextView, date: String?) {
     }
 }
 
+@BindingAdapter("regDate")
+fun setRegDate(view: TextView, date: String){
+
+    val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA)
+    val current = Date()
+    val dateString = formatter.format(current)
+
+    var text = ""
+
+    val yearGap = dateString.substring(0, 4).toInt() - date.substring(0, 4).toInt()
+    val monthGap = dateString.substring(5, 7).toInt() - date.substring(5, 7).toInt()
+    val dayGap = dateString.substring(8, 10).toInt() - date.substring(8, 10).toInt()
+    val hourGap = dateString.substring(11, 13).toInt() - date.substring(11, 13).toInt()
+    val minuteGap = dateString.substring(14, 16).toInt() - date.substring(14, 16).toInt()
+
+    if(yearGap == 0){
+        if(monthGap == 0){
+            if(dayGap == 0){
+                if(hourGap == 0){
+                    if(minuteGap == 0){ text = "방금" }
+                    else{ text = minuteGap.toString() + "분" }
+                }else{ text = hourGap.toString() + "시간" }
+            }else{ text = dayGap.toString() + "일" }
+        }else{ text = monthGap.toString() + "개월" }
+    }else{ text = yearGap.toString() +  "년"}
+
+    view.text = text + " 전"
+}
+
+
 @BindingAdapter("intToString")
 fun setIntToString(view: TextView, input: Int){
     view.text = input.toString()
 }
 
-@BindingAdapter("llVisibilityByString")
-fun setLinearLayoutVisibility(layout: LinearLayout, string: String?){
-    if(string == "")
-        layout.visibility = GONE
-    else
-        layout.visibility = VISIBLE
-}
 
-// R: 리버스 라는 뜻
-@BindingAdapter("clVisibilityByStringR")
-fun setConstraintLayoutVisibilityR(layout: ConstraintLayout, string: String?){
-    if(string != "")
-        layout.visibility = GONE
-    else
-        layout.visibility = VISIBLE
-}
-
-@BindingAdapter("tvVisibilityByInt")
-fun setTextViewVisibility(view: TextView, num: Int){
-    if(num == 1)
-        view.visibility = GONE
-    else
-        view.visibility = VISIBLE
-}
-
-@BindingAdapter("tvVisibilityByString")
-fun setTextviewVisivility(view: TextView, str: String?){
-    if(str == null || str == "")
-        view.visibility = GONE
-    else
-        view.visibility = VISIBLE
-}
-
-@BindingAdapter("tvVisibilityFromEmptyView")
-fun setTextViewVisibilityFromEmptyView(view: TextView, num: Int){
-
-    if(num == 0)
-        view.visibility = VISIBLE
-    else
-        view.visibility = GONE
-}
-
-
-@BindingAdapter("ivVisibilityByInt")
-fun setImageViewVisibility(view: ImageView, num: Int){
-    if(num == 0)
-        view.visibility = VISIBLE
-    else
-        view.visibility = GONE
-}
-
-@BindingAdapter("clVisibilityByBool")
-fun setConstraintLayoutVisibility(layout: ConstraintLayout, bool: Boolean){
-    if(bool)
-        layout.visibility = VISIBLE
-    else
-        layout.visibility = GONE
-}
-
-@BindingAdapter("llVisibilityByInt")
-fun LinearLayout.setVisibilityByInt(num: Int){
-    when(num){
-        1 -> this.visibility = VISIBLE
-        else -> this.visibility = GONE
-    }
-}
-
-@BindingAdapter("llVisibilityByIntR")
-fun LinearLayout.setVisibilityByIntR(num: Int){
-    when(num){
-        0 -> this.visibility = VISIBLE
-        else -> this.visibility = GONE
-    }
-}
-
-@BindingAdapter("cvVisibilityByIntR")
-fun CardView.setVisibilityByIntR(num: Int){
-    when(num){
-        0 -> this.visibility = VISIBLE
-        else -> this.visibility = GONE
-    }
-}
-
-@BindingAdapter("cvVisibilityByInt")
-fun CardView.setVisibilityByInt(num: Int){
-    when(num){
-        1 -> this.visibility = VISIBLE
-        else -> this.visibility = GONE
-    }
-}
-
-@BindingAdapter("rlVisibilityByInt")
-fun RelativeLayout.setVisibilityByInt(num: Int){
-    when(num){
-        0 -> this.visibility = GONE
-        1 -> this.visibility = VISIBLE
-
-    }
-}
-
-
-@BindingAdapter("rlVisibilityByIntR")
-fun RelativeLayout.setVisibilityByIntR(num: Int){
-    when(num){
-        0 -> this.visibility = VISIBLE
-        1 -> this.visibility = GONE
-    }
-}
-
-@BindingAdapter("cvVisibilityByString")
-fun CardView.setVisibilityByInt(str: String?){
-    if(str == null || str == ""){
-        this.visibility = GONE
-    }else{
-        this.visibility = VISIBLE
-    }
-}
-
-
-private fun createLoggerListener(name: String): RequestListener<Drawable> {
-    return object : RequestListener<Drawable> {
-        override fun onLoadFailed(e: GlideException?,
-                                  model: Any?,
-                                  target: com.bumptech.glide.request.target.Target<Drawable>?,
-                                  isFirstResource: Boolean): Boolean {
-            return false
-        }
-
-        override fun onResourceReady(resource: Drawable?,
-                                     model: Any?,
-                                     target: com.bumptech.glide.request.target.Target<Drawable>?,
-                                     dataSource: DataSource?,
-                                     isFirstResource: Boolean): Boolean {
-            if (resource is BitmapDrawable) {
-                val bitmap = resource.bitmap
-                Log.d("GlideApp",
-                    String.format("Ready %s bitmap %,d bytes, size: %d x %d",
-                        name,
-                        bitmap.byteCount,
-                        bitmap.width,
-                        bitmap.height))
-            }
-            return false
-        }
-    }
-}

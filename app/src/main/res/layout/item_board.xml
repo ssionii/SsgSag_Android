@@ -137,7 +137,7 @@
                             android:letterSpacing="-0.02"
                             tools:text="1시간 전"
                             android:layout_marginLeft="8dp"
-                            android:text="@{postDetail.regDate}"/>
+                            regDate="@{postDetail.regDate}"/>
                 </LinearLayout>
             </LinearLayout>
             <androidx.cardview.widget.CardView
