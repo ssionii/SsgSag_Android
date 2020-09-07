@@ -53,7 +53,7 @@
                     android:textColor="@color/grey_1"
                     android:letterSpacing="-0.02"
                     tools:text="공모전/대외활동"
-                    android:text="@{postDetail.category}"/>
+                    boardCategoryText="@{postDetail.category}"/>
         </LinearLayout>
         <LinearLayout
                 android:layout_width="match_parent"
@@ -110,7 +110,7 @@
                             android:letterSpacing="-0.02"
                             tools:text="30"
                             android:layout_marginLeft="2dp"
-                            android:text="@{postDetail.showNum}"/>
+                            android:text="@{Integer.toString(postDetail.showNum)}"/>
 
                     <ImageView
                             android:layout_width="wrap_content"
@@ -126,7 +126,7 @@
                             android:letterSpacing="-0.02"
                             tools:text="30"
                             android:layout_marginLeft="2dp"
-                            android:text="@{postDetail.commentNum}"/>
+                            android:text="@{Integer.toString(postDetail.commentNum)}"/>
 
                     <TextView
                             android:layout_width="wrap_content"
@@ -147,7 +147,6 @@
                     app:cardCornerRadius="4dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:cardElevation="0dp"
-                    app:cardBackgroundColor="@color/grey_4"
                     cvVisibilityByString="@{postDetail.photoUrlList}">
                 <ImageView
                         android:layout_width="match_parent"

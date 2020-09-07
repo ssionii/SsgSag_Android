@@ -68,3 +68,9 @@ fun setClubTabTextColor(view : TextView, reviewType : Int, isUnion : Boolean){
         view.setTextColor(view.resources.getColor(R.color.grey_2))
     }
 }
+
+@BindingAdapter("boardCategoryText")
+fun setBoardCategoryText(view: TextView, category : String){
+    val BoardCategoryMap = mapOf("ALL" to "전체", "CAREER" to "취업/진로", "UNIV" to "대학생활", "THE_OTHERS" to "기타")
+    view.text = BoardCategoryMap[category]
+}
