@@ -43,6 +43,8 @@ class CommunityBoardActivity : BaseActivity<ActivityCommunityBoardBinding, Commu
         CounselBoardCategory("기타", "THE_OTHERS")
     )
 
+    val talkBoardCategoryList = CounselBoardCategory("자유수다", "FREE")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -58,7 +60,7 @@ class CommunityBoardActivity : BaseActivity<ActivityCommunityBoardBinding, Commu
             CommunityBoardType.TALK -> {
                 viewDataBinding.actCommunityBoardTvTitle.text = this.resources.getString(R.string.talk_title)
                 viewDataBinding.actCommunityBoardTl.visibility = GONE
-                viewModel.getTalkList()
+                setTalkVp()
             }
         }
 
@@ -91,6 +93,17 @@ class CommunityBoardActivity : BaseActivity<ActivityCommunityBoardBinding, Commu
             }
             currentItem = 0
             offscreenPageLimit = 3
+        }
+    }
+
+    private fun setTalkVp(){
+        viewDataBinding.actCommunityBoardVp.apply{
+            adapter = BasePagerAdapter(supportFragmentManager).apply {
+                addFragment(BoardListPageFragment.newInstance(talkBoardCategoryList.category,communityBoardType))
+                isSaveEnabled = false
+            }
+            currentItem = 0
+            offscreenPageLimit = 1
         }
     }
 

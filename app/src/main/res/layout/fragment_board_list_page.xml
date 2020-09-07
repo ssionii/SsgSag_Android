@@ -9,7 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/act_community_board_ll_empty"
             android:visibility="gone"
-            tools:visibility="visible"
+            tools:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -42,11 +42,19 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/frag_board_list_page_srl"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
     <androidx.recyclerview.widget.RecyclerView
             android:visibility="visible"
             android:id="@+id/act_community_board_rv"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             tools:listitem="@layout/item_board"
             tools:itemCount="3"
             android:background="@color/grey_4"
@@ -54,9 +62,7 @@
             android:layout_weight="1"
             android:paddingBottom="90dp"
             android:clipToPadding="false"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-
+            />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

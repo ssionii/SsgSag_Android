@@ -7,6 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.SimpleItemAnimator
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.icoo.ssgsag_android.BR
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseFragment
@@ -15,6 +18,8 @@ import com.icoo.ssgsag_android.data.model.community.board.BoardPostDetail
 import com.icoo.ssgsag_android.databinding.FragmentBoardListPageBinding
 import com.icoo.ssgsag_android.databinding.ItemBoardBinding
 import com.icoo.ssgsag_android.ui.main.community.board.postDetail.BoardPostDetailActivity
+import com.icoo.ssgsag_android.ui.main.community.review.ReviewListRecyclerViewAdapter
+import com.icoo.ssgsag_android.util.view.WrapContentLinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class BoardListPageFragment : BaseFragment<FragmentBoardListPageBinding, CommunityBoardViewModel>(), BaseRecyclerViewAdapter.OnItemClickListener{
@@ -54,17 +59,41 @@ class BoardListPageFragment : BaseFragment<FragmentBoardListPageBinding, Communi
                     get() = this@BoardListPageFragment
             }
 
+            (itemAnimator as SimpleItemAnimator).run {
+                changeDuration = 0
+                supportsChangeAnimations = false
+            }
+
             layoutManager = LinearLayoutManager(requireContext())
+
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                    super.onScrollStateChanged(recyclerView, newState)
+
+                    if (newState == RecyclerView.SCROLL_STATE_DRAGGING || newState == RecyclerView.SCROLL_STATE_IDLE) {
+                        var position = (layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
+
+                        adapter!!.apply {
+                            if (itemCount > 0 && (pageSize * (curPage + 1) - 2 < position)) {
+                                curPage = (position + 1) / pageSize
+                                viewModel.getCounselList(category, curPage, pageSize)
+                            }
+                        }
+
+                    }
+                }
+
+            })
         }
 
         val emptyView = viewDataBinding.actCommunityBoardLlEmpty
         val recyclerView = viewDataBinding.actCommunityBoardRv
 
-        viewModel.postList.observe(this, Observer {
+        viewModel.postList.observe(viewLifecycleOwner, Observer {
             (viewDataBinding.actCommunityBoardRv.adapter as BaseRecyclerViewAdapter<BoardPostDetail, *>).run{
-                replaceAll(it)
+                addItem(it)
                 notifyDataSetChanged()
-                if(it.size > 0) {
+                if(this.itemCount > 0) {
                     emptyView.visibility = View.GONE
                     recyclerView.visibility = View.VISIBLE
                 }else{
@@ -74,6 +103,25 @@ class BoardListPageFragment : BaseFragment<FragmentBoardListPageBinding, Communi
 
             }
         })
+
+        viewDataBinding.fragBoardListPageSrl.apply {
+            setOnRefreshListener(object : SwipeRefreshLayout.OnRefreshListener {
+                override fun onRefresh() {
+                    // 새로고침 코드
+                    viewDataBinding.actCommunityBoardRv.apply {
+                        (this.adapter as BaseRecyclerViewAdapter<BoardPostDetail, *>).apply {
+                            clearAll()
+                            curPage = 0
+                            viewModel.getCounselList(category, curPage, pageSize)
+
+                        }
+                        viewDataBinding.fragBoardListPageSrl.isRefreshing = false
+
+                    }
+                }
+            })
+        }
+
     }
 
     override fun onItemClicked(item: Any?, position: Int?) {

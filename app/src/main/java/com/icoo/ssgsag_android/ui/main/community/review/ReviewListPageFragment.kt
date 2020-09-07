@@ -45,6 +45,7 @@ class ReviewListPageFragment : BaseFragment<FragmentReviewListPageBinding, Revie
         viewDataBinding.vm = viewModel
 
         setRv()
+        setSwipeRefresh()
     }
 
     private fun setTab(){
@@ -122,6 +123,10 @@ class ReviewListPageFragment : BaseFragment<FragmentReviewListPageBinding, Revie
             })
         }
 
+
+    }
+
+    private fun setSwipeRefresh(){
         viewDataBinding.fragReviewPageSrl.apply {
             setOnRefreshListener(object : SwipeRefreshLayout.OnRefreshListener {
                 override fun onRefresh() {
