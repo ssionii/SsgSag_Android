@@ -153,7 +153,7 @@ val viewModule = module {
     viewModel { SsgSagViewModel(get(), get(), get()) }
     viewModel { SsgSagFilterViewModel(get(), get(), get()) }
     viewModel { AllPostersViewModel(get(), get(), get()) }
-    viewModel { AllCategoryViewModel(get(), get()) }
+    single { AllCategoryViewModel(get(), get()) }
     viewModel { SearchViewModel(get(), get(), get()) }
     viewModel { TodaySwipePosterViewModel(get(), get()) }
     //Schedule

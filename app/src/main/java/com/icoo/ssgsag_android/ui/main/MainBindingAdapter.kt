@@ -21,3 +21,17 @@ fun setTabType(view: TextView, boolean: Boolean){
 
     }
 }
+
+
+@BindingAdapter("fontFamilyMediumRegular")
+fun setFontFamilyMediumRegular(view: TextView, boolean: Boolean){
+    if(boolean) {
+        view.textColor = view.context.getColor(R.color.selectedTabColor)
+        view.typeface = ResourcesCompat.getFont(SsgSagApplication.getGlobalApplicationContext(), R.font.noto_sans_kr_medium)
+
+    } else {
+        view.textColor = view.context.getColor(R.color.unselected_text_color)
+        view.typeface = ResourcesCompat.getFont(SsgSagApplication.getGlobalApplicationContext(), R.font.noto_sans_kr_regular)
+
+    }
+}

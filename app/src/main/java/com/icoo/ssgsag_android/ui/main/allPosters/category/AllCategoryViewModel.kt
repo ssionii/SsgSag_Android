@@ -42,6 +42,10 @@ class AllCategoryViewModel(
     private val _isUnivClub = MutableLiveData<Boolean>()
     val isUnivClub: LiveData<Boolean> get() = _isUnivClub
 
+    var clickedFiledPositionLeft = 0
+    var clickedFieldPositionRight = 0
+    var isLeftHeaderClicked = true
+
     init {
         _sortType.setValue(2)
         _field.setValue("0")

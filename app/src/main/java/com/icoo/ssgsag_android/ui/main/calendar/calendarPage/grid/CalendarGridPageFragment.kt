@@ -63,7 +63,6 @@ class CalendarGridPageFragment : BaseFragment<FragmentCalendarPageBinding, Calen
         args.putStringArrayList("Date", arrayListOf((item as Date).year, item.month, item.date))
         args.putBoolean("showFavorite",viewModel.isFavoriteFromGrid.value!!)
 
-
         dialogFragment.arguments = args
         dialogFragment.setOnDialogDismissedListener(calendarDialogDismissedListener)
         dialogFragment.setTargetFragment(this, 0)
