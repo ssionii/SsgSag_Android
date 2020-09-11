@@ -27,6 +27,7 @@ class AllCategoryFieldDialogFragment : BaseDialogFragment<DialogFragmentAllCateg
     lateinit var listener: OnDialogDismissedListener
 
     var category = PosterCategory.CONTEST
+    var interestNum = ""
 
     val contestFieldList = arrayListOf(Field("전체", "", false), Field("기획/아이디어", "201", false), Field("광고/마케팅", "202", false), Field("영상/콘텐츠", "206", false), Field("디자인", "205", false), Field("IT/SW", "207", false), Field("문학/시나리오", "204", false), Field("창업/스타트업", "208", false), Field("금융/경제", "215", false), Field("기타", "299", false))
     val actFieldList = arrayListOf(Field("전체", "", false),Field("대기업 서포터즈", "10000, 251", false), Field("공사/공기업 서포터즈", "50000, 251", false), Field("봉사활동", "252", false), Field("리뷰/체험단", "255", false), Field("해외봉사/탐방", "254", false), Field("기타", "299", false))
@@ -46,8 +47,8 @@ class AllCategoryFieldDialogFragment : BaseDialogFragment<DialogFragmentAllCateg
 
     }
 
-
     private fun setRv(){
+
         when(category){
             PosterCategory.CONTEST -> fieldList = contestFieldList
             PosterCategory.ACT -> fieldList = actFieldList
@@ -71,6 +72,9 @@ class AllCategoryFieldDialogFragment : BaseDialogFragment<DialogFragmentAllCateg
             }
         }
 
+        if(!(category == PosterCategory.INTERN && !viewModel.isLeftHeaderClicked)){
+            fieldList[viewModel.clickedFiledPositionLeft].isClicked = true
+        }
 
 
         viewDataBinding.dialogFragAllCategoryFieldRv.run{
@@ -101,6 +105,7 @@ class AllCategoryFieldDialogFragment : BaseDialogFragment<DialogFragmentAllCateg
                 viewModel.clickedFiledPositionLeft = position!!
             }
 
+            interestNum = (item as Field).number
             dismiss()
         }
     }
@@ -156,7 +161,12 @@ class AllCategoryFieldDialogFragment : BaseDialogFragment<DialogFragmentAllCateg
     }
 
     interface OnDialogDismissedListener {
-        fun onDialogDismissed(isUpdated: Boolean)
+        fun onDialogDismissed(interest : String)
+    }
+
+    override fun dismiss() {
+        listener.onDialogDismissed(interestNum)
+        super.dismiss()
     }
 
 }

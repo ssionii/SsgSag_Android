@@ -109,8 +109,7 @@
                 android:id="@+id/act_all_category_rv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                addAll="@{vm.posters}"/>
+                android:orientation="vertical"/>
 
         <RelativeLayout
                 android:visibility="gone"

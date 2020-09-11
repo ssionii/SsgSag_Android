@@ -3,6 +3,7 @@ package com.icoo.ssgsag_android.ui.main.allPosters.category
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.PopupMenu
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
@@ -33,11 +34,7 @@ class AllCategoryActivity : BaseActivity<ActivityAllCategoryBinding, AllCategory
     private var category = 0
 
     private var curPage = 0
-    private var field = 0
-    private var isUnion = true
-    private var isEnterprise = true
-
-    lateinit var mAdapter: DialogPlusAdapter
+    private var interestNum = ""
 
     val requestFromDetail = prepareCall(ActivityResultContracts.StartActivityForResult()) { activityResult : ActivityResult ->
         val resultCode : Int = activityResult.resultCode
@@ -87,48 +84,17 @@ class AllCategoryActivity : BaseActivity<ActivityAllCategoryBinding, AllCategory
 
 
     private fun refreshRv(){
-        viewModel.sortType.observe(this, Observer { value->
+        (viewDataBinding.actAllCategoryRv.adapter as? BaseRecyclerViewAdapter<Any, *>)?.clearAll()
 
-            if(field == 0) {
-                (viewDataBinding.actAllCategoryRv.adapter as? BaseRecyclerViewAdapter<Any, *>)?.run {
-                    clearAll()
-                    curPage = 0
-                    viewModel.getAllPosterCategory(curPage)
+        curPage = 0
 
-                    if(viewModel.posters.value != null)
-                        notifyDataSetChanged()
-                }
-            }else{
-                (viewDataBinding.actAllCategoryRv.adapter as? BaseRecyclerViewAdapter<Any, *>)?.run {
-                    clearAll()
-                    curPage = 0
-                    viewModel.getAllPosterField(field, curPage, category, isEnterprise)
+        if(interestNum == "") {
+            viewModel.getAllPosterCategory(curPage)
+        }else{
+            Log.e("gkdnl", "하위")
+            viewModel.getAllPosterField(curPage, category, interestNum)
+        }
 
-                    if(viewModel.posters.value != null)
-                        notifyDataSetChanged()
-                }
-            }
-        })
-
-
-        viewModel.refreshedPoster.observe(this, Observer { value ->
-            (viewDataBinding.actAllCategoryRv.adapter as? BaseRecyclerViewAdapter<Any, *>)?.run {
-                if(this.itemCount > viewModel.refreshedPosterPosition) {
-                    refreshItem(value, viewModel.refreshedPosterPosition)
-                    notifyItemChanged(viewModel.refreshedPosterPosition)
-                }
-            }
-        })
-
-      viewModel.empty.observe(this, Observer { value ->
-          if(curPage == 0 && value){
-              viewDataBinding.actAllCategoryRlEmpty.visibility = View.VISIBLE
-              viewDataBinding.actAllCategoryRv.visibility = View.GONE
-          }else{
-              viewDataBinding.actAllCategoryRlEmpty.visibility = View.GONE
-              viewDataBinding.actAllCategoryRv.visibility = View.VISIBLE
-          }
-      })
     }
 
     private fun setRv() {
@@ -166,11 +132,11 @@ class AllCategoryActivity : BaseActivity<ActivityAllCategoryBinding, AllCategory
 
                             if (itemCount > 0 && (10 * (curPage+1) - 2 < position)) {
                                 curPage = (position + 1) / 10
-                                if(field == 0) {
+                                if(interestNum == "") {
                                     viewModel.getAllPosterCategory(curPage)
                                 }
                                 else {
-                                    viewModel.getAllPosterField(field, curPage, category, isEnterprise)
+                                    viewModel.getAllPosterField(curPage, category, interestNum)
                                 }
                             }
                             if(viewModel.posters.value != null)
@@ -184,6 +150,37 @@ class AllCategoryActivity : BaseActivity<ActivityAllCategoryBinding, AllCategory
 
             layoutManager = WrapContentLinearLayoutManager()
         }
+
+        viewModel.posters.observe(this, Observer {
+            (viewDataBinding.actAllCategoryRv.adapter as BaseRecyclerViewAdapter<PosterDetail, *>).apply {
+                Log.e("posters!!!", it.toString())
+                replaceAll(it)
+                notifyDataSetChanged()
+            }
+        })
+
+        viewModel.sortType.observe(this, Observer {
+            refreshRv()
+        })
+
+        viewModel.refreshedPoster.observe(this, Observer { value ->
+            (viewDataBinding.actAllCategoryRv.adapter as? BaseRecyclerViewAdapter<Any, *>)?.run {
+                if(this.itemCount > viewModel.refreshedPosterPosition) {
+                    refreshItem(value, viewModel.refreshedPosterPosition)
+                    notifyItemChanged(viewModel.refreshedPosterPosition)
+                }
+            }
+        })
+
+        viewModel.empty.observe(this, Observer { value ->
+            if(curPage == 0 && value){
+                viewDataBinding.actAllCategoryRlEmpty.visibility = View.VISIBLE
+                viewDataBinding.actAllCategoryRv.visibility = View.GONE
+            }else{
+                viewDataBinding.actAllCategoryRlEmpty.visibility = View.GONE
+                viewDataBinding.actAllCategoryRv.visibility = View.VISIBLE
+            }
+        })
 
     }
 
@@ -248,191 +245,17 @@ class AllCategoryActivity : BaseActivity<ActivityAllCategoryBinding, AllCategory
         args.putInt("category", category)
 
         dialogFragment.arguments = args
+        dialogFragment.setOnDialogDismissedListener(dialogDismissedListener)
         dialogFragment.show(supportFragmentManager, "frag_dialog_all_category_field")
 
-//
-//        var isChanged = false
-//        var internHeaderClick = false
-//
-//        val holder = GridHolder(2)
-//
-//        when(category){
-//            0 -> mAdapter = DialogPlusAdapter(this, true, 10, field, category)
-//            1 -> mAdapter = DialogPlusAdapter(this, true, 7, field, category)
-//            2,6 -> mAdapter = DialogPlusAdapter(this, true, 12, field, category)
-//            4 -> {
-//                if(isEnterprise) mAdapter =  DialogPlusAdapter(this, true, 8, field, category, isEnterprise)
-//                else mAdapter =  DialogPlusAdapter(this, true, 12, field, category, isEnterprise)
-//
-//            }
-//        }
-//
-//        val builder = DialogPlus.newDialog(this).apply {
-//
-//            setContentHolder(holder)
-//            if(category == 2 || category == 6 || category == 4){
-//
-//                if(category == 2 || category == 6) {
-//                    if (isUnion)
-//                        setHeader(R.layout.item_dialog_plus_club_header_union)
-//                    else
-//                        setHeader(R.layout.item_dialog_plus_club_header_campus)
-//                }else{
-//                    if(!isEnterprise)
-//                        setHeader(R.layout.item_dialog_plus_club_header_second)
-//                    else
-//                        setHeader(R.layout.item_dialog_plus_club_header_first)
-//                }
-//
-//
-//
-//                setOnClickListener { dialog, view ->
-//
-//                    val firstCv = dialog.headerView.findViewById<CardView>(R.id.item_dialog_plus_club_header_cv_first)
-//                    val firstTv = dialog.headerView.findViewById<TextView>(R.id.item_dialog_plus_club_header_tv_first)
-//                    val secondCv =  dialog.headerView.findViewById<CardView>(R.id.item_dialog_plus_club_header_cv_second)
-//                    val secondTv = dialog.headerView.findViewById<TextView>(R.id.item_dialog_plus_club_header_tv_second)
-//
-//                    if(view.id == R.id.item_dialog_plus_club_header_cancel){
-//                        dialog.onBackPressed(dialog)
-//                    }else if(view.id == R.id.item_dialog_plus_club_header_cv_first){
-//
-//                        // todo: 데이터 바인딩으로 하고 싶어,,
-//                        firstCv.setCardBackgroundColor(Color.parseColor("#26656ef0"))
-//                        firstTv.apply {
-//                            setTextColor(resources.getColor(R.color.ssgsag))
-//                            typeface =
-//                                ResourcesCompat.getFont(
-//                                    SsgSagApplication.getGlobalApplicationContext(),
-//                                    R.font.noto_sans_kr_medium)
-//
-//                        }
-//
-//                        secondCv.setCardBackgroundColor(resources.getColor(R.color.grey_4))
-//                        secondTv.apply {
-//                            setTextColor(resources.getColor(R.color.grey_1))
-//                            typeface =
-//                                ResourcesCompat.getFont(
-//                                    SsgSagApplication.getGlobalApplicationContext(),
-//                                    R.font.noto_sans_kr_regular)
-//
-//                        }
-//                        if(category == 2) {
-//                            category = 6
-//                            viewModel.category = 6
-//                            viewModel.setIsUnivClub(true)
-//                            isUnion = false
-//                        }else if(category == 4){
-//                            isEnterprise = true
-//                            internHeaderClick = true
-//                            dialog.dismiss()
-//
-//                        }
-//                        isChanged = true
-//
-//
-//                    }else if(view.id == R.id.item_dialog_plus_club_header_cv_second){
-//
-//                        secondCv.setCardBackgroundColor(Color.parseColor("#26656ef0"))
-//                        secondTv.apply {
-//                            setTextColor(resources.getColor(R.color.ssgsag))
-//                            typeface =
-//                                ResourcesCompat.getFont(
-//                                    SsgSagApplication.getGlobalApplicationContext(),
-//                                    R.font.noto_sans_kr_medium)
-//
-//                        }
-//
-//                        firstCv.setCardBackgroundColor(resources.getColor(R.color.grey_4))
-//                        firstTv.apply {
-//                            setTextColor(resources.getColor(R.color.grey_1))
-//                            typeface =
-//                                ResourcesCompat.getFont(
-//                                    SsgSagApplication.getGlobalApplicationContext(),
-//                                    R.font.noto_sans_kr_regular)
-//
-//                        }
-//
-//
-//                        if(category == 6) {
-//                            category = 2
-//                            viewModel.category = 2
-//                            viewModel.setIsUnivClub(false)
-//                            isUnion = true
-//                        }else if(category == 4){
-//                            isEnterprise = false
-//                            internHeaderClick = true
-//                            dialog.dismiss()
-//                        }
-//
-//                        isChanged = true
-//                    }
-//                }
-//
-//            } else{
-//                setHeader(R.layout.item_dialog_plus_header)
-//
-//                setOnClickListener { dialog, view ->
-//                    if(view.id == R.id.item_dialog_plus_header_cancel){
-//                        dialog.onBackPressed(dialog)
-//                    }
-//                }
-//            }
-//
-//            setCancelable(true)
-//            setGravity(Gravity.TOP)
-//
-//            setOnItemClickListener{ dialog, item, view, position ->
-//                val textView = view.findViewById<TextView>(R.id.text_view)
-//                textView.setTextColor(context.resources.getColor(R.color.selectedTabColor))
-//
-//                field = position
-//                isChanged = true
-//                curPage = 0
-//                dialog.dismiss()
-//            }
-//
-//            setOnDismissListener {
-//                if(isChanged && !internHeaderClick) {
-//                    (viewDataBinding.actAllCategoryRv.adapter as? BaseRecyclerViewAdapter<Any, *>)?.run {
-//                        clearAll()
-//                        if(field != 0)
-//                            viewModel.getAllPosterField(field, curPage, category, isEnterprise)
-//                        else
-//                            viewModel.getAllPosterCategory(curPage)
-//                        notifyItemRangeChanged(0, curPage*100 + viewModel.posters.value!!.size)
-//                    }
-//                    isChanged = false
-//                }
-//
-//                if(category == 4 && internHeaderClick){
-//                    if(isEnterprise){
-//                        this.setAdapter(DialogPlusAdapter(context!!, true, 8, field, category, isEnterprise))
-//                        field = 0
-//                        this.setHeader(R.layout.item_dialog_plus_club_header_first)
-//                    }
-//                    else {
-//                        this.setAdapter(DialogPlusAdapter(context!!, true, 12, field, category, isEnterprise))
-//                        field = 0
-//                        this.setHeader(R.layout.item_dialog_plus_club_header_second)
-//                    }
-//                    this.create().show()
-//
-//                    internHeaderClick = false
-//                }
-//
-//            }
-//
-//            setAdapter(mAdapter)
-//            setContentHeight(ViewGroup.LayoutParams.WRAP_CONTENT)
-//            setContentWidth(ViewGroup.LayoutParams.WRAP_CONTENT)
-//            setOverlayBackgroundResource(R.color.dialog_background)
-//            setPadding(80, 30, 0, 100)
-//        }
-//        builder.create().show()
+    }
+    val dialogDismissedListener
+            = object : AllCategoryFieldDialogFragment.OnDialogDismissedListener{
+        override fun onDialogDismissed(interest: String) {
+            interestNum = interest
+            refreshRv()
+        }
 
     }
-
-
 
 }

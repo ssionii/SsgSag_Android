@@ -39,6 +39,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
     <LinearLayout
             android:id="@+id/dialog_fragment_all_category_field_ll_header"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"

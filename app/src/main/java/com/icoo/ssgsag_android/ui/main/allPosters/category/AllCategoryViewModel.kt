@@ -74,75 +74,20 @@ class AllCategoryViewModel(
         )
     }
 
-    fun getAllPosterField(data:Int, curPage: Int, category: Int, isEnterprise: Boolean = true){
+    fun getAllPosterField(curPage: Int, category: Int, interestNum : String){
+        if(interestNum == "") _field.value = "0"
+        else _field.value = interestNum
 
-        var field = "0"
-        if(category == 1){
-            when(data){
-                1 -> field = "10000, 251"
-                2 -> field = "50000, 251"
-                3 -> field = "252"
-                4 -> field = "255"
-                5 -> field = "254"
-                6 -> field = "299"
-
-            }
-        }else if(category == 0){
-            when(data){
-                1 -> field = "201"
-                2 -> field = "202"
-                3 -> field = "206"
-                4 -> field = "205"
-                5 -> field = "207"
-                6 -> field = "204"
-                7 -> field = "208"
-                8 -> field = "215"
-                9 -> field = "299"
-            }
-        }else if(category == 4 && isEnterprise){
-            when(data){
-                1 -> field = "10000"
-                2 -> field = "50000"
-                3 -> field = "20000"
-                4 -> field = "60000"
-                5 -> field = "40000"
-                6 -> field = "30000"
-                7 -> field = "95000"
-            }
-        }else if(category == 4 && !isEnterprise){
-            when(data){
-                1 -> field = "110"
-                2 -> field = "109"
-                3 -> field = "103"
-                4 -> field = "112"
-                5 -> field = "101"
-                6 -> field = "104"
-                7 -> field = "107"
-                8 -> field = "102"
-                9 -> field = "106"
-                10 -> field = "111"
-                11 -> field = "199"
-            }
-        }else if(category == 2 || category == 6){
-            field = (data + 400).toString()
-        }
-
-        if(data == 0)
-            field = "0"
-
-        _field.setValue(field)
-
-        addDisposable(repository.getAllPostersField(category, field, this.sortType.value!!, curPage)
+        addDisposable(repository.getAllPostersField(category, interestNum, this.sortType.value!!, curPage)
             .subscribeOn(schedulerProvider.io())
             .observeOn(schedulerProvider.mainThread())
             .subscribe({
-                it.run {
-                    _posters.setValue(this)
-                    if(this.size == 0){
-                        _empty.postValue(true)
-                    }else
-                        _empty.postValue(false)
-                }
+                Log.e("posters", this.toString())
+                _posters.value = it
+                if (it.size == 0)
+                    _empty.postValue(true)
+                else
+                    _empty.postValue(false)
             }, {
                 it.printStackTrace()
                 _empty.postValue(false)
