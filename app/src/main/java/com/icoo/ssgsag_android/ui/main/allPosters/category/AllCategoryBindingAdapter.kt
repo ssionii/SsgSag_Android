@@ -38,7 +38,9 @@ fun setCategoryField(view: TextView, input: String, isUnivClub: Boolean?) {
         num = 10000251
     }else if(input == "50000, 251"){
         num = 50000251
-    } else{
+    } else if(input == ""){
+        num = 0
+    }else {
         num = input.toInt()
     }
 
@@ -116,7 +118,7 @@ fun setCategoryField(view: TextView, input: String, isUnivClub: Boolean?) {
 
 @BindingAdapter("categoryFieldBackground")
 fun setCategoryFieldBackground(view:CardView, num: String){
-    if(num == "0")
+    if(num == "")
         view.setBackgroundResource(R.drawable.border_gray_box)
     else
         view.setBackgroundResource(R.drawable.border_selected_box)

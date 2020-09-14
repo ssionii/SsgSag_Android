@@ -1,7 +1,9 @@
 package com.icoo.ssgsag_android.ui.main.allPosters.category
 
+import android.content.DialogInterface
 import android.graphics.Color
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.View.VISIBLE
 import android.widget.TextView
 import androidx.cardview.widget.CardView
@@ -13,6 +15,7 @@ import com.icoo.ssgsag_android.base.BaseDialogFragment
 import com.icoo.ssgsag_android.base.BaseRecyclerViewAdapter
 import com.icoo.ssgsag_android.databinding.DialogFragmentAllCategoryFieldBinding
 import com.icoo.ssgsag_android.databinding.ItemAllCategoryFieldBinding
+import com.icoo.ssgsag_android.ui.main.MainActivity
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import com.icoo.ssgsag_android.util.view.NonScrollGridLayoutManager
 import org.jetbrains.anko.textColor
@@ -45,6 +48,11 @@ class AllCategoryFieldDialogFragment : BaseDialogFragment<DialogFragmentAllCateg
         setRv()
         setButton()
 
+    }
+
+    override fun dismiss() {
+        listener.onDialogDismissed(interestNum)
+        super.dismiss()
     }
 
     private fun setRv(){
@@ -123,7 +131,7 @@ class AllCategoryFieldDialogFragment : BaseDialogFragment<DialogFragmentAllCateg
 
     private fun setButton(){
         viewDataBinding.dialogFragAllCategoryFieldClCancel.setSafeOnClickListener {
-            dismiss()
+            super.dismiss()
         }
 
         viewDataBinding.dialogFragAllCategoryFieldCvLeft.setSafeOnClickListener {
@@ -162,11 +170,6 @@ class AllCategoryFieldDialogFragment : BaseDialogFragment<DialogFragmentAllCateg
 
     interface OnDialogDismissedListener {
         fun onDialogDismissed(interest : String)
-    }
-
-    override fun dismiss() {
-        listener.onDialogDismissed(interestNum)
-        super.dismiss()
     }
 
 }

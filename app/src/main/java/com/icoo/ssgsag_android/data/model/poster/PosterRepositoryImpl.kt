@@ -33,7 +33,9 @@ class PosterRepositoryImpl(val api: NetworkService, val pref: PreferenceManager)
         }
         .map {
             Log.e("all posters 분야 status", it.status.toString())
-            it.data}
+            Log.e("all posters 분야 message", it.message)
+            it.data
+        }
 
 
     override fun getAllPosters(): Single<Poster> = api

@@ -74,7 +74,8 @@ class AllPostersViewModel(
                 Log.e("getAllPosterAd error", it.message)
             }
             .subscribe({
-                _mainAdList.value = it.mainAdList
+//                _mainAdList.value = it.mainAdList
+                _mainAdList.value = null
                 _posterList.value = it.posterList
                 _eventList.value = it.eventList
             }, {

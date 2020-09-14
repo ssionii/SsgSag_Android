@@ -6,6 +6,7 @@ import android.graphics.Point
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.View.GONE
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
@@ -114,13 +115,18 @@ class AllPostersFragment : BaseFragment<FragmentAllPosterBinding, AllPostersView
         }
 
         viewModel.mainAdList.observe(viewLifecycleOwner, Observer {
-            vpAdapter.apply{
-                replaceAll(it[0].adViewItemList)
-                notifyDataSetChanged()
-            }
-            viewDataBinding.fragAllPosterCai.createDotPanel(it[0].adViewItemList.size, R.drawable.dot_2, R.drawable.dot_1)
+            if(it.size > 0){
+                vpAdapter.apply{
+                    replaceAll(it[0].adViewItemList)
+                    notifyDataSetChanged()
+                }
+                viewDataBinding.fragAllPosterCai.createDotPanel(it[0].adViewItemList.size, R.drawable.dot_2, R.drawable.dot_1)
 
-            viewDataBinding.fragAllPosterAsvpBanner.startAutoScroll()
+                viewDataBinding.fragAllPosterAsvpBanner.startAutoScroll()
+            }else{
+                viewDataBinding.fragAllPosterAsvpBanner.visibility = GONE
+            }
+
         })
     }
 

@@ -49,7 +49,7 @@
                     android:id="@+id/act_all_category_cv_field"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    categoryFieldBackground="@{vm.field}"
+                    categoryFieldBackground="@{vm.interestNum}"
                     app:cardElevation="0dp">
                 <RelativeLayout
                         android:layout_width="match_parent"
@@ -63,7 +63,7 @@
                             android:textSize="12sp"
                             android:fontFamily="@font/noto_sans_kr_medium"
                             tool:text="분야: 전체"
-                            categoryField="@{vm.field}"
+                            categoryField="@{vm.interestNum}"
                             isUnivClub="@{vm.isUnivClub}"
                             android:layout_centerInParent="true"/>
                 </RelativeLayout>

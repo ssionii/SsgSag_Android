@@ -33,8 +33,9 @@ class AllCategoryViewModel(
 
     private val _sortType = MutableLiveData<Int>()
     val sortType: LiveData<Int> get() = _sortType
-    private val _field = MutableLiveData<String>()
-    val field: LiveData<String> get() = _field
+    private val _interestNum = MutableLiveData<String>()
+    val interestNum: LiveData<String> get() = _interestNum
+
     private val _subCategory = MutableLiveData<Int>()
     val subCategory: LiveData<Int> get() = _subCategory
 
@@ -48,14 +49,13 @@ class AllCategoryViewModel(
 
     init {
         _sortType.setValue(2)
-        _field.setValue("0")
+        _interestNum.setValue("")
         _empty.setValue(false)
     }
 
 
     fun getAllPosterCategory(curPage: Int){
 
-        _field.postValue("0")
         addDisposable(repository.getAllPostersCategory(category, this.sortType.value!!, curPage)
             .subscribeOn(schedulerProvider.io())
             .observeOn(schedulerProvider.mainThread())
@@ -74,25 +74,35 @@ class AllCategoryViewModel(
         )
     }
 
-    fun getAllPosterField(curPage: Int, category: Int, interestNum : String){
-        if(interestNum == "") _field.value = "0"
-        else _field.value = interestNum
+    fun getAllPosterField(curPage: Int, category: Int){
 
-        addDisposable(repository.getAllPostersField(category, interestNum, this.sortType.value!!, curPage)
+        Log.e("curPage", curPage.toString())
+        Log.e("category", category.toString())
+        Log.e("interestNum", interestNum.value)
+        Log.e("this.sortType", this.sortType.value.toString())
+
+        // --
+
+        addDisposable(repository.getAllPostersField(category, interestNum.value!!, this.sortType.value!!, curPage)
             .subscribeOn(schedulerProvider.io())
             .observeOn(schedulerProvider.mainThread())
+            .doOnError { Log.e("eroor", "밝생") }
             .subscribe({
-                Log.e("posters", this.toString())
-                _posters.value = it
-                if (it.size == 0)
-                    _empty.postValue(true)
-                else
-                    _empty.postValue(false)
+                it.run {
+                    _posters.setValue(this)
+                    if(this.size == 0){
+                        _empty.postValue(true)
+                    }else
+                        _empty.postValue(false)
+                }
             }, {
                 it.printStackTrace()
-                _empty.postValue(false)
+                _empty.postValue(true)
             })
         )
+
+
+        Log.e("끝난 Log", "!!")
     }
 
     fun getRefreshedPoster(){
@@ -117,14 +127,9 @@ class AllCategoryViewModel(
         category = num
     }
 
-    fun setSubCategoryType(num: Int){
-        _subCategory.postValue(num)
+    fun setInterestNum(num : String){
+        _interestNum.value = num
     }
-
-    fun setIsUnivClub(bool: Boolean){
-        _isUnivClub.postValue(bool)
-    }
-
 
     fun navigate(idx: Int, position: Int) {
 

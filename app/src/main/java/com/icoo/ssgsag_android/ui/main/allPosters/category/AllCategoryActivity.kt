@@ -4,25 +4,27 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.ContextThemeWrapper
+import android.view.MenuItem
+import android.view.MotionEvent
+import android.view.View
 import android.widget.PopupMenu
-import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.RecyclerView
-import com.icoo.ssgsag_android.BR
-import com.icoo.ssgsag_android.R
-import com.icoo.ssgsag_android.base.BaseRecyclerViewAdapter
-import com.icoo.ssgsag_android.data.model.poster.posterDetail.PosterDetail
-import com.icoo.ssgsag_android.databinding.ItemAllPostersBinding
-import com.icoo.ssgsag_android.util.view.WrapContentLinearLayoutManager
-import org.koin.androidx.viewmodel.ext.android.viewModel
-import android.view.*
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
+import com.icoo.ssgsag_android.BR
+import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseActivity
+import com.icoo.ssgsag_android.base.BaseRecyclerViewAdapter
+import com.icoo.ssgsag_android.data.model.poster.posterDetail.PosterDetail
 import com.icoo.ssgsag_android.databinding.ActivityAllCategoryBinding
+import com.icoo.ssgsag_android.databinding.ItemAllPostersBinding
 import com.icoo.ssgsag_android.ui.main.calendar.calendarDetail.CalendarDetailActivity
-import com.icoo.ssgsag_android.util.DialogPlusAdapter
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
+import com.icoo.ssgsag_android.util.view.WrapContentLinearLayoutManager
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AllCategoryActivity : BaseActivity<ActivityAllCategoryBinding, AllCategoryViewModel>(),
     BaseRecyclerViewAdapter.OnItemClickListener {
@@ -31,10 +33,10 @@ class AllCategoryActivity : BaseActivity<ActivityAllCategoryBinding, AllCategory
         get() = R.layout.activity_all_category
     override val viewModel: AllCategoryViewModel by viewModel()
 
-    private var category = 0
+    lateinit private var fieldDialogFragment : AllCategoryFieldDialogFragment
 
+    private var category = 0
     private var curPage = 0
-    private var interestNum = ""
 
     val requestFromDetail = prepareCall(ActivityResultContracts.StartActivityForResult()) { activityResult : ActivityResult ->
         val resultCode : Int = activityResult.resultCode
@@ -68,7 +70,7 @@ class AllCategoryActivity : BaseActivity<ActivityAllCategoryBinding, AllCategory
 
 
         setRv()
-        refreshRv()
+        setDataObserver()
         setButton()
 
         viewModel.clickedFiledPositionLeft = 0
@@ -88,13 +90,13 @@ class AllCategoryActivity : BaseActivity<ActivityAllCategoryBinding, AllCategory
 
         curPage = 0
 
-        if(interestNum == "") {
+        if(viewModel.interestNum.value == "") {
+            Log.e("안녕", ";;")
             viewModel.getAllPosterCategory(curPage)
         }else{
             Log.e("gkdnl", "하위")
-            viewModel.getAllPosterField(curPage, category, interestNum)
+            viewModel.getAllPosterField(curPage, category)
         }
-
     }
 
     private fun setRv() {
@@ -132,11 +134,11 @@ class AllCategoryActivity : BaseActivity<ActivityAllCategoryBinding, AllCategory
 
                             if (itemCount > 0 && (10 * (curPage+1) - 2 < position)) {
                                 curPage = (position + 1) / 10
-                                if(interestNum == "") {
+                                if(viewModel.interestNum.value!! == "") {
                                     viewModel.getAllPosterCategory(curPage)
                                 }
                                 else {
-                                    viewModel.getAllPosterField(curPage, category, interestNum)
+                                    viewModel.getAllPosterField(curPage, category)
                                 }
                             }
                             if(viewModel.posters.value != null)
@@ -151,6 +153,10 @@ class AllCategoryActivity : BaseActivity<ActivityAllCategoryBinding, AllCategory
             layoutManager = WrapContentLinearLayoutManager()
         }
 
+        refreshRv()
+    }
+
+    private fun setDataObserver(){
         viewModel.posters.observe(this, Observer {
             (viewDataBinding.actAllCategoryRv.adapter as BaseRecyclerViewAdapter<PosterDetail, *>).apply {
                 Log.e("posters!!!", it.toString())
@@ -160,6 +166,11 @@ class AllCategoryActivity : BaseActivity<ActivityAllCategoryBinding, AllCategory
         })
 
         viewModel.sortType.observe(this, Observer {
+            refreshRv()
+        })
+
+        viewModel.interestNum.observe(this, Observer {
+            Log.e("interest Num????", it)
             refreshRv()
         })
 
@@ -181,7 +192,6 @@ class AllCategoryActivity : BaseActivity<ActivityAllCategoryBinding, AllCategory
                 viewDataBinding.actAllCategoryRv.visibility = View.VISIBLE
             }
         })
-
     }
 
     override fun onItemClicked(item: Any?, position: Int?) {
@@ -240,20 +250,24 @@ class AllCategoryActivity : BaseActivity<ActivityAllCategoryBinding, AllCategory
 
     private fun showDialog(){
 
-        val dialogFragment = AllCategoryFieldDialogFragment()
+        fieldDialogFragment = AllCategoryFieldDialogFragment()
         val args = Bundle()
         args.putInt("category", category)
+        fieldDialogFragment.arguments = args
+        fieldDialogFragment.setOnDialogDismissedListener(dialogDismissedListener)
 
-        dialogFragment.arguments = args
-        dialogFragment.setOnDialogDismissedListener(dialogDismissedListener)
-        dialogFragment.show(supportFragmentManager, "frag_dialog_all_category_field")
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.addToBackStack(null)
+
+
+        fieldDialogFragment.show(supportFragmentManager, null)
 
     }
-    val dialogDismissedListener
+
+    private val dialogDismissedListener
             = object : AllCategoryFieldDialogFragment.OnDialogDismissedListener{
         override fun onDialogDismissed(interest: String) {
-            interestNum = interest
-            refreshRv()
+            viewModel.setInterestNum(interest)
         }
 
     }
