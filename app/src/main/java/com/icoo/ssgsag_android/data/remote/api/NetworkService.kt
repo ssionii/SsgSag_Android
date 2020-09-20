@@ -531,6 +531,47 @@ interface NetworkService {
         @Path("communityIdx") communityIdx: Int
     ): Single<BoardPostDetailResponse>
 
+    // 커뮤니티 좋아요
+    // 커뮤니티 게시글
+    @POST("/community/like")
+    fun likeCommunityPost(
+        @Header("Authorization") token: String,
+        @Query("communityIdx") communityIdx: Int
+    ): Single<NullDataResponse>
+    // 커뮤니티 댓글 게시글
+    @POST("/community/comment/like")
+    fun likeCommunityComment(
+        @Header("Authorization") token: String,
+        @Query("commentIdx") communityIdx: Int
+    ): Single<NullDataResponse>
+    // 커뮤니티 댓글 게시글
+    @POST("/community/comment/like")
+    fun likeCommunityReply(
+        @Header("Authorization") token: String,
+        @Query("ccommunityIdx") ccommunityIdx: Int
+    ): Single<NullDataResponse>
+
+    // 커뮤니티 좋아요 취소
+    // 커뮤니티 게시글
+    @DELETE("/community/like")
+    fun unlikeCommunityPost(
+        @Header("Authorization") token: String,
+        @Query("communityIdx") communityIdx: Int
+    ): Single<NullDataResponse>
+    // 커뮤니티 댓글 게시글
+    @DELETE("/community/comment/like")
+    fun unlikeCommunityComment(
+        @Header("Authorization") token: String,
+        @Query("commentIdx") communityIdx: Int
+    ): Single<NullDataResponse>
+    // 커뮤니티 댓글 게시글
+    @DELETE("/community/comment/like")
+    fun unlikeCommunityReply(
+        @Header("Authorization") token: String,
+        @Query("ccommunityIdx") ccommunityIdx: Int
+    ): Single<NullDataResponse>
+
+
 
 
     // 광고

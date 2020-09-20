@@ -22,6 +22,9 @@ class BoardPostDetailViewModel(
     private var _commentList = MutableLiveData<ArrayList<PostComment>>()
     val commentList : LiveData<ArrayList<PostComment>> = _commentList
 
+    var refreshedCommentPosition = MutableLiveData<Int>()
+    lateinit var refreshedComment : PostComment
+
 
     fun getPostDetail(postIdx : Int){
         addDisposable(repository.getBoardPostDetail(postIdx)
@@ -37,8 +40,48 @@ class BoardPostDetailViewModel(
             }) {
                 Log.e("get post detail error", it.message)
             })
+    }
 
+    fun likeComment(postComment : PostComment, position : Int){
+        if(postComment.like) {
+            addDisposable(repository.unlikeCommunityComment(postComment.commentIdx)
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.mainThread())
+                .doOnError {
+                    Log.e("unlike comment error", it.message)
+                }
+                .subscribe({
+                    if(it.status == 200) {
 
+                        refreshedComment = postComment
+                        if(refreshedComment.likeNum > 0)
+                            refreshedComment.likeNum--
+                        refreshedComment.like = false
+
+                        refreshedCommentPosition.value = position
+                    }
+                }) {
+
+                })
+        }else {
+            addDisposable(repository.likeCommunityComment(postComment.commentIdx)
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.mainThread())
+                .doOnError {
+                    Log.e("like comment error", it.message)
+                }
+                .subscribe({
+                    if(it.status == 200) {
+                        refreshedComment = postComment
+                        refreshedComment.likeNum++
+                        refreshedComment.like = true
+
+                        refreshedCommentPosition.value = position
+                    }
+                }) {
+
+                })
+        }
     }
 
 }

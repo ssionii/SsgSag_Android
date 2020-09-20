@@ -18,4 +18,28 @@ class CommunityRepositoryImpl (val api: NetworkService, val pref: PreferenceMana
     override fun getBoardPostDetail(communityIdx: Int): Single<BoardPostDetail>
         = api.getPostDetail(pref.findPreference("TOKEN", ""), communityIdx)
         .map { it.data }
+
+    override fun likeCommunityPost(communityIdx: Int): Single<NullDataResponse>
+            = api.likeCommunityPost(pref.findPreference("TOKEN", ""), communityIdx)
+            .map { it }
+
+    override fun likeCommunityComment(commentIdx: Int): Single<NullDataResponse>
+            = api.likeCommunityComment(pref.findPreference("TOKEN", ""), commentIdx)
+            .map { it }
+
+    override fun likeCommunityReply(ccommunityIdx: Int): Single<NullDataResponse>
+            = api.likeCommunityReply(pref.findPreference("TOKEN", ""), ccommunityIdx)
+            .map { it }
+
+    override fun unlikeCommunityPost(communityIdx: Int): Single<NullDataResponse>
+            = api.unlikeCommunityPost(pref.findPreference("TOKEN", ""), communityIdx)
+        .map { it }
+
+    override fun unlikeCommunityComment(commentIdx: Int): Single<NullDataResponse>
+            = api.unlikeCommunityComment(pref.findPreference("TOKEN", ""), commentIdx)
+        .map { it }
+
+    override fun unlikeCommunityReply(ccommunityIdx: Int): Single<NullDataResponse>
+            = api.unlikeCommunityReply(pref.findPreference("TOKEN", ""), ccommunityIdx)
+        .map { it }
 }

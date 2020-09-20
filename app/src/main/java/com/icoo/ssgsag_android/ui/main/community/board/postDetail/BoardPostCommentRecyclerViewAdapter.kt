@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.data.model.community.board.PostComment
 import com.icoo.ssgsag_android.databinding.ItemBoardPostDetailCommentBinding
+import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 
 class BoardPostCommentRecyclerViewAdapter() : RecyclerView.Adapter<BoardPostCommentRecyclerViewAdapter.ViewHolder>() {
 
@@ -22,8 +23,14 @@ class BoardPostCommentRecyclerViewAdapter() : RecyclerView.Adapter<BoardPostComm
         }
     }
 
+    fun replaceItem(item : PostComment, position : Int){
+        itemList[position] = item
+    }
+
 
     override fun getItemCount() = itemList.size
+
+    override fun getItemId(position: Int) = itemList[position].commentIdx.toLong()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BoardPostCommentRecyclerViewAdapter.ViewHolder {
         val viewDataBinding = DataBindingUtil.inflate<ItemBoardPostDetailCommentBinding>(
@@ -48,6 +55,18 @@ class BoardPostCommentRecyclerViewAdapter() : RecyclerView.Adapter<BoardPostComm
             replyAdapter.replaceAll(itemList[position].communityCCommentList)
         }
 
+        holder.dataBinding.itemBoardPostDetailCommentIvLike.setSafeOnClickListener {
+            listener?.onLikeClick(itemList[position], position)
+        }
+
+        holder.dataBinding.itemBoardPostDetailCommentIvMore.setSafeOnClickListener {
+            listener?.onMoreLikeClick(itemList[position].commentIdx)
+        }
+
+        holder.dataBinding.itemBoardPostDetailCommentTvReply.setSafeOnClickListener {
+            listener?.onReplyLikeClick(itemList[position].commentIdx)
+        }
+
     }
 
     val replyClickListener = object : BoardPostReplyRecyclerViewAdapter.OnCommentClickListener{
@@ -59,7 +78,9 @@ class BoardPostCommentRecyclerViewAdapter() : RecyclerView.Adapter<BoardPostComm
     inner class ViewHolder(val dataBinding: ItemBoardPostDetailCommentBinding) : RecyclerView.ViewHolder(dataBinding.root)
 
     interface OnCommentClickListener {
-        fun onLikeClick(commentIdx: Int)
+        fun onLikeClick(postComment: PostComment, position: Int)
+        fun onMoreLikeClick(commentIdx : Int)
+        fun onReplyLikeClick(commentIdx: Int)
     }
 
     private var listener: OnCommentClickListener? = null

@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.databinding.BindingAdapter
 import com.icoo.ssgsag_android.R
+import org.jetbrains.anko.textColor
 import java.text.DecimalFormat
 
 @BindingAdapter("reviewMainText")
@@ -57,6 +58,26 @@ fun setPostLike(view: ImageView, bool : Boolean) {
         view.setImageDrawable(view.resources.getDrawable(R.drawable.ic_like_big_outlined))
     }
 }
+
+@BindingAdapter("commentLike")
+fun setCommentLike(view: ImageView, bool : Boolean) {
+    if(bool){
+        view.setImageDrawable(view.resources.getDrawable(R.drawable.ic_like_filled))
+    }else{
+        view.setImageDrawable(view.resources.getDrawable(R.drawable.ic_like_outlined))
+    }
+}
+
+@BindingAdapter("commentLikeTextColor")
+fun setCommentLikeTextColor(view: TextView, like : Boolean) {
+    if(like){
+        view.textColor = Color.parseColor("#fe6d6d")
+    }else{
+        view.textColor = view.resources.getColor(R.color.grey_1)
+    }
+}
+
+
 
 @BindingAdapter("categoryBg")
 fun setCategoryBg(view : CardView, isChecked : Boolean){

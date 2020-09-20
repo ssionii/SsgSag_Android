@@ -51,6 +51,7 @@
                         android:fontFamily="@font/noto_sans_kr_bold"
                         />
                 <ImageView
+                        android:id="@+id/item_board_post_detail_comment_iv_more"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_category_etc"/>
@@ -85,10 +86,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="10dp"
-                        android:textColor="@color/grey_1"
                         android:letterSpacing="-0.02"
                         tools:text="공감 0"
                         postDetailLikeNum="@{postComment.likeNum}"
+                        commentLikeTextColor="@{postComment.like}"
                         android:fontFamily="@font/noto_sans_kr_medium"
                         android:layout_marginLeft="12dp"
                         />
@@ -101,15 +102,17 @@
                         android:text="답글 달기"
                         android:fontFamily="@font/noto_sans_kr_medium"
                         android:layout_marginLeft="12dp"
+                        android:id="@+id/item_board_post_detail_comment_tv_reply"
                         />
                 <View
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:layout_weight="1"/>
                 <ImageView
+                        android:id="@+id/item_board_post_detail_comment_iv_like"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:src="@drawable/ic_like_outlined"/>
+                        commentLike="@{postComment.like}"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

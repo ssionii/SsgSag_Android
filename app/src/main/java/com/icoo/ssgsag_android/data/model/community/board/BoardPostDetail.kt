@@ -34,7 +34,7 @@ data class PostComment(
     val commentIdx : Int,
     val content : String,
     val regDate : String,
-    val likeNum : Int,
+    var likeNum : Int,
     val userIdx : Int,
     val communityIdx : Int,
     val isDelete : Int,
@@ -42,7 +42,7 @@ data class PostComment(
     val userProfileUrl: String,
     val communityCCommentList : ArrayList<PostComment>?,
     val commentName : String?,
-    val like : Boolean,
+    var like : Boolean,
     val mine: Boolean
 
 )

@@ -7,6 +7,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseActivity
+import com.icoo.ssgsag_android.data.model.community.board.PostComment
 import com.icoo.ssgsag_android.ui.main.community.board.BoardPostDetailBottomSheet
 import com.icoo.ssgsag_android.databinding.ActivityBoardPostDetailBinding
 import com.icoo.ssgsag_android.ui.main.community.board.CommunityBoardType
@@ -20,6 +21,8 @@ class BoardPostDetailActivity : BaseActivity<ActivityBoardPostDetailBinding, Boa
         get() = R.layout.activity_board_post_detail
 
     override val viewModel: BoardPostDetailViewModel by viewModel()
+
+    lateinit var boardPostCommentRecyclerViewAdapter : BoardPostCommentRecyclerViewAdapter
 
     var type = 0
     var postIdx = 0
@@ -44,21 +47,25 @@ class BoardPostDetailActivity : BaseActivity<ActivityBoardPostDetailBinding, Boa
             setButton()
         })
 
-       setCommentRv()
+        setCommentRv()
+        refreshComment()
     }
 
     private fun setCommentRv(){
 
-        val commentAdapter = BoardPostCommentRecyclerViewAdapter()
-        commentAdapter.setOnCommentClickListener(commentClickListener)
+        boardPostCommentRecyclerViewAdapter = BoardPostCommentRecyclerViewAdapter()
+        boardPostCommentRecyclerViewAdapter.apply {
+            setOnCommentClickListener(commentClickListener)
+            setHasStableIds(true)
+        }
 
         viewDataBinding.actBoardPostDetailRvComment.run{
-            adapter = commentAdapter
+            adapter = boardPostCommentRecyclerViewAdapter
             layoutManager = LinearLayoutManager(context)
         }
 
         viewModel.commentList.observe(this, Observer {
-            commentAdapter.run{
+            boardPostCommentRecyclerViewAdapter.run{
                 replaceAll(it)
                 notifyDataSetChanged()
             }
@@ -66,9 +73,26 @@ class BoardPostDetailActivity : BaseActivity<ActivityBoardPostDetailBinding, Boa
         })
     }
 
-    val commentClickListener = object : BoardPostCommentRecyclerViewAdapter.OnCommentClickListener{
-        override fun onLikeClick(commentIdx: Int) {
+    private fun refreshComment(){
+        viewModel.refreshedCommentPosition.observe(this, Observer {
+            boardPostCommentRecyclerViewAdapter.run{
+                replaceItem(viewModel.refreshedComment, viewModel.refreshedCommentPosition.value!!)
+                notifyItemChanged(viewModel.refreshedCommentPosition.value!!)
+            }
+        })
+    }
 
+    val commentClickListener = object : BoardPostCommentRecyclerViewAdapter.OnCommentClickListener{
+        override fun onLikeClick(postComment: PostComment, position: Int) {
+            viewModel.likeComment(postComment, position)
+        }
+
+        override fun onMoreLikeClick(commentIdx: Int) {
+            TODO("Not yet implemented")
+        }
+
+        override fun onReplyLikeClick(commentIdx: Int) {
+            TODO("Not yet implemented")
         }
     }
 
