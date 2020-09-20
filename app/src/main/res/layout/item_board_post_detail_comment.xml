@@ -71,16 +71,16 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:gravity="center_vertical">
+
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="10dp"
-                        android:textColor="@color/grey_2"
-                        android:letterSpacing="-0.02"
-                        tools:text="21시간"
-                        android:text="@{postComment.regDate}"
                         android:fontFamily="@font/noto_sans_kr_regular"
-                        />
+                        android:letterSpacing="-0.02"
+                        regDate="@{postComment.regDate}"
+                        android:textColor="@color/grey_2"
+                        android:textSize="10dp"
+                        tools:text="21시간" />
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -88,7 +88,7 @@
                         android:textColor="@color/grey_1"
                         android:letterSpacing="-0.02"
                         tools:text="공감 0"
-                        android:text="@{Integer.toString(postComment.likeNum)}"
+                        postDetailLikeNum="@{postComment.likeNum}"
                         android:fontFamily="@font/noto_sans_kr_medium"
                         android:layout_marginLeft="12dp"
                         />
@@ -98,7 +98,7 @@
                         android:textSize="10dp"
                         android:textColor="@color/grey_1"
                         android:letterSpacing="-0.02"
-                        tools:text="댓글 달기"
+                        android:text="답글 달기"
                         android:fontFamily="@font/noto_sans_kr_medium"
                         android:layout_marginLeft="12dp"
                         />

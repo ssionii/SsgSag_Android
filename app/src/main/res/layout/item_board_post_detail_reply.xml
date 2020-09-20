@@ -60,7 +60,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:cardBackgroundColor="@color/grey_4"
-                    app:cardCornerRadius="3dp">
+                    app:cardCornerRadius="3dp"
+                    app:cardElevation="0dp">
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -68,6 +69,7 @@
                         android:textColor="@color/grey_1"
                         android:letterSpacing="-0.02"
                         tools:text="\ufeff@파이오오"
+                        android:fontFamily="@font/noto_sans_kr_medium"
                         android:text="@{postComment.commentName}"
                         android:layout_marginHorizontal="4dp"
                         android:layout_marginTop="1dp"
@@ -97,7 +99,7 @@
                         android:textColor="@color/grey_2"
                         android:letterSpacing="-0.02"
                         tools:text="21시간"
-                        android:text="@{postComment.regDate}"
+                        regDate="@{postComment.regDate}"
                         android:fontFamily="@font/noto_sans_kr_regular"
                         />
                 <TextView
@@ -107,7 +109,7 @@
                         android:textColor="@color/grey_1"
                         android:letterSpacing="-0.02"
                         tools:text="공감 0"
-                        android:text="@{Integer.toString(postComment.likeNum)}"
+                        postDetailLikeNum="@{postComment.likeNum}"
                         android:fontFamily="@font/noto_sans_kr_medium"
                         android:layout_marginLeft="12dp"
                         />
@@ -117,7 +119,7 @@
                         android:textSize="10dp"
                         android:textColor="@color/grey_1"
                         android:letterSpacing="-0.02"
-                        tools:text="댓글 달기"
+                        android:text="답글 달기"
                         android:fontFamily="@font/noto_sans_kr_medium"
                         android:layout_marginLeft="12dp"
                         />

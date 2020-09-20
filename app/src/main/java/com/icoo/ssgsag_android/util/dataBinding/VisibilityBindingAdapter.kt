@@ -35,6 +35,14 @@ fun setTextViewVisibility(view: TextView, num: Int){
         view.visibility = View.VISIBLE
 }
 
+@BindingAdapter("tvVisibilityBySize")
+fun setTextViewVisibilityBySize(view: TextView, size: Int){
+    if(size != 0)
+        view.visibility = View.GONE
+    else
+        view.visibility = View.VISIBLE
+}
+
 @BindingAdapter("tvVisibilityByString")
 fun setTextviewVisivility(view: TextView, str: String?){
     if(str == null || str == "")

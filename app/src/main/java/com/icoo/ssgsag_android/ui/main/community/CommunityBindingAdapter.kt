@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.databinding.BindingAdapter
 import com.icoo.ssgsag_android.R
+import java.text.DecimalFormat
 
 @BindingAdapter("reviewMainText")
 fun setReviewMain(view: ImageView, isSave: Int?) {
@@ -20,17 +21,23 @@ fun setReviewMain(view: ImageView, isSave: Int?) {
 
 @BindingAdapter("postDetailCommentNum")
 fun setPostDetailCommentNum(view: TextView, num: Int) {
-    view.text = "댓글 " + num
+    val formatter = DecimalFormat("###,###")
+
+    view.text = "댓글 " + formatter.format(num)
 }
 
 @BindingAdapter("postDetailViewNum")
 fun setPostDetailViewNum(view: TextView, num: Int) {
-    view.text = "조회수 " + num
+    val formatter = DecimalFormat("###,###")
+
+    view.text = "조회수 " +  formatter.format(num)
 }
 
 @BindingAdapter("postDetailLikeNum")
 fun setPostDetailLikeNum(view: TextView, num: Int) {
-    view.text = "공감 " + num
+    val formatter = DecimalFormat("###,###")
+
+    view.text = "공감 " + formatter.format(num)
 }
 
 @BindingAdapter("postBookmark")

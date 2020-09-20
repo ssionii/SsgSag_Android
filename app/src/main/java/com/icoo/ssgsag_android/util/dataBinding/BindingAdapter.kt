@@ -1,45 +1,17 @@
 package com.icoo.ssgsag_android.util.dataBinding
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
-import android.os.Build
-import android.util.Log
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
-import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.RelativeLayout
 import android.widget.TextView
-import androidx.annotation.RequiresApi
 import androidx.cardview.widget.CardView
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.graphics.drawable.toDrawable
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.load.engine.Resource
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.RequestOptions
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseRecyclerViewAdapter
-import com.icoo.ssgsag_android.ui.main.calendar.calendarDialog.calendarDialogPage.CalendarDialogPageRecyclerViewAdapter
 import com.icoo.ssgsag_android.util.extensionFunction.dayOfWeekExtension
 import com.icoo.ssgsag_android.util.extensionFunction.getDateInfo
-import jp.wasabeef.glide.transformations.BlurTransformation
-import jp.wasabeef.glide.transformations.CropTransformation
 import org.jetbrains.anko.backgroundColor
-import org.jetbrains.anko.matchParent
 import org.jetbrains.anko.textColor
-import org.w3c.dom.Text
-import java.io.File
-import java.lang.ref.Reference
 import java.text.SimpleDateFormat
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 import java.util.*
 
 //View BindingAdapter
@@ -184,32 +156,38 @@ fun setSingleDateTextForm1(view: TextView, date: String?) {
 }
 
 @BindingAdapter("regDate")
-fun setRegDate(view: TextView, date: String){
+fun setRegDate(view: TextView, date: String?){
 
-    val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA)
-    val current = Date()
-    val dateString = formatter.format(current)
+    if(date != null){
+        val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA)
+        val current = Date()
+        val dateString = formatter.format(current)
 
-    var text = ""
+        val date2 = formatter.parse(date)
+        val formatter2 = SimpleDateFormat("yy/M/d", Locale.KOREA)
+        val dateString2 = formatter2.format(date2)
 
-    val yearGap = dateString.substring(0, 4).toInt() - date.substring(0, 4).toInt()
-    val monthGap = dateString.substring(5, 7).toInt() - date.substring(5, 7).toInt()
-    val dayGap = dateString.substring(8, 10).toInt() - date.substring(8, 10).toInt()
-    val hourGap = dateString.substring(11, 13).toInt() - date.substring(11, 13).toInt()
-    val minuteGap = dateString.substring(14, 16).toInt() - date.substring(14, 16).toInt()
 
-    if(yearGap == 0){
-        if(monthGap == 0){
+        var text = ""
+
+        val monthGap = dateString.substring(5, 7).toInt() - date.substring(5, 7).toInt()
+        val dayGap = dateString.substring(8, 10).toInt() - date.substring(8, 10).toInt()
+        val hourGap = dateString.substring(11, 13).toInt() - date.substring(11, 13).toInt()
+        val minuteGap = dateString.substring(14, 16).toInt() - date.substring(14, 16).toInt()
+
+
+        if(monthGap == 0 && dayGap < 7){
             if(dayGap == 0){
                 if(hourGap == 0){
-                    if(minuteGap == 0){ text = "방금" }
-                    else{ text = minuteGap.toString() + "분" }
-                }else{ text = hourGap.toString() + "시간" }
-            }else{ text = dayGap.toString() + "일" }
-        }else{ text = monthGap.toString() + "개월" }
-    }else{ text = yearGap.toString() +  "년"}
+                    if(minuteGap == 0){ text = "지금" }
+                    else{ text = minuteGap.toString() + "분 전" }
+                }else{ text = hourGap.toString() + "시간 전" }
+            }else{ text = dayGap.toString() + "일 전" }
+        }else{ text = dateString2}
 
-    view.text = text + " 전"
+        view.text = text
+    }
+
 }
 
 
@@ -217,5 +195,4 @@ fun setRegDate(view: TextView, date: String){
 fun setIntToString(view: TextView, input: Int){
     view.text = input.toString()
 }
-
 
