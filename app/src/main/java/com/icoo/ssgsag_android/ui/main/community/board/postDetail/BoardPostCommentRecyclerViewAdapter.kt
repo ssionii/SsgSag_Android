@@ -60,7 +60,7 @@ class BoardPostCommentRecyclerViewAdapter() : RecyclerView.Adapter<BoardPostComm
         }
 
         holder.dataBinding.itemBoardPostDetailCommentIvMore.setSafeOnClickListener {
-            listener?.onMoreLikeClick(itemList[position].commentIdx)
+            listener?.onMoreLikeClick(itemList[position], position)
         }
 
         holder.dataBinding.itemBoardPostDetailCommentTvReply.setSafeOnClickListener {
@@ -79,7 +79,7 @@ class BoardPostCommentRecyclerViewAdapter() : RecyclerView.Adapter<BoardPostComm
 
     interface OnCommentClickListener {
         fun onLikeClick(postComment: PostComment, position: Int)
-        fun onMoreLikeClick(commentIdx : Int)
+        fun onMoreLikeClick(postComment: PostComment, position: Int)
         fun onReplyLikeClick(commentIdx: Int)
     }
 

@@ -87,8 +87,17 @@ class BoardPostDetailActivity : BaseActivity<ActivityBoardPostDetailBinding, Boa
             viewModel.likeComment(postComment, position)
         }
 
-        override fun onMoreLikeClick(commentIdx: Int) {
-            TODO("Not yet implemented")
+        override fun onMoreLikeClick(postComment: PostComment, position: Int) {
+            val bottomSheet =
+                BoardPostDetailBottomSheet(
+                    postComment.commentIdx,
+                    "comment",
+                    type,
+                    postComment.mine
+                )
+
+            bottomSheet.isCancelable = true
+            bottomSheet.show(supportFragmentManager, null)
         }
 
         override fun onReplyLikeClick(commentIdx: Int) {
