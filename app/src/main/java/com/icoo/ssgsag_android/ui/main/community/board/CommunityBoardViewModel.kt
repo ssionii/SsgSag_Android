@@ -11,6 +11,7 @@ import com.icoo.ssgsag_android.data.local.pref.SharedPreferenceController
 import com.icoo.ssgsag_android.data.model.ads.AdItem
 import com.icoo.ssgsag_android.data.model.community.CommunityRepository
 import com.icoo.ssgsag_android.data.model.community.board.BoardPostDetail
+import com.icoo.ssgsag_android.data.model.community.board.PostInfo
 import com.icoo.ssgsag_android.ui.login.LoginActivity
 import com.icoo.ssgsag_android.ui.main.MainActivity
 import com.icoo.ssgsag_android.ui.main.feed.context
@@ -21,8 +22,8 @@ class CommunityBoardViewModel(
     private val schedulerProvider: SchedulerProvider
 ) : BaseViewModel(){
 
-    private var _postList = MutableLiveData<ArrayList<BoardPostDetail>>()
-    val postList : LiveData<ArrayList<BoardPostDetail>> = _postList
+    private var _postList = MutableLiveData<ArrayList<PostInfo>>()
+    val postList : LiveData<ArrayList<PostInfo>> = _postList
 
     private var _topBannerImage = MutableLiveData<AdItem>()
     val topBannerImage : LiveData<AdItem> = _topBannerImage

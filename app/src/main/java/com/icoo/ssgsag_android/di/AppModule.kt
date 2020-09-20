@@ -186,7 +186,7 @@ val viewModule = module {
     // community
     viewModel { CommunityViewModel() }
     viewModel { CommunityBoardViewModel(get(), get()) }
-    viewModel { BoardPostDetailViewModel() }
+    viewModel { BoardPostDetailViewModel(get(), get()) }
     viewModel {BoardPostWriteViewModel()}
 
 }

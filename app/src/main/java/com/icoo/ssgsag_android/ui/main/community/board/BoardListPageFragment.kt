@@ -2,6 +2,7 @@ package com.icoo.ssgsag_android.ui.main.community.board
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +16,7 @@ import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseFragment
 import com.icoo.ssgsag_android.base.BaseRecyclerViewAdapter
 import com.icoo.ssgsag_android.data.model.community.board.BoardPostDetail
+import com.icoo.ssgsag_android.data.model.community.board.PostInfo
 import com.icoo.ssgsag_android.databinding.FragmentBoardListPageBinding
 import com.icoo.ssgsag_android.databinding.ItemBoardBinding
 import com.icoo.ssgsag_android.ui.main.community.board.postDetail.BoardPostDetailActivity
@@ -50,11 +52,11 @@ class BoardListPageFragment : BaseFragment<FragmentBoardListPageBinding, Communi
     private fun setRv(){
 
         viewDataBinding.actCommunityBoardRv.run{
-            adapter = object : BaseRecyclerViewAdapter<BoardPostDetail, ItemBoardBinding>(){
+            adapter = object : BaseRecyclerViewAdapter<PostInfo, ItemBoardBinding>(){
                 override val layoutResID: Int
                     get() = R.layout.item_board
                 override val bindingVariableId: Int
-                    get() = BR.postDetail
+                    get() = BR.postInfo
                 override val listener: OnItemClickListener?
                     get() = this@BoardListPageFragment
             }
@@ -90,7 +92,7 @@ class BoardListPageFragment : BaseFragment<FragmentBoardListPageBinding, Communi
         val recyclerView = viewDataBinding.actCommunityBoardRv
 
         viewModel.postList.observe(viewLifecycleOwner, Observer {
-            (viewDataBinding.actCommunityBoardRv.adapter as BaseRecyclerViewAdapter<BoardPostDetail, *>).run{
+            (viewDataBinding.actCommunityBoardRv.adapter as BaseRecyclerViewAdapter<PostInfo, *>).run{
                 addItem(it)
                 notifyDataSetChanged()
                 if(this.itemCount > 0) {
@@ -127,6 +129,8 @@ class BoardListPageFragment : BaseFragment<FragmentBoardListPageBinding, Communi
     override fun onItemClicked(item: Any?, position: Int?) {
         val intent = Intent(requireContext(), BoardPostDetailActivity::class.java)
         intent.putExtra("type", communityBoardType)
+        intent.putExtra("postIdx", (item as PostInfo).communityIdx)
+
         startActivity(intent)
     }
 

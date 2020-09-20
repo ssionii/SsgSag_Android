@@ -27,7 +27,7 @@ android {
         minSdkVersion 23
         targetSdkVersion 28
         versionCode 56 // application에 adjust environment 바꾸기!
-        versionName "3.4.1.0"
+        versionName "3.4.3.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

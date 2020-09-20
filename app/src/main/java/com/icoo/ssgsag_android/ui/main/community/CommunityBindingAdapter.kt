@@ -20,17 +20,35 @@ fun setReviewMain(view: ImageView, isSave: Int?) {
 
 @BindingAdapter("postDetailCommentNum")
 fun setPostDetailCommentNum(view: TextView, num: Int) {
-    view.text = "댓글 " + num + "개"
+    view.text = "댓글 " + num
 }
 
 @BindingAdapter("postDetailViewNum")
 fun setPostDetailViewNum(view: TextView, num: Int) {
-    view.text = "조회수 " + num + "회"
+    view.text = "조회수 " + num
 }
 
 @BindingAdapter("postDetailLikeNum")
 fun setPostDetailLikeNum(view: TextView, num: Int) {
     view.text = "공감 " + num
+}
+
+@BindingAdapter("postBookmark")
+fun setPostBookmark(view: ImageView, bool : Boolean) {
+    if(bool){
+        view.setImageDrawable(view.resources.getDrawable(R.drawable.ic_bookmark_big_active))
+    }else{
+        view.setImageDrawable(view.resources.getDrawable(R.drawable.ic_bookmark_big))
+    }
+}
+
+@BindingAdapter("postLike")
+fun setPostLike(view: ImageView, bool : Boolean) {
+    if(bool){
+        view.setImageDrawable(view.resources.getDrawable(R.drawable.ic_like_big_filled_active))
+    }else{
+        view.setImageDrawable(view.resources.getDrawable(R.drawable.ic_like_big_outlined))
+    }
 }
 
 @BindingAdapter("categoryBg")
@@ -70,7 +88,7 @@ fun setClubTabTextColor(view : TextView, reviewType : Int, isUnion : Boolean){
 }
 
 @BindingAdapter("boardCategoryText")
-fun setBoardCategoryText(view: TextView, category : String){
+fun setBoardCategoryText(view: TextView, category : String?){
     val BoardCategoryMap = mapOf("ALL" to "전체", "CAREER" to "취업/진로", "UNIV" to "대학생활", "THE_OTHERS" to "기타", "TALK" to "자유수다")
     view.text = BoardCategoryMap[category]
 }

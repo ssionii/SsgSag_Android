@@ -2,6 +2,9 @@ package com.icoo.ssgsag_android.ui.main.community.board.postDetail
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseActivity
 import com.icoo.ssgsag_android.ui.main.community.board.BoardPostDetailBottomSheet
@@ -19,30 +22,69 @@ class BoardPostDetailActivity : BaseActivity<ActivityBoardPostDetailBinding, Boa
     override val viewModel: BoardPostDetailViewModel by viewModel()
 
     var type = 0
+    var postIdx = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewDataBinding.vm = viewModel
 
         type = intent.getIntExtra("type", CommunityBoardType.TALK)
+        postIdx = intent.getIntExtra("postIdx", 0)
+
 
         when(type){
             CommunityBoardType.COUNSEL -> viewDataBinding.actBoardPostDetailTvTitle.text = this.resources.getString(R.string.counsel_title)
             CommunityBoardType.TALK -> viewDataBinding.actBoardPostDetailTvTitle.text = this.resources.getString(R.string.talk_title)
         }
 
-        setButton()
+        viewModel.getPostDetail(postIdx)
 
+
+        viewModel.postDetail.observe(this, Observer {
+            setButton()
+        })
+
+       setCommentRv()
+    }
+
+    private fun setCommentRv(){
+
+        val commentAdapter = BoardPostCommentRecyclerViewAdapter()
+        commentAdapter.setOnCommentClickListener(commentClickListener)
+
+        viewDataBinding.actBoardPostDetailRvComment.run{
+            adapter = commentAdapter
+            layoutManager = LinearLayoutManager(context)
+        }
+
+        viewModel.commentList.observe(this, Observer {
+            commentAdapter.run{
+                replaceAll(it)
+                notifyDataSetChanged()
+            }
+
+        })
+    }
+
+    val commentClickListener = object : BoardPostCommentRecyclerViewAdapter.OnCommentClickListener{
+        override fun onLikeClick(commentIdx: Int) {
+
+        }
     }
 
     private fun setButton(){
+
+        viewDataBinding.actBoardPostDetailClBack.setSafeOnClickListener {
+            finish()
+        }
+
         viewDataBinding.actBoardPostDetailClMenu.setSafeOnClickListener {
             val bottomSheet =
                 BoardPostDetailBottomSheet(
-                    0,
+                    postIdx,
                     "post",
                     type,
-                    true
+                    viewModel.postDetail.value!!.mine
                 )
 
             bottomSheet.isCancelable = true
@@ -51,7 +93,7 @@ class BoardPostDetailActivity : BaseActivity<ActivityBoardPostDetailBinding, Boa
 
         viewDataBinding.actBoardPostDetailIvPhoto.setSafeOnClickListener {
             val intent = Intent(this, PhotoExpandActivity::class.java)
-            intent.putExtra("photoUrl", viewModel.postDetail.value?.photoUrlList)
+            intent.putExtra("photoUrl", viewModel.postDetail.value?.community?.photoUrlList)
             startActivity(intent)
         }
     }

@@ -10,5 +10,5 @@ data class BoardPostListResponse(
 
 data class BoardPostList(
     val adList : ArrayList<AdItem>,
-    val communityList : ArrayList<BoardPostDetail>
+    val communityList : ArrayList<PostInfo>
 )

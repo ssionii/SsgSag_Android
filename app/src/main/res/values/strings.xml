@@ -139,10 +139,21 @@
     <string name="no_post">표시할 게시글이 존재하지 않습니다.</string>
 
     <!-- setting -->
+    <string name="test_url">54.180.145.82:8080</string>
+    <string name="base_url">http://ssgsag-alb-2141317761.ap-northeast-2.elb.amazonaws.com</string>
+
     <string name="com.crashlytics.useFirebaseAppId">true</string>
 
     <string name="admob_app_id">ca-app-pub-6888357719311971~5202997355</string>
     <string name="banner_ad_unit_id">ca-app-pub-6888357719311971/1199558187</string>
     <string name="banner_ad_unit_id_for_test">ca-app-pub-3940256099942544/6300978111</string>
+
+    <string name="facebook_app_id">409525746550194</string>
+    <string name="kakao_app_key">c04255800313c33eff056de904ed9023</string>
+    <string name="kakaolink_host">kakaolink</string>
+    <string name="kakao_scheme">kakaoc04255800313c33eff056de904ed9023</string>
+    <string name="kakao_ads_client_id">DAN-1hr8ofguvdyeb</string>
+
+    <string name="adjust_app_token">j5uza6tddv5s</string>
 
 </resources>
