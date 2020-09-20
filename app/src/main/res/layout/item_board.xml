@@ -3,8 +3,8 @@
         xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
-                name="postDetail"
-                type="com.icoo.ssgsag_android.data.model.community.board.BoardPostDetail" />
+                name="postInfo"
+                type="com.icoo.ssgsag_android.data.model.community.board.PostInfo" />
     </data>
 <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -27,7 +27,7 @@
                 android:orientation="horizontal"
                 android:gravity="center_vertical">
             <androidx.cardview.widget.CardView
-                    cvVisibilityByInt="@{postDetail.isBest}"
+                    cvVisibilityByInt="@{postInfo.isBest}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:cardBackgroundColor="#14fe6d6d"
@@ -53,7 +53,7 @@
                     android:textColor="@color/grey_1"
                     android:letterSpacing="-0.02"
                     tools:text="공모전/대외활동"
-                    boardCategoryText="@{postDetail.category}"/>
+                    boardCategoryText="@{postInfo.category}"/>
         </LinearLayout>
         <LinearLayout
                 android:layout_width="match_parent"
@@ -76,7 +76,7 @@
                         android:layout_marginTop="6dp"
                         android:maxLines="1"
                         android:ellipsize="end"
-                        android:text="@{postDetail.title}"/>
+                        android:text="@{postInfo.title}"/>
 
                 <TextView
                         android:layout_width="match_parent"
@@ -89,7 +89,7 @@
                         android:layout_marginTop="4dp"
                         android:maxLines="1"
                         android:ellipsize="end"
-                        android:text="@{postDetail.content}"/>
+                        android:text="@{postInfo.content}"/>
 
                 <LinearLayout
                         android:layout_width="match_parent"
@@ -110,7 +110,7 @@
                             android:letterSpacing="-0.02"
                             tools:text="30"
                             android:layout_marginLeft="2dp"
-                            android:text="@{Integer.toString(postDetail.showNum)}"/>
+                            android:text="@{Integer.toString(postInfo.showNum)}"/>
 
                     <ImageView
                             android:layout_width="wrap_content"
@@ -126,7 +126,7 @@
                             android:letterSpacing="-0.02"
                             tools:text="30"
                             android:layout_marginLeft="2dp"
-                            android:text="@{Integer.toString(postDetail.commentNum)}"/>
+                            android:text="@{Integer.toString(postInfo.commentNum)}"/>
 
                     <TextView
                             android:layout_width="wrap_content"
@@ -137,7 +137,7 @@
                             android:letterSpacing="-0.02"
                             tools:text="1시간 전"
                             android:layout_marginLeft="8dp"
-                            regDate="@{postDetail.regDate}"/>
+                            regDate="@{postInfo.regDate}"/>
                 </LinearLayout>
             </LinearLayout>
             <androidx.cardview.widget.CardView
@@ -147,11 +147,11 @@
                     app:cardCornerRadius="4dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:cardElevation="0dp"
-                    cvVisibilityByString="@{postDetail.photoUrlList}">
+                    cvVisibilityByString="@{postInfo.photoUrlList}">
                 <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        glideCenterCrop="@{postDetail.photoUrlList}"/>
+                        glideCenterCrop="@{postInfo.photoUrlList}"/>
             </androidx.cardview.widget.CardView>
 
         </LinearLayout>

@@ -13,14 +13,14 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:background="@color/white">
     <LinearLayout
-            android:id="@+id/item_board_post_detail_comment_ll"
+            android:id="@+id/item_board_post_detail_recomment_ll"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="12dp"
-            android:layout_marginLeft="24dp"
+            android:layout_marginLeft="60dp"
             android:layout_marginRight="20dp">
         <ImageView
                 android:layout_width="36dp"
@@ -55,10 +55,29 @@
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_category_etc"/>
             </LinearLayout>
+
+            <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="@color/grey_4"
+                    app:cardCornerRadius="3dp">
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="10dp"
+                        android:textColor="@color/grey_1"
+                        android:letterSpacing="-0.02"
+                        tools:text="\ufeff@파이오오"
+                        android:text="@{postComment.commentName}"
+                        android:layout_marginHorizontal="4dp"
+                        android:layout_marginTop="1dp"
+                        android:layout_marginBottom="2dp"/>
+            </androidx.cardview.widget.CardView>
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="12dp"
+                    android:layout_marginTop="2dp"
                     android:textColor="@color/black_1"
                     android:letterSpacing="-0.02"
                     android:text="@{postComment.content}"
@@ -114,20 +133,13 @@
         </LinearLayout>
     </LinearLayout>
     <View
-            android:id="@+id/item_board_post_Detail_comment_v"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/grey_4"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/item_board_post_detail_comment_ll"
+            app:layout_constraintTop_toBottomOf="@+id/item_board_post_detail_recomment_ll"
             android:layout_marginTop="12dp"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/item_board_post_detail_rv_reply"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/item_board_post_Detail_comment_v"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

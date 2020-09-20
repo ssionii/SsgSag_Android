@@ -61,6 +61,14 @@ fun setImageViewVisibility(view: ImageView, num: Int){
         view.visibility = View.GONE
 }
 
+@BindingAdapter("ivVisibilityByString")
+fun setImageViewVisibility(view: ImageView, str: String?){
+    if(str == null || str == "")
+        view.visibility = View.GONE
+    else
+        view.visibility = View.VISIBLE
+}
+
 @BindingAdapter("clVisibilityByBool")
 fun setConstraintLayoutVisibility(layout: ConstraintLayout, bool: Boolean){
     if(bool)

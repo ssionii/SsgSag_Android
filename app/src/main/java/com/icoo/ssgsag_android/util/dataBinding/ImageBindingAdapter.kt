@@ -20,18 +20,30 @@ import java.lang.ref.Reference
 @BindingAdapter("glideImg")
 fun setGlideImg(view: ImageView, imgUrl: String?) {
 
-    val requestOptions = RequestOptions
-        .skipMemoryCacheOf(false)//memory cache 사용
-        .diskCacheStrategy(DiskCacheStrategy.NONE)//disk cache 사용하지 않음
+    var tempImgUrl = ""
 
-    Glide.with(view.context)
-        .load(imgUrl)
-        .placeholder(R.drawable.img_default)
-        //  .listener(createLoggerListener("glideImg"))
-        .thumbnail(0.1f)
-        .error(R.drawable.img_default) //에러시 나올 이미지 적용
-        .apply(requestOptions)
-        .into(view)
+    imgUrl?.apply{
+
+        if(imgUrl.indexOf(',') > -1){
+            tempImgUrl = imgUrl.substring(0, imgUrl.indexOf(','))
+        }else{
+            tempImgUrl = imgUrl
+        }
+        val requestOptions = RequestOptions
+            .skipMemoryCacheOf(false)//memory cache 사용
+            .diskCacheStrategy(DiskCacheStrategy.NONE)//disk cache 사용하지 않음
+
+        Glide.with(view.context)
+            .load(tempImgUrl)
+            .placeholder(R.drawable.img_default)
+            //  .listener(createLoggerListener("glideImg"))
+            .thumbnail(0.1f)
+            .error(R.drawable.img_default) //에러시 나올 이미지 적용
+            .apply(requestOptions)
+            .into(view)
+    }
+
+
 
 }
 
