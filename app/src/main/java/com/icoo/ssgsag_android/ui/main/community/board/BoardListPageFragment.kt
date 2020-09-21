@@ -43,7 +43,12 @@ class BoardListPageFragment : BaseFragment<FragmentBoardListPageBinding, Communi
         category = requireArguments().getString("category")!!
         communityBoardType = requireArguments().getInt("communityBoardType")
 
-        viewModel.getCounselList(category, curPage, pageSize)
+        if(communityBoardType == CommunityBoardType.TALK){
+            viewModel.getTalkList(curPage, pageSize)
+        }else{
+            viewModel.getCounselList(category, curPage, pageSize)
+        }
+
         setRv()
 
     }

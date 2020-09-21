@@ -1,11 +1,14 @@
 package com.icoo.ssgsag_android.ui.main.community.board
 
+import android.app.Activity
 import android.content.Intent
 import android.graphics.Point
 import android.os.Bundle
 import android.util.Log
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.tabs.TabLayout
@@ -34,16 +37,35 @@ class CommunityBoardActivity : BaseActivity<ActivityCommunityBoardBinding, Commu
 
     override val viewModel: CommunityBoardViewModel by viewModel()
 
+    val writePostRequest = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult : ActivityResult ->
+        val resultCode : Int = activityResult.resultCode
+        val data : Intent? = activityResult.data
+
+        if(resultCode == Activity.RESULT_OK &&  data!!.getIntExtra("type", PostWriteType.WRITE) == PostWriteType.WRITE) {
+            when(communityBoardType){
+                CommunityBoardType.COUNSEL -> {
+                    setCounselVp()
+                    setTab()
+                }
+                CommunityBoardType.TALK -> {
+                    setTalkVp()
+                }
+            }
+        }
+    }
+
+
+
     var communityBoardType = CommunityBoardType.TALK
 
     val counselBoardCategoryList = arrayListOf(
-        CounselBoardCategory("전체", "ALL"),
-        CounselBoardCategory("취업/진로", "CAREER"),
-        CounselBoardCategory("대학생활", "UNIV"),
-        CounselBoardCategory("기타", "THE_OTHERS")
+        CounselBoardCategory("전체", "ALL", false),
+        CounselBoardCategory("취업/진로", "CAREER", false),
+        CounselBoardCategory("대학생활", "UNIV", false),
+        CounselBoardCategory("기타", "THE_OTHERS", false)
     )
 
-    val talkBoardCategoryList = CounselBoardCategory("자유수다", "FREE")
+    val talkBoardCategoryList = CounselBoardCategory("자유수다", "FREE", false)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,6 +90,7 @@ class CommunityBoardActivity : BaseActivity<ActivityCommunityBoardBinding, Commu
         setButton()
 
     }
+
 
     private fun setTopBanner(){
 
@@ -140,15 +163,16 @@ class CommunityBoardActivity : BaseActivity<ActivityCommunityBoardBinding, Commu
                 CommunityBoardType.COUNSEL -> {
                     val intent = Intent(this, BoardCounselPostWriteActivity::class.java)
                     intent.putExtra("postWriteType", PostWriteType.WRITE)
-                    startActivity(intent)
+                    writePostRequest.launch(intent)
                 }
                 CommunityBoardType.TALK -> {
                     val intent = Intent(this, BoardTalkPostWriteActivity::class.java)
                     intent.putExtra("postWriteType", PostWriteType.WRITE)
-                    startActivity(intent)
+                    writePostRequest.launch(intent)
                 }
             }
         }
+
     }
 }
 

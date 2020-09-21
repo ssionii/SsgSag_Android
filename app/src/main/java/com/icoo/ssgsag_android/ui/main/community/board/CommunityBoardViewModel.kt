@@ -44,7 +44,19 @@ class CommunityBoardViewModel(
             })
     }
 
-    fun getTalkList(){
-
+    fun getTalkList(curPage: Int, pageSize: Int){
+        addDisposable(repository.getBoardPost("FREE", curPage,pageSize)
+            .subscribeOn(schedulerProvider.io())
+            .observeOn(schedulerProvider.mainThread())
+            .doOnError {
+                Log.e("get counsel list error", it.message)
+            }
+            .subscribe({
+                _topBannerImage.value = it.adList[0]
+                _postList.value = it.communityList
+            }) {
+                Toast.makeText(context, "네트워크 상태를 확인해주세요.", Toast.LENGTH_SHORT).show()
+                Log.e("get counsel list error:", it.message)
+            })
     }
 }
