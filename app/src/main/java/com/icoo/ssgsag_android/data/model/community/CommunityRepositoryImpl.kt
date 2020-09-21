@@ -1,5 +1,6 @@
 package com.icoo.ssgsag_android.data.model.community
 
+import android.util.Log
 import com.google.gson.JsonObject
 import com.icoo.ssgsag_android.data.local.pref.PreferenceManager
 import com.icoo.ssgsag_android.data.model.base.NullDataResponse
@@ -29,6 +30,9 @@ class CommunityRepositoryImpl (val api: NetworkService, val pref: PreferenceMana
 
     override fun likeCommunityReply(ccommunityIdx: Int): Single<NullDataResponse>
             = api.likeCommunityReply(pref.findPreference("TOKEN", ""), ccommunityIdx)
+        .doOnError{
+            Log.e("like reply", it.message)
+        }
             .map { it }
 
     override fun unlikeCommunityPost(communityIdx: Int): Single<NullDataResponse>
@@ -41,5 +45,8 @@ class CommunityRepositoryImpl (val api: NetworkService, val pref: PreferenceMana
 
     override fun unlikeCommunityReply(ccommunityIdx: Int): Single<NullDataResponse>
             = api.unlikeCommunityReply(pref.findPreference("TOKEN", ""), ccommunityIdx)
+        .doOnError{
+            Log.e("unlike reply", it.message)
+        }
         .map { it }
 }

@@ -135,7 +135,7 @@
                 android:value="@string/facebook_app_id"/>
 <!--        <meta-data-->
 <!--                android:name="com.google.firebase.messaging.default_notification_channel_id"-->
-<!--                android:value="@string/default_notification_channel_id"/>-->
+<!--                android:value="@string/default_notifi_cation_channel_id"/>-->
         <meta-data
                 android:name="com.kakao.sdk.AppKey"
                 android:value="@string/kakao_app_key"/>

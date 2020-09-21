@@ -1,5 +1,6 @@
 package com.icoo.ssgsag_android.ui.main.community.board.postDetail
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -8,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.data.model.community.board.PostComment
 import com.icoo.ssgsag_android.databinding.ItemBoardPostDetailCommentBinding
+import com.icoo.ssgsag_android.ui.main.community.board.BoardPostDetailBottomSheet
+import com.icoo.ssgsag_android.ui.main.feed.context
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 
 class BoardPostCommentRecyclerViewAdapter() : RecyclerView.Adapter<BoardPostCommentRecyclerViewAdapter.ViewHolder>() {
@@ -25,8 +28,23 @@ class BoardPostCommentRecyclerViewAdapter() : RecyclerView.Adapter<BoardPostComm
 
     fun replaceItem(item : PostComment, position : Int){
         itemList[position] = item
+        notifyItemChanged(position)
     }
 
+    fun replaceSubItem(item : PostComment, commentPosition : Int, replyPosition : Int){
+        val tempSubList = itemList[commentPosition]
+        if(tempSubList.communityCCommentList != null) {
+            tempSubList.communityCCommentList!![replyPosition] = item
+        }
+
+        itemList[commentPosition] = tempSubList
+
+        notifyItemChanged(commentPosition)
+
+        (replyAdapterList[commentPosition] as BoardPostReplyRecyclerViewAdapter).replaceItem(item, replyPosition)
+    }
+
+    val replyAdapterList = hashMapOf<Int, BoardPostReplyRecyclerViewAdapter>()
 
     override fun getItemCount() = itemList.size
 
@@ -44,8 +62,15 @@ class BoardPostCommentRecyclerViewAdapter() : RecyclerView.Adapter<BoardPostComm
         holder.dataBinding.postComment = itemList[position]
 
         if(itemList[position].communityCCommentList != null) {
-            val replyAdapter = BoardPostReplyRecyclerViewAdapter()
-            replyAdapter.setOnCommentClickListener(replyClickListener)
+
+            replyAdapterList[position] = BoardPostReplyRecyclerViewAdapter()
+            val replyAdapter =  replyAdapterList[position]!!
+
+            replyAdapter.apply {
+                setOnCommentClickListener(replyClickListener)
+                setHasStableIds(true)
+                commentPosition = position
+            }
 
             holder.dataBinding.itemBoardPostDetailRvReply.run {
                 adapter = replyAdapter
@@ -64,14 +89,22 @@ class BoardPostCommentRecyclerViewAdapter() : RecyclerView.Adapter<BoardPostComm
         }
 
         holder.dataBinding.itemBoardPostDetailCommentTvReply.setSafeOnClickListener {
-            listener?.onReplyLikeClick(itemList[position].commentIdx)
+            listener?.onReplyClick(itemList[position].commentIdx)
         }
 
     }
 
     val replyClickListener = object : BoardPostReplyRecyclerViewAdapter.OnCommentClickListener{
-        override fun onLikeClick(commentIdx: Int) {
+        override fun onLikeClick(postComment: PostComment, commentPosition : Int, replyPosition: Int) {
+            listener?.onReplyLikeClick(postComment, commentPosition, replyPosition)
+        }
 
+        override fun onMoreLikeClick(postComment: PostComment, commentPosition : Int, replyPosition: Int) {
+           listener?.onReplyMoreLikeClick(postComment, commentPosition, replyPosition)
+        }
+
+        override fun onReplyLikeClick(commentIdx: Int) {
+            listener?.onReplyReplyClick(commentIdx)
         }
     }
 
@@ -80,7 +113,11 @@ class BoardPostCommentRecyclerViewAdapter() : RecyclerView.Adapter<BoardPostComm
     interface OnCommentClickListener {
         fun onLikeClick(postComment: PostComment, position: Int)
         fun onMoreLikeClick(postComment: PostComment, position: Int)
-        fun onReplyLikeClick(commentIdx: Int)
+        fun onReplyClick(commentIdx: Int)
+
+        fun onReplyLikeClick(postComment: PostComment, commentPosition : Int, replyPosition: Int)
+        fun onReplyMoreLikeClick(postComment: PostComment, commentPosition : Int, replyPosition: Int)
+        fun onReplyReplyClick(commentIdx: Int)
     }
 
     private var listener: OnCommentClickListener? = null

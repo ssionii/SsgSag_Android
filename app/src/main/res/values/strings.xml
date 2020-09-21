@@ -140,7 +140,7 @@
 
     <!-- setting -->
     <string name="test_url">54.180.145.82:8080</string>
-    <string name="base_url">http://ssgsag-alb-2141317761.ap-northeast-2.elb.amazonaws.com</string>
+    <string name="base_url">https://ssgsag-server.com</string>
 
     <string name="com.crashlytics.useFirebaseAppId">true</string>
 

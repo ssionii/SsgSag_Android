@@ -538,17 +538,17 @@ interface NetworkService {
         @Header("Authorization") token: String,
         @Query("communityIdx") communityIdx: Int
     ): Single<NullDataResponse>
-    // 커뮤니티 댓글 게시글
+    // 커뮤니티 댓글
     @POST("/community/comment/like")
     fun likeCommunityComment(
         @Header("Authorization") token: String,
         @Query("commentIdx") communityIdx: Int
     ): Single<NullDataResponse>
-    // 커뮤니티 댓글 게시글
-    @POST("/community/comment/like")
+    // 커뮤니티 답글
+    @POST("/community/ccomment/like")
     fun likeCommunityReply(
         @Header("Authorization") token: String,
-        @Query("ccommunityIdx") ccommunityIdx: Int
+        @Query("ccommentIdx") ccommunityIdx: Int
     ): Single<NullDataResponse>
 
     // 커뮤니티 좋아요 취소
@@ -558,17 +558,17 @@ interface NetworkService {
         @Header("Authorization") token: String,
         @Query("communityIdx") communityIdx: Int
     ): Single<NullDataResponse>
-    // 커뮤니티 댓글 게시글
+    // 커뮤니티 댓글
     @DELETE("/community/comment/like")
     fun unlikeCommunityComment(
         @Header("Authorization") token: String,
         @Query("commentIdx") communityIdx: Int
     ): Single<NullDataResponse>
-    // 커뮤니티 댓글 게시글
-    @DELETE("/community/comment/like")
+    // 커뮤니티 답글
+    @DELETE("/community/ccomment/like")
     fun unlikeCommunityReply(
         @Header("Authorization") token: String,
-        @Query("ccommunityIdx") ccommunityIdx: Int
+        @Query("ccommentIdx") ccommunityIdx: Int
     ): Single<NullDataResponse>
 
 

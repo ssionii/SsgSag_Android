@@ -81,28 +81,6 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                    android:visibility="gone"
-                    android:id="@+id/bottom_sheet_post_detail_cv_recomment"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    app:cardBackgroundColor="#14656ef0"
-                    app:cardCornerRadius="4dp"
-                    app:cardElevation="0dp"
-                    android:layout_marginBottom="12dp">
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:textColor="@color/cornflower"
-                        android:letterSpacing="-0.01"
-                        android:gravity="center_horizontal"
-                        android:fontFamily="@font/noto_sans_kr_bold"
-                        android:text="대댓글 쓰기"
-                        android:layout_gravity="center"/>
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
                     android:id="@+id/bottom_sheet_post_detail_cv_cancel"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"

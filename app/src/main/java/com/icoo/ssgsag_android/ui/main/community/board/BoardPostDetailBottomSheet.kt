@@ -54,7 +54,6 @@ class BoardPostDetailBottomSheet (
                 if(isMine){
                     viewDataBinding.bottomSheetPostDetailCvDelete.visibility = VISIBLE
                 }else{
-                    viewDataBinding.bottomSheetPostDetailCvRecomment.visibility = VISIBLE
                     viewDataBinding.bottomSheetPostDetailCvReport.visibility = VISIBLE
                 }
             }
@@ -84,10 +83,6 @@ class BoardPostDetailBottomSheet (
 
         viewDataBinding.bottomSheetPostDetailCvReport.setSafeOnClickListener {
             Log.e("report ", "click")
-        }
-
-        viewDataBinding.bottomSheetPostDetailCvRecomment.setSafeOnClickListener {
-            Log.e("recomment ", "click")
         }
 
         viewDataBinding.bottomSheetPostDetailCvCancel.setSafeOnClickListener {

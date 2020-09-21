@@ -76,10 +76,16 @@ class BoardPostDetailActivity : BaseActivity<ActivityBoardPostDetailBinding, Boa
     private fun refreshComment(){
         viewModel.refreshedCommentPosition.observe(this, Observer {
             boardPostCommentRecyclerViewAdapter.run{
-                replaceItem(viewModel.refreshedComment, viewModel.refreshedCommentPosition.value!!)
-                notifyItemChanged(viewModel.refreshedCommentPosition.value!!)
+                replaceItem(viewModel.refreshedComment, it)
             }
         })
+
+        viewModel.refreshedReplyPosition.observe(this, Observer {
+            boardPostCommentRecyclerViewAdapter.run{
+                replaceSubItem(viewModel.refreshedComment, viewModel.refreshedCommentPosition.value!!, it)
+            }
+        })
+
     }
 
     val commentClickListener = object : BoardPostCommentRecyclerViewAdapter.OnCommentClickListener{
@@ -100,7 +106,19 @@ class BoardPostDetailActivity : BaseActivity<ActivityBoardPostDetailBinding, Boa
             bottomSheet.show(supportFragmentManager, null)
         }
 
-        override fun onReplyLikeClick(commentIdx: Int) {
+        override fun onReplyClick(commentIdx: Int) {
+            TODO("Not yet implemented")
+        }
+
+        override fun onReplyLikeClick(postComment: PostComment, commentPosition: Int, replyPosition: Int) {
+           viewModel.likeReply(postComment, commentPosition, replyPosition)
+        }
+
+        override fun onReplyMoreLikeClick(postComment: PostComment, commentPosition: Int, replyPosition: Int) {
+            TODO("Not yet implemented")
+        }
+
+        override fun onReplyReplyClick(commentIdx: Int) {
             TODO("Not yet implemented")
         }
     }
