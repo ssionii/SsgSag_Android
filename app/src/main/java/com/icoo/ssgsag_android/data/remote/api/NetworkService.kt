@@ -516,6 +516,7 @@ interface NetworkService {
         @Path("clubPostIdx") clubPostIdx: Int
     ): Single<NullDataResponse>
 
+
     // 커뮤니티
     @GET("/community")
     fun getBoardPost(
@@ -524,6 +525,14 @@ interface NetworkService {
         @Query("curPage") curPage: Int,
         @Query("pageSize") pageSize: Int
     ): Single<BoardPostListResponse>
+
+    @POST("/community")
+    fun writeBoardPost(
+        @Header("Content-Type") content_type: String,
+        @Header("Authorization") token: String,
+        @Body() body : JsonObject
+    ): Single<NullDataResponse>
+
 
     @GET("/community/{communityIdx}")
     fun getPostDetail(

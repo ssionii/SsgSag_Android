@@ -1,5 +1,6 @@
 package com.icoo.ssgsag_android.data.model.community
 
+import com.google.gson.JsonObject
 import com.icoo.ssgsag_android.data.model.base.NullDataResponse
 import com.icoo.ssgsag_android.data.model.community.board.BoardPostDetail
 import com.icoo.ssgsag_android.data.model.community.board.BoardPostList
@@ -7,6 +8,7 @@ import io.reactivex.Single
 
 interface CommunityRepository {
     fun getBoardPost(category : String, curPage : Int, pageSize : Int) : Single<BoardPostList>
+    fun writeBoardPost(body: JsonObject) : Single<NullDataResponse>
     fun getBoardPostDetail(communityIdx : Int) : Single<BoardPostDetail>
 
     fun likeCommunityPost(communityIdx : Int) : Single<NullDataResponse>

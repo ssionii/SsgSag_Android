@@ -11,28 +11,20 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
-import com.icoo.ssgsag_android.BR
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseActivity
-import com.icoo.ssgsag_android.base.BaseRecyclerViewAdapter
-import com.icoo.ssgsag_android.data.model.category.Category
-import com.icoo.ssgsag_android.databinding.ActivityBoardCounselPostWriteBinding
 import com.icoo.ssgsag_android.databinding.ActivityBoardTalkPostWriteBinding
-import com.icoo.ssgsag_android.databinding.ItemBoardCounselPostWriteCategoryBinding
 import com.icoo.ssgsag_android.ui.main.community.board.PostWriteType
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
-import com.icoo.ssgsag_android.util.view.NonScrollGridLayoutManager
-import com.icoo.ssgsag_android.util.view.SpacesItemDecoration
-import kotlinx.android.synthetic.main.activity_board_talk_post_write.*
-import kotlinx.android.synthetic.main.toolbar_cancel.view.*
+import org.json.JSONObject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -45,6 +37,8 @@ class  BoardTalkPostWriteActivity : BaseActivity<ActivityBoardTalkPostWriteBindi
 
     var postWriteType = 0
     val REQUEST_CODE_SELECT_IMAGE: Int = 1004
+
+    var uploadButtonClickable = false
 
     val requestPermissionLauncher =
         registerForActivityResult(
@@ -59,7 +53,7 @@ class  BoardTalkPostWriteActivity : BaseActivity<ActivityBoardTalkPostWriteBindi
 
     var photoURI : String = ""
     var title : String = ""
-    var description : String = ""
+    var content : String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,16 +70,17 @@ class  BoardTalkPostWriteActivity : BaseActivity<ActivityBoardTalkPostWriteBindi
 
         setEditTextChange()
         setButton()
+        setObserve()
 
     }
 
     fun setEditType(){
         // 통신해서 가져오기
         title = "제목이지롱"
-        description = "하하"
+        content = "하하"
 
         viewDataBinding.actBoardPostWriteEtTitle.setText(title)
-        viewDataBinding.actBoardPostWriteEtDescription.setText(description)
+        viewDataBinding.actBoardPostWriteEtDescription.setText(content)
 
         onDataCheck()
     }
@@ -107,13 +102,36 @@ class  BoardTalkPostWriteActivity : BaseActivity<ActivityBoardTalkPostWriteBindi
         }
 
         viewDataBinding.actBoardPostWriteClUpload.setSafeOnClickListener {
-            Log.e("title", title)
-            Log.e("description", description)
-            if(photoURI != ""){
-                Log.e("photoURI", photoURI)
+            if(uploadButtonClickable) {
+                val jsonObject = JSONObject()
+                jsonObject.put("category", "FREE")
+                jsonObject.put("title", title)
+                jsonObject.put("content", content)
+                if (photoURI != "") {
+                    jsonObject.put("photoUrlList", photoURI)
+                }
+
+                viewModel.writeBoardPost(jsonObject)
             }
+
+
         }
     }
+
+    private fun setObserve(){
+
+        viewModel.status.observe(this, Observer {
+            if(it == 200){
+                val result = Intent().apply {
+                    putExtra("type", postWriteType)
+                }
+                setResult(Activity.RESULT_OK, result)
+
+                finish()
+            }
+        })
+    }
+
 
     private fun EditText.onChange(cb: (String) -> Unit) {
         this.addTextChangedListener(object : TextWatcher {
@@ -125,7 +143,7 @@ class  BoardTalkPostWriteActivity : BaseActivity<ActivityBoardTalkPostWriteBindi
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 when(this@onChange){
                     viewDataBinding.actBoardPostWriteEtTitle -> title = s.toString()
-                    viewDataBinding.actBoardPostWriteEtDescription -> description = s.toString()
+                    viewDataBinding.actBoardPostWriteEtDescription -> content = s.toString()
                 }
             }
         })
@@ -137,14 +155,14 @@ class  BoardTalkPostWriteActivity : BaseActivity<ActivityBoardTalkPostWriteBindi
     }
 
     private fun onDataCheck(){
-        if(title != "" && description != ""){
+        if(title != "" && content != ""){
             viewDataBinding.actBoardPostWriteClUpload.run{
-                isClickable = true
+                uploadButtonClickable = true
                 setBackgroundColor(this.resources.getColor(R.color.ssgsag))
             }
         }else{
             viewDataBinding.actBoardPostWriteClUpload.run{
-                isClickable = false
+                uploadButtonClickable = false
                 setBackgroundColor(this.resources.getColor(R.color.grey_2))
             }
         }
