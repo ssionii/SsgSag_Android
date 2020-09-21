@@ -8,12 +8,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.data.model.community.board.PostComment
+import com.icoo.ssgsag_android.databinding.ItemAllPosterCollectionBinding
 import com.icoo.ssgsag_android.databinding.ItemBoardPostDetailCommentBinding
+import com.icoo.ssgsag_android.databinding.ItemBoardPostDetailReplyBinding
+import com.icoo.ssgsag_android.databinding.ItemKakaoAdsBinding
+import com.icoo.ssgsag_android.ui.main.allPosters.collection.GoogleAdsViewHolder
+import com.icoo.ssgsag_android.ui.main.allPosters.collection.SsgSagAdsViewHolder
+import com.icoo.ssgsag_android.ui.main.allPosters.collection.ViewType
 import com.icoo.ssgsag_android.ui.main.community.board.BoardPostDetailBottomSheet
 import com.icoo.ssgsag_android.ui.main.feed.context
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 
-class BoardPostCommentRecyclerViewAdapter() : RecyclerView.Adapter<BoardPostCommentRecyclerViewAdapter.ViewHolder>() {
+class BoardPostCommentRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var itemList = arrayListOf<PostComment>()
 
@@ -31,92 +37,71 @@ class BoardPostCommentRecyclerViewAdapter() : RecyclerView.Adapter<BoardPostComm
         notifyItemChanged(position)
     }
 
-    fun replaceSubItem(item : PostComment, commentPosition : Int, replyPosition : Int){
-        val tempSubList = itemList[commentPosition]
-        if(tempSubList.communityCCommentList != null) {
-            tempSubList.communityCCommentList!![replyPosition] = item
-        }
-
-        itemList[commentPosition] = tempSubList
-
-        notifyItemChanged(commentPosition)
-
-        (replyAdapterList[commentPosition] as BoardPostReplyRecyclerViewAdapter).replaceItem(item, replyPosition)
-    }
-
-    val replyAdapterList = hashMapOf<Int, BoardPostReplyRecyclerViewAdapter>()
-
     override fun getItemCount() = itemList.size
 
-    override fun getItemId(position: Int) = itemList[position].commentIdx.toLong()
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BoardPostCommentRecyclerViewAdapter.ViewHolder {
-        val viewDataBinding = DataBindingUtil.inflate<ItemBoardPostDetailCommentBinding>(
-            LayoutInflater.from(parent.context),
-            R.layout.item_board_post_detail_comment, parent, false
-        )
-        return ViewHolder(viewDataBinding)
+    override fun getItemViewType(position: Int): Int {
+        return itemList[position].type
     }
 
-    override fun onBindViewHolder(holder: BoardPostCommentRecyclerViewAdapter.ViewHolder, position: Int) {
-        holder.dataBinding.postComment = itemList[position]
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        if (viewType == PostCommentViewType.COMMENT) {
+            val viewDataBinding = DataBindingUtil.inflate<ItemBoardPostDetailCommentBinding>(
+                LayoutInflater.from(parent.context),
+                R.layout.item_board_post_detail_comment, parent, false
+            )
+            return CommentViewHolder(viewDataBinding)
+        } else {
+            val viewDataBinding = DataBindingUtil.inflate<ItemBoardPostDetailReplyBinding>(
+                LayoutInflater.from(parent.context),
+                R.layout.item_board_post_detail_reply, parent, false
+            )
+            return ReplyViewHolder(viewDataBinding)
+        }
 
-        if(itemList[position].communityCCommentList != null) {
+    }
 
-            replyAdapterList[position] = BoardPostReplyRecyclerViewAdapter()
-            val replyAdapter =  replyAdapterList[position]!!
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
-            replyAdapter.apply {
-                setOnCommentClickListener(replyClickListener)
-                setHasStableIds(true)
-                commentPosition = position
+        if(holder is CommentViewHolder) {
+            holder.dataBinding.postComment = itemList[position]
+
+            holder.dataBinding.itemBoardPostDetailCommentIvLike.setSafeOnClickListener {
+                listener?.onLikeClick(itemList[position], position)
             }
 
-            holder.dataBinding.itemBoardPostDetailRvReply.run {
-                adapter = replyAdapter
-                layoutManager = LinearLayoutManager(context)
+            holder.dataBinding.itemBoardPostDetailCommentIvMore.setSafeOnClickListener {
+                listener?.onMoreLikeClick(itemList[position], position)
             }
 
-            replyAdapter.replaceAll(itemList[position].communityCCommentList)
-        }
+            holder.dataBinding.itemBoardPostDetailCommentTvReply.setSafeOnClickListener {
+                listener?.onReplyClick(itemList[position].commentIdx)
+            }
+        } else if(holder is ReplyViewHolder){
+            holder.dataBinding.postComment = itemList[position]
 
-        holder.dataBinding.itemBoardPostDetailCommentIvLike.setSafeOnClickListener {
-            listener?.onLikeClick(itemList[position], position)
-        }
+            holder.dataBinding.itemBoardPostDetailReplyIvLike.setSafeOnClickListener {
+                listener?.onReplyLikeClick(itemList[position], position)
+            }
 
-        holder.dataBinding.itemBoardPostDetailCommentIvMore.setSafeOnClickListener {
-            listener?.onMoreLikeClick(itemList[position], position)
-        }
+            holder.dataBinding.itemBoardPostDetailReplyIvMore.setSafeOnClickListener {
+                listener?.onReplyMoreLikeClick(itemList[position], position)
+            }
 
-        holder.dataBinding.itemBoardPostDetailCommentTvReply.setSafeOnClickListener {
-            listener?.onReplyClick(itemList[position].commentIdx)
+            holder.dataBinding.itemBoardPostDetailReplyTvReply.setSafeOnClickListener {
+                listener?.onReplyReplyClick(itemList[position].commentIdx)
+            }
         }
 
     }
 
-    val replyClickListener = object : BoardPostReplyRecyclerViewAdapter.OnCommentClickListener{
-        override fun onLikeClick(postComment: PostComment, commentPosition : Int, replyPosition: Int) {
-            listener?.onReplyLikeClick(postComment, commentPosition, replyPosition)
-        }
-
-        override fun onMoreLikeClick(postComment: PostComment, commentPosition : Int, replyPosition: Int) {
-           listener?.onReplyMoreLikeClick(postComment, commentPosition, replyPosition)
-        }
-
-        override fun onReplyLikeClick(commentIdx: Int) {
-            listener?.onReplyReplyClick(commentIdx)
-        }
-    }
-
-    inner class ViewHolder(val dataBinding: ItemBoardPostDetailCommentBinding) : RecyclerView.ViewHolder(dataBinding.root)
 
     interface OnCommentClickListener {
         fun onLikeClick(postComment: PostComment, position: Int)
         fun onMoreLikeClick(postComment: PostComment, position: Int)
         fun onReplyClick(commentIdx: Int)
 
-        fun onReplyLikeClick(postComment: PostComment, commentPosition : Int, replyPosition: Int)
-        fun onReplyMoreLikeClick(postComment: PostComment, commentPosition : Int, replyPosition: Int)
+        fun onReplyLikeClick(postComment: PostComment,position : Int)
+        fun onReplyMoreLikeClick(postComment: PostComment, position : Int)
         fun onReplyReplyClick(commentIdx: Int)
     }
 
@@ -125,5 +110,12 @@ class BoardPostCommentRecyclerViewAdapter() : RecyclerView.Adapter<BoardPostComm
     fun setOnCommentClickListener(listener: OnCommentClickListener) {
         this.listener = listener
     }
+}
 
+class CommentViewHolder(val dataBinding: ItemBoardPostDetailCommentBinding) : RecyclerView.ViewHolder(dataBinding.root)
+class ReplyViewHolder(val dataBinding: ItemBoardPostDetailReplyBinding) : RecyclerView.ViewHolder(dataBinding.root)
+
+object PostCommentViewType {
+    const val COMMENT = 0
+    const val REPLY = 1
 }

@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseActivity
 import com.icoo.ssgsag_android.data.model.community.board.PostComment
+import com.icoo.ssgsag_android.data.model.community.board.PostInfo
 import com.icoo.ssgsag_android.databinding.ActivityBoardPostDetailBinding
 import com.icoo.ssgsag_android.ui.main.community.board.BoardPostDetailBottomSheet
 import com.icoo.ssgsag_android.ui.main.community.board.CommunityBoardType
@@ -77,7 +78,6 @@ class BoardPostDetailActivity : BaseActivity<ActivityBoardPostDetailBinding, Boa
         boardPostCommentRecyclerViewAdapter = BoardPostCommentRecyclerViewAdapter()
         boardPostCommentRecyclerViewAdapter.apply {
             setOnCommentClickListener(commentClickListener)
-            setHasStableIds(true)
         }
 
         viewDataBinding.actBoardPostDetailRvComment.run{
@@ -86,8 +86,23 @@ class BoardPostDetailActivity : BaseActivity<ActivityBoardPostDetailBinding, Boa
         }
 
         viewModel.commentList.observe(this, Observer {
+
+            val tempCommentList = arrayListOf<PostComment>()
+
+            for(comment in it){
+                comment.type = 0
+                tempCommentList.add(comment)
+
+                if(comment.communityCCommentList!!.size > 0){
+                    for(reply in comment.communityCCommentList!!){
+                        reply.type = 1
+                        tempCommentList.add(reply)
+                    }
+                }
+            }
+
             boardPostCommentRecyclerViewAdapter.run{
-                replaceAll(it)
+                replaceAll(tempCommentList)
                 notifyDataSetChanged()
             }
 
@@ -98,12 +113,6 @@ class BoardPostDetailActivity : BaseActivity<ActivityBoardPostDetailBinding, Boa
         viewModel.refreshedCommentPosition.observe(this, Observer {
             boardPostCommentRecyclerViewAdapter.run{
                 replaceItem(viewModel.refreshedComment, it)
-            }
-        })
-
-        viewModel.refreshedReplyPosition.observe(this, Observer {
-            boardPostCommentRecyclerViewAdapter.run{
-                replaceSubItem(viewModel.refreshedComment, viewModel.refreshedCommentPosition.value!!, it)
             }
         })
 
@@ -131,11 +140,11 @@ class BoardPostDetailActivity : BaseActivity<ActivityBoardPostDetailBinding, Boa
             TODO("Not yet implemented")
         }
 
-        override fun onReplyLikeClick(postComment: PostComment, commentPosition: Int, replyPosition: Int) {
-           viewModel.likeReply(postComment, commentPosition, replyPosition)
+        override fun onReplyLikeClick(postComment: PostComment, position: Int) {
+            viewModel.likeReply(postComment, position)
         }
 
-        override fun onReplyMoreLikeClick(postComment: PostComment, commentPosition: Int, replyPosition: Int) {
+        override fun onReplyMoreLikeClick(postComment: PostComment, position: Int) {
             TODO("Not yet implemented")
         }
 

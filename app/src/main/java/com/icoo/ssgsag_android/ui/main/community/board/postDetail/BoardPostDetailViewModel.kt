@@ -26,7 +26,6 @@ class BoardPostDetailViewModel(
     var deleteStatus = MutableLiveData<Int>()
     var writeCommentStatus = MutableLiveData<Int>()
     var refreshedCommentPosition = MutableLiveData<Int>()
-    var refreshedReplyPosition = MutableLiveData<Int>()
     lateinit var refreshedComment : PostComment
 
     var postIdx = 0
@@ -91,13 +90,8 @@ class BoardPostDetailViewModel(
         }
     }
 
-    fun likeReply(postComment : PostComment, commentPosition : Int, replyPosition : Int){
+    fun likeReply(postComment : PostComment, position: Int){
 
-        Log.e("postComment", postComment.toString())
-
-        Log.e("like comment", commentPosition.toString())
-        Log.e("like reply", replyPosition.toString())
-        Log.e("like reply idx", postComment.ccommentIdx.toString())
         if(postComment.like) {
             addDisposable(repository.unlikeCommunityReply(postComment.ccommentIdx)
                 .subscribeOn(schedulerProvider.io())
@@ -111,9 +105,7 @@ class BoardPostDetailViewModel(
                         if(refreshedComment.likeNum > 0)
                             refreshedComment.likeNum--
                         refreshedComment.like = false
-                        refreshedCommentPosition.value = commentPosition
-                        refreshedReplyPosition.value = replyPosition
-
+                        refreshedCommentPosition.value = position
                     }
 
                 }) {
@@ -131,11 +123,9 @@ class BoardPostDetailViewModel(
                         refreshedComment = postComment
                         refreshedComment.likeNum++
                         refreshedComment.like = true
-                        refreshedCommentPosition.value = commentPosition
-                        refreshedReplyPosition.value = replyPosition
+                        refreshedCommentPosition.value = position
                     }
 
-                    Log.e("status", it.status.toString())
                 }) {
                     Log.e("like reply", it.message)
                 })

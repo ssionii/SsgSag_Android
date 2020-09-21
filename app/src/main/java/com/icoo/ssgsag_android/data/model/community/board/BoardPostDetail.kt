@@ -44,6 +44,7 @@ data class PostComment(
     var communityCCommentList : ArrayList<PostComment>?,
     val commentName : String?,
     var like : Boolean,
-    val mine: Boolean
+    val mine: Boolean,
+    var type : Int
 
 )
