@@ -22,9 +22,12 @@ class BoardPostDetailViewModel(
     private var _commentList = MutableLiveData<ArrayList<PostComment>>()
     val commentList : LiveData<ArrayList<PostComment>> = _commentList
 
+    var status = MutableLiveData<Int>()
     var refreshedCommentPosition = MutableLiveData<Int>()
     var refreshedReplyPosition = MutableLiveData<Int>()
     lateinit var refreshedComment : PostComment
+
+
 
     fun getPostDetail(postIdx : Int){
         addDisposable(repository.getBoardPostDetail(postIdx)
@@ -134,4 +137,20 @@ class BoardPostDetailViewModel(
                 })
         }
     }
+
+    fun deletePost(postIdx : Int){
+        addDisposable(repository.deleteBoardPost(postIdx)
+            .subscribeOn(schedulerProvider.io())
+            .observeOn(schedulerProvider.mainThread())
+            .doOnError {
+                Log.e("get post detail error", it.message)
+            }
+            .subscribe({
+                Log.e("status", it.status.toString())
+                status.value = it.status
+            }) {
+                Log.e("get post detail error", it.message)
+            })
+    }
+
 }

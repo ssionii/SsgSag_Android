@@ -1,11 +1,14 @@
 package com.icoo.ssgsag_android.ui.main.community.board
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -30,6 +33,27 @@ class BoardListPageFragment : BaseFragment<FragmentBoardListPageBinding, Communi
         get() = R.layout.fragment_board_list_page
 
     override val viewModel: CommunityBoardViewModel by viewModel()
+
+    val postRequest = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult : ActivityResult ->
+        val resultCode : Int = activityResult.resultCode
+        val data : Intent? = activityResult.data
+
+        if(resultCode == Activity.RESULT_OK) {
+            if(data!!.getStringExtra("type") == "delete" || data.getStringExtra("type") == "edit") {
+//                curPage = 0
+//                when (communityBoardType) {
+//                    CommunityBoardType.COUNSEL -> {
+//                        viewModel.getCounselList(category, curPage, pageSize)
+//                    }
+//                    CommunityBoardType.TALK -> {
+//                        viewModel.getTalkList(curPage, pageSize)
+//                    }
+//                }
+                (requireActivity() as CommunityBoardActivity).setCounselVp()
+            }
+        }
+    }
+
 
     var category = "ALL"
     var communityBoardType = CommunityBoardType.COUNSEL
@@ -98,7 +122,10 @@ class BoardListPageFragment : BaseFragment<FragmentBoardListPageBinding, Communi
 
         viewModel.postList.observe(viewLifecycleOwner, Observer {
             (viewDataBinding.actCommunityBoardRv.adapter as BaseRecyclerViewAdapter<PostInfo, *>).run{
-                addItem(it)
+                if(curPage > 0)
+                    addItem(it)
+                else
+                    replaceAll(it)
                 notifyDataSetChanged()
                 if(this.itemCount > 0) {
                     emptyView.visibility = View.GONE
@@ -119,7 +146,10 @@ class BoardListPageFragment : BaseFragment<FragmentBoardListPageBinding, Communi
                         (this.adapter as BaseRecyclerViewAdapter<BoardPostDetail, *>).apply {
                             clearAll()
                             curPage = 0
-                            viewModel.getCounselList(category, curPage, pageSize)
+                            if(communityBoardType == CommunityBoardType.COUNSEL)
+                                viewModel.getCounselList(category, curPage, pageSize)
+                            else
+                                viewModel.getTalkList(curPage, pageSize)
 
                         }
                         viewDataBinding.fragBoardListPageSrl.isRefreshing = false
@@ -136,7 +166,7 @@ class BoardListPageFragment : BaseFragment<FragmentBoardListPageBinding, Communi
         intent.putExtra("type", communityBoardType)
         intent.putExtra("postIdx", (item as PostInfo).communityIdx)
 
-        startActivity(intent)
+        postRequest.launch(intent)
     }
 
 

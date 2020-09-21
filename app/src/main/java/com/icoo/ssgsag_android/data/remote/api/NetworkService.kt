@@ -518,6 +518,7 @@ interface NetworkService {
 
 
     // 커뮤니티
+    // 게시글
     @GET("/community")
     fun getBoardPost(
         @Header("Authorization") token: String,
@@ -532,6 +533,20 @@ interface NetworkService {
         @Header("Authorization") token: String,
         @Body() body : JsonObject
     ): Single<NullDataResponse>
+
+    @PUT("/community")
+    fun editBoardPost(
+        @Header("Content-Type") content_type: String,
+        @Header("Authorization") token: String,
+        @Body() body : JsonObject
+    ): Single<NullDataResponse>
+
+    @DELETE("/community/{communityIdx}")
+    fun deleteBoardPost(
+        @Header("Authorization") token: String,
+        @Path("communityIdx") communityIdx : Int
+    ): Single<NullDataResponse>
+
 
 
     @GET("/community/{communityIdx}")

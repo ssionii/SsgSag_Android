@@ -54,8 +54,6 @@ class CommunityBoardActivity : BaseActivity<ActivityCommunityBoardBinding, Commu
         }
     }
 
-
-
     var communityBoardType = CommunityBoardType.TALK
 
     val counselBoardCategoryList = arrayListOf(
@@ -77,7 +75,6 @@ class CommunityBoardActivity : BaseActivity<ActivityCommunityBoardBinding, Commu
             CommunityBoardType.COUNSEL -> {
                 viewDataBinding.actCommunityBoardTvTitle.text = this.resources.getString(R.string.counsel_title)
                 setCounselVp()
-                setTab()
             }
             CommunityBoardType.TALK -> {
                 viewDataBinding.actCommunityBoardTvTitle.text = this.resources.getString(R.string.talk_title)
@@ -106,7 +103,7 @@ class CommunityBoardActivity : BaseActivity<ActivityCommunityBoardBinding, Commu
 
     }
 
-    private fun setCounselVp(){
+    fun setCounselVp(){
         viewDataBinding.actCommunityBoardVp.apply{
             adapter = BasePagerAdapter(supportFragmentManager).apply {
                 for(category in counselBoardCategoryList ){
@@ -117,6 +114,8 @@ class CommunityBoardActivity : BaseActivity<ActivityCommunityBoardBinding, Commu
             currentItem = 0
             offscreenPageLimit = 3
         }
+
+        setTab()
     }
 
     private fun setTalkVp(){

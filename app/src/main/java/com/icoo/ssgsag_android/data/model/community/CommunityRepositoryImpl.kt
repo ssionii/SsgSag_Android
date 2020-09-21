@@ -20,6 +20,15 @@ class CommunityRepositoryImpl (val api: NetworkService, val pref: PreferenceMana
             =api.writeBoardPost("application/json", pref.findPreference("TOKEN", ""), body )
         .map { it }
 
+    override fun editBoardPost(body: JsonObject): Single<NullDataResponse>
+            = api.editBoardPost("application/json", pref.findPreference("TOKEN", ""), body)
+        .map{ it }
+
+    override fun deleteBoardPost(communityIdx: Int): Single<NullDataResponse>
+            = api.deleteBoardPost(pref.findPreference("TOKEN", ""), communityIdx)
+        .map { it }
+
+
     override fun getBoardPostDetail(communityIdx: Int): Single<BoardPostDetail>
         = api.getPostDetail(pref.findPreference("TOKEN", ""), communityIdx)
         .map { it.data }

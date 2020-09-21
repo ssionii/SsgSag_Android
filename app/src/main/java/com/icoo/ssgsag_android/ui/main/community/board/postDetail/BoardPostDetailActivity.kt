@@ -1,5 +1,6 @@
 package com.icoo.ssgsag_android.ui.main.community.board.postDetail
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -49,6 +50,11 @@ class BoardPostDetailActivity : BaseActivity<ActivityBoardPostDetailBinding, Boa
 
         setCommentRv()
         refreshComment()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getPostDetail(postIdx)
     }
 
     private fun setCommentRv(){
@@ -139,6 +145,7 @@ class BoardPostDetailActivity : BaseActivity<ActivityBoardPostDetailBinding, Boa
                 )
 
             bottomSheet.isCancelable = true
+            bottomSheet.setOnSheetDismissedListener(sheetDismissedListener)
             bottomSheet.show(supportFragmentManager, null)
         }
 
@@ -146,6 +153,23 @@ class BoardPostDetailActivity : BaseActivity<ActivityBoardPostDetailBinding, Boa
             val intent = Intent(this, PhotoExpandActivity::class.java)
             intent.putExtra("photoUrl", viewModel.postDetail.value?.community?.photoUrlList)
             startActivity(intent)
+        }
+    }
+
+    val sheetDismissedListener = object : BoardPostDetailBottomSheet.OnSheetDismissedListener{
+        override fun onSheetDismissed() {
+            val result = Intent().apply {
+                putExtra("type", "delete")
+            }
+            setResult(Activity.RESULT_OK, result)
+            finish()
+        }
+
+        override fun onPostEdited() {
+            val result = Intent().apply {
+                putExtra("type", "edit")
+            }
+            setResult(Activity.RESULT_OK, result)
         }
     }
 }

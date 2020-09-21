@@ -11,6 +11,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
@@ -35,6 +36,7 @@ class  BoardTalkPostWriteActivity : BaseActivity<ActivityBoardTalkPostWriteBindi
 
     override val viewModel: BoardPostWriteViewModel by viewModel()
 
+    var postIdx = 0
     var postWriteType = 0
     val REQUEST_CODE_SELECT_IMAGE: Int = 1004
 
@@ -58,6 +60,7 @@ class  BoardTalkPostWriteActivity : BaseActivity<ActivityBoardTalkPostWriteBindi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        postIdx = intent.getIntExtra("postIdx", 0)
         postWriteType = intent.getIntExtra("postWriteType", PostWriteType.WRITE)
 
         when(postWriteType){
@@ -75,18 +78,25 @@ class  BoardTalkPostWriteActivity : BaseActivity<ActivityBoardTalkPostWriteBindi
     }
 
     fun setEditType(){
-        // 통신해서 가져오기
-        title = "제목이지롱"
-        content = "하하"
+        viewModel.getPostDetail(postIdx)
 
-        viewDataBinding.actBoardPostWriteEtTitle.setText(title)
-        viewDataBinding.actBoardPostWriteEtDescription.setText(content)
+        viewModel.postDetail.observe(this, Observer {
+            title = it.community.title
+            content = it.community.content
 
-        onDataCheck()
+            viewDataBinding.actBoardPostWriteEtTitle.setText(title)
+            viewDataBinding.actBoardPostWriteEtDescription.setText(content)
+
+            onDataCheck()
+        })
     }
 
     private fun setButton(){
         viewDataBinding.actBoardPostWriteToolbar.toolbarCancelClCancel.setSafeOnClickListener {
+            val result = Intent().apply {
+                putExtra("isEdited", false)
+            }
+            setResult(Activity.RESULT_OK, result)
             finish()
         }
 
@@ -102,28 +112,52 @@ class  BoardTalkPostWriteActivity : BaseActivity<ActivityBoardTalkPostWriteBindi
         }
 
         viewDataBinding.actBoardPostWriteClUpload.setSafeOnClickListener {
-            if(uploadButtonClickable) {
-                val jsonObject = JSONObject()
-                jsonObject.put("category", "FREE")
-                jsonObject.put("title", title)
-                jsonObject.put("content", content)
-                if (photoURI != "") {
-                    jsonObject.put("photoUrlList", photoURI)
+            if(postWriteType == PostWriteType.WRITE) {
+                if (uploadButtonClickable) {
+                    val jsonObject = JSONObject()
+                    jsonObject.put("category", "FREE")
+                    jsonObject.put("title", title)
+                    jsonObject.put("content", content)
+                    if (photoURI != "") {
+                        jsonObject.put("photoUrlList", photoURI)
+                    }
+
+                    viewModel.writeBoardPost(jsonObject)
                 }
+            }else{
+                if (uploadButtonClickable) {
+                    val jsonObject = JSONObject()
+                    jsonObject.put("communityIdx", postIdx)
+                    jsonObject.put("category", "FREE")
+                    jsonObject.put("title", title)
+                    jsonObject.put("content", content)
+                    if (photoURI != "") {
+                        jsonObject.put("photoUrlList", photoURI)
+                    }
 
-                viewModel.writeBoardPost(jsonObject)
+                    viewModel.editBoardPost(jsonObject)
+                }
             }
-
-
         }
     }
 
     private fun setObserve(){
 
-        viewModel.status.observe(this, Observer {
+        viewModel.writeStatus.observe(this, Observer {
             if(it == 200){
                 val result = Intent().apply {
                     putExtra("type", postWriteType)
+                }
+                setResult(Activity.RESULT_OK, result)
+
+                finish()
+            }
+        })
+
+        viewModel.editStatus.observe(this, Observer {
+            if(it == 200) {
+                val result = Intent().apply {
+                    putExtra("isEdited", true)
                 }
                 setResult(Activity.RESULT_OK, result)
 

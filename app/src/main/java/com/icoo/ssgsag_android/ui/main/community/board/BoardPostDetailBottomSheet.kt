@@ -1,5 +1,6 @@
 package com.icoo.ssgsag_android.ui.main.community.board
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -7,6 +8,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.lifecycle.Observer
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.icoo.ssgsag_android.databinding.BottomSheetPostDetailBinding
 import com.icoo.ssgsag_android.ui.main.community.board.postDetail.BoardPostDetailViewModel
@@ -25,6 +29,21 @@ class BoardPostDetailBottomSheet (
     lateinit var viewDataBinding: BottomSheetPostDetailBinding
     val viewModel: BoardPostDetailViewModel by viewModel()
 
+    val editPostRequest = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult : ActivityResult ->
+        val resultCode : Int = activityResult.resultCode
+        val data : Intent? = activityResult.data
+
+        if(resultCode == Activity.RESULT_OK) {
+            if(data!!.getBooleanExtra("isEdited", false)) {
+                listener.onPostEdited()
+            }
+            dismiss()
+
+        }
+    }
+
+
+    lateinit var listener: OnSheetDismissedListener
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,6 +55,7 @@ class BoardPostDetailBottomSheet (
 
         setUI()
         setButton()
+        setObserve()
 
         return viewDataBinding.root
     }
@@ -65,20 +85,22 @@ class BoardPostDetailBottomSheet (
             when(type){
                 CommunityBoardType.COUNSEL ->{
                     val intent = Intent(activity, BoardCounselPostWriteActivity::class.java)
+                    intent.putExtra("postIdx", idx)
                     intent.putExtra("postWriteType", PostWriteType.EDIT)
-                    startActivity(intent)
+                    editPostRequest.launch(intent)
                 }
                 CommunityBoardType.TALK ->{
                     val intent = Intent(activity, BoardTalkPostWriteActivity::class.java)
+                    intent.putExtra("postIdx", idx)
                     intent.putExtra("postWriteType", PostWriteType.EDIT)
-                    startActivity(intent)
+                    editPostRequest.launch(intent)
                 }
             }
 
         }
 
         viewDataBinding.bottomSheetPostDetailCvDelete.setSafeOnClickListener {
-            Log.e("delete ", "click")
+            viewModel.deletePost(idx)
         }
 
         viewDataBinding.bottomSheetPostDetailCvReport.setSafeOnClickListener {
@@ -90,6 +112,24 @@ class BoardPostDetailBottomSheet (
         }
     }
 
+
+    private fun setObserve(){
+        viewModel.status.observe(this, Observer {
+            if(it == 200) {
+                listener.onSheetDismissed()
+                dismiss()
+            }
+        })
+    }
+
+    fun setOnSheetDismissedListener(listener: OnSheetDismissedListener) {
+        this.listener = listener
+    }
+
+    interface OnSheetDismissedListener {
+        fun onSheetDismissed()
+        fun onPostEdited()
+    }
 
     companion object {
         const val REQUEST_CODE = 2001

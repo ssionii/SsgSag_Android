@@ -11,6 +11,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.EditText
@@ -42,6 +43,7 @@ class  BoardCounselPostWriteActivity: BaseActivity<ActivityBoardCounselPostWrite
 
     override val viewModel: BoardPostWriteViewModel by viewModel()
 
+    var postIdx = 0
     var postWriteType = 0
     val REQUEST_CODE_SELECT_IMAGE: Int = 1004
 
@@ -72,6 +74,7 @@ class  BoardCounselPostWriteActivity: BaseActivity<ActivityBoardCounselPostWrite
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        postIdx = intent.getIntExtra("postIdx", 0)
         postWriteType = intent.getIntExtra("postWriteType", PostWriteType.WRITE)
 
         setCategoryRv()
@@ -89,20 +92,31 @@ class  BoardCounselPostWriteActivity: BaseActivity<ActivityBoardCounselPostWrite
     }
 
     fun setEditType(){
-        // 통신해서 가져오기
-        selectedCategory = categoryList[1]
-        title = "제목이지롱"
-        content = "하하"
 
-        viewDataBinding.actBoardPostWriteEtTitle.setText(title)
-        viewDataBinding.actBoardPostWriteEtDescription.setText(content)
-        (viewDataBinding.actBoardCounselPostWriteRvCategory.adapter as BaseRecyclerViewAdapter<CounselBoardCategory, *>).run{
-            categoryList[1].click = true
-            replaceAll(categoryList)
-            notifyDataSetChanged()
-        }
+        viewModel.getPostDetail(postIdx)
 
-        onDataCheck()
+        viewModel.postDetail.observe(this, Observer {
+            for(c in categoryList){
+                if(it.community.category == c.category){
+                    c.click = true
+                    selectedCategory = c
+                }
+            }
+
+            title = it.community.title
+            content = it.community.content
+
+            viewDataBinding.actBoardPostWriteEtTitle.setText(title)
+            viewDataBinding.actBoardPostWriteEtDescription.setText(content)
+            (viewDataBinding.actBoardCounselPostWriteRvCategory.adapter as BaseRecyclerViewAdapter<CounselBoardCategory, *>).run{
+
+                replaceAll(categoryList)
+                notifyDataSetChanged()
+            }
+
+            onDataCheck()
+        })
+
     }
 
     fun setCategoryRv(){
@@ -148,6 +162,11 @@ class  BoardCounselPostWriteActivity: BaseActivity<ActivityBoardCounselPostWrite
 
     private fun setButton(){
         viewDataBinding.actBoardPostWriteToolbar.toolbarCancelClCancel.setSafeOnClickListener {
+
+            val result = Intent().apply {
+                putExtra("isEdited", false)
+            }
+            setResult(Activity.RESULT_OK, result)
             finish()
         }
 
@@ -163,16 +182,32 @@ class  BoardCounselPostWriteActivity: BaseActivity<ActivityBoardCounselPostWrite
         }
 
         viewDataBinding.actBoardPostWriteClUpload.setSafeOnClickListener {
-            if(uploadButtonClickable) {
-                val jsonObject = JSONObject()
-                jsonObject.put("category", selectedCategory!!.category)
-                jsonObject.put("title", title)
-                jsonObject.put("content", content)
-                if (photoURI != "") {
-                    jsonObject.put("photoUrlList", photoURI)
-                }
 
-                viewModel.writeBoardPost(jsonObject)
+            if(postWriteType == PostWriteType.WRITE) {
+                if (uploadButtonClickable) {
+                    val jsonObject = JSONObject()
+                    jsonObject.put("category", selectedCategory!!.category)
+                    jsonObject.put("title", title)
+                    jsonObject.put("content", content)
+                    if (photoURI != "") {
+                        jsonObject.put("photoUrlList", photoURI)
+                    }
+
+                    viewModel.writeBoardPost(jsonObject)
+                }
+            }else{
+                if (uploadButtonClickable) {
+                    val jsonObject = JSONObject()
+                    jsonObject.put("communityIdx", postIdx)
+                    jsonObject.put("category", selectedCategory!!.category)
+                    jsonObject.put("title", title)
+                    jsonObject.put("content", content)
+                    if (photoURI != "") {
+                        jsonObject.put("photoUrlList", photoURI)
+                    }
+
+                    viewModel.editBoardPost(jsonObject)
+                }
             }
 
         }
@@ -180,10 +215,21 @@ class  BoardCounselPostWriteActivity: BaseActivity<ActivityBoardCounselPostWrite
 
     private fun setObserve(){
 
-        viewModel.status.observe(this, Observer {
+        viewModel.writeStatus.observe(this, Observer {
             if(it == 200){
                 val result = Intent().apply {
                     putExtra("type", postWriteType)
+                }
+                setResult(Activity.RESULT_OK, result)
+
+                finish()
+            }
+        })
+
+        viewModel.editStatus.observe(this, Observer {
+            if(it == 200) {
+                val result = Intent().apply {
+                    putExtra("isEdited", true)
                 }
                 setResult(Activity.RESULT_OK, result)
 
