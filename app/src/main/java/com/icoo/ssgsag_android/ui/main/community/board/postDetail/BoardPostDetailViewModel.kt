@@ -1,15 +1,16 @@
 package com.icoo.ssgsag_android.ui.main.community.board.postDetail
 
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.gson.JsonObject
+import com.google.gson.JsonParser
 import com.icoo.ssgsag_android.base.BaseViewModel
 import com.icoo.ssgsag_android.data.model.community.CommunityRepository
 import com.icoo.ssgsag_android.data.model.community.board.BoardPostDetail
 import com.icoo.ssgsag_android.data.model.community.board.PostComment
-import com.icoo.ssgsag_android.ui.main.feed.context
 import com.icoo.ssgsag_android.util.scheduler.SchedulerProvider
+import org.json.JSONObject
 
 class BoardPostDetailViewModel(
     private val repository: CommunityRepository,
@@ -22,14 +23,17 @@ class BoardPostDetailViewModel(
     private var _commentList = MutableLiveData<ArrayList<PostComment>>()
     val commentList : LiveData<ArrayList<PostComment>> = _commentList
 
-    var status = MutableLiveData<Int>()
+    var deleteStatus = MutableLiveData<Int>()
+    var writeCommentStatus = MutableLiveData<Int>()
     var refreshedCommentPosition = MutableLiveData<Int>()
     var refreshedReplyPosition = MutableLiveData<Int>()
     lateinit var refreshedComment : PostComment
 
+    var postIdx = 0
 
 
     fun getPostDetail(postIdx : Int){
+        this.postIdx = postIdx
         addDisposable(repository.getBoardPostDetail(postIdx)
             .subscribeOn(schedulerProvider.io())
             .observeOn(schedulerProvider.mainThread())
@@ -147,7 +151,26 @@ class BoardPostDetailViewModel(
             }
             .subscribe({
                 Log.e("status", it.status.toString())
-                status.value = it.status
+                deleteStatus.value = it.status
+            }) {
+                Log.e("get post detail error", it.message)
+            })
+    }
+
+    fun writeComment(jsonObject: JSONObject){
+        val body = JsonParser().parse(jsonObject.toString()) as JsonObject
+
+        addDisposable(repository.writePostComment(body)
+            .subscribeOn(schedulerProvider.io())
+            .observeOn(schedulerProvider.mainThread())
+            .doOnError {
+                Log.e("write comment error", it.message)
+            }
+            .subscribe({
+                writeCommentStatus.value = it.status
+                if(it.status == 200){
+                    getPostDetail(postIdx)
+                }
             }) {
                 Log.e("get post detail error", it.message)
             })

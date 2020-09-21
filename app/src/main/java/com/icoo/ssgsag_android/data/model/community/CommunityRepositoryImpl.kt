@@ -29,9 +29,14 @@ class CommunityRepositoryImpl (val api: NetworkService, val pref: PreferenceMana
         .map { it }
 
 
+
     override fun getBoardPostDetail(communityIdx: Int): Single<BoardPostDetail>
         = api.getPostDetail(pref.findPreference("TOKEN", ""), communityIdx)
         .map { it.data }
+
+    override fun writePostComment(body: JsonObject): Single<NullDataResponse>
+            = api.writePostComment("application/json", pref.findPreference("TOKEN", ""), body)
+        .map { it }
 
 
     override fun likeCommunityPost(communityIdx: Int): Single<NullDataResponse>

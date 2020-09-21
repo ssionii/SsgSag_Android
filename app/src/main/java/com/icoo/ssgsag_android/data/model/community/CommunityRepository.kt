@@ -14,6 +14,8 @@ interface CommunityRepository {
 
     fun getBoardPostDetail(communityIdx : Int) : Single<BoardPostDetail>
 
+    fun writePostComment(body: JsonObject) : Single<NullDataResponse>
+
     fun likeCommunityPost(communityIdx : Int) : Single<NullDataResponse>
     fun likeCommunityComment(commentIdx : Int) : Single<NullDataResponse>
     fun likeCommunityReply(ccommunityIdx : Int) : Single<NullDataResponse>

@@ -114,7 +114,7 @@ class BoardPostDetailBottomSheet (
 
 
     private fun setObserve(){
-        viewModel.status.observe(this, Observer {
+        viewModel.deleteStatus.observe(this, Observer {
             if(it == 200) {
                 listener.onSheetDismissed()
                 dismiss()

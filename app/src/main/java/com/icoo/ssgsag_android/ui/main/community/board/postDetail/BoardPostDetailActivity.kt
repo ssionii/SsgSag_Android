@@ -1,19 +1,26 @@
 package com.icoo.ssgsag_android.ui.main.community.board.postDetail
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
+import android.view.View
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
+import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseActivity
 import com.icoo.ssgsag_android.data.model.community.board.PostComment
-import com.icoo.ssgsag_android.ui.main.community.board.BoardPostDetailBottomSheet
 import com.icoo.ssgsag_android.databinding.ActivityBoardPostDetailBinding
+import com.icoo.ssgsag_android.ui.main.community.board.BoardPostDetailBottomSheet
 import com.icoo.ssgsag_android.ui.main.community.board.CommunityBoardType
 import com.icoo.ssgsag_android.ui.main.photoEnlarge.PhotoExpandActivity
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
+import org.json.JSONObject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class BoardPostDetailActivity : BaseActivity<ActivityBoardPostDetailBinding, BoardPostDetailViewModel>(){
@@ -27,6 +34,9 @@ class BoardPostDetailActivity : BaseActivity<ActivityBoardPostDetailBinding, Boa
 
     var type = 0
     var postIdx = 0
+
+    private var viewTop = 0
+    private var viewBottom = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +60,11 @@ class BoardPostDetailActivity : BaseActivity<ActivityBoardPostDetailBinding, Boa
 
         setCommentRv()
         refreshComment()
+        setObserver()
+
+        viewDataBinding.actBoardPostDetailClBack.setSafeOnClickListener {
+            finish()
+        }
     }
 
     override fun onResume() {
@@ -129,11 +144,8 @@ class BoardPostDetailActivity : BaseActivity<ActivityBoardPostDetailBinding, Boa
         }
     }
 
-    private fun setButton(){
 
-        viewDataBinding.actBoardPostDetailClBack.setSafeOnClickListener {
-            finish()
-        }
+    private fun setButton(){
 
         viewDataBinding.actBoardPostDetailClMenu.setSafeOnClickListener {
             val bottomSheet =
@@ -154,6 +166,31 @@ class BoardPostDetailActivity : BaseActivity<ActivityBoardPostDetailBinding, Boa
             intent.putExtra("photoUrl", viewModel.postDetail.value?.community?.photoUrlList)
             startActivity(intent)
         }
+
+        viewDataBinding.actBoardPostDetailIvWriteComment.setSafeOnClickListener {
+            if(viewDataBinding.actBoardPostDetailEtComment.text.toString() != "") {
+                val jsonObject = JSONObject()
+                jsonObject.put("content", viewDataBinding.actBoardPostDetailEtComment.text)
+                jsonObject.put("communityIdx", postIdx)
+
+                viewModel.writeComment(jsonObject)
+                hideKeyboard(viewDataBinding.actBoardPostDetailEtComment)
+
+                viewDataBinding.actBoardPostDetailEtComment.text.clear()
+
+
+
+            }
+        }
+
+    }
+
+    private fun setObserver(){
+        viewModel.writeCommentStatus.observe(this, Observer {
+            if(it == 200){
+                scrollToViewBottom(viewDataBinding.actBoardPostDetailRvComment, viewDataBinding.actBoardPostDetailNsv)
+            }
+        })
     }
 
     val sheetDismissedListener = object : BoardPostDetailBottomSheet.OnSheetDismissedListener{
@@ -171,5 +208,30 @@ class BoardPostDetailActivity : BaseActivity<ActivityBoardPostDetailBinding, Boa
             }
             setResult(Activity.RESULT_OK, result)
         }
+    }
+
+    fun scrollToViewTop(view: View, scrollView: NestedScrollView){
+        if(view != null && view != scrollView){
+            viewTop += view.top
+            scrollToViewTop((view.parent as View), scrollView)
+        } else if(scrollView != null){
+            Handler().postDelayed({ scrollView.smoothScrollTo(0, viewTop) }, 100)
+        }
+    }
+
+    fun scrollToViewBottom(view: View, scrollView: NestedScrollView){
+        if(view != null && view != scrollView){
+            viewBottom += view.bottom
+            scrollToViewBottom((view.parent as View), scrollView)
+        } else if(scrollView != null){
+            Handler().postDelayed({ scrollView.smoothScrollTo(0, viewBottom) }, 100)
+        }
+    }
+
+    fun hideKeyboard(et: EditText){
+
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm!!.hideSoftInputFromWindow(et.getWindowToken(), 0)
+
     }
 }

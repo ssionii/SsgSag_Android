@@ -206,6 +206,8 @@ class  BoardCounselPostWriteActivity: BaseActivity<ActivityBoardCounselPostWrite
                         jsonObject.put("photoUrlList", photoURI)
                     }
 
+                    Log.e("edited category", selectedCategory!!.category)
+
                     viewModel.editBoardPost(jsonObject)
                 }
             }

@@ -548,12 +548,20 @@ interface NetworkService {
     ): Single<NullDataResponse>
 
 
-
+    // 게시글 상세보기
     @GET("/community/{communityIdx}")
     fun getPostDetail(
         @Header("Authorization") token: String,
         @Path("communityIdx") communityIdx: Int
     ): Single<BoardPostDetailResponse>
+
+    // 댓글 달기
+    @POST("/community/comment")
+    fun writePostComment(
+        @Header("Content-Type") content_type: String,
+        @Header("Authorization") token: String,
+        @Body() body : JsonObject
+    ):Single<NullDataResponse>
 
     // 커뮤니티 좋아요
     // 커뮤니티 게시글
