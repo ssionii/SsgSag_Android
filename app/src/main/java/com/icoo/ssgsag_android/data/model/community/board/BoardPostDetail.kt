@@ -45,6 +45,7 @@ data class PostComment(
     val commentName : String?,
     var like : Boolean,
     val mine: Boolean,
-    var type : Int
+    var type : Int,
+    var isSelected : Boolean
 
 )

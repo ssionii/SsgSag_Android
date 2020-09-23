@@ -117,7 +117,7 @@
         <activity android:name=".ui.main.calendar.calendarPage.list.CalendarListDeleteActivity"/>
         <activity android:name=".ui.main.block.MainBlockActivity"/>
 
-        <activity android:name=".ui.main.community.board.CommunityBoardActivity"/>
+        <activity android:name=".ui.main.community.board.CommunityBoardActivity" />
         <activity android:name=".ui.main.community.board.postDetail.BoardPostDetailActivity"
                 android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".ui.main.community.board.postDetail.write.BoardCounselPostWriteActivity"

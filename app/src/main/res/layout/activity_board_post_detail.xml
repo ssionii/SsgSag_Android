@@ -6,6 +6,9 @@
         <variable
                 name="vm"
                 type="com.icoo.ssgsag_android.ui.main.community.board.postDetail.BoardPostDetailViewModel" />
+        <variable
+                name="activity"
+                type="com.icoo.ssgsag_android.ui.main.community.board.postDetail.BoardPostDetailActivity" />
     </data>
 <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -70,7 +73,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintTop_toBottomOf="@id/act_board_post_detail_cl_toolbar"
-            app:layout_constraintBottom_toTopOf="@+id/act_board_post_detail_cl_write_comment"
+            app:layout_constraintBottom_toTopOf="@+id/act_board_post_detail_cl_bottom_container"
             app:layout_constraintStart_toStartOf="parent"
             android:background="@color/grey_4"
             android:overScrollMode="never">
@@ -263,7 +266,6 @@
                     android:layout_height="8dp"
                     android:background="@color/grey_4"/>
             <TextView
-                    android:visibility="visible"
                     android:id="@+id/act_board_post_detail_tv_no_comment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -275,7 +277,7 @@
                     android:layout_marginTop="11dp"
                     android:layout_marginBottom="11dp"
                     android:fontFamily="@font/noto_sans_kr_regular"
-                    tvVisibilityBySize="@{vm.commentList.size()}"
+                    tvVisibilityBySize="@{vm.commentList}"
                     />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -288,37 +290,77 @@
     </androidx.core.widget.NestedScrollView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/act_board_post_detail_cl_write_comment"
+            android:id="@+id/act_board_post_detail_cl_bottom_container"
             android:layout_width="match_parent"
-            android:layout_height="46dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:background="@color/white">
-        <EditText
-                android:id="@+id/act_board_post_detail_et_comment"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:textSize="14dp"
-                android:textColorHint="@color/grey_2"
-                android:textColor="@color/black_1"
-                android:letterSpacing="-0.01"
-                android:hint="댓글을 입력해주세요"
-                android:fontFamily="@font/noto_sans_kr_regular"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="20dp"
-                android:background="@null"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/act_board_post_detail_iv_write_comment"/>
-        <ImageView
-                android:id="@+id/act_board_post_detail_iv_write_comment"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/bt_comment"
-                app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+        <LinearLayout
+                android:id="@+id/act_board_post_detail_ll_reply_guide"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:orientation="horizontal"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginRight="15dp"/>
+                android:background="@color/ssgsag"
+                android:gravity="center_vertical"
+                llVisibilityByBoolean="@{vm.isReply()}">
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14dp"
+                    android:fontFamily="@font/noto_sans_kr_medium"
+                    android:textColor="@color/white"
+                    tools:text="파이오오님에게 답글 작성 중…"
+                    isReply="@{vm.isReply()}"
+                    replyUserName="@{activity.userNickname}"
+                    android:layout_marginLeft="16dp"/>
+            <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"/>
+            <ImageView
+                    android:id="@+id/act_board_post_detail_iv_reply_guide_cancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_cancel_white"
+                    android:layout_marginRight="22dp"/>
+        </LinearLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/act_board_post_detail_cl_write_comment"
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:background="@color/white"
+                app:layout_constraintTop_toBottomOf="@+id/act_board_post_detail_ll_reply_guide"
+                app:layout_constraintBottom_toBottomOf="parent">
+            <EditText
+                    android:id="@+id/act_board_post_detail_et_comment"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:textSize="14dp"
+                    android:textColorHint="@color/grey_2"
+                    android:textColor="@color/black_1"
+                    android:letterSpacing="-0.01"
+                    commentEditTextHint="@{vm.isReply()}"
+                    android:fontFamily="@font/noto_sans_kr_regular"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@null"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/act_board_post_detail_iv_write_comment"/>
+            <ImageView
+                    android:id="@+id/act_board_post_detail_iv_write_comment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/bt_comment"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginRight="15dp"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseActivity
 import com.icoo.ssgsag_android.data.model.community.board.PostComment
-import com.icoo.ssgsag_android.data.model.community.board.PostInfo
 import com.icoo.ssgsag_android.databinding.ActivityBoardPostDetailBinding
 import com.icoo.ssgsag_android.ui.main.community.board.BoardPostDetailBottomSheet
 import com.icoo.ssgsag_android.ui.main.community.board.CommunityBoardType
@@ -39,9 +38,13 @@ class BoardPostDetailActivity : BaseActivity<ActivityBoardPostDetailBinding, Boa
     private var viewTop = 0
     private var viewBottom = 0
 
+    private var commentIdx = 0
+    var userNickname = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewDataBinding.vm = viewModel
+        viewDataBinding.activity = this
 
         type = intent.getIntExtra("type", CommunityBoardType.TALK)
         postIdx = intent.getIntExtra("postIdx", 0)
@@ -53,7 +56,6 @@ class BoardPostDetailActivity : BaseActivity<ActivityBoardPostDetailBinding, Boa
         }
 
         viewModel.getPostDetail(postIdx)
-
 
         viewModel.postDetail.observe(this, Observer {
             setButton()
@@ -86,6 +88,8 @@ class BoardPostDetailActivity : BaseActivity<ActivityBoardPostDetailBinding, Boa
         }
 
         viewModel.commentList.observe(this, Observer {
+
+            Log.e("commentList", it.toString())
 
             val tempCommentList = arrayListOf<PostComment>()
 
@@ -136,8 +140,13 @@ class BoardPostDetailActivity : BaseActivity<ActivityBoardPostDetailBinding, Boa
             bottomSheet.show(supportFragmentManager, null)
         }
 
-        override fun onReplyClick(commentIdx: Int) {
-            TODO("Not yet implemented")
+        override fun onReplyClick(idx: Int, name: String, position : Int) {
+            showKeyboard(viewDataBinding.actBoardPostDetailEtComment)
+            viewModel.isReply.value = true
+            commentIdx = idx
+            userNickname = name
+
+            scroll(position)
         }
 
         override fun onReplyLikeClick(postComment: PostComment, position: Int) {
@@ -148,13 +157,26 @@ class BoardPostDetailActivity : BaseActivity<ActivityBoardPostDetailBinding, Boa
             TODO("Not yet implemented")
         }
 
-        override fun onReplyReplyClick(commentIdx: Int) {
-            TODO("Not yet implemented")
+
+
+        override fun onReplyReplyClick(idx: Int, name: String, position : Int) {
+            showKeyboard(viewDataBinding.actBoardPostDetailEtComment)
+            viewModel.isReply.value = true
+            commentIdx = idx
+            userNickname = name
+
+            scroll(position)
+
         }
+
     }
 
 
     private fun setButton(){
+
+        viewDataBinding.actBoardPostDetailIvReplyGuideCancel.setSafeOnClickListener {
+            viewModel.isReply.value = false
+        }
 
         viewDataBinding.actBoardPostDetailClMenu.setSafeOnClickListener {
             val bottomSheet =
@@ -177,18 +199,30 @@ class BoardPostDetailActivity : BaseActivity<ActivityBoardPostDetailBinding, Boa
         }
 
         viewDataBinding.actBoardPostDetailIvWriteComment.setSafeOnClickListener {
+
             if(viewDataBinding.actBoardPostDetailEtComment.text.toString() != "") {
-                val jsonObject = JSONObject()
-                jsonObject.put("content", viewDataBinding.actBoardPostDetailEtComment.text)
-                jsonObject.put("communityIdx", postIdx)
+                if(viewModel.isReply.value!!){
+                    val jsonObject = JSONObject()
+                    jsonObject.put("content", viewDataBinding.actBoardPostDetailEtComment.text)
+                    jsonObject.put("commentIdx", commentIdx)
+                    jsonObject.put("commentName", userNickname)
 
-                viewModel.writeComment(jsonObject)
-                hideKeyboard(viewDataBinding.actBoardPostDetailEtComment)
+                    viewModel.writeReply(jsonObject)
+                    hideKeyboard(viewDataBinding.actBoardPostDetailEtComment)
 
-                viewDataBinding.actBoardPostDetailEtComment.text.clear()
+                    viewDataBinding.actBoardPostDetailEtComment.text.clear()
+                    viewModel.isReply.value = false
 
+                }else{
+                    val jsonObject = JSONObject()
+                    jsonObject.put("content", viewDataBinding.actBoardPostDetailEtComment.text)
+                    jsonObject.put("communityIdx", postIdx)
 
+                    viewModel.writeComment(jsonObject)
+                    hideKeyboard(viewDataBinding.actBoardPostDetailEtComment)
 
+                    viewDataBinding.actBoardPostDetailEtComment.text.clear()
+                }
             }
         }
 
@@ -196,9 +230,14 @@ class BoardPostDetailActivity : BaseActivity<ActivityBoardPostDetailBinding, Boa
 
     private fun setObserver(){
         viewModel.writeCommentStatus.observe(this, Observer {
+            Log.e("writeComment", it.toString())
             if(it == 200){
                 scrollToViewBottom(viewDataBinding.actBoardPostDetailRvComment, viewDataBinding.actBoardPostDetailNsv)
             }
+        })
+
+        viewModel.isReply.observe(this, Observer {
+            if(!it) boardPostCommentRecyclerViewAdapter.clearItemBg()
         })
     }
 
@@ -219,15 +258,6 @@ class BoardPostDetailActivity : BaseActivity<ActivityBoardPostDetailBinding, Boa
         }
     }
 
-    fun scrollToViewTop(view: View, scrollView: NestedScrollView){
-        if(view != null && view != scrollView){
-            viewTop += view.top
-            scrollToViewTop((view.parent as View), scrollView)
-        } else if(scrollView != null){
-            Handler().postDelayed({ scrollView.smoothScrollTo(0, viewTop) }, 100)
-        }
-    }
-
     fun scrollToViewBottom(view: View, scrollView: NestedScrollView){
         if(view != null && view != scrollView){
             viewBottom += view.bottom
@@ -237,10 +267,27 @@ class BoardPostDetailActivity : BaseActivity<ActivityBoardPostDetailBinding, Boa
         }
     }
 
+    fun scroll(position : Int){
+        viewDataBinding.actBoardPostDetailRvComment.apply{
+            post {
+                val height : Float = y + getChildAt(position).y
+                viewDataBinding.actBoardPostDetailNsv.smoothScrollTo(0, height.toInt())
+            }
+        }
+    }
+
     fun hideKeyboard(et: EditText){
 
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm!!.hideSoftInputFromWindow(et.getWindowToken(), 0)
+        imm.hideSoftInputFromWindow(et.getWindowToken(), 0)
+
+    }
+
+    fun showKeyboard(et: EditText){
+
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        et.requestFocus()
+        imm.showSoftInput(et, 0)
 
     }
 }

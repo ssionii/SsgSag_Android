@@ -554,10 +554,16 @@ interface NetworkService {
         @Header("Authorization") token: String,
         @Path("communityIdx") communityIdx: Int
     ): Single<BoardPostDetailResponse>
-
     // 댓글 달기
     @POST("/community/comment")
     fun writePostComment(
+        @Header("Content-Type") content_type: String,
+        @Header("Authorization") token: String,
+        @Body() body : JsonObject
+    ):Single<NullDataResponse>
+    // 답글 달기
+    @POST("/community/ccomment")
+    fun writePostReply(
         @Header("Content-Type") content_type: String,
         @Header("Authorization") token: String,
         @Body() body : JsonObject

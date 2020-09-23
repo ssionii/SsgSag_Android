@@ -23,6 +23,8 @@ class BoardPostCommentRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.Vi
 
     private var itemList = arrayListOf<PostComment>()
 
+    private var selectedPosition = 0
+
     fun replaceAll(array: ArrayList<PostComment>?) {
         array?.let {
             this.itemList.run {
@@ -35,6 +37,12 @@ class BoardPostCommentRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.Vi
     fun replaceItem(item : PostComment, position : Int){
         itemList[position] = item
         notifyItemChanged(position)
+    }
+
+    fun clearItemBg(){
+        for(item in itemList){
+            item.isSelected = false
+        }
     }
 
     override fun getItemCount() = itemList.size
@@ -65,30 +73,42 @@ class BoardPostCommentRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.Vi
         if(holder is CommentViewHolder) {
             holder.dataBinding.postComment = itemList[position]
 
-            holder.dataBinding.itemBoardPostDetailCommentIvLike.setSafeOnClickListener {
+            holder.dataBinding.itemBoardPostDetailCommentIvLike.setOnClickListener {
                 listener?.onLikeClick(itemList[position], position)
             }
 
-            holder.dataBinding.itemBoardPostDetailCommentIvMore.setSafeOnClickListener {
+            holder.dataBinding.itemBoardPostDetailCommentIvMore.setOnClickListener {
                 listener?.onMoreLikeClick(itemList[position], position)
             }
 
-            holder.dataBinding.itemBoardPostDetailCommentTvReply.setSafeOnClickListener {
-                listener?.onReplyClick(itemList[position].commentIdx)
+            holder.dataBinding.itemBoardPostDetailCommentTvReply.setOnClickListener {
+                itemList[selectedPosition].isSelected = false
+                notifyItemChanged(selectedPosition)
+                itemList[position].isSelected = true
+                selectedPosition = position
+                notifyItemChanged(position)
+
+                listener?.onReplyClick(itemList[position].commentIdx, itemList[position].userNickname, position)
             }
         } else if(holder is ReplyViewHolder){
             holder.dataBinding.postComment = itemList[position]
 
-            holder.dataBinding.itemBoardPostDetailReplyIvLike.setSafeOnClickListener {
+            holder.dataBinding.itemBoardPostDetailReplyIvLike.setOnClickListener {
                 listener?.onReplyLikeClick(itemList[position], position)
             }
 
-            holder.dataBinding.itemBoardPostDetailReplyIvMore.setSafeOnClickListener {
+            holder.dataBinding.itemBoardPostDetailReplyIvMore.setOnClickListener {
                 listener?.onReplyMoreLikeClick(itemList[position], position)
             }
 
-            holder.dataBinding.itemBoardPostDetailReplyTvReply.setSafeOnClickListener {
-                listener?.onReplyReplyClick(itemList[position].commentIdx)
+            holder.dataBinding.itemBoardPostDetailReplyTvReply.setOnClickListener {
+                itemList[selectedPosition].isSelected = false
+                notifyItemChanged(selectedPosition)
+                itemList[position].isSelected = true
+                selectedPosition = position
+                notifyItemChanged(position)
+
+                listener?.onReplyReplyClick(itemList[position].commentIdx, itemList[position].userNickname, position)
             }
         }
 
@@ -98,11 +118,11 @@ class BoardPostCommentRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.Vi
     interface OnCommentClickListener {
         fun onLikeClick(postComment: PostComment, position: Int)
         fun onMoreLikeClick(postComment: PostComment, position: Int)
-        fun onReplyClick(commentIdx: Int)
+        fun onReplyClick(commentIdx: Int, userNickname : String, position : Int)
 
         fun onReplyLikeClick(postComment: PostComment,position : Int)
         fun onReplyMoreLikeClick(postComment: PostComment, position : Int)
-        fun onReplyReplyClick(commentIdx: Int)
+        fun onReplyReplyClick(commentIdx: Int, userNickname : String, position : Int)
     }
 
     private var listener: OnCommentClickListener? = null

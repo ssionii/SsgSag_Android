@@ -1,6 +1,8 @@
 package com.icoo.ssgsag_android.util.dataBinding
 
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
@@ -36,11 +38,11 @@ fun setTextViewVisibility(view: TextView, num: Int){
 }
 
 @BindingAdapter("tvVisibilityBySize")
-fun setTextViewVisibilityBySize(view: TextView, size: Int){
-    if(size != 0)
-        view.visibility = View.GONE
+fun setTextViewVisibilityBySize(view: TextView, arrayList: ArrayList<*>?){
+    if(arrayList == null || arrayList.size == 0)
+        view.visibility = VISIBLE
     else
-        view.visibility = View.VISIBLE
+        view.visibility = GONE
 }
 
 @BindingAdapter("tvVisibilityByString")
@@ -99,6 +101,13 @@ fun LinearLayout.setVisibilityByIntR(num: Int){
         0 -> this.visibility = View.VISIBLE
         else -> this.visibility = View.GONE
     }
+}
+
+@BindingAdapter("llVisibilityByBoolean")
+fun LinearLayout.setVisibilityByBoolean(bool: Boolean){
+    if(bool) this.visibility = VISIBLE
+    else this.visibility = GONE
+
 }
 
 @BindingAdapter("cvVisibilityByIntR")

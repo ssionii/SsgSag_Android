@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        android:background="@color/white">
+        replyCommentBg="@{postComment.selected}">
     <LinearLayout
             android:id="@+id/item_board_post_detail_recomment_ll"
             android:layout_width="match_parent"
@@ -71,7 +71,7 @@
                         android:letterSpacing="-0.02"
                         tools:text="\ufeff@파이오오"
                         android:fontFamily="@font/noto_sans_kr_medium"
-                        android:text="@{postComment.commentName}"
+                        replyUserName="@{postComment.commentName}"
                         android:layout_marginHorizontal="4dp"
                         android:layout_marginTop="1dp"
                         android:layout_marginBottom="2dp"/>

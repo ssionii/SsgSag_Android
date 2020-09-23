@@ -13,8 +13,8 @@ interface CommunityRepository {
     fun deleteBoardPost(communityIdx : Int) : Single<NullDataResponse>
 
     fun getBoardPostDetail(communityIdx : Int) : Single<BoardPostDetail>
-
     fun writePostComment(body: JsonObject) : Single<NullDataResponse>
+    fun writePostReply(body: JsonObject) : Single<NullDataResponse>
 
     fun likeCommunityPost(communityIdx : Int) : Single<NullDataResponse>
     fun likeCommunityComment(commentIdx : Int) : Single<NullDataResponse>

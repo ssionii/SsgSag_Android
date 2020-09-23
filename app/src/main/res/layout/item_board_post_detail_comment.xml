@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        android:background="@color/white">
+        replyCommentBg="@{postComment.selected}">
     <LinearLayout
             android:id="@+id/item_board_post_detail_comment_ll"
             android:layout_width="match_parent"
@@ -124,13 +124,5 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/item_board_post_detail_comment_ll"
             android:layout_marginTop="12dp"/>
-
-    <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/item_board_post_detail_rv_reply"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/item_board_post_Detail_comment_v"/>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

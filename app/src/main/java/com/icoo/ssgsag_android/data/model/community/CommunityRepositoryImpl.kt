@@ -38,6 +38,9 @@ class CommunityRepositoryImpl (val api: NetworkService, val pref: PreferenceMana
             = api.writePostComment("application/json", pref.findPreference("TOKEN", ""), body)
         .map { it }
 
+    override fun writePostReply(body: JsonObject): Single<NullDataResponse>
+         = api.writePostReply("application/json", pref.findPreference("TOKEN", ""), body)
+        .map { it }
 
     override fun likeCommunityPost(communityIdx: Int): Single<NullDataResponse>
             = api.likeCommunityPost(pref.findPreference("TOKEN", ""), communityIdx)

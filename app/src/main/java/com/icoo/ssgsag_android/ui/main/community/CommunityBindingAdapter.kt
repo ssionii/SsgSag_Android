@@ -2,11 +2,14 @@ package com.icoo.ssgsag_android.ui.main.community
 
 import android.graphics.Color
 import android.view.View
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
 import com.icoo.ssgsag_android.R
+import org.jetbrains.anko.backgroundColor
 import org.jetbrains.anko.textColor
 import java.text.DecimalFormat
 
@@ -119,4 +122,28 @@ fun setClubTabTextColor(view : TextView, reviewType : Int, isUnion : Boolean){
 fun setBoardCategoryText(view: TextView, category : String?){
     val BoardCategoryMap = mapOf("ALL" to "전체", "CAREER" to "취업/진로", "UNIV" to "대학생활", "THE_OTHERS" to "기타", "FREE" to "자유수다")
     view.text = BoardCategoryMap[category]
+}
+
+@BindingAdapter("replyUserName")
+fun setReplyUserName(view: TextView, userName: String){
+    view.text = "@" + userName
+}
+
+@BindingAdapter("commentEditTextHint")
+fun setCommentEditTextHint(view: EditText, isReply : Boolean){
+    if(isReply) view.hint = "답글을 입력해주세요"
+    else view.hint = "댓글을 입력해주세요"
+}
+
+@BindingAdapter("isReply", "replyUserName")
+fun setReplyUserName(view: TextView, isReply : Boolean, userName : String){
+    if(isReply){
+        view.text = userName + "님에게 답글 작성 중…"
+    }
+}
+
+@BindingAdapter("replyCommentBg")
+fun setReplyCommentBg(layout: ConstraintLayout, isSelected : Boolean){
+    if(isSelected) layout.backgroundColor = Color.parseColor("#14656ef0")
+    else layout.backgroundColor = layout.resources.getColor(R.color.white)
 }
