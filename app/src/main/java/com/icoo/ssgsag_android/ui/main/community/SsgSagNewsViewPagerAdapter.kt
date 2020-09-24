@@ -1,6 +1,7 @@
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.viewpager.widget.PagerAdapter
@@ -13,7 +14,8 @@ import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 
 class SsgSagNewsViewPagerAdapter(
     private val context : Context,
-    private val feedList: ArrayList<Feed>?
+    private val feedList: ArrayList<Feed>?,
+    private val from : String
 ) : PagerAdapter() {
 
     private var mOnItemClickListener: OnItemClickListener? = null
@@ -26,6 +28,10 @@ class SsgSagNewsViewPagerAdapter(
             R.layout.item_community_ssgsag_news, container, false
         )
 
+        if(from == "main"){
+            viewDataBinding.itemCommunitySsgsagNewsIvBookmark.visibility = GONE
+        }
+
         if(feedList!= null){
             val feedItem = feedList[position]
 
@@ -33,7 +39,11 @@ class SsgSagNewsViewPagerAdapter(
             viewDataBinding.itemCommunitySsgsagNewsCv.layoutParams.height = (newsWidth * 0.5).toInt()
 
             viewDataBinding.root.setSafeOnClickListener {
-                mOnItemClickListener?.onItemClick(feedItem.feedUrl)
+                mOnItemClickListener?.onItemClick(feedItem.feedUrl, feedItem.feedName, feedItem.isSave)
+            }
+
+            viewDataBinding.itemCommunitySsgsagNewsIvBookmark.setOnClickListener {
+                mOnItemClickListener?.bookmark(feedItem.feedIdx)
             }
 
         }
@@ -66,7 +76,8 @@ class SsgSagNewsViewPagerAdapter(
     }
 
     interface OnItemClickListener {
-        fun onItemClick(url : String)
+        fun onItemClick(url : String, name : String, isSave : Int)
+        fun bookmark(idx: Int)
     }
 
 }

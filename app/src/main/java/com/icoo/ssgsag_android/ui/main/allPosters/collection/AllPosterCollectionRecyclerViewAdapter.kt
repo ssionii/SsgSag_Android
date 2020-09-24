@@ -9,14 +9,11 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.MobileAds
 import com.icoo.ssgsag_android.R
+import com.icoo.ssgsag_android.SsgSagApplication
 import com.icoo.ssgsag_android.data.model.poster.allPoster.AdPosterCollection
 import com.icoo.ssgsag_android.databinding.ItemAllPosterCollectionBinding
 import com.icoo.ssgsag_android.databinding.ItemKakaoAdsBinding
-import com.icoo.ssgsag_android.ui.main.allPosters.AllPostersFragment
-import com.icoo.ssgsag_android.ui.main.feed.context
 import com.kakao.adfit.ads.AdListener
 
 
@@ -30,6 +27,8 @@ class AllPosterCollectionRecyclerViewAdapter(private val lifecycle: Lifecycle) :
     private var middleMargin = 0
     private var rightMargin = 0
     private var contentWidth= 0
+
+    val context = SsgSagApplication.getGlobalApplicationContext()
 
     fun setOnAllPosterCollectionClickListener(listener: OnAllPosterCollectionClickListener) {
         this.listener = listener

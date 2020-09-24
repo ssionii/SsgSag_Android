@@ -1,7 +1,6 @@
 package com.icoo.ssgsag_android.ui.main.review.club.info
 
 import android.content.Intent
-import android.graphics.Paint
 import android.graphics.Point
 import android.net.Uri
 import android.os.Bundle
@@ -12,14 +11,12 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseFragment
 import com.icoo.ssgsag_android.databinding.FragmentClubInfoBinding
-import com.icoo.ssgsag_android.ui.main.feed.FeedWebActivity
+import com.icoo.ssgsag_android.ui.main.community.feed.FeedWebActivity
 import com.icoo.ssgsag_android.ui.main.review.club.registration.ClubManagerCheckActivity
 import com.icoo.ssgsag_android.util.view.SpacesItemDecoration
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import com.icoo.ssgsag_android.util.dataBinding.replaceAll
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import android.graphics.Paint.UNDERLINE_TEXT_FLAG
-import android.widget.TextView
 import com.icoo.ssgsag_android.ui.main.community.review.photoViewPager.PhotoViewPagerActivity
 import com.icoo.ssgsag_android.ui.main.community.review.reviewDetail.ReviewDetailViewModel
 import org.jetbrains.anko.support.v4.toast

@@ -10,7 +10,6 @@ import com.icoo.ssgsag_android.base.BaseViewModel
 import com.icoo.ssgsag_android.data.model.review.club.ClubInfo
 import com.icoo.ssgsag_android.data.model.review.club.ClubReviewRepository
 import com.icoo.ssgsag_android.ui.main.community.review.ReviewType
-import com.icoo.ssgsag_android.ui.main.feed.context
 import com.icoo.ssgsag_android.util.scheduler.SchedulerProvider
 import org.json.JSONObject
 

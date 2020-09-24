@@ -11,7 +11,6 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
 import com.icoo.ssgsag_android.R
-import com.icoo.ssgsag_android.ui.main.feed.context
 import org.jetbrains.anko.backgroundColor
 import org.jetbrains.anko.textColor
 
@@ -51,16 +50,16 @@ fun setClubRgstrCategoryBg(layout: ConstraintLayout, isSelected: Boolean){
     if(isSelected)
         layout.setBackgroundResource(R.drawable.bg_656ef0_4)
     else
-        layout.setBackgroundColor(context.resources.getColor(R.color.grey_4))
+        layout.setBackgroundColor(layout.resources.getColor(R.color.grey_4))
 
 }
 
 @BindingAdapter("clubRgstrCategoryText")
 fun setClubRgstrCategoryText(view: TextView, isSelected: Boolean){
     if(isSelected)
-        view.textColor = context.resources.getColor(R.color.ssgsag)
+        view.textColor = view.resources.getColor(R.color.ssgsag)
     else
-        view.textColor = context.resources.getColor(R.color.grey_2)
+        view.textColor = view.resources.getColor(R.color.grey_2)
 }
 
 

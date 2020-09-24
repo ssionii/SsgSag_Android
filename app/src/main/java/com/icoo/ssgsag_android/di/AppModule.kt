@@ -40,12 +40,11 @@ import com.icoo.ssgsag_android.ui.main.calendar.calendarPage.list.CalendarListDe
 import com.icoo.ssgsag_android.ui.main.calendar.calendarPage.list.CalendarListViewModel
 import com.icoo.ssgsag_android.ui.main.calendar.posterBookmark.PosterBookmarkViewModel
 import com.icoo.ssgsag_android.ui.main.community.CommunityViewModel
-import com.icoo.ssgsag_android.ui.main.community.board.CommunityBoardActivity
 import com.icoo.ssgsag_android.ui.main.community.board.CommunityBoardViewModel
 import com.icoo.ssgsag_android.ui.main.community.board.postDetail.BoardPostDetailViewModel
 import com.icoo.ssgsag_android.ui.main.community.board.postDetail.write.BoardPostWriteViewModel
 import com.icoo.ssgsag_android.ui.main.community.review.ReviewViewModel
-import com.icoo.ssgsag_android.ui.main.feed.FeedViewModel
+import com.icoo.ssgsag_android.ui.main.community.feed.FeedViewModel
 import com.icoo.ssgsag_android.ui.main.myPage.MyPageViewModel
 import com.icoo.ssgsag_android.ui.main.myPage.myReview.MyReviewViewModel
 import com.icoo.ssgsag_android.ui.main.review.club.registration.ClubRgstrViewModel
@@ -153,7 +152,12 @@ val viewModule = module {
     viewModel { SignupViewModel(get(), get(), get()) }
     viewModel {SearchUnivViewModel(get(), get())}
     //Feed
-    viewModel { FeedViewModel(get(),get()) }
+    viewModel {
+        FeedViewModel(
+            get(),
+            get()
+        )
+    }
     //MyPage
     viewModel { MyPageViewModel(get(), get()) }
     viewModel {MyReviewViewModel(get(), get(), get())}

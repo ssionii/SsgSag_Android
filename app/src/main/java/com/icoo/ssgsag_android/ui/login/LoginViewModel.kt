@@ -40,7 +40,6 @@ class LoginViewModel (
     val isUpdated: LiveData<Int> get() = _isUpdated
 
     val realm = Realm.getDefaultInstance()
-    private val context = SsgSagApplication.getGlobalApplicationContext()
 
 
     fun login(accessToken: String, loginType: Int, uuid: String?){

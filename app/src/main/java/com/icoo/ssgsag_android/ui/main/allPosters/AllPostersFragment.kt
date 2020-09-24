@@ -21,7 +21,7 @@ import com.icoo.ssgsag_android.ui.main.allPosters.category.AllCategoryActivity
 import com.icoo.ssgsag_android.ui.main.allPosters.collection.AllPosterCollectionRecyclerViewAdapter
 import com.icoo.ssgsag_android.ui.main.allPosters.collection.AllPosterEventCardViewPagerAdapter
 import com.icoo.ssgsag_android.ui.main.calendar.calendarDetail.CalendarDetailActivity
-import com.icoo.ssgsag_android.ui.main.feed.FeedWebActivity
+import com.icoo.ssgsag_android.ui.main.community.feed.FeedWebActivity
 import com.icoo.ssgsag_android.util.view.AutoScrollAdapter
 import com.icoo.ssgsag_android.util.view.NonScrollGridLayoutManager
 import com.icoo.ssgsag_android.util.view.WrapContentLinearLayoutManager

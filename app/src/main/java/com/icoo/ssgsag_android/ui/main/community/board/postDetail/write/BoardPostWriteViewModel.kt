@@ -9,7 +9,6 @@ import com.google.gson.JsonParser
 import com.icoo.ssgsag_android.base.BaseViewModel
 import com.icoo.ssgsag_android.data.model.community.CommunityRepository
 import com.icoo.ssgsag_android.data.model.community.board.BoardPostDetail
-import com.icoo.ssgsag_android.ui.main.feed.context
 import com.icoo.ssgsag_android.util.scheduler.SchedulerProvider
 import org.json.JSONObject
 

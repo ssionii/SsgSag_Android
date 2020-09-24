@@ -11,7 +11,7 @@ import com.icoo.ssgsag_android.data.model.review.ReviewRepository
 import com.icoo.ssgsag_android.data.model.review.club.ClubPost
 import com.icoo.ssgsag_android.data.model.review.club.ClubReviewRepository
 import com.icoo.ssgsag_android.ui.main.community.review.ReviewType
-import com.icoo.ssgsag_android.ui.main.feed.context
+import com.icoo.ssgsag_android.SsgSagApplication.Companion.getGlobalApplicationContext
 import com.icoo.ssgsag_android.util.scheduler.SchedulerProvider
 
 class MyReviewViewModel(

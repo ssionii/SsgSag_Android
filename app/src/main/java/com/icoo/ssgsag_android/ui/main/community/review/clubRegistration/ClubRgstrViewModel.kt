@@ -11,7 +11,6 @@ import com.icoo.ssgsag_android.base.BaseViewModel
 import com.icoo.ssgsag_android.data.model.category.Category
 import com.icoo.ssgsag_android.data.model.review.club.ClubReviewRepository
 import com.icoo.ssgsag_android.data.model.subscribe.SubscribeFilter
-import com.icoo.ssgsag_android.ui.main.feed.context
 import com.icoo.ssgsag_android.util.scheduler.SchedulerProvider
 import okhttp3.MediaType
 import okhttp3.MultipartBody

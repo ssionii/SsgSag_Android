@@ -5,9 +5,9 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.icoo.ssgsag_android.R
+import com.icoo.ssgsag_android.SsgSagApplication
 import com.icoo.ssgsag_android.data.model.review.club.BlogReview
 import com.icoo.ssgsag_android.databinding.ItemReviewBlogBinding
-import com.icoo.ssgsag_android.ui.main.feed.context
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 
 
@@ -18,6 +18,8 @@ class BlogReviewRecyclerViewAdapter(
     private var listener: OnBlogReviewClickListener? = null
     private var size = 0
     var isMore = false
+
+    val context = SsgSagApplication.getGlobalApplicationContext()
 
     fun setOnBlogReviewClickListener(listener: OnBlogReviewClickListener) {
         this.listener = listener

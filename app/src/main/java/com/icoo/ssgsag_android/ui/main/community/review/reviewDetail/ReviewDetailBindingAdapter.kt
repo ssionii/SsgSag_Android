@@ -13,7 +13,6 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.icoo.ssgsag_android.R
-import com.icoo.ssgsag_android.ui.main.feed.context
 import org.jetbrains.anko.textColor
 
 @BindingAdapter("clubType")
@@ -69,11 +68,11 @@ fun setDetailReviewGradeScore(view: TextView, score: Double?, category: String){
     if(gradeIdx != -1) {
         when (category) {
             "친목", "혜택", "급여", "사내문화" -> text =
-                context.resources.getStringArray(R.array.basic_label)[gradeIdx]
-            "전문성" -> text = context.resources.getStringArray(R.array.degree_label)[gradeIdx]
-            "재미" -> text = context.resources.getStringArray(R.array.fun_label)[gradeIdx]
-            "강도" -> text = context.resources.getStringArray(R.array.intense_label)[gradeIdx]
-            "성장" -> text = context.resources.getStringArray(R.array.growth_label)[gradeIdx]
+                view.resources.getStringArray(R.array.basic_label)[gradeIdx]
+            "전문성" -> text = view.resources.getStringArray(R.array.degree_label)[gradeIdx]
+            "재미" -> text = view.resources.getStringArray(R.array.fun_label)[gradeIdx]
+            "강도" -> text = view.resources.getStringArray(R.array.intense_label)[gradeIdx]
+            "성장" -> text = view.resources.getStringArray(R.array.growth_label)[gradeIdx]
         }
     }
 

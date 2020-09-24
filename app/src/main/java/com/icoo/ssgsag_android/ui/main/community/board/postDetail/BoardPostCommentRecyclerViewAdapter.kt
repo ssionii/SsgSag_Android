@@ -16,7 +16,6 @@ import com.icoo.ssgsag_android.ui.main.allPosters.collection.GoogleAdsViewHolder
 import com.icoo.ssgsag_android.ui.main.allPosters.collection.SsgSagAdsViewHolder
 import com.icoo.ssgsag_android.ui.main.allPosters.collection.ViewType
 import com.icoo.ssgsag_android.ui.main.community.board.BoardPostDetailBottomSheet
-import com.icoo.ssgsag_android.ui.main.feed.context
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 
 class BoardPostCommentRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {

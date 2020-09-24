@@ -3,7 +3,7 @@
     <data>
         <variable
                 name="vm"
-                type="com.icoo.ssgsag_android.ui.main.feed.FeedViewModel" />
+                type="com.icoo.ssgsag_android.ui.main.community.feed.FeedViewModel" />
     </data>
 <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"

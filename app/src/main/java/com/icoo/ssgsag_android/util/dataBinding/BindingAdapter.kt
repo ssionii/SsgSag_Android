@@ -191,6 +191,19 @@ fun setRegDate(view: TextView, date: String?){
 }
 
 
+@BindingAdapter("regDateByDot")
+fun setRegDateByDot(view: TextView, date: String?){
+    if(date != null){
+        val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA)
+        val date2 = formatter.parse(date)
+        val formatter2 = SimpleDateFormat("yyyy.MM.dd", Locale.KOREA)
+        val dateString = formatter2.format(date2)
+        view.text = dateString
+    }
+
+}
+
+
 @BindingAdapter("intToString")
 fun setIntToString(view: TextView, input: Int){
     view.text = input.toString()

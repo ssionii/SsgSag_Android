@@ -5,7 +5,6 @@ import android.widget.Toast
 import com.google.gson.JsonObject
 import com.icoo.ssgsag_android.base.BaseViewModel
 import com.icoo.ssgsag_android.data.model.event.EventRepository
-import com.icoo.ssgsag_android.ui.main.feed.context
 import com.icoo.ssgsag_android.util.scheduler.SchedulerProvider
 
 class ReviewEventViewModel(

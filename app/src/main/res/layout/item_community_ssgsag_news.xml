@@ -64,6 +64,16 @@
                 android:fontFamily="@font/noto_sans_kr_regular"
                 android:layout_marginLeft="8dp"
                 showNum="@{feed.showNum}"/>
+        <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+        <ImageView
+                android:id="@+id/item_community_ssgsag_news_iv_bookmark"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                tools:src="@drawable/ic_bookmark_big"
+                isBookmarked="@{feed.isSave()}"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

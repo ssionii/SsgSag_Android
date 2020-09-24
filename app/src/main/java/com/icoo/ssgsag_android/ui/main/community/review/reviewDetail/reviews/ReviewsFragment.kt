@@ -4,13 +4,12 @@ package com.icoo.ssgsag_android.ui.main.review.club.reviews
 import android.content.Intent
 import android.graphics.Point
 import android.os.Bundle
-import android.util.Log
 import androidx.lifecycle.Observer
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseFragment
 import com.icoo.ssgsag_android.data.model.review.club.ClubPost
 import com.icoo.ssgsag_android.databinding.FragmentClubReviewsBinding
-import com.icoo.ssgsag_android.ui.main.feed.FeedWebActivity
+import com.icoo.ssgsag_android.ui.main.community.feed.FeedWebActivity
 import com.icoo.ssgsag_android.ui.main.community.review.HowWriteReviewActivity
 import com.icoo.ssgsag_android.ui.main.review.club.edit.ClubReviewEditActivity
 import com.icoo.ssgsag_android.ui.main.review.club.edit.ClubReviewEditDialogFragment

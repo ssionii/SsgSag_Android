@@ -11,8 +11,8 @@ import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.icoo.ssgsag_android.R
+import com.icoo.ssgsag_android.SsgSagApplication
 import com.icoo.ssgsag_android.databinding.ItemSquarePhotoBinding
-import com.icoo.ssgsag_android.ui.main.feed.context
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import java.io.File
 
@@ -24,6 +24,8 @@ class ClubInfoPhotoRecyclerViewAdapter(
     private var listener: OnReviewPhotoClickListener? = null
     private var size = 0
     var isRgstr = false
+
+    val context = SsgSagApplication.getGlobalApplicationContext()
 
     fun setOnReviewPhotoClickListener(listener: OnReviewPhotoClickListener) {
         this.listener = listener

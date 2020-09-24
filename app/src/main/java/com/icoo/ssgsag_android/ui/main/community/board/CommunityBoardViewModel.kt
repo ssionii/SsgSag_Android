@@ -14,7 +14,7 @@ import com.icoo.ssgsag_android.data.model.community.board.BoardPostDetail
 import com.icoo.ssgsag_android.data.model.community.board.PostInfo
 import com.icoo.ssgsag_android.ui.login.LoginActivity
 import com.icoo.ssgsag_android.ui.main.MainActivity
-import com.icoo.ssgsag_android.ui.main.feed.context
+import com.icoo.ssgsag_android.SsgSagApplication.Companion.globalApplication
 import com.icoo.ssgsag_android.util.scheduler.SchedulerProvider
 
 class CommunityBoardViewModel(
@@ -40,7 +40,7 @@ class CommunityBoardViewModel(
                     _topBannerImage.value = it.adList[0]
                 _postList.value = it.communityList
             }) {
-                Toast.makeText(context, "네트워크 상태를 확인해주세요.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(globalApplication, "네트워크 상태를 확인해주세요.", Toast.LENGTH_SHORT).show()
                 Log.e("get counsel list error:", it.message)
             })
     }

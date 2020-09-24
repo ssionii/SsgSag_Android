@@ -4,23 +4,14 @@ import SsgSagNewsViewPagerAdapter
 import android.content.Intent
 import android.graphics.Point
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseFragment
-import com.icoo.ssgsag_android.data.model.community.board.PostInfo
 import com.icoo.ssgsag_android.databinding.FragmentCommunityBinding
 import com.icoo.ssgsag_android.ui.main.community.board.CommunityBoardActivity
-import com.icoo.ssgsag_android.ui.main.community.board.CommunityBoardType
 import com.icoo.ssgsag_android.ui.main.community.board.postDetail.BoardPostDetailActivity
+import com.icoo.ssgsag_android.ui.main.community.feed.CommunityFeedActivity
 import com.icoo.ssgsag_android.ui.main.community.review.CommunityReviewActivity
-import com.icoo.ssgsag_android.ui.main.feed.FeedViewModel
-import com.icoo.ssgsag_android.ui.main.feed.adapter.FeedAnchorRecyclerViewAdapter
-import com.icoo.ssgsag_android.ui.main.feed.adapter.FeedCareerViewPagerAdapter
-import com.icoo.ssgsag_android.ui.main.feed.category.FeedCategoryRecyclerViewAdapter
 import com.icoo.ssgsag_android.ui.main.review.club.ReviewDetailActivity
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import com.icoo.ssgsag_android.util.view.WrapContentLinearLayoutManager
@@ -58,7 +49,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
         val contentWidth = ((width - 20 - 10 - 30) * d).toInt()
 
         viewModel.feedList.observe(viewLifecycleOwner, Observer {
-            val cardViewPagerAdapter = SsgSagNewsViewPagerAdapter(requireContext(), it)
+            val cardViewPagerAdapter = SsgSagNewsViewPagerAdapter(requireContext(), it, "main")
             cardViewPagerAdapter.newsWidth = contentWidth
 
             viewDataBinding.itemSsgsagNewsAvp.apply{
@@ -136,9 +127,14 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
         }
 
         viewDataBinding.fragCommunityLlFeedMore.setSafeOnClickListener {
-            // TODO: 추천정보로 이동
+            goFeed()
         }
 
+    }
+
+    private fun goFeed(){
+        val intent = Intent(requireActivity(), CommunityFeedActivity::class.java)
+        startActivity(intent)
     }
 
     private fun goBoard(type : Int){

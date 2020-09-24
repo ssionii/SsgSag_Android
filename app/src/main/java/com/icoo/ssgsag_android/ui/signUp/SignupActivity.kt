@@ -30,7 +30,6 @@ import com.icoo.ssgsag_android.base.BaseActivity
 import com.icoo.ssgsag_android.data.local.pref.SharedPreferenceController
 import com.icoo.ssgsag_android.data.model.user.DeviceInfo
 import com.icoo.ssgsag_android.databinding.ActivitySignupBinding
-import com.icoo.ssgsag_android.ui.main.feed.context
 import com.icoo.ssgsag_android.ui.main.myPage.serviceInfo.privacy.PrivacyActivity
 import com.icoo.ssgsag_android.ui.main.myPage.serviceInfo.term.TermActivity
 import com.icoo.ssgsag_android.ui.signUp.searchUniv.SearchUnivActivity
@@ -397,13 +396,13 @@ class SignupActivity : BaseActivity<ActivitySignupBinding, SignupViewModel>() {
             || !viewDataBinding.actSignupCbTerms.isChecked || (checkNickNameValidation == false)
         ) {
             isClickable = false
-            viewDataBinding.actSignupIvDone.backgroundColor = context.resources.getColor(R.color.grey_2)
+            viewDataBinding.actSignupIvDone.backgroundColor = resources.getColor(R.color.grey_2)
         } else if (GetSignupProfile.birth.isNotEmpty() && GetSignupProfile.nickname.isNotEmpty() && GetSignupProfile.gender != ""
             && GetSignupProfile.school.isNotEmpty() && GetSignupProfile.major.isNotEmpty() && GetSignupProfile.studentNumber.isNotEmpty() && GetSignupProfile.grade != 0
             && viewDataBinding.actSignupCbTerms.isChecked && checkNickNameValidation
         ) {
             isClickable = true
-            viewDataBinding.actSignupIvDone.backgroundColor = context.resources.getColor(R.color.ssgsag)
+            viewDataBinding.actSignupIvDone.backgroundColor = resources.getColor(R.color.ssgsag)
         }
     }
 

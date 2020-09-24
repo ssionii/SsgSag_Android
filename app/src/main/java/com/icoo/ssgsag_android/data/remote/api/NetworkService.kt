@@ -330,9 +330,11 @@ interface NetworkService {
 
     //region
     // 오늘의 피드 조회
-    @GET("/feed/today")
+    @GET("/feed/v2/today")
     fun getTodayFeeds(
-        @Header("Authorization") token: String
+        @Header("Authorization") token: String,
+        @Query("curPage") curPage: Int,
+        @Query("categoryIdx") category: Int
     ):Single<FeedTodayResponse>
     //카테고리별 피드 조회(최신순)
     @GET("/feed")

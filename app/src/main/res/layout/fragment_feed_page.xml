@@ -6,7 +6,7 @@
     <data>
         <variable
                 name="vm"
-                type="com.icoo.ssgsag_android.ui.main.feed.FeedViewModel"/>
+                type="com.icoo.ssgsag_android.ui.main.community.feed.FeedViewModel"/>
     </data>
 
     <RelativeLayout
@@ -68,7 +68,6 @@
                 android:orientation="horizontal"
                 android:paddingVertical="10dp"
                 android:layout_below="@+id/frag_feed_page_rl_toolbar"
-                replaceAll="@{vm.feedCategoryList}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
         <androidx.core.widget.NestedScrollView
