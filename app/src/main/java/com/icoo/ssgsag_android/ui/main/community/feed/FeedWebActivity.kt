@@ -1,5 +1,7 @@
 package com.icoo.ssgsag_android.ui.main.community.feed
 
+import android.app.Activity
+import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
@@ -22,6 +24,9 @@ class FeedWebActivity : BaseActivity<ActivityFeedWebDetailBinding, FeedViewModel
     override val viewModel: FeedViewModel by viewModel()
 
     var isSave = MutableLiveData<Int>()
+
+    var position = 0
+    var idx = 0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -71,6 +76,7 @@ class FeedWebActivity : BaseActivity<ActivityFeedWebDetailBinding, FeedViewModel
 
         if(intent.getStringExtra("from") == "feed"){
             isSave.value = intent.getIntExtra("isSave", 0)
+            position = intent.getIntExtra("position", 0)
         }else{
             viewDataBinding.actFeedWebDetailIvBookmark.visibility = INVISIBLE
         }
@@ -78,20 +84,32 @@ class FeedWebActivity : BaseActivity<ActivityFeedWebDetailBinding, FeedViewModel
         viewDataBinding.actFeedWebDetailWv.loadUrl(intent.getStringExtra("url"))
 
         setButton()
-
-
+        setObserver()
 
     }
 
+    private fun setObserver(){
+        viewModel.feedBookmarkStatus.observe(this, Observer {
+            if(it == 200){
+                if( isSave.value == 0) isSave.value = 1
+                else isSave.value = 0
+
+                val result = Intent().apply {
+                    putExtra("isSave", isSave.value!!)
+                    putExtra("position", position)
+                }
+                setResult(Activity.RESULT_OK, result)
+            }
+        })
+    }
+
     private fun setButton(){
-        act_feed_web_detail_iv_back.setSafeOnClickListener {
+        viewDataBinding.actFeedWebDetailIvBack.setSafeOnClickListener {
             finish()
         }
 
-        act_feed_web_detail_iv_bookmark.setSafeOnClickListener {
-            viewModel.feed.value?.apply {
-//                viewModel.bookmark(this.feedIdx, this.isSave, 0,"web")
-            }
+        viewDataBinding.actFeedWebDetailIvBookmark.setSafeOnClickListener {
+            viewModel.bookmarkFromWeb(intent.getIntExtra("idx", 0), isSave.value!!)
         }
     }
 }

@@ -38,6 +38,7 @@ class FeedRecyclerViewAdapter: RecyclerView.Adapter<FeedRecyclerViewAdapter.View
 
     fun refreshItem(newFeed : Feed, position: Int){
         itemList[position] = newFeed
+        notifyItemChanged(position)
     }
 
     fun removedItem(position: Int){
@@ -83,11 +84,7 @@ class FeedRecyclerViewAdapter: RecyclerView.Adapter<FeedRecyclerViewAdapter.View
         }
 
         holder.dataBinding.itemFeedIvBookmark.setSafeOnClickListener {
-            listener?.onBookmarkClicked(
-                itemList[position].feedIdx,
-                itemList[position].isSave,
-                position
-            )
+            listener?.onBookmarkClicked(itemList[position], position)
         }
     }
 
@@ -104,7 +101,7 @@ class FeedRecyclerViewAdapter: RecyclerView.Adapter<FeedRecyclerViewAdapter.View
 
     interface OnFeedItemClickListener {
         fun onItemClicked(feedIdx: Int, feedUrl: String, feedName: String, isSaved: Int, position: Int)
-        fun onBookmarkClicked(feedIdx: Int, isSaved: Int, position: Int)
+        fun onBookmarkClicked(feedItem: Feed, position: Int)
     }
 
 }

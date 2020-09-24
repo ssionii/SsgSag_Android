@@ -29,8 +29,11 @@ class FeedViewModel(
     private val _feedList = MutableLiveData<ArrayList<Feed>>()
     val feedList : LiveData<ArrayList<Feed>> get() = _feedList
 
-    private val _feed = MutableLiveData<Feed>()
-    val feed : LiveData<Feed> get() = _feed
+    var bestFeedBookmarkStatus = MutableLiveData<Int>()
+    var feedBookmarkStatus = MutableLiveData<Int>()
+    lateinit var refreshedFeed : Feed
+    var refreshedFeedPosition = 0
+
 
    init {
 
@@ -139,10 +142,10 @@ class FeedViewModel(
 //
 //    }
 //
-    fun bookmark(idx: Int, isSave: Int, position: Int, from: String = ""){
+    fun bookmarkFromWeb(feedIdx : Int, isSave : Int){
 
         if(isSave == 0) {
-            addDisposable(repository.bookmarkFeed(idx)
+            addDisposable(repository.bookmarkFeed(feedIdx)
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.mainThread())
                 .doOnSubscribe { showProgress() }
@@ -151,28 +154,14 @@ class FeedViewModel(
                     if(it == 200) {
                         Toast.makeText(SsgSagApplication.getGlobalApplicationContext(),
                             "북마크에 추가되었습니다.",Toast.LENGTH_SHORT).show()
-                        if (from == "web") {
-                            if (feed.value!!.isSave == 0) {
-                                tmpFeed = feed.value!!.copy(isSave = 1)
-                            } else {
-                                tmpFeed = feed.value!!.copy(isSave = 0)
-                            }
-                            _feed.postValue(tmpFeed)
-                        } else if(from == "today"){
-                            getTodayFeeds()
-                        }
-                        else{
-                            refreshedFeedPosition = position
-                            refreshedFeedIdx = idx
-                            refreshFeed()
-                        }
+                        feedBookmarkStatus.value = it
                     }
                 }, {
 
                 })
             )
-        }else if(isSave == 1){
-            addDisposable(repository.unbookmarkFeed(idx)
+        }else {
+            addDisposable(repository.unbookmarkFeed(feedIdx)
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.mainThread())
                 .doOnSubscribe { showProgress() }
@@ -182,31 +171,62 @@ class FeedViewModel(
                         Toast.makeText(SsgSagApplication.getGlobalApplicationContext(),
                             "북마크에서 삭제되었습니다.",Toast.LENGTH_SHORT).show()
 
-                        if (from == "web") {
-                            if (feed.value!!.isSave == 0) {
-                                tmpFeed = feed.value!!.copy(isSave = 1)
-                            } else {
-                                tmpFeed = feed.value!!.copy(isSave = 0)
-                            }
-                            _feed.postValue(tmpFeed)
-                            //unBookmarkedFeed(refreshedFeedPosition)
+                        feedBookmarkStatus.value = it
+                    }
+                }, {
 
-                        }else if(from == "today"){
-                            getTodayFeeds()
-                        } else{
-                            refreshedFeedPosition = position
-                            refreshedFeedIdx = idx
-                            refreshFeed()
-                        }
+                })
+            )
+        }
+    }
+
+    fun bookmark(feedItem : Feed, position : Int, isBest : Boolean){
+
+        if(feedItem.isSave == 0) {
+            addDisposable(repository.bookmarkFeed(feedItem.feedIdx)
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.mainThread())
+                .doOnSubscribe { showProgress() }
+                .doOnTerminate { hideProgress() }
+                .subscribe({
+                    if(it == 200) {
+                        Toast.makeText(SsgSagApplication.getGlobalApplicationContext(),
+                            "북마크에 추가되었습니다.",Toast.LENGTH_SHORT).show()
+
+                        refreshedFeed = feedItem
+                        refreshedFeed.isSave = 1
+                        refreshedFeedPosition = position
+
+                        if(isBest) bestFeedBookmarkStatus.value = it
+                        else feedBookmarkStatus.value = it
 
                     }
-
                 }, {
 
                 })
             )
         }else {
-            return
+            addDisposable(repository.unbookmarkFeed(feedItem.feedIdx)
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.mainThread())
+                .doOnSubscribe { showProgress() }
+                .doOnTerminate { hideProgress() }
+                .subscribe({
+                    if(it == 200) {
+                        Toast.makeText(SsgSagApplication.getGlobalApplicationContext(),
+                            "북마크에서 삭제되었습니다.",Toast.LENGTH_SHORT).show()
+
+                        refreshedFeed = feedItem
+                        refreshedFeed.isSave = 0
+                        refreshedFeedPosition = position
+
+                        if(isBest) bestFeedBookmarkStatus.value = it
+                        else feedBookmarkStatus.value = it
+                    }
+                }, {
+
+                })
+            )
         }
     }
 

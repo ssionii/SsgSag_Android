@@ -4,10 +4,11 @@ import SsgSagNewsViewPagerAdapter
 import android.content.Intent
 import android.graphics.Point
 import android.os.Bundle
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseActivity
+import com.icoo.ssgsag_android.data.model.feed.Feed
 import com.icoo.ssgsag_android.databinding.ActivityCommunityFeedBinding
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import com.icoo.ssgsag_android.util.view.WrapContentLinearLayoutManager
@@ -21,6 +22,7 @@ class CommunityFeedActivity : BaseActivity<ActivityCommunityFeedBinding, FeedVie
     override val viewModel: FeedViewModel by viewModel()
 
     private lateinit var feedRecyclerViewAdapter: FeedRecyclerViewAdapter
+
     var curPage = 0
     var pageSize = 10
 
@@ -34,6 +36,7 @@ class CommunityFeedActivity : BaseActivity<ActivityCommunityFeedBinding, FeedVie
         setSsgsagNewsVp()
         setRv()
         setButton()
+        setObserver()
     }
 
     private fun setSsgsagNewsVp(){
@@ -51,9 +54,13 @@ class CommunityFeedActivity : BaseActivity<ActivityCommunityFeedBinding, FeedVie
         val rightMargin = (30 * d).toInt()
         val contentWidth = ((width - 20 - 10 - 30) * d).toInt()
 
+
+
         viewModel.bestFeedList.observe(this, androidx.lifecycle.Observer {
-            val cardViewPagerAdapter = SsgSagNewsViewPagerAdapter(this, it, "feed")
-            cardViewPagerAdapter.apply {
+            val ssgSagNewsViewPagerAdapter = SsgSagNewsViewPagerAdapter(this,  it, "feed")
+
+            ssgSagNewsViewPagerAdapter.replaceAll(it)
+            ssgSagNewsViewPagerAdapter.apply {
                 newsWidth = contentWidth
                 setOnItemClickListener(bestFeedItemClickListener)
             }
@@ -61,19 +68,19 @@ class CommunityFeedActivity : BaseActivity<ActivityCommunityFeedBinding, FeedVie
                 clipToPadding = false
                 setPadding(leftMargin, 0, rightMargin, 0)
                 pageMargin = middleMargin
-                adapter = cardViewPagerAdapter
+                adapter = ssgSagNewsViewPagerAdapter
             }
         })
 
     }
 
     val bestFeedItemClickListener = object : SsgSagNewsViewPagerAdapter.OnItemClickListener {
-        override fun onItemClick(url: String, name: String, isSave: Int) {
-            getWebActivity(url, name, isSave)
+        override fun onItemClick(idx: Int, url: String, name: String, isSave: Int, position: Int) {
+            goWebActivity(idx ,url, name, isSave)
         }
 
-        override fun bookmark(idx: Int) {
-            TODO("Not yet implemented")
+        override fun bookmark(feed: Feed, position: Int) {
+            viewModel.bookmark(feed, position, true)
         }
     }
 
@@ -121,13 +128,27 @@ class CommunityFeedActivity : BaseActivity<ActivityCommunityFeedBinding, FeedVie
     }
 
     val feedItemClickListener = object : FeedRecyclerViewAdapter.OnFeedItemClickListener {
-        override fun onBookmarkClicked(feedIdx: Int, isSaved: Int, position: Int) {
-            TODO("Not yet implemented")
+        override fun onBookmarkClicked(feedItem: Feed, position: Int) {
+            viewModel.bookmark(feedItem, position, false)
         }
-
         override fun onItemClicked(feedIdx: Int, feedUrl: String, feedName: String, isSave: Int, position: Int) {
-            getWebActivity(feedUrl, feedName, isSave)
+            goWebActivity(feedIdx, feedUrl, feedName, isSave)
         }
+    }
+
+    private fun setObserver(){
+        viewModel.feedBookmarkStatus.observe(this, Observer {
+            if(it == 200){
+                feedRecyclerViewAdapter.refreshItem(viewModel.refreshedFeed, viewModel.refreshedFeedPosition)
+            }
+        })
+
+        viewModel.bestFeedBookmarkStatus.observe(this, Observer {
+            if(it == 200){
+                (viewDataBinding.actCommunityFeedAvp.adapter as SsgSagNewsViewPagerAdapter)
+                    .replaceItem(viewModel.refreshedFeed, viewModel.refreshedFeedPosition)
+            }
+        })
     }
 
     private fun setButton(){
@@ -138,11 +159,12 @@ class CommunityFeedActivity : BaseActivity<ActivityCommunityFeedBinding, FeedVie
 
     }
 
-    private fun getWebActivity(url : String, name : String, isSave : Int){
+    private fun goWebActivity(idx : Int, url : String, name : String, isSave : Int){
         val intent = Intent(this@CommunityFeedActivity, FeedWebActivity::class.java)
         intent.apply{
             putExtra("from","feed")
             putExtra("url",url)
+            putExtra("idx",idx)
             putExtra("title",name)
             putExtra("isSave",isSave)
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
