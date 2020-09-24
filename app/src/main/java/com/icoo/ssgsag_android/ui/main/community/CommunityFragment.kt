@@ -4,20 +4,24 @@ import SsgSagNewsViewPagerAdapter
 import android.content.Intent
 import android.graphics.Point
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseFragment
+import com.icoo.ssgsag_android.data.model.community.board.PostInfo
 import com.icoo.ssgsag_android.databinding.FragmentCommunityBinding
 import com.icoo.ssgsag_android.ui.main.community.board.CommunityBoardActivity
 import com.icoo.ssgsag_android.ui.main.community.board.CommunityBoardType
+import com.icoo.ssgsag_android.ui.main.community.board.postDetail.BoardPostDetailActivity
 import com.icoo.ssgsag_android.ui.main.community.review.CommunityReviewActivity
 import com.icoo.ssgsag_android.ui.main.feed.FeedViewModel
 import com.icoo.ssgsag_android.ui.main.feed.adapter.FeedAnchorRecyclerViewAdapter
 import com.icoo.ssgsag_android.ui.main.feed.adapter.FeedCareerViewPagerAdapter
 import com.icoo.ssgsag_android.ui.main.feed.category.FeedCategoryRecyclerViewAdapter
+import com.icoo.ssgsag_android.ui.main.review.club.ReviewDetailActivity
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import com.icoo.ssgsag_android.util.view.WrapContentLinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -46,7 +50,6 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
 
 
     }
-
     private fun setSsgsagNewsVp(d : Float, width: Int){
 
         val leftMargin = (20 * d).toInt()
@@ -54,7 +57,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
         val rightMargin = (30 * d).toInt()
         val contentWidth = ((width - 20 - 10 - 30) * d).toInt()
 
-        viewModel.ssgSagNewsList.observe(viewLifecycleOwner, Observer {
+        viewModel.feedList.observe(viewLifecycleOwner, Observer {
             val cardViewPagerAdapter = SsgSagNewsViewPagerAdapter(requireContext(), it)
             cardViewPagerAdapter.newsWidth = contentWidth
 
@@ -71,37 +74,85 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
     private fun setRv(){
 
         viewModel.collectionItem.observe(viewLifecycleOwner, Observer {
+
+            val collectionAdapter = CommunityCollectionRecyclerView(it)
+            collectionAdapter.apply {
+                setOnCommunityCollectionClickListener(onCommunityCollectionClickListener)
+                setHasStableIds(true)
+            }
+
             viewDataBinding.fragCommunityRv.apply{
-                adapter = CommunityCollectionRecyclerView(it)
+                adapter = collectionAdapter
                 layoutManager = WrapContentLinearLayoutManager()
             }
-        })
 
+        })
+    }
+
+    val onCommunityCollectionClickListener = object : CommunityCollectionRecyclerView.OnCommunityCollectionClickListener {
+
+        override fun onMoreClick(communityType: Int) {
+            when(communityType){
+                CommunityViewType.BOARD_COUNSEL, CommunityViewType.BOARD_TALK -> {
+                    goBoard(communityType)
+                }
+                CommunityViewType.REVIEW -> {
+                    goReview()
+                }
+            }
+        }
+
+        override fun onItemClick(communityType: Int, idx: Int) {
+            when(communityType){
+                CommunityViewType.BOARD_COUNSEL, CommunityViewType.BOARD_TALK -> {
+                    val intent = Intent(requireContext(), BoardPostDetailActivity::class.java)
+
+                    intent.putExtra("type", communityType)
+                    intent.putExtra("postIdx", idx)
+
+                    startActivity(intent)
+                }
+                CommunityViewType.REVIEW -> {
+                    val intent = Intent(activity!!, ReviewDetailActivity::class.java)
+                    intent.putExtra("clubIdx", idx)
+                    startActivity(intent)
+                }
+            }
+        }
     }
 
     private fun setButton(){
 
         viewDataBinding.fragCommunityLlCounselBoard.setSafeOnClickListener {
-            val intent = Intent(requireActivity(), CommunityBoardActivity::class.java)
-            intent.putExtra("type", CommunityBoardType.COUNSEL)
-
-            startActivity(intent)
-
+            goBoard(CommunityViewType.BOARD_COUNSEL)
         }
 
         viewDataBinding.fragCommunityLlTalkBoard.setSafeOnClickListener {
-            val intent = Intent(requireActivity(), CommunityBoardActivity::class.java)
-            intent.putExtra("type", CommunityBoardType.TALK)
-
-            startActivity(intent)
-
+            goBoard(CommunityViewType.BOARD_TALK)
         }
 
         viewDataBinding.fragCommunityLlReview.setSafeOnClickListener {
-            val intent = Intent(requireActivity(), CommunityReviewActivity::class.java)
-            startActivity(intent)
+            goReview()
+        }
+
+        viewDataBinding.fragCommunityLlFeedMore.setSafeOnClickListener {
+            // TODO: 추천정보로 이동
         }
 
     }
+
+    private fun goBoard(type : Int){
+        val intent = Intent(requireActivity(), CommunityBoardActivity::class.java)
+        intent.putExtra("type", type)
+
+        startActivity(intent)
+
+    }
+
+    private fun goReview(){
+        val intent = Intent(requireActivity(), CommunityReviewActivity::class.java)
+        startActivity(intent)
+    }
+
 
 }

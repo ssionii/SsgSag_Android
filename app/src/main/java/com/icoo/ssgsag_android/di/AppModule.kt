@@ -184,7 +184,7 @@ val viewModule = module {
     viewModel { MoreReviewViewModel(get(), get(), get()) }
     viewModel { ReviewEventViewModel(get(), get()) }
     // community
-    viewModel { CommunityViewModel() }
+    viewModel { CommunityViewModel(get(), get()) }
     viewModel { CommunityBoardViewModel(get(), get()) }
     viewModel { BoardPostDetailViewModel(get(), get()) }
     viewModel {BoardPostWriteViewModel(get(), get())}

@@ -124,11 +124,22 @@ fun setGlideTopCropImg(view: ImageView, imgUrl: String?) {
 
 @BindingAdapter("glideCenterCrop")
 fun setGlideCenterCropImg(view: ImageView, imgUrl: String?) {
-    Glide.with(view.context)
-        .load(imgUrl)
-        .centerCrop()
-        .error(R.drawable.img_poster) //에러시 나올 이미지 적용
-        .into(view)
+    var tempImgUrl = ""
+
+    imgUrl?.apply {
+
+        if (imgUrl.indexOf(',') > -1) {
+            tempImgUrl = imgUrl.substring(0, imgUrl.indexOf(','))
+        } else {
+            tempImgUrl = imgUrl
+        }
+
+        Glide.with(view.context)
+            .load(tempImgUrl)
+            .centerCrop()
+            .error(R.drawable.img_default) //에러시 나올 이미지 적용
+            .into(view)
+    }
 }
 
 

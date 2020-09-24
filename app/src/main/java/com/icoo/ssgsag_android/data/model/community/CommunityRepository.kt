@@ -7,6 +7,9 @@ import com.icoo.ssgsag_android.data.model.community.board.BoardPostList
 import io.reactivex.Single
 
 interface CommunityRepository {
+
+    fun getCommunityMain() : Single<CommunityMainCollection>
+
     fun getBoardPost(category : String, curPage : Int, pageSize : Int) : Single<BoardPostList>
     fun writeBoardPost(body: JsonObject) : Single<NullDataResponse>
     fun editBoardPost(body: JsonObject) : Single<NullDataResponse>

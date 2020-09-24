@@ -4,8 +4,8 @@
         xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
-                name="news"
-                type="com.icoo.ssgsag_android.data.model.community.SsgSagNews" />
+                name="feed"
+                type="com.icoo.ssgsag_android.data.model.feed.Feed" />
     </data>
 <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="310dp"
@@ -21,12 +21,13 @@
 
         <ImageView
                 android:id="@+id/item_community_ssgsag_news_iv_photo"
-                glideCenterCrop="@{news.photoUrl}"
+                glideCenterCrop="@{feed.feedPreviewImgUrl}"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
     </androidx.cardview.widget.CardView>
 
     <TextView
+            android:id="@+id/item_community_ssgsag_news_tv_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/item_community_ssgsag_news_cv"
@@ -36,11 +37,34 @@
             android:fontFamily="@font/noto_sans_kr_bold"
             android:textColor="@color/black_1"
             android:letterSpacing="-0.02"
-            android:maxLines="2"
+            android:lines="2"
             android:ellipsize="end"
             tools:text="네이버, AI로 뉴스 추천 … 사용자 정보 편식 키운다 - 중앙일보news"
-            android:text="@{news.title}"
+            android:text="@{feed.feedName}"
             />
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/item_community_ssgsag_news_tv_title">
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12dp"
+                android:textColor="@color/grey_1"
+                android:fontFamily="@font/noto_sans_kr_regular"
+                android:text=" 카테고리" />
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12dp"
+                android:textColor="@color/grey_2"
+                android:fontFamily="@font/noto_sans_kr_regular"
+                android:layout_marginLeft="8dp"
+                showNum="@{feed.showNum}"/>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

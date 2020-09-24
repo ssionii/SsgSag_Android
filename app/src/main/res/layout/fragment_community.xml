@@ -78,6 +78,7 @@
         </LinearLayout>
 
         <LinearLayout
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -231,7 +232,7 @@
                     android:layout_marginLeft="22dp"
                     android:text="@string/community_ssgsag_news_title"/>
             <LinearLayout
-                    android:id="@+id/item_ssgsag_news_ll_more"
+                    android:id="@+id/frag_community_ll_feed_more"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -258,7 +259,9 @@
                 android:id="@+id/item_ssgsag_news_avp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/white"
                 android:layout_marginBottom="22dp"/>
+
 
     </LinearLayout>
 

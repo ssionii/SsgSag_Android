@@ -12,6 +12,10 @@ import io.reactivex.Single
 
 class CommunityRepositoryImpl (val api: NetworkService, val pref: PreferenceManager) : CommunityRepository {
 
+    override fun getCommunityMain(): Single<CommunityMainCollection>
+         = api.getCommunityMain(pref.findPreference("TOKEN", ""))
+        .map { it.data }
+
     override fun getBoardPost(category: String, curPage: Int, pageSize: Int): Single<BoardPostList>
         = api.getBoardPost(pref.findPreference("TOKEN", "") ,category, curPage, pageSize)
         .map { it.data }

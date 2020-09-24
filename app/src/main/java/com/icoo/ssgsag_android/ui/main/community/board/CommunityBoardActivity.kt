@@ -71,6 +71,7 @@ class CommunityBoardActivity : BaseActivity<ActivityCommunityBoardBinding, Commu
         viewDataBinding.vm = viewModel
 
         communityBoardType = intent.getIntExtra("type", CommunityBoardType.TALK)
+
         when(communityBoardType){
             CommunityBoardType.COUNSEL -> {
                 viewDataBinding.actCommunityBoardTvTitle.text = this.resources.getString(R.string.counsel_title)
@@ -176,8 +177,8 @@ class CommunityBoardActivity : BaseActivity<ActivityCommunityBoardBinding, Commu
 }
 
 object CommunityBoardType{
-    const val COUNSEL = 0
-    const val TALK = 1
+    const val COUNSEL = 1
+    const val TALK = 2
 }
 
 object PostWriteType {

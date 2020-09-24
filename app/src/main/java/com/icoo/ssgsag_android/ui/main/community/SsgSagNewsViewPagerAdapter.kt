@@ -7,12 +7,13 @@ import androidx.viewpager.widget.PagerAdapter
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.data.model.ads.AdItem
 import com.icoo.ssgsag_android.data.model.community.SsgSagNews
+import com.icoo.ssgsag_android.data.model.feed.Feed
 import com.icoo.ssgsag_android.databinding.ItemCommunitySsgsagNewsBinding
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 
 class SsgSagNewsViewPagerAdapter(
     private val context : Context,
-    private val newsList: ArrayList<SsgSagNews>?
+    private val feedList: ArrayList<Feed>?
 ) : PagerAdapter() {
 
     private var mOnItemClickListener: OnItemClickListener? = null
@@ -25,14 +26,14 @@ class SsgSagNewsViewPagerAdapter(
             R.layout.item_community_ssgsag_news, container, false
         )
 
-        if(newsList!= null){
-            val newsItem = newsList[position]
+        if(feedList!= null){
+            val feedItem = feedList[position]
 
-            viewDataBinding.news = newsItem
+            viewDataBinding.feed = feedItem
             viewDataBinding.itemCommunitySsgsagNewsCv.layoutParams.height = (newsWidth * 0.5).toInt()
 
             viewDataBinding.root.setSafeOnClickListener {
-                mOnItemClickListener?.onItemClick(newsItem.url)
+                mOnItemClickListener?.onItemClick(feedItem.feedUrl)
             }
 
         }
@@ -46,8 +47,8 @@ class SsgSagNewsViewPagerAdapter(
     }
 
     override fun getCount(): Int {
-        if(newsList!= null)
-            return newsList.size
+        if(feedList!= null)
+            return feedList.size
         else
             return 0
     }

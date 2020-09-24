@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
     <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:background="@color/white"
             android:orientation="vertical"
-            android:layout_marginTop="20dp">
+            android:paddingTop="20dp">
         <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
@@ -27,7 +27,7 @@
                     android:layout_marginLeft="22dp"
                     tools:text="팀원 모집중"/>
             <LinearLayout
-                    android:id="@+id/item_community_collection_tv_more"
+                    android:id="@+id/item_community_collection_ll_more"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -36,14 +36,15 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginRight="20dp"
                     android:gravity="center_vertical">
+
                 <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="13sp"
-                        android:textColor="@color/ssgsag"
-                        android:letterSpacing="-0.02"
+                        android:layout_height="match_parent"
                         android:fontFamily="@font/noto_sans_kr_regular"
-                        android:text="@string/show_more"/>
+                        android:letterSpacing="-0.02"
+                        android:text="@string/show_more"
+                        android:textColor="@color/ssgsag"
+                        android:textSize="13sp" />
                 <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

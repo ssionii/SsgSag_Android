@@ -15,6 +15,7 @@ import com.icoo.ssgsag_android.data.model.poster.PosterResponse
 import com.icoo.ssgsag_android.data.model.poster.TodaySsgSagResponse
 import com.icoo.ssgsag_android.data.model.poster.posterDetail.PosterDetailResponse
 import com.icoo.ssgsag_android.data.model.ads.AdsDataResponse
+import com.icoo.ssgsag_android.data.model.community.CommunityMainResponse
 import com.icoo.ssgsag_android.data.model.community.board.BoardPostDetailResponse
 import com.icoo.ssgsag_android.data.model.community.board.BoardPostListResponse
 import com.icoo.ssgsag_android.data.model.poster.allPoster.AllPosterAd
@@ -518,6 +519,13 @@ interface NetworkService {
 
 
     // 커뮤니티
+    // 메인 화면 조회
+    @GET("/community/mainview")
+    fun getCommunityMain(
+        @Header("Authorization") token: String
+    ): Single<CommunityMainResponse>
+
+
     // 게시글 조회
     @GET("/community")
     fun getBoardPost(

@@ -9,6 +9,7 @@ import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
 import com.icoo.ssgsag_android.R
+import com.icoo.ssgsag_android.ui.main.community.review.ReviewType
 import org.jetbrains.anko.backgroundColor
 import org.jetbrains.anko.textColor
 import java.text.DecimalFormat
@@ -20,6 +21,38 @@ fun setReviewMain(view: ImageView, isSave: Int?) {
             view.visibility = View.VISIBLE
         else
             view.visibility = View.INVISIBLE
+    }
+}
+
+@BindingAdapter("communityMainReviewTypeBg")
+fun setCommunityMainReviewTypeBg(view: CardView, type: Int){
+    when(type){
+        ReviewType.UNION_CLUB, ReviewType.UNIV_CLUB  -> view.setCardBackgroundColor(view.resources.getColor(R.color.categoryClubBg))
+        ReviewType.ACT -> view.setCardBackgroundColor(view.resources.getColor(R.color.categoryActBg))
+        ReviewType.INTERN -> view.setCardBackgroundColor(view.resources.getColor(R.color.categoryInternBg))
+    }
+}
+
+
+@BindingAdapter("communityMainReviewTypeText")
+fun setCommunityMainReviewTypeText(view: TextView, type: Int){
+    when(type){
+        ReviewType.UNION_CLUB -> {
+            view.text = "연합동아리"
+            view.textColor = view.resources.getColor(R.color.categoryClubText)
+        }
+        ReviewType.UNIV_CLUB -> {
+            view.text = "교내동아리"
+            view.textColor = view.resources.getColor(R.color.categoryClubText)
+        }
+        ReviewType.ACT -> {
+            view.text = "대외활동"
+            view.textColor = view.resources.getColor(R.color.categoryActText)
+        }
+        ReviewType.INTERN -> {
+            view.text = "인턴"
+            view.textColor = view.resources.getColor(R.color.categoryInternText)
+        }
     }
 }
 

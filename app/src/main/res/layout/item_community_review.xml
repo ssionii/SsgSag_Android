@@ -3,7 +3,7 @@
     <data>
         <variable
                 name="reviewMain"
-                type="com.icoo.ssgsag_android.data.model.community.ReviewMain" />
+                type="com.icoo.ssgsag_android.data.model.review.club.ClubPost" />
     </data>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -30,7 +30,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:cardCornerRadius="3dp"
-                    app:cardBackgroundColor="@color/grey_4"
+                    communityMainReviewTypeBg="@{reviewMain.clubType}"
                     app:cardElevation="0dp">
                 <TextView
                         android:layout_width="wrap_content"
@@ -44,7 +44,7 @@
                         android:layout_marginHorizontal="4dp"
                         android:layout_marginTop="1dp"
                         android:layout_marginBottom="2dp"
-                        android:text="@{reviewMain.category}"/>
+                        communityMainReviewTypeText="@{reviewMain.clubType}"/>
             </androidx.cardview.widget.CardView>
 
             <TextView
@@ -56,7 +56,7 @@
                     tools:text="IT 연합동아리 SOPT "
                     android:fontFamily="@font/noto_sans_kr_regular"
                     android:layout_marginLeft="4dp"
-                    android:text="@{reviewMain.name}"/>
+                    android:text="@{reviewMain.clubName}"/>
         </LinearLayout>
 
         <TextView
@@ -70,7 +70,7 @@
                 android:ellipsize="end"
                 android:fontFamily="@font/noto_sans_kr_medium"
                 android:layout_marginTop="10dp"
-                android:text="@{reviewMain.title}"
+                android:text="@{reviewMain.oneLine}"
                 />
         <LinearLayout
                 android:layout_width="match_parent"
@@ -86,7 +86,7 @@
                     android:isIndicator="true"
                     android:numStars="5"
                     android:stepSize="0.5"
-                    android:rating="@{reviewMain.score}"/>
+                    android:rating="@{reviewMain.score0}"/>
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -96,7 +96,7 @@
                     tools:text="평점 3.9"
                     android:fontFamily="@font/noto_sans_kr_regular"
                     android:layout_marginLeft="9dp"
-                    reviewGrade="@{reviewMain.score}"/>
+                    reviewGrade="@{reviewMain.score0}"/>
         </LinearLayout>
         <TextView
                 android:layout_width="wrap_content"
@@ -109,7 +109,7 @@
                 android:ellipsize="end"
                 tools:text="개발, 디자인, 기획 파트로 나누어져 있어서 협업 경험하는데 큰 도움 됨. 특히 방학에 앱잼이라는 3주짜리 해커톤을 하는데 너무 맘에 들었음 ㅎㅎ IT쪽에 충분히 관심있고 개발 욕심있다면 짱 추천 "
                 android:fontFamily="@font/noto_sans_kr_regular"
-                android:text="@{reviewMain.description}"
+                android:text="@{reviewMain.advantage}"
                 />
         <LinearLayout
                 android:layout_width="wrap_content"
@@ -124,7 +124,7 @@
                     android:textColor="@color/grey_2"
                     android:textSize="10sp"
                     tools:text="작성자"
-                    android:text="@{reviewMain.userName}"/>
+                    android:text="@{reviewMain.userNickname}"/>
 
             <TextView
                     android:layout_width="wrap_content"
@@ -141,7 +141,7 @@
                     android:textColor="@color/grey_2"
                     android:textSize="10sp"
                     tools:text="2019년 활동"
-                    android:text="@{reviewMain.actDuration}"/>
+                    clubActDate ="@{reviewMain.clubEndDate}"/>
         </LinearLayout>
     </LinearLayout>
 
