@@ -102,17 +102,6 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>() {
 
     private fun setButton(){
 
-        // 마이페이지
-        viewDataBinding.fragMainIvMypage.setSafeOnClickListener {
-
-            view!!.context.startActivity<MyPageActivity>()
-            (view!!.context as Activity).overridePendingTransition(
-                R.anim.anim_slide_in_left,
-                R.anim.anim_not_move
-            )
-
-        }
-
         viewDataBinding.fragMainIvFilter.setSafeOnClickListener {
             startActivity<SsgSagFilterActivity>()
         }

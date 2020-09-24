@@ -75,29 +75,15 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding, CalendarViewModel
 
     private fun setButton() {
 
-        viewDataBinding.fragCalIvDrawer.setSafeOnClickListener {
-            view!!.context.startActivity<MyPageActivity>()
-            (view!!.context as Activity).overridePendingTransition(
-                R.anim.anim_slide_in_left,
-                R.anim.anim_not_move
-            )
-        }
-
         // 캘린더로 보기, 리스트로 보기 toggle
         viewDataBinding.fragCalendarCvToggle.setOnClickListener {
             if(viewDataBinding.fragCalendarTvToggle.text == "캘린더로 보기"){
                 replaceFragment(calendarGridFragment)
+                calendarGridFragment.setHeaderDate()
                 viewDataBinding.fragCalendarTvToggle.text = "리스트로 보기"
-
-                viewDataBinding.fragCalTvDay.visibility = VISIBLE
-                viewDataBinding.fragCalTvHeader.visibility = GONE
-
             }else{
                 replaceFragment(calendarListFragment)
                 viewDataBinding.fragCalendarTvToggle.text = "캘린더로 보기"
-
-                viewDataBinding.fragCalTvDay.visibility = GONE
-                viewDataBinding.fragCalTvHeader.visibility = VISIBLE
             }
         }
 
