@@ -217,6 +217,14 @@ class BoardPostDetailActivity : BaseActivity<ActivityBoardPostDetailBinding, Boa
             startActivity(intent)
         }
 
+        viewDataBinding.actBoardPostDetailIvBookmark.setSafeOnClickListener {
+            viewModel.bookmarkPost(postIdx)
+        }
+
+        viewDataBinding.actBoardPostDetailIvLike.setSafeOnClickListener {
+            viewModel.likePost(postIdx)
+        }
+
         viewDataBinding.actBoardPostDetailIvWriteComment.setSafeOnClickListener {
 
             if(viewDataBinding.actBoardPostDetailEtComment.text.toString() != "") {
@@ -249,14 +257,34 @@ class BoardPostDetailActivity : BaseActivity<ActivityBoardPostDetailBinding, Boa
 
     private fun setObserver(){
         viewModel.writeCommentStatus.observe(this, Observer {
-            Log.e("writeComment", it.toString())
             if(it == 200){
+                viewModel.isReply.value = false
                 scrollToViewBottom(viewDataBinding.actBoardPostDetailRvComment, viewDataBinding.actBoardPostDetailNsv)
             }
         })
 
         viewModel.isReply.observe(this, Observer {
             if(!it) boardPostCommentRecyclerViewAdapter.clearItemBg()
+        })
+
+        viewModel.bookmarkStatus.observe(this, Observer {
+            if(it == 200){
+                if(viewModel.postDetail.value!!.save){
+                    viewDataBinding.actBoardPostDetailIvBookmark.setImageDrawable(resources.getDrawable(R.drawable.ic_bookmark_big_active))
+                } else {
+                    viewDataBinding.actBoardPostDetailIvBookmark.setImageDrawable(resources.getDrawable(R.drawable.ic_bookmark_big))
+                }
+            }
+        })
+
+        viewModel.likeStatus.observe(this, Observer {
+            if(it == 200){
+                if(viewModel.postDetail.value!!.like){
+                    viewDataBinding.actBoardPostDetailIvLike.setImageDrawable(resources.getDrawable(R.drawable.ic_like_big_filled_active))
+                } else {
+                    viewDataBinding.actBoardPostDetailIvLike.setImageDrawable(resources.getDrawable(R.drawable.ic_like_big_outlined))
+                }
+            }
         })
     }
 

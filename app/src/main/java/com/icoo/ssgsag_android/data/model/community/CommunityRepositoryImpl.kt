@@ -24,7 +24,6 @@ class CommunityRepositoryImpl (val api: NetworkService, val pref: PreferenceMana
             = api.editBoardPost("application/json", pref.findPreference("TOKEN", ""), body)
         .map{ it }
 
-
     override fun getBoardPostDetail(communityIdx: Int): Single<BoardPostDetail>
             = api.getPostDetail(pref.findPreference("TOKEN", ""), communityIdx)
         .map { it.data }
@@ -33,21 +32,47 @@ class CommunityRepositoryImpl (val api: NetworkService, val pref: PreferenceMana
         = api.refreshPostDetail(pref.findPreference("TOKEN", ""), communityIdx ,1)
         .map{it.data}
 
-    override fun writePostComment(body: JsonObject): Single<NullDataResponse>
-            = api.writePostComment("application/json", pref.findPreference("TOKEN", ""), body)
-        .map { it }
-
-    override fun writePostReply(body: JsonObject): Single<NullDataResponse>
-            = api.writePostReply("application/json", pref.findPreference("TOKEN", ""), body)
-        .map { it }
-
-
     override fun deleteBoardPost(communityIdx: Int): Single<NullDataResponse>
             = api.deleteBoardPost(pref.findPreference("TOKEN", ""), communityIdx)
         .map { it }
 
+    override fun likeCommunityPost(communityIdx: Int): Single<NullDataResponse>
+            = api.likeCommunityPost(pref.findPreference("TOKEN", ""), communityIdx)
+        .map { it }
+
+    override fun unlikeCommunityPost(communityIdx: Int): Single<NullDataResponse>
+            = api.unlikeCommunityPost(pref.findPreference("TOKEN", ""), communityIdx)
+        .map { it }
+
+    override fun bookmarkCommunityPost(communityIdx: Int): Single<NullDataResponse>
+        = api.bookmarkCommunityPost(pref.findPreference("TOKEN", ""), communityIdx)
+        .map{ it }
+
+    override fun unbookmarkCommunityPost(communityIdx: Int): Single<NullDataResponse>
+            = api.unbookmarkCommunityPost(pref.findPreference("TOKEN", ""), communityIdx)
+        .map{ it }
+
+
+    override fun writePostComment(body: JsonObject): Single<NullDataResponse>
+            = api.writePostComment("application/json", pref.findPreference("TOKEN", ""), body)
+        .map { it }
+
+    override fun unlikeCommunityComment(commentIdx: Int): Single<NullDataResponse>
+            = api.unlikeCommunityComment(pref.findPreference("TOKEN", ""), commentIdx)
+        .map { it }
+
     override fun deletePostComment(commentIdx: Int): Single<NullDataResponse>
             = api.deletePostComment(pref.findPreference("TOKEN", ""), commentIdx)
+        .map { it }
+
+    override fun likeCommunityComment(commentIdx: Int): Single<NullDataResponse>
+            = api.likeCommunityComment(pref.findPreference("TOKEN", ""), commentIdx)
+        .map { it }
+
+
+
+    override fun writePostReply(body: JsonObject): Single<NullDataResponse>
+            = api.writePostReply("application/json", pref.findPreference("TOKEN", ""), body)
         .map { it }
 
     override fun deletePostReply(ccommentIdx: Int): Single<NullDataResponse>
@@ -55,29 +80,12 @@ class CommunityRepositoryImpl (val api: NetworkService, val pref: PreferenceMana
         .map { it }
 
 
-
-    override fun likeCommunityPost(communityIdx: Int): Single<NullDataResponse>
-            = api.likeCommunityPost(pref.findPreference("TOKEN", ""), communityIdx)
-            .map { it }
-
-    override fun likeCommunityComment(commentIdx: Int): Single<NullDataResponse>
-            = api.likeCommunityComment(pref.findPreference("TOKEN", ""), commentIdx)
-            .map { it }
-
     override fun likeCommunityReply(ccommunityIdx: Int): Single<NullDataResponse>
             = api.likeCommunityReply(pref.findPreference("TOKEN", ""), ccommunityIdx)
         .doOnError{
             Log.e("like reply", it.message)
         }
             .map { it }
-
-    override fun unlikeCommunityPost(communityIdx: Int): Single<NullDataResponse>
-            = api.unlikeCommunityPost(pref.findPreference("TOKEN", ""), communityIdx)
-        .map { it }
-
-    override fun unlikeCommunityComment(commentIdx: Int): Single<NullDataResponse>
-            = api.unlikeCommunityComment(pref.findPreference("TOKEN", ""), commentIdx)
-        .map { it }
 
     override fun unlikeCommunityReply(ccommunityIdx: Int): Single<NullDataResponse>
             = api.unlikeCommunityReply(pref.findPreference("TOKEN", ""), ccommunityIdx)

@@ -11,8 +11,8 @@ data class BoardPostDetail(
     val userNickname : String,
     val userProfileUrl : String,
     val communityCommentList : ArrayList<PostComment>,
-    val save : Boolean,
-    val like : Boolean,
+    var save : Boolean,
+    var like : Boolean,
     val mine: Boolean
 )
 

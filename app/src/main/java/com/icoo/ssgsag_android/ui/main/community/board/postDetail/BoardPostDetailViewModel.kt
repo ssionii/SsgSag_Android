@@ -25,6 +25,8 @@ class BoardPostDetailViewModel(
 
     var isReply = MutableLiveData<Boolean>()
     var deleteStatus = MutableLiveData<Int>()
+    var bookmarkStatus = MutableLiveData<Int>()
+    var likeStatus = MutableLiveData<Int>()
     var writeCommentStatus = MutableLiveData<Int>()
     var refreshedCommentPosition = MutableLiveData<Int>()
     lateinit var refreshedComment : PostComment
@@ -80,9 +82,90 @@ class BoardPostDetailViewModel(
                 Log.e("status", it.status.toString())
                 deleteStatus.value = it.status
             }) {
-                Log.e("get post detail error", it.message)
+                Log.e("delete post error", it.message)
             })
     }
+
+    fun bookmarkPost(postIdx: Int){
+        if(postDetail.value!!.save){
+            addDisposable(repository.unbookmarkCommunityPost(postIdx)
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.mainThread())
+                .doOnError {
+                    Log.e("bookmark post error", it.message)
+                }
+                .subscribe({
+                    if(it.status == 200){
+                        var tempPostDetail = postDetail.value!!
+                        tempPostDetail.save = false
+
+                        _postDetail.value = tempPostDetail
+                    }
+                    bookmarkStatus.value = it.status
+                }) {
+                    Log.e("bookmark post error", it.message)
+                })
+        }else {
+            addDisposable(repository.bookmarkCommunityPost(postIdx)
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.mainThread())
+                .doOnError {
+                    Log.e("bookmark post error", it.message)
+                }
+                .subscribe({
+                    if(it.status == 200){
+                        var tempPostDetail = postDetail.value!!
+                        tempPostDetail.save = true
+
+                        _postDetail.value = tempPostDetail
+                    }
+                    bookmarkStatus.value = it.status
+                }) {
+                    Log.e("bookmark post error", it.message)
+                })
+        }
+    }
+
+    fun likePost(postIdx: Int){
+        if(postDetail.value!!.like){
+            addDisposable(repository.unlikeCommunityPost(postIdx)
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.mainThread())
+                .doOnError {
+                    Log.e("like post error", it.message)
+                }
+                .subscribe({
+                    if(it.status == 200){
+                        var tempPostDetail = postDetail.value!!
+                        tempPostDetail.like = false
+
+                        _postDetail.value = tempPostDetail
+                    }
+                    likeStatus.value = it.status
+                }) {
+                    Log.e("like post error", it.message)
+                })
+        }else {
+            addDisposable(repository.likeCommunityPost(postIdx)
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.mainThread())
+                .doOnError {
+                    Log.e("like post error", it.message)
+                }
+                .subscribe({
+                    if(it.status == 200){
+                        var tempPostDetail = postDetail.value!!
+                        tempPostDetail.like = true
+
+                        _postDetail.value = tempPostDetail
+                    }
+                    likeStatus.value = it.status
+                }) {
+                    Log.e("like post error", it.message)
+                })
+        }
+    }
+
 
     fun deleteComment(commentIdx : Int){
         addDisposable(repository.deletePostComment(commentIdx)

@@ -518,7 +518,7 @@ interface NetworkService {
 
 
     // 커뮤니티
-    // 게시글
+    // 게시글 조회
     @GET("/community")
     fun getBoardPost(
         @Header("Authorization") token: String,
@@ -526,22 +526,20 @@ interface NetworkService {
         @Query("curPage") curPage: Int,
         @Query("pageSize") pageSize: Int
     ): Single<BoardPostListResponse>
-
+    // 게시글 작성
     @POST("/community")
     fun writeBoardPost(
         @Header("Content-Type") content_type: String,
         @Header("Authorization") token: String,
         @Body() body : JsonObject
     ): Single<NullDataResponse>
-
+    // 게시글 수정
     @PUT("/community")
     fun editBoardPost(
         @Header("Content-Type") content_type: String,
         @Header("Authorization") token: String,
         @Body() body : JsonObject
     ): Single<NullDataResponse>
-
-
     // 게시글 상세보기
     @GET("/community/{communityIdx}")
     fun getPostDetail(
@@ -555,77 +553,85 @@ interface NetworkService {
         @Path("communityIdx") communityIdx: Int,
         @Query("isReset") isReset : Int
     ): Single<BoardPostDetailResponse>
-    // 댓글 달기
+    // 게시글 삭제
+    @DELETE("/community/{communityIdx}")
+    fun deleteBoardPost(
+        @Header("Authorization") token: String,
+        @Path("communityIdx") communityIdx : Int
+    ): Single<NullDataResponse>
+    // 게시글 좋아요
+    @POST("/community/like")
+    fun likeCommunityPost(
+        @Header("Authorization") token: String,
+        @Query("communityIdx") communityIdx: Int
+    ): Single<NullDataResponse>
+    // 게시글 좋아요 취소
+    @DELETE("/community/like")
+    fun unlikeCommunityPost(
+        @Header("Authorization") token: String,
+        @Query("communityIdx") communityIdx: Int
+    ): Single<NullDataResponse>
+    // 게시글 북마크
+    @POST("/community/save")
+    fun bookmarkCommunityPost(
+        @Header("Authorization") token: String,
+        @Query("communityIdx") communityIdx: Int
+    ): Single<NullDataResponse>
+    // 게시글 북마크 취소
+    @DELETE("/community/save")
+    fun unbookmarkCommunityPost(
+        @Header("Authorization") token: String,
+        @Query("communityIdx") communityIdx: Int
+    ): Single<NullDataResponse>
+
+
+    // 댓글 작성
     @POST("/community/comment")
     fun writePostComment(
         @Header("Content-Type") content_type: String,
         @Header("Authorization") token: String,
         @Body() body : JsonObject
     ):Single<NullDataResponse>
-    // 답글 달기
+    // 댓글 삭제
+    @DELETE("/community/comment/{commentIdx}")
+    fun deletePostComment(
+        @Header("Authorization") token: String,
+        @Path("commentIdx") commentIdx : Int
+    ): Single<NullDataResponse>
+    // 댓글 좋아요
+    @POST("/community/comment/like")
+    fun likeCommunityComment(
+        @Header("Authorization") token: String,
+        @Query("commentIdx") communityIdx: Int
+    ): Single<NullDataResponse>
+    // 댓글 좋아요 취소
+    @DELETE("/community/comment/like")
+    fun unlikeCommunityComment(
+        @Header("Authorization") token: String,
+        @Query("commentIdx") communityIdx: Int
+    ): Single<NullDataResponse>
+
+
+    // 답글 작성
     @POST("/community/ccomment")
     fun writePostReply(
         @Header("Content-Type") content_type: String,
         @Header("Authorization") token: String,
         @Body() body : JsonObject
     ):Single<NullDataResponse>
-
-    // 커뮤니티 글 삭제
-    // 커뮤니티 게시글
-    @DELETE("/community/{communityIdx}")
-    fun deleteBoardPost(
-        @Header("Authorization") token: String,
-        @Path("communityIdx") communityIdx : Int
-    ): Single<NullDataResponse>
-    // 커뮤니티 댓글
-    @DELETE("/community/comment/{commentIdx}")
-    fun deletePostComment(
-        @Header("Authorization") token: String,
-        @Path("commentIdx") commentIdx : Int
-    ): Single<NullDataResponse>
-    // 커뮤니티 답글
+    // 답글 삭제
     @DELETE("/community/ccomment/{ccommentIdx}")
     fun deletePostReply(
         @Header("Authorization") token: String,
         @Path("ccommentIdx") ccommentIdx : Int
     ): Single<NullDataResponse>
-
-
-    // 커뮤니티 좋아요
-    // 커뮤니티 게시글
-    @POST("/community/like")
-    fun likeCommunityPost(
-        @Header("Authorization") token: String,
-        @Query("communityIdx") communityIdx: Int
-    ): Single<NullDataResponse>
-    // 커뮤니티 댓글
-    @POST("/community/comment/like")
-    fun likeCommunityComment(
-        @Header("Authorization") token: String,
-        @Query("commentIdx") communityIdx: Int
-    ): Single<NullDataResponse>
-    // 커뮤니티 답글
+    // 답글 좋아요
     @POST("/community/ccomment/like")
     fun likeCommunityReply(
         @Header("Authorization") token: String,
         @Query("ccommentIdx") ccommunityIdx: Int
     ): Single<NullDataResponse>
-
-
-    // 커뮤니티 좋아요 취소
-    // 커뮤니티 게시글
-    @DELETE("/community/like")
-    fun unlikeCommunityPost(
-        @Header("Authorization") token: String,
-        @Query("communityIdx") communityIdx: Int
-    ): Single<NullDataResponse>
-    // 커뮤니티 댓글
-    @DELETE("/community/comment/like")
-    fun unlikeCommunityComment(
-        @Header("Authorization") token: String,
-        @Query("commentIdx") communityIdx: Int
-    ): Single<NullDataResponse>
-    // 커뮤니티 답글
+    // 답글 좋아요 취소
     @DELETE("/community/ccomment/like")
     fun unlikeCommunityReply(
         @Header("Authorization") token: String,

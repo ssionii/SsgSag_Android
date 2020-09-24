@@ -13,17 +13,19 @@ interface CommunityRepository {
 
     fun getBoardPostDetail(communityIdx : Int) : Single<BoardPostDetail>
     fun refreshPostDetail(communityIdx: Int) : Single<BoardPostDetail>
-    fun writePostComment(body: JsonObject) : Single<NullDataResponse>
-    fun writePostReply(body: JsonObject) : Single<NullDataResponse>
-
     fun deleteBoardPost(communityIdx : Int) : Single<NullDataResponse>
-    fun deletePostComment(commentIdx : Int) : Single<NullDataResponse>
-    fun deletePostReply(ccommentIdx : Int) : Single<NullDataResponse>
-
     fun likeCommunityPost(communityIdx : Int) : Single<NullDataResponse>
-    fun likeCommunityComment(commentIdx : Int) : Single<NullDataResponse>
-    fun likeCommunityReply(ccommunityIdx : Int) : Single<NullDataResponse>
     fun unlikeCommunityPost(communityIdx : Int) : Single<NullDataResponse>
+    fun bookmarkCommunityPost(communityIdx: Int) : Single<NullDataResponse>
+    fun unbookmarkCommunityPost(communityIdx: Int) : Single<NullDataResponse>
+
+    fun writePostComment(body: JsonObject) : Single<NullDataResponse>
+    fun deletePostComment(commentIdx : Int) : Single<NullDataResponse>
+    fun likeCommunityComment(commentIdx : Int) : Single<NullDataResponse>
     fun unlikeCommunityComment(commentIdx : Int) : Single<NullDataResponse>
+
+    fun writePostReply(body: JsonObject) : Single<NullDataResponse>
+    fun deletePostReply(ccommentIdx : Int) : Single<NullDataResponse>
+    fun likeCommunityReply(ccommunityIdx : Int) : Single<NullDataResponse>
     fun unlikeCommunityReply(ccommunityIdx : Int) : Single<NullDataResponse>
 }
