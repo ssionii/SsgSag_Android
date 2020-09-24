@@ -53,6 +53,67 @@ class BoardPostDetailViewModel(
             })
     }
 
+    fun refreshPostDetail(postIdx : Int){
+        addDisposable(repository.refreshPostDetail(postIdx)
+            .subscribeOn(schedulerProvider.io())
+            .observeOn(schedulerProvider.mainThread())
+            .doOnError {
+                Log.e("refresh detail error", it.message)
+            }
+            .subscribe({
+                _postDetail.value = it
+                _commentList.value = it.communityCommentList
+
+            }) {
+                Log.e("refresh detail error", it.message)
+            })
+    }
+
+    fun deletePost(postIdx : Int){
+        addDisposable(repository.deleteBoardPost(postIdx)
+            .subscribeOn(schedulerProvider.io())
+            .observeOn(schedulerProvider.mainThread())
+            .doOnError {
+                Log.e("delete post error", it.message)
+            }
+            .subscribe({
+                Log.e("status", it.status.toString())
+                deleteStatus.value = it.status
+            }) {
+                Log.e("get post detail error", it.message)
+            })
+    }
+
+    fun deleteComment(commentIdx : Int){
+        addDisposable(repository.deletePostComment(commentIdx)
+            .subscribeOn(schedulerProvider.io())
+            .observeOn(schedulerProvider.mainThread())
+            .doOnError {
+                Log.e("delete comment error", it.message)
+            }
+            .subscribe({
+                Log.e("status", it.status.toString())
+                deleteStatus.value = it.status
+            }) {
+                Log.e("delete comment error", it.message)
+            })
+    }
+
+    fun deleteReply(ccommentIdx : Int){
+        addDisposable(repository.deletePostReply(ccommentIdx)
+            .subscribeOn(schedulerProvider.io())
+            .observeOn(schedulerProvider.mainThread())
+            .doOnError {
+                Log.e("delete reply error", it.message)
+            }
+            .subscribe({
+                Log.e("status", it.status.toString())
+                deleteStatus.value = it.status
+            }) {
+                Log.e("delete reply error", it.message)
+            })
+    }
+
     fun likeComment(postComment : PostComment, position : Int){
         if(postComment.like) {
             addDisposable(repository.unlikeCommunityComment(postComment.commentIdx)
@@ -137,20 +198,6 @@ class BoardPostDetailViewModel(
         }
     }
 
-    fun deletePost(postIdx : Int){
-        addDisposable(repository.deleteBoardPost(postIdx)
-            .subscribeOn(schedulerProvider.io())
-            .observeOn(schedulerProvider.mainThread())
-            .doOnError {
-                Log.e("get post detail error", it.message)
-            }
-            .subscribe({
-                Log.e("status", it.status.toString())
-                deleteStatus.value = it.status
-            }) {
-                Log.e("get post detail error", it.message)
-            })
-    }
 
     fun writeComment(jsonObject: JSONObject){
         val body = JsonParser().parse(jsonObject.toString()) as JsonObject
@@ -164,7 +211,7 @@ class BoardPostDetailViewModel(
             .subscribe({
                 writeCommentStatus.value = it.status
                 if(it.status == 200){
-                    getPostDetail(postIdx)
+                    refreshPostDetail(postIdx)
                 }
             }) {
                 Log.e("get post detail error", it.message)
@@ -182,7 +229,7 @@ class BoardPostDetailViewModel(
             }
             .subscribe({
                 if(it.status == 200){
-                    getPostDetail(postIdx)
+                    refreshPostDetail(postIdx)
                 }
             }) {
                 Log.e("get post detail error", it.message)

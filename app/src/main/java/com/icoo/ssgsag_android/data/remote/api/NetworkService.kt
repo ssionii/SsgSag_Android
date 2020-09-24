@@ -541,18 +541,19 @@ interface NetworkService {
         @Body() body : JsonObject
     ): Single<NullDataResponse>
 
-    @DELETE("/community/{communityIdx}")
-    fun deleteBoardPost(
-        @Header("Authorization") token: String,
-        @Path("communityIdx") communityIdx : Int
-    ): Single<NullDataResponse>
-
 
     // 게시글 상세보기
     @GET("/community/{communityIdx}")
     fun getPostDetail(
         @Header("Authorization") token: String,
         @Path("communityIdx") communityIdx: Int
+    ): Single<BoardPostDetailResponse>
+    // 게시글 상세보기 (조회수 반영 X)
+    @GET("/community/{communityIdx}")
+    fun refreshPostDetail(
+        @Header("Authorization") token: String,
+        @Path("communityIdx") communityIdx: Int,
+        @Query("isReset") isReset : Int
     ): Single<BoardPostDetailResponse>
     // 댓글 달기
     @POST("/community/comment")
@@ -568,6 +569,27 @@ interface NetworkService {
         @Header("Authorization") token: String,
         @Body() body : JsonObject
     ):Single<NullDataResponse>
+
+    // 커뮤니티 글 삭제
+    // 커뮤니티 게시글
+    @DELETE("/community/{communityIdx}")
+    fun deleteBoardPost(
+        @Header("Authorization") token: String,
+        @Path("communityIdx") communityIdx : Int
+    ): Single<NullDataResponse>
+    // 커뮤니티 댓글
+    @DELETE("/community/comment/{commentIdx}")
+    fun deletePostComment(
+        @Header("Authorization") token: String,
+        @Path("commentIdx") commentIdx : Int
+    ): Single<NullDataResponse>
+    // 커뮤니티 답글
+    @DELETE("/community/ccomment/{ccommentIdx}")
+    fun deletePostReply(
+        @Header("Authorization") token: String,
+        @Path("ccommentIdx") ccommentIdx : Int
+    ): Single<NullDataResponse>
+
 
     // 커뮤니티 좋아요
     // 커뮤니티 게시글
@@ -588,6 +610,7 @@ interface NetworkService {
         @Header("Authorization") token: String,
         @Query("ccommentIdx") ccommunityIdx: Int
     ): Single<NullDataResponse>
+
 
     // 커뮤니티 좋아요 취소
     // 커뮤니티 게시글

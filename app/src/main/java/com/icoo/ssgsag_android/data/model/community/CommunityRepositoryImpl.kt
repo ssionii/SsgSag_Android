@@ -24,23 +24,37 @@ class CommunityRepositoryImpl (val api: NetworkService, val pref: PreferenceMana
             = api.editBoardPost("application/json", pref.findPreference("TOKEN", ""), body)
         .map{ it }
 
-    override fun deleteBoardPost(communityIdx: Int): Single<NullDataResponse>
-            = api.deleteBoardPost(pref.findPreference("TOKEN", ""), communityIdx)
-        .map { it }
-
-
 
     override fun getBoardPostDetail(communityIdx: Int): Single<BoardPostDetail>
-        = api.getPostDetail(pref.findPreference("TOKEN", ""), communityIdx)
+            = api.getPostDetail(pref.findPreference("TOKEN", ""), communityIdx)
         .map { it.data }
+
+    override fun refreshPostDetail(communityIdx: Int): Single<BoardPostDetail>
+        = api.refreshPostDetail(pref.findPreference("TOKEN", ""), communityIdx ,1)
+        .map{it.data}
 
     override fun writePostComment(body: JsonObject): Single<NullDataResponse>
             = api.writePostComment("application/json", pref.findPreference("TOKEN", ""), body)
         .map { it }
 
     override fun writePostReply(body: JsonObject): Single<NullDataResponse>
-         = api.writePostReply("application/json", pref.findPreference("TOKEN", ""), body)
+            = api.writePostReply("application/json", pref.findPreference("TOKEN", ""), body)
         .map { it }
+
+
+    override fun deleteBoardPost(communityIdx: Int): Single<NullDataResponse>
+            = api.deleteBoardPost(pref.findPreference("TOKEN", ""), communityIdx)
+        .map { it }
+
+    override fun deletePostComment(commentIdx: Int): Single<NullDataResponse>
+            = api.deletePostComment(pref.findPreference("TOKEN", ""), commentIdx)
+        .map { it }
+
+    override fun deletePostReply(ccommentIdx: Int): Single<NullDataResponse>
+            = api.deletePostReply(pref.findPreference("TOKEN", ""), ccommentIdx)
+        .map { it }
+
+
 
     override fun likeCommunityPost(communityIdx: Int): Single<NullDataResponse>
             = api.likeCommunityPost(pref.findPreference("TOKEN", ""), communityIdx)

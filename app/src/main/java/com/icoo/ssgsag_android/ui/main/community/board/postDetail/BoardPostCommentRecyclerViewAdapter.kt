@@ -47,6 +47,15 @@ class BoardPostCommentRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.Vi
 
     override fun getItemCount() = itemList.size
 
+    override fun getItemId(position: Int): Long {
+        if(itemList[position].type == 0){
+            return itemList[position].commentIdx.toLong()
+        }else{
+            return itemList[position].ccommentIdx.toLong() * 100000
+        }
+
+    }
+
     override fun getItemViewType(position: Int): Int {
         return itemList[position].type
     }

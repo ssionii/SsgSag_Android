@@ -35,7 +35,6 @@ class BoardPostDetailActivity : BaseActivity<ActivityBoardPostDetailBinding, Boa
     var type = 0
     var postIdx = 0
 
-    private var viewTop = 0
     private var viewBottom = 0
 
     private var commentIdx = 0
@@ -72,7 +71,7 @@ class BoardPostDetailActivity : BaseActivity<ActivityBoardPostDetailBinding, Boa
 
     override fun onResume() {
         super.onResume()
-        viewModel.getPostDetail(postIdx)
+        viewModel.refreshPostDetail(postIdx)
     }
 
     private fun setCommentRv(){
@@ -80,6 +79,7 @@ class BoardPostDetailActivity : BaseActivity<ActivityBoardPostDetailBinding, Boa
         boardPostCommentRecyclerViewAdapter = BoardPostCommentRecyclerViewAdapter()
         boardPostCommentRecyclerViewAdapter.apply {
             setOnCommentClickListener(commentClickListener)
+            setHasStableIds(true)
         }
 
         viewDataBinding.actBoardPostDetailRvComment.run{
@@ -88,9 +88,6 @@ class BoardPostDetailActivity : BaseActivity<ActivityBoardPostDetailBinding, Boa
         }
 
         viewModel.commentList.observe(this, Observer {
-
-            Log.e("commentList", it.toString())
-
             val tempCommentList = arrayListOf<PostComment>()
 
             for(comment in it){
@@ -137,6 +134,7 @@ class BoardPostDetailActivity : BaseActivity<ActivityBoardPostDetailBinding, Boa
                 )
 
             bottomSheet.isCancelable = true
+            bottomSheet.setOnSheetDismissedListener(sheetDismissedListener)
             bottomSheet.show(supportFragmentManager, null)
         }
 
@@ -154,7 +152,17 @@ class BoardPostDetailActivity : BaseActivity<ActivityBoardPostDetailBinding, Boa
         }
 
         override fun onReplyMoreLikeClick(postComment: PostComment, position: Int) {
-            TODO("Not yet implemented")
+            val bottomSheet =
+                BoardPostDetailBottomSheet(
+                    postComment.ccommentIdx,
+                    "reply",
+                    type,
+                    postComment.mine
+                )
+
+            bottomSheet.isCancelable = true
+            bottomSheet.setOnSheetDismissedListener(sheetDismissedListener)
+            bottomSheet.show(supportFragmentManager, null)
         }
 
 
@@ -193,8 +201,19 @@ class BoardPostDetailActivity : BaseActivity<ActivityBoardPostDetailBinding, Boa
         }
 
         viewDataBinding.actBoardPostDetailIvPhoto.setSafeOnClickListener {
+
+            var tempImgUrl = ""
+
+            viewModel.postDetail.value?.community?.photoUrlList?.let {
+                if (it.indexOf(',') > -1) {
+                    tempImgUrl = it.substring(0, it.indexOf(','))
+                } else {
+                    tempImgUrl = it
+                }
+            }
+
             val intent = Intent(this, PhotoExpandActivity::class.java)
-            intent.putExtra("photoUrl", viewModel.postDetail.value?.community?.photoUrlList)
+            intent.putExtra("photoUrl", tempImgUrl)
             startActivity(intent)
         }
 
@@ -242,7 +261,15 @@ class BoardPostDetailActivity : BaseActivity<ActivityBoardPostDetailBinding, Boa
     }
 
     val sheetDismissedListener = object : BoardPostDetailBottomSheet.OnSheetDismissedListener{
-        override fun onSheetDismissed() {
+
+        override fun onPostEdited() {
+            val result = Intent().apply {
+                putExtra("type", "edit")
+            }
+            setResult(Activity.RESULT_OK, result)
+        }
+
+        override fun onPostDeleted() {
             val result = Intent().apply {
                 putExtra("type", "delete")
             }
@@ -250,11 +277,8 @@ class BoardPostDetailActivity : BaseActivity<ActivityBoardPostDetailBinding, Boa
             finish()
         }
 
-        override fun onPostEdited() {
-            val result = Intent().apply {
-                putExtra("type", "edit")
-            }
-            setResult(Activity.RESULT_OK, result)
+        override fun onCommentDeleted() {
+            viewModel.refreshPostDetail(postIdx)
         }
     }
 

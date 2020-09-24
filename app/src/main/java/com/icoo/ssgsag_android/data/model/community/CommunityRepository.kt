@@ -10,11 +10,15 @@ interface CommunityRepository {
     fun getBoardPost(category : String, curPage : Int, pageSize : Int) : Single<BoardPostList>
     fun writeBoardPost(body: JsonObject) : Single<NullDataResponse>
     fun editBoardPost(body: JsonObject) : Single<NullDataResponse>
-    fun deleteBoardPost(communityIdx : Int) : Single<NullDataResponse>
 
     fun getBoardPostDetail(communityIdx : Int) : Single<BoardPostDetail>
+    fun refreshPostDetail(communityIdx: Int) : Single<BoardPostDetail>
     fun writePostComment(body: JsonObject) : Single<NullDataResponse>
     fun writePostReply(body: JsonObject) : Single<NullDataResponse>
+
+    fun deleteBoardPost(communityIdx : Int) : Single<NullDataResponse>
+    fun deletePostComment(commentIdx : Int) : Single<NullDataResponse>
+    fun deletePostReply(ccommentIdx : Int) : Single<NullDataResponse>
 
     fun likeCommunityPost(communityIdx : Int) : Single<NullDataResponse>
     fun likeCommunityComment(commentIdx : Int) : Single<NullDataResponse>

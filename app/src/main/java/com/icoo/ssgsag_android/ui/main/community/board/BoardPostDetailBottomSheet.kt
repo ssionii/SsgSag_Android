@@ -70,7 +70,7 @@ class BoardPostDetailBottomSheet (
                     viewDataBinding.bottomSheetPostDetailCvReport.visibility = VISIBLE
                 }
             }
-            "comment" -> {
+            "comment", "reply" -> {
                 if(isMine){
                     viewDataBinding.bottomSheetPostDetailCvDelete.visibility = VISIBLE
                 }else{
@@ -100,7 +100,11 @@ class BoardPostDetailBottomSheet (
         }
 
         viewDataBinding.bottomSheetPostDetailCvDelete.setSafeOnClickListener {
-            viewModel.deletePost(idx)
+            when(from){
+                "post" ->  viewModel.deletePost(idx)
+                "comment" -> viewModel.deleteComment(idx)
+                "reply" -> viewModel.deleteReply(idx)
+            }
         }
 
         viewDataBinding.bottomSheetPostDetailCvReport.setSafeOnClickListener {
@@ -116,8 +120,17 @@ class BoardPostDetailBottomSheet (
     private fun setObserve(){
         viewModel.deleteStatus.observe(this, Observer {
             if(it == 200) {
-                listener.onSheetDismissed()
-                dismiss()
+                when(from){
+                    "post" ->{
+                        listener.onPostDeleted()
+                        dismiss()
+                    }
+                    "comment", "reply" ->{
+                        listener.onCommentDeleted()
+                        dismiss()
+                    }
+                }
+
             }
         })
     }
@@ -127,8 +140,9 @@ class BoardPostDetailBottomSheet (
     }
 
     interface OnSheetDismissedListener {
-        fun onSheetDismissed()
         fun onPostEdited()
+        fun onPostDeleted()
+        fun onCommentDeleted()
     }
 
     companion object {
