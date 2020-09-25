@@ -21,6 +21,7 @@ import com.icoo.ssgsag_android.ui.main.calendar.CalendarFragment
 import com.icoo.ssgsag_android.ui.main.calendar.calendarDetail.CalendarDetailActivity
 import com.icoo.ssgsag_android.ui.main.coachmark.FilterCoachmarkDialogFragment
 import com.icoo.ssgsag_android.ui.main.community.CommunityFragment
+import com.icoo.ssgsag_android.ui.main.myPage.MyPageFragment
 import com.icoo.ssgsag_android.ui.main.ssgSag.SsgSagViewModel
 import com.icoo.ssgsag_android.util.listener.BackPressHandler
 import io.fabric.sdk.android.Fabric
@@ -90,7 +91,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, SsgSagViewModel>() {
                 addFragment(CalendarFragment())
                 addFragment(CommunityFragment())
                 addFragment(CommunityFragment())
-                addFragment(CommunityFragment())
+                addFragment(MyPageFragment())
                 isSaveEnabled = false
             }
             currentItem = 0

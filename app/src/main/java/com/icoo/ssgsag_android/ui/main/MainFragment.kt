@@ -1,41 +1,23 @@
 package com.icoo.ssgsag_android.ui.main
 
-import android.app.Activity
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.*
-import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 
-import androidx.fragment.app.FragmentTransaction
 import androidx.viewpager.widget.ViewPager
-import com.crashlytics.android.Crashlytics
-import com.google.android.material.color.MaterialColors.getColor
-import com.google.android.material.tabs.TabLayout
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseFragment
 import com.icoo.ssgsag_android.base.BasePagerAdapter
-import com.icoo.ssgsag_android.data.local.pref.SharedPreferenceController
 import com.icoo.ssgsag_android.databinding.FragmentMainBinding
-import com.icoo.ssgsag_android.ui.login.LoginActivity
 import com.icoo.ssgsag_android.ui.main.allPosters.AllPostersFragment
 import com.icoo.ssgsag_android.ui.main.allPosters.search.SearchActivity
-import com.icoo.ssgsag_android.ui.main.myPage.MyPageActivity
 import com.icoo.ssgsag_android.ui.main.ssgSag.SsgSagFragment
 import com.icoo.ssgsag_android.ui.main.ssgSag.filter.SsgSagFilterActivity
-import com.icoo.ssgsag_android.ui.main.subscribe.SubscribeActivity
-import com.icoo.ssgsag_android.ui.signUp.SignupActivity
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
-import com.icoo.ssgsag_android.util.view.NonSwipeViewPager
-import org.jetbrains.anko.backgroundColor
-import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.support.v4.startActivity
-import org.jetbrains.anko.support.v4.toast
-import org.jetbrains.anko.textColor
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 

@@ -46,18 +46,6 @@ class MyPageViewModel(
         )
     }
 
-    /*
-    fun navigate(idx: Int) {
-        when (idx) {
-            0 -> _activityToStart.postValue(Pair(AccountMgtActivity::class, null))
-            1 -> _activityToStart.postValue(Pair(CareerActivity::class, null)) // 나의 이력
-            2 -> _activityToStart.postValue(Pair(PushAlarmActivity::class, null)) // 푸시 알림 설정
-            3 -> _activityToStart.postValue(Pair(NoticeActivity::class, null)) // 공지사항
-            4 -> _activityToStart.postValue(Pair(ContactActivity::class, null)) // 문의하기
-            else ->
-                Log.d(TAG, idx.toString())
-        }
-    }*/
 
     private fun showProgress() {
         _isProgress.value = View.VISIBLE

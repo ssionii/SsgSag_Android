@@ -1,20 +1,16 @@
 package com.icoo.ssgsag_android.ui.main.ssgSag
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.icoo.ssgsag_android.base.BaseViewModel
-import com.icoo.ssgsag_android.data.model.poster.Poster
 import com.icoo.ssgsag_android.data.model.poster.PosterRepository
 import com.icoo.ssgsag_android.data.model.poster.posterDetail.PosterDetail
 import com.icoo.ssgsag_android.data.model.user.UserRepository
-import com.icoo.ssgsag_android.data.model.user.userInfo.UserInfo
-import com.icoo.ssgsag_android.ui.main.myPage.MyPageActivity
+import com.icoo.ssgsag_android.ui.main.myPage.MyPageFragment
 import com.icoo.ssgsag_android.ui.main.subscribe.SubscribeActivity
 import com.icoo.ssgsag_android.util.scheduler.SchedulerProvider
-import org.w3c.dom.Comment
 import kotlin.reflect.KClass
 
 class SsgSagViewModel(
@@ -106,7 +102,7 @@ class SsgSagViewModel(
 
     fun navigatePage(idx: Int){
         when(idx) {
-            0-> _activityToStart.postValue(Pair(MyPageActivity::class, null))
+            0-> _activityToStart.postValue(Pair(MyPageFragment::class, null))
             1->  _activityToStart.postValue(Pair(SubscribeActivity::class, null))
         }
     }

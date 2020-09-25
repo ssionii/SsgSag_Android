@@ -1,6 +1,5 @@
 package com.icoo.ssgsag_android.ui.main.calendar
 
-import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
@@ -13,7 +12,6 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import com.icoo.ssgsag_android.BuildConfig
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseFragment
@@ -23,9 +21,7 @@ import com.icoo.ssgsag_android.ui.main.MainActivity
 import com.icoo.ssgsag_android.ui.main.calendar.calendarPage.grid.CalendarGridFragment
 import com.icoo.ssgsag_android.ui.main.calendar.calendarPage.list.CalendarListDeleteActivity
 import com.icoo.ssgsag_android.ui.main.calendar.calendarPage.list.CalendarListFragment
-import com.icoo.ssgsag_android.ui.main.myPage.MyPageActivity
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
-import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.verticalMargin
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.File
