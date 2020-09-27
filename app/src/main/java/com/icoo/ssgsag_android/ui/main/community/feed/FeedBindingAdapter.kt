@@ -62,7 +62,7 @@ fun setIsBookmarked(view: ImageView, isSave: Int){
     if(isSave == 0){
         view.setImageResource(R.drawable.ic_bookmark)
     }else if(isSave == 1){
-        view.setImageResource(R.drawable.ic_bookmark_big_active)
+        view.setImageResource(R.drawable.ic_bookmark_filled_active)
     }
 }
 

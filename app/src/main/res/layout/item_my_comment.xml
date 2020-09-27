@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+                name="myComment"
+                type="com.icoo.ssgsag_android.data.model.user.myBoard.MyComment" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginHorizontal="24dp">
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="12dp"
+                    android:gravity="center_vertical">
+
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_board_counsel_grey" />
+
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_marginLeft="12dp">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/noto_sans_kr_medium"
+                            android:textColor="@color/grey_1"
+                            android:textSize="10dp"
+                            myCommentType="@{myComment.community.category}"
+                            tools:text="고민 상담톡 | 취업/진로" />
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="10dp"
+                            android:textColor="@color/grey_2"
+                            android:fontFamily="@font/noto_sans_kr_medium"
+                            android:layout_marginTop="4dp"
+                            tools:text="오늘 입학 후 첫 등교해보았습니다"
+                            android:text="@{myComment.community.title}"
+                            />
+                </LinearLayout>
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_arrow_next"/>
+            </LinearLayout>
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:textColor="@color/black_1"
+                    android:fontFamily="@font/noto_sans_kr_regular"
+                    android:layout_marginTop="12dp"
+                    tools:text="참여대상이 최대 20억 밸류의 시드 투자 유치를 원하는 창업 3년 이내의 초기 창업기업 또는 팀이라고?"
+                    android:text="@{myComment.content}"
+                    />
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="10sp"
+                    android:textColor="@color/grey_2"
+                    android:fontFamily="@font/noto_sans_kr_regular"
+                    tools:text="21시간 전"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="14dp"
+                    regDate="@{myComment.regDate}"
+                    />
+        </LinearLayout>
+
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/grey_4"
+                app:layout_constraintBottom_toBottomOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

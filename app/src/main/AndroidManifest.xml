@@ -52,7 +52,7 @@
         <activity android:name=".ui.main.subscribe.SubscribeActivity"/>
         <activity android:name=".ui.main.community.feed.FeedWebActivity"
                 android:usesCleartextTraffic="true"/>
-        <activity android:name=".ui.main.myPage.MyPageFragment"/>
+        <activity android:name=".ui.main.myPage.myBoard.MyBoardActivity"/>
         <activity android:name=".ui.main.myPage.contact.ContactActivity"/>
         <activity android:name=".ui.main.myPage.pushAlarm.PushAlarmActivity"/>
         <activity android:name=".ui.main.myPage.serviceInfo.license.LicenseActivity"/>

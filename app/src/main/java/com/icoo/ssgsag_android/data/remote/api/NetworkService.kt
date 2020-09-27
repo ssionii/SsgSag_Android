@@ -24,6 +24,8 @@ import com.icoo.ssgsag_android.data.model.review.club.response.*
 import com.icoo.ssgsag_android.data.model.signUp.SignUpResponse
 import com.icoo.ssgsag_android.data.model.signUp.UniversityListResponse
 import com.icoo.ssgsag_android.data.model.subscribe.SubscribeResponse
+import com.icoo.ssgsag_android.data.model.user.myBoard.BookmarkedResponse
+import com.icoo.ssgsag_android.data.model.user.myBoard.MyCommentResponse
 import com.icoo.ssgsag_android.data.model.user.userInfo.UserInfoResponse
 import io.reactivex.*
 import okhttp3.MultipartBody
@@ -124,6 +126,28 @@ interface NetworkService {
         @Header("Content-Type") content_type: String,
         @Body() body: JsonObject
     ): Single<NullDataResponse>
+
+    @GET("/user/myComment")
+    fun getMyComment(
+        @Header("Authorization") token: String,
+        @Query("curPage") curPage: Int,
+        @Query("pageSize") pageSize: Int
+    ): Single<MyCommentResponse>
+    // 저장한 게시글 조회
+    @GET("/community/save")
+    fun getBookmarkedPost(
+        @Header("Authorization") token: String,
+        @Query("curPage") curPage: Int,
+        @Query("pageSize") pageSize: Int
+    ): Single<BookmarkedResponse>
+
+    //저장한 피드 조회
+    @GET("/feed")
+    fun getBookmarkedFeeds(
+        @Header("Authorization") token: String,
+        @Query("save") isSave: Int,
+        @Query("curPage") curPage: Int
+    ):Single<FeedsResponse>
 
     //region 유저 로그 수집
     //포스터 상세보기에서 웹사이트 버튼 클릭
@@ -342,13 +366,6 @@ interface NetworkService {
         @Header("Authorization") token: String,
         @Query("curPage") curPage: Int,
         @Query("categoryIdx") category: Int
-    ):Single<FeedsResponse>
-    //저장한 피드 조회(등록순)
-    @GET("/feed")
-    fun getBookmarkedFeeds(
-        @Header("Authorization") token: String,
-        @Query("save") isSave: Int,
-        @Query("curPage") curPage: Int
     ):Single<FeedsResponse>
     //피드 한개 조회(조회수 안 올라감)
     @GET("/feed/{feedIdx}")
@@ -647,6 +664,7 @@ interface NetworkService {
         @Header("Authorization") token: String,
         @Query("ccommentIdx") ccommunityIdx: Int
     ): Single<NullDataResponse>
+
 
 
 

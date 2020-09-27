@@ -1,5 +1,6 @@
 package com.icoo.ssgsag_android.ui.main.myPage
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.icoo.ssgsag_android.ui.main.myPage.accountMgt.AccountMgtActivity
 import com.icoo.ssgsag_android.ui.main.myPage.career.CareerActivity
 import com.icoo.ssgsag_android.ui.main.myPage.contact.ContactActivity
+import com.icoo.ssgsag_android.ui.main.myPage.myBoard.MyBoardActivity
 import com.icoo.ssgsag_android.ui.main.myPage.notice.NoticeActivity
 import com.icoo.ssgsag_android.ui.main.myPage.pushAlarm.PushAlarmActivity
 import com.icoo.ssgsag_android.ui.main.myPage.serviceInfo.ServiceInfoActivity
@@ -42,11 +44,15 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding, MyPageViewModel>() {
         }
 
         viewDataBinding.fragMyPageLlMypostContainer.setOnClickListener {
-
+            val intent = Intent(requireActivity(), MyBoardActivity::class.java)
+            intent.putExtra("type", "post")
+            startActivity(intent)
         }
 
         viewDataBinding.fragMyPageLlBookmarkContainer.setOnClickListener {
-
+            val intent = Intent(requireActivity(), MyBoardActivity::class.java)
+            intent.putExtra("type", "bookmark")
+            startActivity(intent)
         }
 
         viewDataBinding.fragMyPageLlNoticeContainer.setOnClickListener {

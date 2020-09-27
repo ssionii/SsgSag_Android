@@ -30,3 +30,30 @@ fun setMyReviewRegDate(view: TextView, adminAccept: Int){
         2 -> view.text = "거절"
     }
 }
+
+@BindingAdapter("myPostIcon")
+fun setMyPageIcon(view : ImageView, category : String){
+    when(category){
+        "FREE" ->{
+
+        }
+    }
+}
+
+@BindingAdapter("myCommentType")
+fun setMyCommentType(view : TextView, category : String){
+    when(category){
+        "FREE" ->{
+            view.text = "자유 수다톡"
+        }
+        "UNIV" -> {
+            view.text = "고민 상담톡 | 대학생활"
+        }
+        "CAREER" -> {
+            view.text = "고민 상담톡 | 취업/진로"
+        }
+        "THE_OTHERS" -> {
+            view.text = "고민 상담톡 | 기타"
+        }
+    }
+}
