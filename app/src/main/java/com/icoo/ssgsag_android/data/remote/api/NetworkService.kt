@@ -27,6 +27,7 @@ import com.icoo.ssgsag_android.data.model.subscribe.SubscribeResponse
 import com.icoo.ssgsag_android.data.model.user.myBoard.BookmarkedResponse
 import com.icoo.ssgsag_android.data.model.user.myBoard.MyCommentResponse
 import com.icoo.ssgsag_android.data.model.user.userInfo.UserInfoResponse
+import com.icoo.ssgsag_android.data.model.user.userNotice.UserNoticeResponse
 import io.reactivex.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -127,6 +128,21 @@ interface NetworkService {
         @Body() body: JsonObject
     ): Single<NullDataResponse>
 
+    // 알림 조회
+    @GET("/user/notify")
+    fun getUserNotice(
+        @Header("Authorization") token: String,
+        @Query("curPage") curPage: Int,
+        @Query("pageSize") pageSize: Int
+    ) : Single<UserNoticeResponse>
+
+    // 알림 조회
+    @GET("/user/notify/count")
+    fun getUserNoticeCount(
+        @Header("Authorization") token: String
+    ) : Single<IntResponse>
+
+    // 내 댓글 조회
     @GET("/user/myComment")
     fun getMyComment(
         @Header("Authorization") token: String,

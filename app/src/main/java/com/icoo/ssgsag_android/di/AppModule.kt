@@ -58,6 +58,7 @@ import com.icoo.ssgsag_android.ui.main.ssgSag.SsgSagViewModel
 import com.icoo.ssgsag_android.ui.main.ssgSag.filter.SsgSagFilterViewModel
 import com.icoo.ssgsag_android.ui.main.ssgSag.todaySwipePoster.TodaySwipePosterViewModel
 import com.icoo.ssgsag_android.ui.main.subscribe.subscribeDialog.SubscribeDialogViewModel
+import com.icoo.ssgsag_android.ui.main.userNotice.UserNoticeViewModel
 import com.icoo.ssgsag_android.ui.signUp.SignupViewModel
 import com.icoo.ssgsag_android.ui.signUp.searchUniv.SearchUnivViewModel
 import com.icoo.ssgsag_android.util.scheduler.AndroidSchedulerProvider
@@ -160,7 +161,8 @@ val viewModule = module {
     }
     //MyPage
     viewModel { MyPageViewModel(get(), get()) }
-    viewModel {MyReviewViewModel(get(), get(), get())}
+    viewModel { MyReviewViewModel(get(), get(), get())}
+    viewModel { UserNoticeViewModel(get(), get())}
     //Subscribe
     viewModel { SubscribeViewModel(get(), get()) }
     viewModel { SubscribeDialogViewModel(get(), get())}

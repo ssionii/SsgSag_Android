@@ -99,7 +99,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:src="@drawable/selector_navigation_ssg_sag"
+                        android:src="@drawable/selector_navigation_home"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -115,21 +115,18 @@
                         android:layout_height="wrap_content">
 
                     <View
-                            android:layout_centerInParent="true"
                             android:layout_width="17dp"
                             android:layout_height="17dp"
-                            android:background="@drawable/circle_count"/>
+                            android:background="@drawable/circle_fe6d6d"/>
 
                     <TextView
                             android:id="@+id/frag_ssg_sag_tv_ssg_sag_count"
                             android:layout_centerInParent="true"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="9sp"
-                            android:textColor="#ffffff"
-                            android:letterSpacing="-0.02"
-                            android:lineSpacingExtra="-1sp"
-                            tools:text="남은카드 수"/>
+                            android:textSize="9dp"
+                            android:textColor="@color/white"
+                            tools:text="1"/>
 
                 </RelativeLayout>
 

@@ -253,25 +253,27 @@
                     </LinearLayout>
 
                     <ImageView
-                            android:id="@+id/act_board_post_detail_iv_bookmark"
-                            postBookmark="@{vm.postDetail.save}"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="4dp"
-                            tools:src="@drawable/ic_bookmark_big"
-                            app:layout_constraintEnd_toStartOf="@+id/act_board_post_detail_iv_like"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"/>
-
-                    <ImageView
                             android:id="@+id/act_board_post_detail_iv_like"
                             postLike="@{vm.postDetail.like}"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             tools:src="@drawable/ic_like_big_outlined"
+                            android:layout_marginRight="4dp"
+                            app:layout_constraintEnd_toStartOf="@+id/act_board_post_detail_iv_bookmark"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"/>
+
+                    <ImageView
+                            android:id="@+id/act_board_post_detail_iv_bookmark"
+                            postBookmark="@{vm.postDetail.save}"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            tools:src="@drawable/ic_bookmark_big"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintBottom_toBottomOf="parent"/>
+
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>
             <View

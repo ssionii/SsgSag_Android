@@ -179,7 +179,7 @@ fun setRegDate(view: TextView, date: String?){
         if(monthGap == 0 && dayGap < 7){
             if(dayGap == 0){
                 if(hourGap == 0){
-                    if(minuteGap == 0){ text = "지금" }
+                    if(minuteGap <= 0){ text = "지금" }
                     else{ text = minuteGap.toString() + "분 전" }
                 }else{ text = hourGap.toString() + "시간 전" }
             }else{ text = dayGap.toString() + "일 전" }
