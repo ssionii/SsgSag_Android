@@ -11,7 +11,7 @@
                 android:orientation="vertical">
             <include
                     android:id="@+id/act_community_review_toolbar"
-                    layout="@layout/toolbar_back_search"/>
+                    layout="@layout/toolbar_back"/>
             <com.google.android.material.tabs.TabLayout
                     android:id="@+id/act_community_review_tl_category"
                     android:layout_width="match_parent"

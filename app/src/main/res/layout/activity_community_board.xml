@@ -48,6 +48,7 @@
                 app:layout_constraintBottom_toBottomOf="parent" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
+                android:visibility="gone"
                 android:id="@+id/act_community_board_cl_search"
                 android:layout_width="48dp"
                 android:layout_height="match_parent"

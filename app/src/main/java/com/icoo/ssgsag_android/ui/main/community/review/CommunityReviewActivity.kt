@@ -28,7 +28,7 @@ class CommunityReviewActivity : BaseActivity<ActivityCommunityReviewBinding, Rev
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewDataBinding.actCommunityReviewToolbar.toolbarBackSearchTvTitle.text = "활동 후기"
+        viewDataBinding.actCommunityReviewToolbar.toolbarBackTvTitle.text = "활동 후기"
 
         setViewPager()
         setTabLayout()
