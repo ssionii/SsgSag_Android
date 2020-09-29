@@ -138,6 +138,7 @@ class BoardPostDetailViewModel(
                     if(it.status == 200){
                         var tempPostDetail = postDetail.value!!
                         tempPostDetail.like = false
+                        tempPostDetail.community.likeNum = tempPostDetail.community.likeNum!! - 1
 
                         _postDetail.value = tempPostDetail
                     }
@@ -156,6 +157,7 @@ class BoardPostDetailViewModel(
                     if(it.status == 200){
                         var tempPostDetail = postDetail.value!!
                         tempPostDetail.like = true
+                        tempPostDetail.community.likeNum = tempPostDetail.community.likeNum!! + 1
 
                         _postDetail.value = tempPostDetail
                     }
@@ -165,7 +167,6 @@ class BoardPostDetailViewModel(
                 })
         }
     }
-
 
     fun deleteComment(commentIdx : Int){
         addDisposable(repository.deletePostComment(commentIdx)

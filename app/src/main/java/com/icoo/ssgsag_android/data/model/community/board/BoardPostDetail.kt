@@ -7,7 +7,7 @@ data class BoardPostDetailResponse(
 )
 
 data class BoardPostDetail(
-    val community : PostInfo,
+    var community : PostInfo,
     val userNickname : String,
     val userProfileUrl : String,
     val communityCommentList : ArrayList<PostComment>,
@@ -24,7 +24,7 @@ data class PostInfo(
     val content : String,
     val photoUrlList : String?,
     val regDate : String,
-    val likeNum : Int?,
+    var likeNum : Int?,
     val commentNum : Int,
     val showNum : Int,
     val isBest : Int
