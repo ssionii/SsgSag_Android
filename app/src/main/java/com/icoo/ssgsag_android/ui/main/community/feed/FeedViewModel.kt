@@ -140,7 +140,7 @@ class FeedViewModel(
                 .subscribe({
                     if(it == 200) {
                         Toast.makeText(SsgSagApplication.getGlobalApplicationContext(),
-                            "북마크에 추가되었습니다.",Toast.LENGTH_SHORT).show()
+                            "[내 정보 > 스크랩한 글] 에 보관되었습니다.",Toast.LENGTH_SHORT).show()
                         feedBookmarkStatus.value = it
                         refreshFeed(feedIdx)
                     }
@@ -156,8 +156,6 @@ class FeedViewModel(
                 .doOnTerminate { hideProgress() }
                 .subscribe({
                     if(it == 200) {
-                        Toast.makeText(SsgSagApplication.getGlobalApplicationContext(),
-                            "북마크에서 삭제되었습니다.",Toast.LENGTH_SHORT).show()
 
                         feedBookmarkStatus.value = it
                         refreshFeed(feedIdx)
@@ -180,7 +178,7 @@ class FeedViewModel(
                 .subscribe({
                     if(it == 200) {
                         Toast.makeText(SsgSagApplication.getGlobalApplicationContext(),
-                            "북마크에 추가되었습니다.",Toast.LENGTH_SHORT).show()
+                            "[내 정보 > 스크랩한 글] 에 보관되었습니다.",Toast.LENGTH_SHORT).show()
 
                         refreshedFeed = feedItem
                         refreshedFeed.isSave = 1
@@ -202,9 +200,6 @@ class FeedViewModel(
                 .doOnTerminate { hideProgress() }
                 .subscribe({
                     if(it == 200) {
-                        Toast.makeText(SsgSagApplication.getGlobalApplicationContext(),
-                            "북마크에서 삭제되었습니다.",Toast.LENGTH_SHORT).show()
-
                         refreshedFeed = feedItem
                         refreshedFeed.isSave = 0
                         refreshedFeedPosition = position
