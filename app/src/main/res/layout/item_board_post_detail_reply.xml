@@ -51,6 +51,7 @@
                         android:fontFamily="@font/noto_sans_kr_bold"
                         />
                 <ImageView
+                        ivVisibilityByBool="@{postComment.mine}"
                         android:id="@+id/item_board_post_detail_reply_iv_more"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

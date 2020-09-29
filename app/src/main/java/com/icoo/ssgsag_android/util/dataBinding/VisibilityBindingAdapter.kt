@@ -90,6 +90,14 @@ fun setImageViewVisibility(view: ImageView, num: Int){
         view.visibility = View.GONE
 }
 
+@BindingAdapter("ivVisibilityByBool")
+fun setImageViewVisibility(view: ImageView, bool: Boolean){
+    if(bool)
+        view.visibility = VISIBLE
+    else
+        view.visibility = GONE
+}
+
 @BindingAdapter("ivVisibilityByString")
 fun setImageViewVisibility(view: ImageView, str: String?){
     if(str == null || str == "")

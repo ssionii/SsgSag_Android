@@ -284,6 +284,7 @@ class BoardPostDetailActivity : BaseActivity<ActivityBoardPostDetailBinding, Boa
                 }
             }
         })
+
     }
 
     val sheetDismissedListener = object : BoardPostDetailBottomSheet.OnSheetDismissedListener{
