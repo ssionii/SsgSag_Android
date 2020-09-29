@@ -70,7 +70,7 @@ fun setIsBookmarked(view: ImageView, isSave: Int){
 fun setAnchorText(view: TextView, categoryIdx: Int?) {
     when(categoryIdx){
         100 -> view.text = "BEST"
-        101 -> view.text = "대학생활"
+        101 -> view.text = "학교생활"
         102 -> view.text = "취업뉴스"
         103 -> view.text = "커리어"
 

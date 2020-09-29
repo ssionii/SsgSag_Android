@@ -59,7 +59,7 @@ class CommunityBoardActivity : BaseActivity<ActivityCommunityBoardBinding, Commu
     val counselBoardCategoryList = arrayListOf(
         CounselBoardCategory("전체", "ALL", false),
         CounselBoardCategory("취업/진로", "CAREER", false),
-        CounselBoardCategory("대학생활", "UNIV", false),
+        CounselBoardCategory("학교생활", "UNIV", false),
         CounselBoardCategory("기타", "THE_OTHERS", false)
     )
 

@@ -47,7 +47,7 @@ fun setMyCommentType(view : TextView, category : String){
             view.text = "자유 수다톡"
         }
         "UNIV" -> {
-            view.text = "고민 상담톡 | 대학생활"
+            view.text = "고민 상담톡 | 학교생활"
         }
         "CAREER" -> {
             view.text = "고민 상담톡 | 취업/진로"
