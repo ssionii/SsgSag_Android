@@ -9,6 +9,29 @@
         <include
                 android:id="@+id/act_board_post_write_toolbar"
                 layout="@layout/toolbar_cancel"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/act_board_post_write_cl_upload"
+                android:layout_width="@dimen/toolbar_height"
+                android:layout_height="@dimen/toolbar_height"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/act_board_post_write_toolbar"
+                android:layout_marginRight="12dp">
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="업로드"
+                    android:fontFamily="@font/noto_sans_kr_regular"
+                    android:textColor="@color/ssgsag"
+                    android:textSize="10dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
         <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -79,8 +102,10 @@
                         android:background="@drawable/border_eeeeee_4"
                         android:hint="@string/board_talk_write_hint"
                         android:gravity="top"
+
                         android:paddingVertical="8dp"
                         android:paddingHorizontal="10dp"
+                        android:minLines="10"
                         android:fontFamily="@font/noto_sans_kr_regular"
                         android:textSize="12dp"
                         android:textColorHint="@color/grey_2"
@@ -140,28 +165,6 @@
 
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/act_board_post_write_cl_upload"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/bottom_btn_height"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                android:background="@color/grey_2">
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="16dp"
-                    android:textColor="#ffffff"
-                    android:gravity="center_horizontal"
-                    android:text="업로드"
-                    android:fontFamily="@font/noto_sans_kr_medium"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    />
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

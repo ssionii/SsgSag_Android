@@ -32,6 +32,7 @@ import com.icoo.ssgsag_android.ui.main.community.board.PostWriteType
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import com.icoo.ssgsag_android.util.view.NonScrollGridLayoutManager
 import com.icoo.ssgsag_android.util.view.SpacesItemDecoration
+import org.jetbrains.anko.sdk27.coroutines.onTouch
 import org.json.JSONObject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -85,6 +86,7 @@ class  BoardCounselPostWriteActivity: BaseActivity<ActivityBoardCounselPostWrite
                 setEditType()
             }
         }
+
         setEditTextChange()
         setButton()
         setObserve()
@@ -265,12 +267,10 @@ class  BoardCounselPostWriteActivity: BaseActivity<ActivityBoardCounselPostWrite
         if(selectedCategory != null && title != "" && content != ""){
             viewDataBinding.actBoardPostWriteClUpload.run{
                 uploadButtonClickable = true
-                setBackgroundColor(this.resources.getColor(R.color.ssgsag))
             }
         }else{
             viewDataBinding.actBoardPostWriteClUpload.run{
                 uploadButtonClickable = false
-                setBackgroundColor(this.resources.getColor(R.color.grey_2))
             }
         }
     }
