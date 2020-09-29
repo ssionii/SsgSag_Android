@@ -111,8 +111,8 @@
     <string name="community_ssgsag_news_title">이번 주 추천정보</string>
 
     <!-- Community Board text -->
-    <string name="counsel_title">고민 상담</string>
-    <string name="talk_title">자유 수다</string>
+    <string name="counsel_title">고민 상담톡</string>
+    <string name="talk_title">자유 수다톡</string>
     <string name="board_counsel_write_hint">&lt;커뮤니티 이용 규칙에 어긋나는 게시글은 안돼요! &gt;
         \n\n- 욕설/인신공격/비방 금지
         \n\n- 개인정보/저작권 침해 금지
