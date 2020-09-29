@@ -165,8 +165,6 @@ class BoardPostDetailActivity : BaseActivity<ActivityBoardPostDetailBinding, Boa
             bottomSheet.show(supportFragmentManager, null)
         }
 
-
-
         override fun onReplyReplyClick(idx: Int, name: String, position : Int) {
             showKeyboard(viewDataBinding.actBoardPostDetailEtComment)
             viewModel.isReply.value = true

@@ -100,7 +100,7 @@
                     <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/ic_view_count"/>
+                            android:src="@drawable/ic_like_16"/>
                     <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -110,7 +110,7 @@
                             android:letterSpacing="-0.02"
                             tools:text="30"
                             android:layout_marginLeft="2dp"
-                            android:text="@{Integer.toString(postInfo.showNum)}"/>
+                            android:text="@{Integer.toString(postInfo.likeNum)}"/>
 
                     <ImageView
                             android:layout_width="wrap_content"

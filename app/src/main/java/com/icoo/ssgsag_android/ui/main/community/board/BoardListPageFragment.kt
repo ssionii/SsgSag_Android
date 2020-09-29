@@ -40,15 +40,6 @@ class BoardListPageFragment : BaseFragment<FragmentBoardListPageBinding, Communi
 
         if(resultCode == Activity.RESULT_OK) {
             if(data!!.getStringExtra("type") == "delete" || data.getStringExtra("type") == "edit") {
-//                curPage = 0
-//                when (communityBoardType) {
-//                    CommunityBoardType.COUNSEL -> {
-//                        viewModel.getCounselList(category, curPage, pageSize)
-//                    }
-//                    CommunityBoardType.TALK -> {
-//                        viewModel.getTalkList(curPage, pageSize)
-//                    }
-//                }
                 (requireActivity() as CommunityBoardActivity).setCounselVp()
             }
         }
