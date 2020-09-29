@@ -64,6 +64,8 @@
                     android:textColor="@color/black_1"
                     android:letterSpacing="-0.02"
                     android:text="@{postComment.content}"
+                    android:linksClickable="true"
+                    android:autoLink="web"
                     tools:text="참여대상이 최대 20억 밸류의 시드 투자 유치를 원하는 창업 3년 이내의 초기 창업기업 또는 팀이라고?"
                     android:fontFamily="@font/noto_sans_kr_regular"
                     />
