@@ -3,6 +3,7 @@ package com.icoo.ssgsag_android
 import android.app.Activity
 import android.app.Application
 import android.os.Bundle
+import android.util.Log
 import com.adjust.sdk.Adjust
 import com.adjust.sdk.AdjustConfig
 import com.adjust.sdk.LogLevel
@@ -33,8 +34,8 @@ class SsgSagApplication : Application() {
         val ActTitle = arrayListOf("지원자격", "활동내역", "혜택")
         val ClubTitle = arrayListOf("활동분야", "모임시간", "혜택")
         val RecruitTitle = arrayListOf("모집분야", "지원자격", "근무지역")
-        val eduTitle = arrayListOf("주제","내용/커리큘럼","일정/기간")
-        val scholarTitle = arrayListOf("인원/혜택", "대상 및 조건","기타사항")
+        val eduTitle = arrayListOf("주제", "내용/커리큘럼", "일정/기간")
+        val scholarTitle = arrayListOf("인원/혜택", "대상 및 조건", "기타사항")
 
         var isRequiredUpdate = true
 
@@ -73,7 +74,7 @@ class SsgSagApplication : Application() {
 
 
         Realm.init(this)
-        val config : RealmConfiguration = RealmConfiguration.Builder()
+        val config: RealmConfiguration = RealmConfiguration.Builder()
             .name("appdb.realm")
             .deleteRealmIfMigrationNeeded()
             .build()
@@ -82,7 +83,8 @@ class SsgSagApplication : Application() {
 
         val crashlyticsKit = Crashlytics.Builder()
             .core(
-                CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
+                CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build()
+            )
             .build()
 
         Fabric.with(this, crashlyticsKit)
@@ -90,7 +92,7 @@ class SsgSagApplication : Application() {
 
     }
 
-    private fun initAdjustSetting(){
+    private fun initAdjustSetting() {
         val appToken = this.resources.getString(R.string.adjust_app_token)
         //val environment = AdjustConfig.ENVIRONMENT_SANDBOX
         val environment = AdjustConfig.ENVIRONMENT_PRODUCTION
@@ -125,8 +127,11 @@ class SsgSagApplication : Application() {
     }
 
     private fun buildNetwork() {
+        val setting = getSharedPreferences("setting", 0)
+        val url = setting.getString("URL", getString(R.string.base_url))
+        Log.d("networkmode", url)
         val retrofit: Retrofit = Retrofit.Builder()
-            .baseUrl(getString(R.string.base_url))
+            .baseUrl(url)
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .build()

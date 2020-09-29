@@ -117,6 +117,8 @@
         <activity android:name=".ui.main.calendar.calendarPage.list.CalendarListDeleteActivity"/>
         <activity android:name=".ui.main.block.MainBlockActivity"/>
 
+        <activity android:name=".ui.main.myPage.DeveloperPageActivity"/>
+
 
 
 
@@ -124,16 +126,13 @@
         <meta-data
                 android:name="com.facebook.sdk.ApplicationId"
                 android:value="@string/facebook_app_id"/>
-        <meta-data
-                android:name="com.google.firebase.messaging.default_notification_channel_id"
-                android:value="@string/default_notification_channel_id"/>
+<!--        <meta-data-->
+<!--                android:name="com.google.firebase.messaging.default_notification_channel_id"-->
+<!--                android:value="@string/default_notification_channel_id"/>-->
         <meta-data
                 android:name="com.kakao.sdk.AppKey"
                 android:value="@string/kakao_app_key"/>
-        <meta-data android:name="AdBrixRmAppKey"
-                   android:value="@string/adbrix_app_key"/>
-        <meta-data android:name="AdBrixRmSecretKey"
-                   android:value="@string/adbrix_secret_key"/>
+
 <!--        <meta-data-->
 <!--                android:name="com.google.android.gms.ads.APPLICATION_ID"-->
 <!--                android:value="ca-app-pub-6888357719311971~5202997355"/>-->
