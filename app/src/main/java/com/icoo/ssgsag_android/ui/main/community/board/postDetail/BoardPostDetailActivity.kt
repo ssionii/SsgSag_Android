@@ -90,6 +90,7 @@ class BoardPostDetailActivity : BaseActivity<ActivityBoardPostDetailBinding, Boa
         viewDataBinding.actBoardPostDetailRvComment.run{
             adapter = boardPostCommentRecyclerViewAdapter
             layoutManager = LinearLayoutManager(context)
+            itemAnimator = null
         }
 
         viewModel.commentList.observe(this, Observer {

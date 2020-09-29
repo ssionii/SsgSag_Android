@@ -80,15 +80,15 @@ class CommunityReviewActivity : BaseActivity<ActivityCommunityReviewBinding, Rev
 
     private fun setButton(){
 
-        viewDataBinding.actCommunityReviewToolbar.toolbarBackSearchClBack.setSafeOnClickListener {
+        viewDataBinding.actCommunityReviewToolbar.toolbarBackClBack.setSafeOnClickListener {
             finish()
         }
 
-        viewDataBinding.actCommunityReviewToolbar.toolbarBackSearchClSearch.setSafeOnClickListener {
-            val intent = Intent(this, SearchActivity::class.java)
-            intent.putExtra("from", "review")
-            startActivity(intent)
-        }
+//        viewDataBinding.actCommunityReviewToolbar.toolbarBackSearchClSearch.setSafeOnClickListener {
+//            val intent = Intent(this, SearchActivity::class.java)
+//            intent.putExtra("from", "review")
+//            startActivity(intent)
+//        }
 
         viewDataBinding.actCommunityReviewCvWriteReview.setSafeOnClickListener {
             goToReviewWrite()
