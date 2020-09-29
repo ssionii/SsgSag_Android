@@ -109,7 +109,7 @@ class CommunityCollectionRecyclerView(private var itemList : CommunityMainCollec
 
                 if(itemList.worryCommunityList != null && itemList.worryCommunityList!!.size > 0) {
 
-                    holder.dataBinding.itemCommunityCollectionTvTitle.text = "고민 상담 Talk"
+                    holder.dataBinding.itemCommunityCollectionTvTitle.text = "고민 상담톡"
                     (holder.dataBinding.itemCommunityCollectionRv.adapter as BaseRecyclerViewAdapter<PostInfo, *>).run {
                         replaceAll(itemList.worryCommunityList)
                         notifyDataSetChanged()
@@ -143,7 +143,7 @@ class CommunityCollectionRecyclerView(private var itemList : CommunityMainCollec
 
                 if(itemList.freeCommunityList != null && itemList.freeCommunityList!!.size > 0) {
 
-                    holder.dataBinding.itemCommunityCollectionTvTitle.text = "자유 수다 Talk"
+                    holder.dataBinding.itemCommunityCollectionTvTitle.text = "자유 수다톡"
                     (holder.dataBinding.itemCommunityCollectionRv.adapter as BaseRecyclerViewAdapter<PostInfo, *>).run {
                         replaceAll(itemList.freeCommunityList)
                         notifyDataSetChanged()
