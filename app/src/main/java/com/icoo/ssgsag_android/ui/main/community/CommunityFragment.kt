@@ -86,14 +86,13 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
 
     val feedItemClickListener = object : SsgSagNewsViewPagerAdapter.OnItemClickListener {
 
-        override fun onItemClick(idx: Int, url: String, name: String, isSave: Int, position : Int) {
+        override fun onItemClick(idx: Int, url: String, name: String, position : Int) {
             val intent = Intent(requireActivity(), FeedWebActivity::class.java)
             intent.apply{
                 putExtra("from","feed")
                 putExtra("idx",idx)
                 putExtra("url",url)
                 putExtra("title",name)
-                putExtra("isSave",isSave)
                 putExtra("position",position)
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)

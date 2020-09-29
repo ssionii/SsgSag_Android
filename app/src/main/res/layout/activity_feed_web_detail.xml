@@ -4,8 +4,8 @@
 
     <data>
         <variable
-                name="activity"
-                type="com.icoo.ssgsag_android.ui.main.community.feed.FeedWebActivity"/>
+                name="vm"
+                type="com.icoo.ssgsag_android.ui.main.community.feed.FeedViewModel"/>
 
     </data>
 
@@ -45,7 +45,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="12dp" >
                 <ImageView
-                        isBookmarked="@{activity.isSave}"
+                        isBookmarked="@{vm.feed.isSave}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:layout_constraintStart_toStartOf="parent"

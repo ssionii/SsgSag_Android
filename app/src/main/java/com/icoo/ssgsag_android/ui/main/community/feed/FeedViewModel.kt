@@ -29,6 +29,9 @@ class FeedViewModel(
     private val _feedList = MutableLiveData<ArrayList<Feed>>()
     val feedList : LiveData<ArrayList<Feed>> get() = _feedList
 
+    private val _feed = MutableLiveData<Feed>()
+    val feed : LiveData<Feed> get() = _feed
+
     var bestFeedBookmarkStatus = MutableLiveData<Int>()
     var feedBookmarkStatus = MutableLiveData<Int>()
     lateinit var refreshedFeed : Feed
@@ -89,62 +92,46 @@ class FeedViewModel(
 //        )
 //    }
 //
-//    fun getFeed(feedIdx: Int){
-//        addDisposable(repository.getFeed(feedIdx)
-//            .subscribeOn(schedulerProvider.io())
-//            .observeOn(schedulerProvider.mainThread())
-//            .doOnSubscribe { showProgress() }
-//            .doOnTerminate { hideProgress() }
-//            .subscribe({
-//                it.run{
-//                    _feed.setValue(this)
-//                    _refreshedFeed.postValue(this)
-//                }
-//
-//            }, {
-//
-//            })
-//        )
-//    }
-//
-//    // 조회수 안 올라감
-//    fun refreshFeed(){
-//        if(refreshedFeedIdx != 0) {
-//            addDisposable(repository.getFeedRefresh(refreshedFeedIdx)
-//                .subscribeOn(schedulerProvider.io())
-//                .observeOn(schedulerProvider.mainThread())
-//                .doOnSubscribe { showProgress() }
-//                .doOnTerminate { hideProgress() }
-//                .subscribe({
-//                    it.run {
-//                        _refreshedFeed.setValue(this)
-//                        tmpRefreshedFeed = this
-//                    }
-//
-//                }, {
-//
-//                })
-//            )
-//        }
-//    }
-//
-//
-//    fun navigate(url: String, idx:Int, position: Int) {
-//        val bundle = Bundle().apply {
-//            putString("url", url)
-//            putString("from", "feed")
-//            putInt("idx", idx)
-//        }
-//
-//        _activityToStart.postValue(Pair(FeedWebActivity::class, bundle))
-//        refreshedFeedPosition = position
-//        refreshedFeedIdx = idx
-//
-//    }
-//
-    fun bookmarkFromWeb(feedIdx : Int, isSave : Int){
+    fun getFeed(idx: Int){
+        addDisposable(repository.getFeed(idx)
+            .subscribeOn(schedulerProvider.io())
+            .observeOn(schedulerProvider.mainThread())
+            .doOnSubscribe { showProgress() }
+            .doOnTerminate { hideProgress() }
+            .subscribe({
+                it.run{
+                    _feed.setValue(this)
+                }
 
-        if(isSave == 0) {
+            }, {
+                Log.e("get feed error", it.message)
+            })
+        )
+    }
+
+    // 조회수 안 올라감
+    fun refreshFeed(idx : Int){
+        addDisposable(repository.getFeedRefresh(idx)
+            .subscribeOn(schedulerProvider.io())
+            .observeOn(schedulerProvider.mainThread())
+            .doOnSubscribe { showProgress() }
+            .doOnTerminate { hideProgress() }
+            .subscribe({
+                it.run {
+                    _feed.value = this
+                }
+
+            }, {
+                Log.e("refresh feed error", it.message)
+            })
+        )
+
+    }
+
+
+    fun bookmarkFromWeb(feedIdx : Int){
+
+        if(feed.value!!.isSave == 0) {
             addDisposable(repository.bookmarkFeed(feedIdx)
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.mainThread())
@@ -155,6 +142,7 @@ class FeedViewModel(
                         Toast.makeText(SsgSagApplication.getGlobalApplicationContext(),
                             "북마크에 추가되었습니다.",Toast.LENGTH_SHORT).show()
                         feedBookmarkStatus.value = it
+                        refreshFeed(feedIdx)
                     }
                 }, {
 
@@ -172,6 +160,7 @@ class FeedViewModel(
                             "북마크에서 삭제되었습니다.",Toast.LENGTH_SHORT).show()
 
                         feedBookmarkStatus.value = it
+                        refreshFeed(feedIdx)
                     }
                 }, {
 

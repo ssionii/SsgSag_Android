@@ -85,7 +85,7 @@ class FeedRecyclerViewAdapter: RecyclerView.Adapter<FeedRecyclerViewAdapter.View
         holder.dataBinding.root.setSafeOnClickListener {
             listener?.onItemClicked(
                 itemList[position].feedIdx, itemList[position].feedUrl,
-                itemList[position].feedName, itemList[position].isSave, position
+                itemList[position].feedName, position
             )
         }
 
@@ -106,7 +106,7 @@ class FeedRecyclerViewAdapter: RecyclerView.Adapter<FeedRecyclerViewAdapter.View
     }
 
     interface OnFeedItemClickListener {
-        fun onItemClicked(feedIdx: Int, feedUrl: String, feedName: String, isSaved: Int, position: Int)
+        fun onItemClicked(feedIdx: Int, feedUrl: String, feedName: String, position: Int)
         fun onBookmarkClicked(feedItem: Feed, position: Int)
     }
 

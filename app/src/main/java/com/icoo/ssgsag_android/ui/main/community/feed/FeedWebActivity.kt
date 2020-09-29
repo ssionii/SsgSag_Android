@@ -23,8 +23,6 @@ class FeedWebActivity : BaseActivity<ActivityFeedWebDetailBinding, FeedViewModel
         get() = R.layout.activity_feed_web_detail
     override val viewModel: FeedViewModel by viewModel()
 
-    var isSave = MutableLiveData<Int>()
-
     var position = 0
     var idx = 0
     var type = ""
@@ -33,7 +31,7 @@ class FeedWebActivity : BaseActivity<ActivityFeedWebDetailBinding, FeedViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewDataBinding.activity = this
+        viewDataBinding.vm = viewModel
 
         viewDataBinding.actFeedWebDetailWv.apply{
             settings.javaScriptEnabled = true
@@ -41,10 +39,7 @@ class FeedWebActivity : BaseActivity<ActivityFeedWebDetailBinding, FeedViewModel
             webChromeClient = WebChromeClient()
 
             webViewClient = object : WebViewClient(){
-                override fun shouldOverrideUrlLoading(
-                    view: WebView?,
-                    request: WebResourceRequest?
-                ): Boolean {
+                override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
                     act_feed_web_detail_progress_bar.visibility = VISIBLE
                     return super.shouldOverrideUrlLoading(view, request)
                 }
@@ -53,14 +48,8 @@ class FeedWebActivity : BaseActivity<ActivityFeedWebDetailBinding, FeedViewModel
                     super.onPageStarted(view, url, favicon)
                 }
 
-                override fun onReceivedError(
-                    view: WebView?,
-                    request: WebResourceRequest?,
-                    error: WebResourceError?
-                ) {
+                override fun onReceivedError(view: WebView?, request: WebResourceRequest?, error: WebResourceError?) {
                     super.onReceivedError(view, request, error)
-
-                    Log.e("web view ", error.toString())
                 }
 
                 override fun onPageFinished(view: WebView?, url: String?) {
@@ -76,9 +65,12 @@ class FeedWebActivity : BaseActivity<ActivityFeedWebDetailBinding, FeedViewModel
         viewDataBinding.actFeedWebDetailTvName.text = intent.getStringExtra("title")
 
         if(intent.getStringExtra("from") == "feed"){
-            isSave.value = intent.getIntExtra("isSave", 0)
+
+            idx = intent.getIntExtra("idx", 0)
             position = intent.getIntExtra("position", 0)
-            type = intent.getStringExtra("type")
+
+            viewModel.getFeed(idx)
+
         }else{
             viewDataBinding.actFeedWebDetailIvBookmark.visibility = INVISIBLE
         }
@@ -91,21 +83,15 @@ class FeedWebActivity : BaseActivity<ActivityFeedWebDetailBinding, FeedViewModel
     }
 
     private fun setObserver(){
-        viewModel.feedBookmarkStatus.observe(this, Observer {
-            if(it == 200){
-                if( isSave.value == 0) isSave.value = 1
-                else isSave.value = 0
 
-                val result = Intent().apply {
-                    putExtra("type", type)
-                    putExtra("isSave", isSave.value!!)
-                    putExtra("position", position)
-                }
-
-                Log.e("result", result.toString())
-
-                setResult(Activity.RESULT_OK, result)
+        viewModel.feed.observe(this, Observer {
+            val result = Intent().apply {
+                putExtra("type", type)
+                putExtra("isSave", it.isSave)
+                putExtra("position", position)
             }
+
+            setResult(Activity.RESULT_OK, result)
         })
     }
 
@@ -115,7 +101,7 @@ class FeedWebActivity : BaseActivity<ActivityFeedWebDetailBinding, FeedViewModel
         }
 
         viewDataBinding.actFeedWebDetailIvBookmark.setSafeOnClickListener {
-            viewModel.bookmarkFromWeb(intent.getIntExtra("idx", 0), isSave.value!!)
+            viewModel.bookmarkFromWeb(idx)
         }
     }
 }

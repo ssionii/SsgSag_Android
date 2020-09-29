@@ -36,20 +36,10 @@ class CommunityFeedActivity : BaseActivity<ActivityCommunityFeedBinding, FeedVie
                 val isSave = it.getIntExtra("isSave", 0)
                 val position =  it.getIntExtra("position", 0)
 
-                when(it.getStringExtra("type")){
-                    "best" -> {
-                        (viewDataBinding.actCommunityFeedAvp.adapter as SsgSagNewsViewPagerAdapter).run{
-                            refreshItem(isSave, position)
-                            refresh()
-                        }
-                    } else -> {
-                        feedRecyclerViewAdapter.run{
-                            refreshItemIsSave(isSave, position)
-                            notifyItemChanged(position)
-                        }
-                    }
+                feedRecyclerViewAdapter.run{
+                    refreshItemIsSave(isSave, position)
+                    notifyItemChanged(position)
                 }
-
             }
         }
     }
@@ -108,8 +98,17 @@ class CommunityFeedActivity : BaseActivity<ActivityCommunityFeedBinding, FeedVie
     }
 
     val bestFeedItemClickListener = object : SsgSagNewsViewPagerAdapter.OnItemClickListener {
-        override fun onItemClick(idx: Int, url: String, name: String, isSave: Int, position: Int) {
-            goWebActivity(idx ,url, name, isSave, position, "best")
+        override fun onItemClick(idx: Int, url: String, name: String, position: Int) {
+            val intent = Intent(this@CommunityFeedActivity, FeedWebActivity::class.java)
+            intent.apply{
+                putExtra("from","feed")
+                putExtra("url",url)
+                putExtra("idx",idx)
+                putExtra("title",name)
+                putExtra("position", position)
+            }
+
+            startActivity(intent)
         }
 
         override fun bookmark(feed: Feed, position: Int) {
@@ -164,8 +163,17 @@ class CommunityFeedActivity : BaseActivity<ActivityCommunityFeedBinding, FeedVie
         override fun onBookmarkClicked(feedItem: Feed, position: Int) {
             viewModel.bookmark(feedItem, position, false)
         }
-        override fun onItemClicked(feedIdx: Int, feedUrl: String, feedName: String, isSave: Int, position: Int) {
-            goWebActivity(feedIdx, feedUrl, feedName, isSave, position, "feed")
+        override fun onItemClicked(feedIdx: Int, feedUrl: String, feedName: String, position: Int) {
+            val intent = Intent(this@CommunityFeedActivity, FeedWebActivity::class.java)
+            intent.apply{
+                putExtra("from","feed")
+                putExtra("url",feedUrl)
+                putExtra("idx",feedIdx)
+                putExtra("title",feedName)
+                putExtra("position", position)
+            }
+
+            bookmarkFeedRequest.launch(intent)
         }
     }
 
@@ -190,23 +198,6 @@ class CommunityFeedActivity : BaseActivity<ActivityCommunityFeedBinding, FeedVie
             finish()
         }
 
-    }
-
-    private fun goWebActivity(idx : Int, url : String, name : String, isSave : Int, position : Int, type : String){
-        val intent = Intent(this@CommunityFeedActivity, FeedWebActivity::class.java)
-        intent.apply{
-            putExtra("from","feed")
-            putExtra("type",type)
-            putExtra("url",url)
-            putExtra("idx",idx)
-            putExtra("title",name)
-            putExtra("isSave",isSave)
-            putExtra("position", position)
-//            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-//            addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
-        }
-
-        bookmarkFeedRequest.launch(intent)
     }
 
 

@@ -63,7 +63,7 @@ class SsgSagNewsViewPagerAdapter(
             viewDataBinding.itemCommunitySsgsagNewsCv.layoutParams.height = (newsWidth * 0.5).toInt()
 
             viewDataBinding.root.setSafeOnClickListener {
-                mOnItemClickListener?.onItemClick(feedItem.feedIdx, feedItem.feedUrl, feedItem.feedName, feedItem.isSave, position)
+                mOnItemClickListener?.onItemClick(feedItem.feedIdx, feedItem.feedUrl, feedItem.feedName, position)
             }
 
             viewDataBinding.itemCommunitySsgsagNewsIvBookmark.setOnClickListener {
@@ -109,7 +109,7 @@ class SsgSagNewsViewPagerAdapter(
     }
 
     interface OnItemClickListener {
-        fun onItemClick(idx : Int, url : String, name : String, isSave : Int, position : Int)
+        fun onItemClick(idx : Int, url : String, name : String, position : Int)
         fun bookmark(feed : Feed, position : Int)
     }
 
