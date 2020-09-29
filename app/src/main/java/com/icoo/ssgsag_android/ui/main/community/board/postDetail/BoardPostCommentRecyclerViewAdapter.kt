@@ -42,6 +42,8 @@ class BoardPostCommentRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.Vi
         for(item in itemList){
             item.isSelected = false
         }
+
+        notifyDataSetChanged()
     }
 
     override fun getItemCount() = itemList.size

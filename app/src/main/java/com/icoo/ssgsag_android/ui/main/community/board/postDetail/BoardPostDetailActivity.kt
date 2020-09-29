@@ -201,6 +201,8 @@ class BoardPostDetailActivity : BaseActivity<ActivityBoardPostDetailBinding, Boa
 
         viewDataBinding.actBoardPostDetailIvReplyGuideCancel.setSafeOnClickListener {
             viewModel.isReply.value = false
+
+            viewDataBinding.actBoardPostDetailEtComment.text.clear()
         }
 
         viewDataBinding.actBoardPostDetailClMenu.setSafeOnClickListener {
