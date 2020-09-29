@@ -99,7 +99,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
                 addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
             }
 
-            bookmarkRequest.launch(intent)
+            startActivity(intent)
         }
 
         override fun bookmark(feed: Feed, position: Int) {

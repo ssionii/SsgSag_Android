@@ -44,6 +44,7 @@ class SsgSagNewsViewPagerAdapter(
         feedList[position].isSave = isSave
     }
 
+
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
 
         val viewDataBinding = DataBindingUtil.inflate<ItemCommunitySsgsagNewsBinding>(
@@ -85,6 +86,14 @@ class SsgSagNewsViewPagerAdapter(
             return feedList.size
         else
             return 0
+    }
+
+    override fun getItemPosition(`object`: Any): Int {
+        return POSITION_NONE
+    }
+
+    fun refresh(){
+        notifyDataSetChanged()
     }
 
     override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {

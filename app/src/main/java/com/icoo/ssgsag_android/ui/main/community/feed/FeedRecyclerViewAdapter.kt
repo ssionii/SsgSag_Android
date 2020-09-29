@@ -41,6 +41,12 @@ class FeedRecyclerViewAdapter: RecyclerView.Adapter<FeedRecyclerViewAdapter.View
         notifyItemChanged(position)
     }
 
+    fun refreshItemIsSave(isSave : Int, position: Int){
+        itemList[position].isSave = isSave
+        notifyItemChanged(position)
+    }
+
+
     fun removedItem(position: Int){
 
         val iter = itemList.iterator()

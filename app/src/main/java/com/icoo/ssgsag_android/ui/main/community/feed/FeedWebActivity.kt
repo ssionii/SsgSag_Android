@@ -27,6 +27,7 @@ class FeedWebActivity : BaseActivity<ActivityFeedWebDetailBinding, FeedViewModel
 
     var position = 0
     var idx = 0
+    var type = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,6 +78,7 @@ class FeedWebActivity : BaseActivity<ActivityFeedWebDetailBinding, FeedViewModel
         if(intent.getStringExtra("from") == "feed"){
             isSave.value = intent.getIntExtra("isSave", 0)
             position = intent.getIntExtra("position", 0)
+            type = intent.getStringExtra("type")
         }else{
             viewDataBinding.actFeedWebDetailIvBookmark.visibility = INVISIBLE
         }
@@ -95,9 +97,13 @@ class FeedWebActivity : BaseActivity<ActivityFeedWebDetailBinding, FeedViewModel
                 else isSave.value = 0
 
                 val result = Intent().apply {
+                    putExtra("type", type)
                     putExtra("isSave", isSave.value!!)
                     putExtra("position", position)
                 }
+
+                Log.e("result", result.toString())
+
                 setResult(Activity.RESULT_OK, result)
             }
         })

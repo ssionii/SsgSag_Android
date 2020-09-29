@@ -1,11 +1,17 @@
 package com.icoo.ssgsag_android.ui.main.community.feed
 
 import SsgSagNewsViewPagerAdapter
+import android.app.Activity
 import android.content.Intent
 import android.graphics.Point
 import android.os.Bundle
+import android.util.Log
+import android.view.View
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager.widget.ViewPager
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseActivity
 import com.icoo.ssgsag_android.data.model.feed.Feed
@@ -20,6 +26,33 @@ class CommunityFeedActivity : BaseActivity<ActivityCommunityFeedBinding, FeedVie
         get() = R.layout.activity_community_feed
 
     override val viewModel: FeedViewModel by viewModel()
+
+    val bookmarkFeedRequest = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult : ActivityResult ->
+        val resultCode : Int = activityResult.resultCode
+        val data : Intent? = activityResult.data
+
+        if(resultCode == Activity.RESULT_OK) {
+            data?.let{
+                val isSave = it.getIntExtra("isSave", 0)
+                val position =  it.getIntExtra("position", 0)
+
+                when(it.getStringExtra("type")){
+                    "best" -> {
+                        (viewDataBinding.actCommunityFeedAvp.adapter as SsgSagNewsViewPagerAdapter).run{
+                            refreshItem(isSave, position)
+                            refresh()
+                        }
+                    } else -> {
+                        feedRecyclerViewAdapter.run{
+                            refreshItemIsSave(isSave, position)
+                            notifyItemChanged(position)
+                        }
+                    }
+                }
+
+            }
+        }
+    }
 
     private lateinit var feedRecyclerViewAdapter: FeedRecyclerViewAdapter
 
@@ -76,7 +109,7 @@ class CommunityFeedActivity : BaseActivity<ActivityCommunityFeedBinding, FeedVie
 
     val bestFeedItemClickListener = object : SsgSagNewsViewPagerAdapter.OnItemClickListener {
         override fun onItemClick(idx: Int, url: String, name: String, isSave: Int, position: Int) {
-            goWebActivity(idx ,url, name, isSave)
+            goWebActivity(idx ,url, name, isSave, position, "best")
         }
 
         override fun bookmark(feed: Feed, position: Int) {
@@ -132,7 +165,7 @@ class CommunityFeedActivity : BaseActivity<ActivityCommunityFeedBinding, FeedVie
             viewModel.bookmark(feedItem, position, false)
         }
         override fun onItemClicked(feedIdx: Int, feedUrl: String, feedName: String, isSave: Int, position: Int) {
-            goWebActivity(feedIdx, feedUrl, feedName, isSave)
+            goWebActivity(feedIdx, feedUrl, feedName, isSave, position, "feed")
         }
     }
 
@@ -159,19 +192,21 @@ class CommunityFeedActivity : BaseActivity<ActivityCommunityFeedBinding, FeedVie
 
     }
 
-    private fun goWebActivity(idx : Int, url : String, name : String, isSave : Int){
+    private fun goWebActivity(idx : Int, url : String, name : String, isSave : Int, position : Int, type : String){
         val intent = Intent(this@CommunityFeedActivity, FeedWebActivity::class.java)
         intent.apply{
             putExtra("from","feed")
+            putExtra("type",type)
             putExtra("url",url)
             putExtra("idx",idx)
             putExtra("title",name)
             putExtra("isSave",isSave)
-            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+            putExtra("position", position)
+//            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+//            addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
         }
 
-        startActivity(intent)
+        bookmarkFeedRequest.launch(intent)
     }
 
 

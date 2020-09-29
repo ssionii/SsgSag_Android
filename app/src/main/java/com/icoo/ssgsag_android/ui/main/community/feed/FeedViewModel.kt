@@ -230,13 +230,6 @@ class FeedViewModel(
         }
     }
 
-//    fun setCategory(categoryIdx: Int){
-//        _category.postValue(categoryIdx)
-//        getCategoryFeeds(0, categoryIdx)
-//    }
-
-
-
     private fun showProgress() {
         _isProgress.value = View.VISIBLE
     }
