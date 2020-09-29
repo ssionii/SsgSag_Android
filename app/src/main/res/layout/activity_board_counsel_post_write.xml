@@ -116,6 +116,10 @@
                     android:textColor="@color/black_1"
                     android:letterSpacing="-0.01"
                     android:hint="상담 제목(최대 20자)"
+                    android:maxLines="1"
+                    android:lines="1"
+                    android:maxLength="20"
+                    android:inputType="text"
                     android:textColorHint="@color/grey_2"
                     android:fontFamily="@font/noto_sans_kr_regular"/>
 
