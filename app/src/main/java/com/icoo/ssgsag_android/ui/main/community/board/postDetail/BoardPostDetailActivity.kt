@@ -12,8 +12,11 @@ import android.widget.EditText
 import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseActivity
+import com.icoo.ssgsag_android.base.BaseRecyclerViewAdapter
+import com.icoo.ssgsag_android.data.model.community.board.BoardPostDetail
 import com.icoo.ssgsag_android.data.model.community.board.PostComment
 import com.icoo.ssgsag_android.databinding.ActivityBoardPostDetailBinding
 import com.icoo.ssgsag_android.ui.main.community.board.BoardPostDetailBottomSheet
@@ -60,8 +63,10 @@ class BoardPostDetailActivity : BaseActivity<ActivityBoardPostDetailBinding, Boa
             setButton()
         })
 
+
         setCommentRv()
         refreshComment()
+        setPullToRefresh()
         setObserver()
 
         viewDataBinding.actBoardPostDetailClBack.setSafeOnClickListener {
@@ -177,6 +182,19 @@ class BoardPostDetailActivity : BaseActivity<ActivityBoardPostDetailBinding, Boa
 
     }
 
+
+    private fun setPullToRefresh(){
+        viewDataBinding.actBoardPostDetailSrl.apply{
+            setOnRefreshListener(object : SwipeRefreshLayout.OnRefreshListener {
+                override fun onRefresh() {
+                    // 새로고침 코드
+                   viewModel.getPostDetail(postIdx)
+
+                    viewDataBinding.actBoardPostDetailSrl.isRefreshing = false
+                }
+            })
+        }
+    }
 
     private fun setButton(){
 
