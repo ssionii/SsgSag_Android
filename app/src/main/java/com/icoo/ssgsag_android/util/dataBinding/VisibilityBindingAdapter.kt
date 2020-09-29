@@ -20,13 +20,22 @@ fun setLinearLayoutVisibility(layout: LinearLayout, string: String?){
         layout.visibility = View.VISIBLE
 }
 
-// R: 리버스 라는 뜻
+
 @BindingAdapter("clVisibilityByInt")
 fun setClVisibilityByInt(layout: ConstraintLayout, num: Int?){
     if(num == null || num == 0){
         layout.visibility = GONE
     }else{
         layout.visibility = VISIBLE
+    }
+}
+
+@BindingAdapter("clVisibilityByIntR")
+fun setClVisibilityByIntR(layout: ConstraintLayout, num: Int){
+    if(num == 0){
+        layout.visibility = VISIBLE
+    }else{
+        layout.visibility = GONE
     }
 }
 

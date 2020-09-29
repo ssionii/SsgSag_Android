@@ -57,6 +57,10 @@ public class CircleAnimIndicator(context : Context, attrs : AttributeSet?) : Lin
         selectDot(0)
     }
 
+    fun deleteDoPanel(){
+        this.removeAllViews()
+    }
+
     /**
      * 선택된 점 표시
      * @param position

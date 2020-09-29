@@ -2,6 +2,7 @@ package com.icoo.ssgsag_android.ui.main.community.board
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Point
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,11 +10,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.viewpager.widget.ViewPager
 import com.icoo.ssgsag_android.BR
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseFragment
@@ -22,8 +25,11 @@ import com.icoo.ssgsag_android.data.model.community.board.BoardPostDetail
 import com.icoo.ssgsag_android.data.model.community.board.PostInfo
 import com.icoo.ssgsag_android.databinding.FragmentBoardListPageBinding
 import com.icoo.ssgsag_android.databinding.ItemBoardBinding
+import com.icoo.ssgsag_android.ui.main.MainActivity
 import com.icoo.ssgsag_android.ui.main.community.board.postDetail.BoardPostDetailActivity
+import com.icoo.ssgsag_android.ui.main.community.feed.FeedWebActivity
 import com.icoo.ssgsag_android.ui.main.community.review.ReviewListRecyclerViewAdapter
+import com.icoo.ssgsag_android.util.view.AutoScrollAdapter
 import com.icoo.ssgsag_android.util.view.WrapContentLinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -55,6 +61,8 @@ class BoardListPageFragment : BaseFragment<FragmentBoardListPageBinding, Communi
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        viewDataBinding.vm = viewModel
+
         category = requireArguments().getString("category")!!
         communityBoardType = requireArguments().getInt("communityBoardType")
 
@@ -64,10 +72,97 @@ class BoardListPageFragment : BaseFragment<FragmentBoardListPageBinding, Communi
             viewModel.getCounselList(category, curPage, pageSize)
         }
 
+        setTopBanner()
         setRv()
+        pullToRefresh()
 
     }
 
+
+    private fun setTopBanner(){
+
+        val d = resources.displayMetrics.density
+        val width = MainActivity.GetWidth.windowWidth
+
+        val vpAdapter =
+            AutoScrollAdapter(requireActivity())
+        vpAdapter.setOnItemClickListener(onBannerItemClickListener)
+
+        viewDataBinding.fragBoardListPageAsvpBanner.run{
+            adapter = vpAdapter
+            setInterval(3000)
+            setCycle(true)
+
+            layoutParams.height = (width * 0.32).toInt()
+
+            addOnPageChangeListener(onBannerPageChangeListener)
+        }
+
+        viewModel.adList.observe(viewLifecycleOwner, Observer {
+            vpAdapter.apply{
+                replaceAll(it)
+                notifyDataSetChanged()
+            }
+
+            viewDataBinding.fragBoardListPagerCai.run{
+                deleteDoPanel()
+                createDotPanel(it.size, R.drawable.dot_2, R.drawable.dot_1)
+            }
+
+            viewDataBinding.fragBoardListPageAsvpBanner.startAutoScroll()
+        })
+    }
+
+    val onBannerItemClickListener
+            = object : AutoScrollAdapter.OnItemClickListener{
+        override fun onItemClick(url: String?) {
+
+            val intent = Intent(context, FeedWebActivity::class.java)
+            intent.putExtra("url",url)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+
+            val bundle = Bundle().apply {
+                putString("url", url)
+            }
+
+            ContextCompat.startActivity(activity!!, intent, bundle)
+        }
+    }
+
+    val onBannerPageChangeListener
+            = object : ViewPager.OnPageChangeListener{
+        override fun onPageScrollStateChanged(state: Int) { }
+
+        override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
+
+        override fun onPageSelected(position: Int) {
+            viewDataBinding.fragBoardListPagerCai.selectDot(position)
+        }
+    }
+
+    private fun pullToRefresh(){
+        viewDataBinding.fragBoardListPageSrl.apply {
+            setOnRefreshListener(object : SwipeRefreshLayout.OnRefreshListener {
+                override fun onRefresh() {
+                    // 새로고침 코드
+                    viewDataBinding.actCommunityBoardRv.apply {
+                        (this.adapter as BaseRecyclerViewAdapter<BoardPostDetail, *>).apply {
+                            clearAll()
+                            curPage = 0
+                            if(communityBoardType == CommunityBoardType.COUNSEL)
+                                viewModel.refreshCounselList(category, curPage, pageSize)
+                            else
+                                viewModel.refreshTalkList(curPage, pageSize)
+
+                        }
+                        viewDataBinding.fragBoardListPageSrl.isRefreshing = false
+
+                    }
+                }
+            })
+        }
+    }
 
     private fun setRv(){
 
@@ -117,7 +212,7 @@ class BoardListPageFragment : BaseFragment<FragmentBoardListPageBinding, Communi
                     addItem(it)
                 else
                     replaceAll(it)
-                notifyDataSetChanged()
+                notifyItemRangeChanged(curPage * 10, (curPage * 10) + pageSize + 1)
                 if(this.itemCount > 0) {
                     emptyView.visibility = View.GONE
                     recyclerView.visibility = View.VISIBLE
@@ -128,27 +223,6 @@ class BoardListPageFragment : BaseFragment<FragmentBoardListPageBinding, Communi
 
             }
         })
-
-        viewDataBinding.fragBoardListPageSrl.apply {
-            setOnRefreshListener(object : SwipeRefreshLayout.OnRefreshListener {
-                override fun onRefresh() {
-                    // 새로고침 코드
-                    viewDataBinding.actCommunityBoardRv.apply {
-                        (this.adapter as BaseRecyclerViewAdapter<BoardPostDetail, *>).apply {
-                            clearAll()
-                            curPage = 0
-                            if(communityBoardType == CommunityBoardType.COUNSEL)
-                                viewModel.getCounselList(category, curPage, pageSize)
-                            else
-                                viewModel.getTalkList(curPage, pageSize)
-
-                        }
-                        viewDataBinding.fragBoardListPageSrl.isRefreshing = false
-
-                    }
-                }
-            })
-        }
 
     }
 

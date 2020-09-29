@@ -84,25 +84,10 @@ class CommunityBoardActivity : BaseActivity<ActivityCommunityBoardBinding, Commu
             }
         }
 
-        setTopBanner()
         setButton()
 
     }
 
-
-    private fun setTopBanner(){
-
-        val d = resources.displayMetrics.density
-
-        // 화면 전체 사이즈
-        val display = windowManager.defaultDisplay
-        val size = Point()
-        display.getSize(size)
-        val width = (size.x / d).toInt()
-
-        viewDataBinding.actCommunityBoardIvTopBanner.layoutParams.height = (width * 0.32 * d).toInt()
-
-    }
 
     fun setCounselVp(){
         viewDataBinding.actCommunityBoardVp.apply{
