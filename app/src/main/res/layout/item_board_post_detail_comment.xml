@@ -15,7 +15,7 @@
     <LinearLayout
             android:id="@+id/item_board_post_detail_comment_ll"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -66,7 +66,7 @@
                     android:text="@{postComment.content}"
                     android:linksClickable="true"
                     android:autoLink="web"
-                    tools:text="참여대상이 최대 20억 밸류의 시드 투자 유치를 원하는 창업 3년 이내의 초기 창업기업 또는 팀이라고?"
+                    tools:text="참여대상이 최대 20억 밸류의 시드 투는 창업자 유치를 원는 팀이라고?참여대상이 최대 20억 밸류의 시드 투자 유치를 원하는 창업 3년 이내의 초기 창업기업 또는 팀이라고?참여대상이 최대 20억 밸류의 시드 투자 유치를 원하는 창업 3년 이내의 초기 창업기업 또는 팀이라고?참여대상이 최대 20억 밸류의 시드 투자 유치를 원하는 창업 3년 이내의 초기 창업기업 또는 팀이라고?참여대상이 최대 20억 밸류의 시드 투자 유치를 원하는 창업 3년 이내의 초기 창업기업 또는 팀이라고?"
                     android:fontFamily="@font/noto_sans_kr_regular"
                     />
 
