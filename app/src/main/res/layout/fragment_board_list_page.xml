@@ -62,6 +62,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
             android:visibility="visible"
+            tools:visibility="gone"
             android:id="@+id/act_community_board_rv"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -76,49 +77,49 @@
             app:layout_constraintBottom_toBottomOf="parent"
             />
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/act_community_board_ll_empty"
+                android:visibility="gone"
+                tools:visibility="visible"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                android:background="@color/white"
+                clVisibilityByIntR="@{vm.postCount}"
+                app:layout_constraintTop_toBottomOf="@+id/frag_board_list_page_cl_banner"
+                app:layout_constraintBottom_toBottomOf="parent">
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent">
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/img_empty"/>
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:textColor="@color/grey_1"
+                        android:letterSpacing="-0.02"
+                        android:fontFamily="@font/noto_sans_kr_regular"
+                        android:gravity="center_horizontal"
+                        android:layout_marginTop="12dp"
+                        android:text="@string/no_post"
+                        />
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </LinearLayout>
     </androidx.core.widget.NestedScrollView>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/act_community_board_ll_empty"
-            android:visibility="gone"
-            tools:visibility="gone"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_horizontal"
-            android:background="@color/white"
-            clVisibilityByIntR="@{vm.postList.size()}"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent">
-        <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent">
-            <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/img_empty"/>
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="12sp"
-                    android:textColor="@color/grey_1"
-                    android:letterSpacing="-0.02"
-                    android:fontFamily="@font/noto_sans_kr_regular"
-                    android:gravity="center_horizontal"
-                    android:layout_marginTop="12dp"
-                    android:text="@string/no_post"
-                    />
-        </LinearLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ProgressBar
             android:visibility="@{vm.isProgress}"

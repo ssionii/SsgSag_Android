@@ -32,6 +32,12 @@ class CommunityBoardViewModel(
     private val _isProgress = MutableLiveData<Int>()
     val isProgress: LiveData<Int> get() = _isProgress
 
+    var postCount = MutableLiveData<Int>()
+
+    init {
+        postCount.value = 0
+    }
+
     fun getCounselList(category : String, curPage : Int, pageSize : Int){
         addDisposable(repository.getBoardPost(category, curPage,pageSize)
             .subscribeOn(schedulerProvider.io())
@@ -45,6 +51,7 @@ class CommunityBoardViewModel(
                 if(curPage == 0)
                     _adList.value = it.adList
                 _postList.value = it.communityList
+                postCount.value = postCount.value?.plus(it.communityList.size)
             }) {
                 Toast.makeText(globalApplication, "네트워크 상태를 확인해주세요.", Toast.LENGTH_SHORT).show()
                 Log.e("get counsel list error:", it.message)
@@ -64,6 +71,7 @@ class CommunityBoardViewModel(
                 if(curPage == 0)
                     _adList.value = it.adList
                 _postList.value = it.communityList
+                postCount.value = postCount.value?.plus(it.communityList.size)
             }) {
                 Toast.makeText(context, "네트워크 상태를 확인해주세요.", Toast.LENGTH_SHORT).show()
                 Log.e("get counsel list error:", it.message)
@@ -80,7 +88,11 @@ class CommunityBoardViewModel(
                 Log.e("get counsel list error", it.message)
             }
             .subscribe({
+                if(curPage == 0){
+                    postCount.value = 0
+                }
                 _postList.value = it.communityList
+                postCount.value = postCount.value?.plus(it.communityList.size)
             }) {
                 Toast.makeText(globalApplication, "네트워크 상태를 확인해주세요.", Toast.LENGTH_SHORT).show()
                 Log.e("get counsel list error:", it.message)
@@ -97,7 +109,11 @@ class CommunityBoardViewModel(
                 Log.e("get counsel list error", it.message)
             }
             .subscribe({
+                if(curPage == 0){
+                    postCount.value = 0
+                }
                 _postList.value = it.communityList
+                postCount.value = postCount.value?.plus(it.communityList.size)
             }) {
                 Toast.makeText(context, "네트워크 상태를 확인해주세요.", Toast.LENGTH_SHORT).show()
                 Log.e("get counsel list error:", it.message)
