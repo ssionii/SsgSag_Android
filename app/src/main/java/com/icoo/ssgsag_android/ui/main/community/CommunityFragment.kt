@@ -74,12 +74,6 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
 
     }
 
-//    override fun onResume() {
-//        super.onResume()
-//
-//        viewModel.getCommunityMain()
-//    }
-
     private fun setSsgsagNewsVp(d : Float, width: Int){
 
         val leftMargin = (20 * d).toInt()
@@ -195,7 +189,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
             goFeed()
         }
 
-        viewDataBinding.fragCommunityLlFeedMore.setSafeOnClickListener {
+        viewDataBinding.fragCommunityClFeedTitle.setOnClickListener {
             goFeed()
         }
 
@@ -215,20 +209,6 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
         viewDataBinding.fragCommunityClCoachmarkContainer.visibility = View.VISIBLE
 
         SharedPreferenceController.setCommunityCoachMark(requireActivity(), true)
-
-//        val d = resources.displayMetrics.density
-//        val widthPx = MainActivity.GetWidth.windowWidth / 10 * 5
-//
-//        val rightDpValue = widthPx / d - 97
-//        val bottomDpValue = 12
-//
-//        val leftMargin = (rightDpValue * d).toInt()
-//        val bottomMargin = (bottomDpValue * d).toInt()
-//
-//        (viewDataBinding.fragCommunityClCoachmarkContainer.layoutParams as ConstraintLayout.LayoutParams).apply{
-//            marginStart = leftMargin
-//            verticalMargin = bottomMargin
-//        }
 
         viewDataBinding.fragCommunityClCoachmarkContainer.setOnTouchListener( object : View.OnTouchListener{
             override fun onTouch(v: View?, event: MotionEvent?): Boolean {

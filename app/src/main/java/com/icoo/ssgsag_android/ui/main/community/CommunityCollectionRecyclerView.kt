@@ -123,7 +123,7 @@ class CommunityCollectionRecyclerView(private var itemList : CommunityMainCollec
                     holder.dataBinding.root.layoutParams.height = 0
                 }
 
-                holder.dataBinding.itemCommunityCollectionLlMore.setSafeOnClickListener {
+                holder.dataBinding.itemCommunityCollectionClTitle.setSafeOnClickListener {
                     collectionListener?.onMoreClick(viewType)
                 }
             }
@@ -162,7 +162,7 @@ class CommunityCollectionRecyclerView(private var itemList : CommunityMainCollec
                     holder.dataBinding.root.layoutParams.height = 0
                 }
 
-                holder.dataBinding.itemCommunityCollectionLlMore.setSafeOnClickListener {
+                holder.dataBinding.itemCommunityCollectionClTitle.setSafeOnClickListener {
                     collectionListener?.onMoreClick(viewType)
                 }
             }
@@ -196,7 +196,7 @@ class CommunityCollectionRecyclerView(private var itemList : CommunityMainCollec
                     holder.dataBinding.root.layoutParams.height = 0
                 }
 
-                holder.dataBinding.itemCommunityCollectionLlMore.setSafeOnClickListener {
+                holder.dataBinding.itemCommunityCollectionClTitle.setSafeOnClickListener {
                     collectionListener?.onMoreClick(viewType)
                 }
             }
