@@ -119,8 +119,10 @@
         <activity android:name=".ui.main.community.board.CommunityBoardActivity" />
         <activity android:name=".ui.main.community.board.postDetail.BoardPostDetailActivity"
                 android:windowSoftInputMode="adjustResize"/>
-        <activity android:name=".ui.main.community.board.postDetail.write.BoardCounselPostWriteActivity"/>
-        <activity android:name=".ui.main.community.board.postDetail.write.BoardTalkPostWriteActivity"/>
+        <activity android:name=".ui.main.community.board.postDetail.write.BoardCounselPostWriteActivity"
+                android:windowSoftInputMode="adjustResize"/>
+        <activity android:name=".ui.main.community.board.postDetail.write.BoardTalkPostWriteActivity"
+                android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".ui.main.community.review.CommunityReviewActivity"/>
         <activity android:name=".ui.main.community.feed.CommunityFeedActivity"/>
 
