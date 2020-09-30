@@ -164,7 +164,7 @@ fun setRegDate(view: TextView, date: String?){
         val dateString = formatter.format(current)
 
         val date2 = formatter.parse(date)
-        val formatter2 = SimpleDateFormat("yy/M/d", Locale.KOREA)
+        val formatter2 = SimpleDateFormat("yyyy년 M월 d일", Locale.KOREA)
         val dateString2 = formatter2.format(date2)
 
 
