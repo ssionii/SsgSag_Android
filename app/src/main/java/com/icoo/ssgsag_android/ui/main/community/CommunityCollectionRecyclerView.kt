@@ -109,9 +109,14 @@ class CommunityCollectionRecyclerView(private var itemList : CommunityMainCollec
 
                 if(itemList.worryCommunityList != null && itemList.worryCommunityList!!.size > 0) {
 
+                    val tempList = itemList.worryCommunityList
+                    for(i in 0 until tempList!!.size){
+                        tempList[i].isBest = 1
+                    }
+
                     holder.dataBinding.itemCommunityCollectionTvTitle.text = "고민 상담톡"
                     (holder.dataBinding.itemCommunityCollectionRv.adapter as BaseRecyclerViewAdapter<PostInfo, *>).run {
-                        replaceAll(itemList.worryCommunityList)
+                        replaceAll(tempList)
                         notifyDataSetChanged()
                     }
                 }else {
@@ -143,9 +148,14 @@ class CommunityCollectionRecyclerView(private var itemList : CommunityMainCollec
 
                 if(itemList.freeCommunityList != null && itemList.freeCommunityList!!.size > 0) {
 
+                    val tempList = itemList.freeCommunityList
+                    for(i in 0 until tempList!!.size){
+                        tempList[i].isBest = 1
+                    }
+
                     holder.dataBinding.itemCommunityCollectionTvTitle.text = "자유 수다톡"
                     (holder.dataBinding.itemCommunityCollectionRv.adapter as BaseRecyclerViewAdapter<PostInfo, *>).run {
-                        replaceAll(itemList.freeCommunityList)
+                        replaceAll(tempList)
                         notifyDataSetChanged()
                     }
                 }else {

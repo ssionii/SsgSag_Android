@@ -27,7 +27,7 @@ data class PostInfo(
     var likeNum : Int?,
     val commentNum : Int,
     val showNum : Int,
-    val isBest : Int
+    var isBest : Int
 )
 
 data class PostComment(

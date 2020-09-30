@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
                 name="postInfo"
                 type="com.icoo.ssgsag_android.data.model.community.board.PostInfo" />
     </data>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:background="@drawable/border_eeeeee_8"
         android:layout_marginBottom="12dp">
     <LinearLayout
@@ -26,7 +26,8 @@
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
 
             <androidx.cardview.widget.CardView
                     cvVisibilityByInt="@{postInfo.isBest}"
@@ -36,16 +37,17 @@
                     app:cardElevation="0dp"
                     app:cardCornerRadius="3dp"
                     android:layout_marginRight="4dp">
+
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="4dp"
                         android:layout_marginTop="1dp"
                         android:layout_marginBottom="2dp"
-                        android:layout_marginHorizontal="4dp"
+                        android:letterSpacing="-0.02"
                         android:text="BEST"
-                        android:textSize="10dp"
                         android:textColor="#fe6d6d"
-                        android:letterSpacing="-0.02" />
+                        android:textSize="10dp" />
             </androidx.cardview.widget.CardView>
             <TextView
                     android:layout_width="wrap_content"
@@ -92,6 +94,7 @@
                 android:text="@{postInfo.content}"
                 android:fontFamily="@font/noto_sans_kr_regular"
                 android:ellipsize="end"
+                android:lines="1"
                 android:layout_marginTop="6dp"/>
     </LinearLayout>
     
