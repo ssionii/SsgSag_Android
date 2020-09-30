@@ -62,6 +62,7 @@ class CommunityFeedActivity : BaseActivity<ActivityCommunityFeedBinding, FeedVie
         setRv()
         setButton()
         setObserver()
+        setPullToRefresh()
     }
 
     private fun setSsgsagNewsVp(){
@@ -192,6 +193,19 @@ class CommunityFeedActivity : BaseActivity<ActivityCommunityFeedBinding, FeedVie
                     .replaceItem(viewModel.refreshedFeed, viewModel.refreshedFeedPosition)
             }
         })
+    }
+
+    private fun setPullToRefresh(){
+
+        viewDataBinding.actCommunityFeedSrl.run{
+            setOnRefreshListener {
+                feedRecyclerViewAdapter.clearAll()
+                curPage = 0
+                viewModel.getTodayFeeds(curPage, pageSize)
+                viewDataBinding.actCommunityFeedSrl.isRefreshing = false
+            }
+        }
+
     }
 
     private fun setButton(){

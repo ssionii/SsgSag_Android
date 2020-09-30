@@ -38,10 +38,6 @@ class FeedViewModel(
     var refreshedFeedPosition = 0
 
 
-   init {
-
-   }
-
     fun getTodayFeeds(curPage: Int, pageSize: Int){
         addDisposable(repository.getTodayFeeds(curPage, pageSize)
             .subscribeOn(schedulerProvider.io())
