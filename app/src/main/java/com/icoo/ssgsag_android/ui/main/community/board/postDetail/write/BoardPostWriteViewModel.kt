@@ -17,6 +17,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import org.json.JSONObject
 import java.io.File
+import java.net.URLEncoder
 
 class BoardPostWriteViewModel(
     private val repository: CommunityRepository,
@@ -46,6 +47,9 @@ class BoardPostWriteViewModel(
             }
             .subscribe({
                 _postDetail.value = it
+                it.community.photoUrlList?.apply {
+                    photoUrl.value = this
+                }
 
             }) {
                 Log.e("get post detail error", it.message)
@@ -74,8 +78,9 @@ class BoardPostWriteViewModel(
         val file  = File(imgUri)
         val requestfile: RequestBody =
             RequestBody.create(MediaType.parse("multipart/form-detailData"), file)
+
         val data: MultipartBody.Part =
-            MultipartBody.Part.createFormData("photo", file.name, requestfile)
+            MultipartBody.Part.createFormData("photo", URLEncoder.encode(file.name, "UTF-8"), requestfile)
 
         addDisposable(repository.getPhotoUrl(data)
             .subscribeOn(schedulerProvider.io())

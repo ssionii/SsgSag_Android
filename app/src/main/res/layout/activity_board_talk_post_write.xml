@@ -90,7 +90,8 @@
                             android:inputType="text"
                             android:maxLength="20"
                             android:textColorHint="@color/grey_2"
-                            android:fontFamily="@font/noto_sans_kr_regular"/>
+                            android:fontFamily="@font/noto_sans_kr_regular"
+                            android:text="@{vm.postDetail.community.title}"/>
 
                     <View
                             android:layout_width="match_parent"
@@ -111,7 +112,7 @@
                         android:background="@drawable/border_eeeeee_4"
                         android:hint="@string/board_talk_write_hint"
                         android:gravity="top"
-
+                        android:text="@{vm.postDetail.community.content}"
                         android:paddingVertical="8dp"
                         android:paddingHorizontal="10dp"
                         android:minLines="10"

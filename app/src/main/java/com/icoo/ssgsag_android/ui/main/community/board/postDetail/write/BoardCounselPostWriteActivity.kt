@@ -110,8 +110,12 @@ class  BoardCounselPostWriteActivity: BaseActivity<ActivityBoardCounselPostWrite
             title = it.community.title
             content = it.community.content
 
-            viewDataBinding.actBoardPostWriteEtTitle.setText(title)
-            viewDataBinding.actBoardPostWriteEtDescription.setText(content)
+            it.community.photoUrlList?.apply{
+                photoURI = this
+            }
+
+//            viewDataBinding.actBoardPostWriteEtTitle.setText(title)
+//            viewDataBinding.actBoardPostWriteEtDescription.setText(content)
             (viewDataBinding.actBoardCounselPostWriteRvCategory.adapter as BaseRecyclerViewAdapter<CounselBoardCategory, *>).run{
 
                 replaceAll(categoryList)

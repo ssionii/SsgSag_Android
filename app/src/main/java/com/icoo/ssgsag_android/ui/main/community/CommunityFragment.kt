@@ -13,6 +13,7 @@ import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseFragment
 import com.icoo.ssgsag_android.data.model.feed.Feed
 import com.icoo.ssgsag_android.databinding.FragmentCommunityBinding
+import com.icoo.ssgsag_android.ui.main.MainActivity
 import com.icoo.ssgsag_android.ui.main.community.board.CommunityBoardActivity
 import com.icoo.ssgsag_android.ui.main.community.board.postDetail.BoardPostDetailActivity
 import com.icoo.ssgsag_android.ui.main.community.feed.CommunityFeedActivity
@@ -60,6 +61,13 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
 
 
     }
+
+    override fun onResume() {
+        super.onResume()
+
+        viewModel.getCommunityMain()
+    }
+
     private fun setSsgsagNewsVp(d : Float, width: Int){
 
         val leftMargin = (20 * d).toInt()

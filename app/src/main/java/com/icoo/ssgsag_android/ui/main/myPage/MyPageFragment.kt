@@ -1,13 +1,18 @@
 package com.icoo.ssgsag_android.ui.main.myPage
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseFragment
 import com.icoo.ssgsag_android.databinding.FragmentMyPageBinding
+import com.icoo.ssgsag_android.ui.main.MainActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.icoo.ssgsag_android.ui.main.myPage.accountMgt.AccountMgtActivity
 import com.icoo.ssgsag_android.ui.main.myPage.career.CareerActivity
@@ -24,6 +29,14 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding, MyPageViewModel>() {
     override val layoutResID: Int
         get() = R.layout.fragment_my_page
     override val viewModel: MyPageViewModel by viewModel()
+
+    val accountRequest = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult : ActivityResult ->
+        val resultCode : Int = activityResult.resultCode
+
+        if(resultCode == Activity.RESULT_OK) {
+            (activity as MainActivity).viewModel.getUserInfo()
+        }
+    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -68,7 +81,9 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding, MyPageViewModel>() {
         }
 
         viewDataBinding.fragMyPageLlSettingContainer.setOnClickListener {
-            startActivity<AccountMgtActivity>()
+
+            val intent = Intent(requireActivity(), AccountMgtActivity::class.java)
+            accountRequest.launch(intent)
         }
 
         viewDataBinding.fragMyPageCvFeedback.setOnClickListener {
