@@ -86,6 +86,10 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding, MyPageViewModel>() {
             accountRequest.launch(intent)
         }
 
+        viewDataBinding.fragMyPageLlFeedback.setOnClickListener {
+            startActivity<ContactActivity>()
+        }
+
         viewDataBinding.fragMyPageCvFeedback.setOnClickListener {
             startActivity<ContactActivity>()
         }
