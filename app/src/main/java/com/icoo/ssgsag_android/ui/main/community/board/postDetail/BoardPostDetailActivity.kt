@@ -311,6 +311,8 @@ class BoardPostDetailActivity : BaseActivity<ActivityBoardPostDetailBinding, Boa
     val sheetDismissedListener = object : BoardPostDetailBottomSheet.OnSheetDismissedListener{
 
         override fun onPostEdited() {
+
+            // 리스트에 변경사항 알려줌
             val result = Intent().apply {
                 putExtra("type", "edit")
             }
@@ -318,6 +320,8 @@ class BoardPostDetailActivity : BaseActivity<ActivityBoardPostDetailBinding, Boa
         }
 
         override fun onPostDeleted() {
+
+            // 리스트에 변경사항 알려줌
             val result = Intent().apply {
                 putExtra("type", "delete")
             }

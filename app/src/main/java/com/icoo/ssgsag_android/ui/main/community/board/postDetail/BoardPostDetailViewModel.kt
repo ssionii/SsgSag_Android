@@ -1,6 +1,7 @@
 package com.icoo.ssgsag_android.ui.main.community.board.postDetail
 
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.JsonObject
@@ -79,7 +80,9 @@ class BoardPostDetailViewModel(
                 Log.e("delete post error", it.message)
             }
             .subscribe({
-                Log.e("status", it.status.toString())
+                if(it.status == 200) {
+                    Toast.makeText(context, "게시물이 삭제되었습니다.", Toast.LENGTH_SHORT).show()
+                }
                 deleteStatus.value = it.status
             }) {
                 Log.e("delete post error", it.message)

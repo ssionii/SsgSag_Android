@@ -12,6 +12,8 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.Observer
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.icoo.ssgsag_android.base.dialogFragment.BaseDialogFragment
+import com.icoo.ssgsag_android.base.dialogFragment.TwoButtonDialogFragment
 import com.icoo.ssgsag_android.databinding.BottomSheetPostDetailBinding
 import com.icoo.ssgsag_android.ui.main.community.board.postDetail.BoardPostDetailViewModel
 import com.icoo.ssgsag_android.ui.main.community.board.postDetail.write.BoardCounselPostWriteActivity
@@ -44,6 +46,8 @@ class BoardPostDetailBottomSheet (
 
 
     lateinit var listener: OnSheetDismissedListener
+
+    lateinit var twoButtonDialog : TwoButtonDialogFragment
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -101,10 +105,13 @@ class BoardPostDetailBottomSheet (
 
         viewDataBinding.bottomSheetPostDetailCvDelete.setSafeOnClickListener {
             when(from){
-                "post" ->  viewModel.deletePost(idx)
-                "comment" -> viewModel.deleteComment(idx)
-                "reply" -> viewModel.deleteReply(idx)
+                "post" -> twoButtonDialog = TwoButtonDialogFragment.newInstance("게시글을 삭제하시겠어요?\n삭제한 글은 복구할 수 없습니다.", "취소", "확인")
+                "comment" -> twoButtonDialog = TwoButtonDialogFragment.newInstance("댓글을 삭제하시겠어요?\n삭제한 댓글은 복구할 수 없습니다.", "취소", "확인")
+                "reply" -> twoButtonDialog = TwoButtonDialogFragment.newInstance("답글을 삭제하시겠어요?\n삭제한 답글은 복구할 수 없습니다.", "취소", "확인")
             }
+
+            twoButtonDialog.setDialogDismissListener(dialogDismissedListener)
+            twoButtonDialog.show(requireFragmentManager(), null)
         }
 
         viewDataBinding.bottomSheetPostDetailCvReport.setSafeOnClickListener {
@@ -116,6 +123,23 @@ class BoardPostDetailBottomSheet (
         }
     }
 
+    val dialogDismissedListener = object : TwoButtonDialogFragment.TwoButtonDialogDismissListener{
+        override fun onLeftButtonClick() {
+            twoButtonDialog.dismiss()
+        }
+
+        override fun onRightButtonClick() {
+            when(from) {
+                "post"-> viewModel.deletePost(idx)
+                "comment" -> viewModel.deleteComment(idx)
+                "reply" -> viewModel.deleteReply(idx)
+            }
+        }
+
+        override fun onDialogDismissed() {
+        }
+    }
+
 
     private fun setObserve(){
         viewModel.deleteStatus.observe(this, Observer {
@@ -123,10 +147,12 @@ class BoardPostDetailBottomSheet (
                 when(from){
                     "post" ->{
                         listener.onPostDeleted()
+                        twoButtonDialog.dismiss()
                         dismiss()
                     }
                     "comment", "reply" ->{
                         listener.onCommentDeleted()
+                        twoButtonDialog.dismiss()
                         dismiss()
                     }
                 }

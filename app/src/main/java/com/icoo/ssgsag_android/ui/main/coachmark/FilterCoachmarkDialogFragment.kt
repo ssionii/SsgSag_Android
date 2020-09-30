@@ -1,13 +1,10 @@
 package com.icoo.ssgsag_android.ui.main.coachmark
 
-import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Log
 import android.view.KeyEvent
 import com.icoo.ssgsag_android.R
-import com.icoo.ssgsag_android.base.BaseDialogFragment
-import com.icoo.ssgsag_android.data.local.pref.SharedPreferenceController
+import com.icoo.ssgsag_android.base.dialogFragment.BaseDialogFragment
 import com.icoo.ssgsag_android.databinding.DialogFragmentCoachmarkFilterBinding
 import com.icoo.ssgsag_android.ui.main.MainActivity
 import com.icoo.ssgsag_android.ui.main.ssgSag.SsgSagViewModel

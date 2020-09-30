@@ -1,13 +1,11 @@
 package com.icoo.ssgsag_android.ui.main.calendar.calendarDetail
 
-import com.icoo.ssgsag_android.ui.main.calendar.calendarDialog.calendarDialogPage.CalendarDialogPageViewModel
-
 
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.KeyEvent
 import com.icoo.ssgsag_android.R
-import com.icoo.ssgsag_android.base.BaseDialogFragment
+import com.icoo.ssgsag_android.base.dialogFragment.BaseDialogFragment
 import com.icoo.ssgsag_android.databinding.DialogFragmentCalendarDetailDeletePosterBinding
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
