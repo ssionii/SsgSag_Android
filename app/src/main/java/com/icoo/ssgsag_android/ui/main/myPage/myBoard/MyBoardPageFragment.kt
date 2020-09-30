@@ -12,14 +12,13 @@ import com.icoo.ssgsag_android.data.model.community.board.BoardPostDetail
 import com.icoo.ssgsag_android.data.model.community.board.PostInfo
 import com.icoo.ssgsag_android.data.model.feed.Feed
 import com.icoo.ssgsag_android.data.model.user.myBoard.MyComment
-import com.icoo.ssgsag_android.databinding.FragmentMyBoardPageBinding
-import com.icoo.ssgsag_android.databinding.ItemBoardBinding
-import com.icoo.ssgsag_android.databinding.ItemFeedBinding
-import com.icoo.ssgsag_android.databinding.ItemMyCommentBinding
+import com.icoo.ssgsag_android.data.model.user.myBoard.MyPost
+import com.icoo.ssgsag_android.databinding.*
 import com.icoo.ssgsag_android.ui.main.community.board.CommunityBoardType
 import com.icoo.ssgsag_android.ui.main.community.board.postDetail.BoardPostDetailActivity
 import com.icoo.ssgsag_android.ui.main.community.feed.FeedWebActivity
 import com.icoo.ssgsag_android.ui.main.myPage.MyPageViewModel
+import com.icoo.ssgsag_android.ui.main.review.club.ReviewDetailActivity
 import com.icoo.ssgsag_android.util.view.WrapContentLinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -51,6 +50,53 @@ class MyBoardPageFragment : BaseFragment<FragmentMyBoardPageBinding, MyPageViewM
     private fun setRv(){
         when(myBoardType){
 
+            MyBoardType.MY_POST -> {
+
+                viewModel.getMyPost(curPage, pageSize)
+
+                viewDataBinding.actMyBoardPageRv.run{
+                    adapter = object :BaseRecyclerViewAdapter<MyPost, ItemMyPostBinding>(){
+                        override val layoutResID: Int
+                            get() = R.layout.item_my_post
+                        override val bindingVariableId: Int
+                            get() = BR.myPost
+                        override val listener: OnItemClickListener?
+                            get() = object : OnItemClickListener{
+                                override fun onItemClicked(item: Any?, position: Int?) {
+
+                                    val post = item as MyPost
+
+                                    when(post.category1){
+
+                                        "COMMUNITY" -> {
+                                            val intent = Intent(requireActivity(), BoardPostDetailActivity::class.java)
+                                            when(post.category2){
+                                                "FREE" -> intent.putExtra("type", CommunityBoardType.TALK)
+                                                else -> intent.putExtra("type", CommunityBoardType.COUNSEL)
+                                            }
+                                            intent.putExtra("postIdx", post.contentIdx)
+                                            startActivity(intent)
+                                        }
+
+                                        "CLUB_POST"-> {
+                                            val intent = Intent(requireActivity(), ReviewDetailActivity::class.java)
+                                            intent.putExtra("clubIdx", post.contentIdx)
+                                            startActivity(intent)
+                                        }
+                                    }
+
+                                }
+                            }
+                    }
+
+                    layoutManager = WrapContentLinearLayoutManager()
+                }
+
+                viewDataBinding.actMyBoardPageTvEmpty.text = "표시할 정보가 없습니다."
+
+
+            }
+
             MyBoardType.MY_COMMENT -> {
 
                 viewModel.getMyComment(curPage, pageSize)
@@ -72,7 +118,7 @@ class MyBoardPageFragment : BaseFragment<FragmentMyBoardPageBinding, MyPageViewM
                                         "FREE" -> intent.putExtra("type", CommunityBoardType.TALK)
                                         else -> intent.putExtra("type", CommunityBoardType.COUNSEL)
                                     }
-                                    intent.putExtra("postIdx", comment.parentIdx)
+                                    intent.putExtra("postIdx", comment.community.communityIdx)
 
                                     startActivity(intent)
 
@@ -196,6 +242,15 @@ class MyBoardPageFragment : BaseFragment<FragmentMyBoardPageBinding, MyPageViewM
     }
 
     private fun refreshRv(){
+
+        viewModel.myPostList.observe(viewLifecycleOwner, Observer {
+            (viewDataBinding.actMyBoardPageRv.adapter as BaseRecyclerViewAdapter<MyPost, *>).run{
+
+                addItem(it)
+                notifyDataSetChanged()
+            }
+        })
+
         viewModel.myCommentList.observe(viewLifecycleOwner, Observer {
             (viewDataBinding.actMyBoardPageRv.adapter as BaseRecyclerViewAdapter<MyComment, *>).run{
 

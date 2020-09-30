@@ -131,5 +131,5 @@ class UserNoticeFragment : BaseFragment<FragmentUserNoticeBinding,UserNoticeView
             }
         })
     }
-    
+
 }

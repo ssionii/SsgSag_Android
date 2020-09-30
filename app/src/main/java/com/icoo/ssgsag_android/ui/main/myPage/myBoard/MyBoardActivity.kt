@@ -42,15 +42,15 @@ class MyBoardActivity : BaseActivity<ActivityMyBoardBinding, MyPageViewModel>(){
 
 
     private fun setPostVp(){
-        val myComment = MyBoardPageFragment.newInstance(MyBoardPageFragment.MyBoardType.MY_COMMENT)
+        val myComment = MyBoardPageFragment.newInstance(MyBoardPageFragment.MyBoardType.MY_POST)
         val myComment2 = MyBoardPageFragment.newInstance(MyBoardPageFragment.MyBoardType.MY_COMMENT)
 
         viewDataBinding.actMyBoardVp.run{
             adapter = BasePagerAdapter(supportFragmentManager).apply {
 
-
-                addFragment(myComment2)
                 addFragment(myComment)
+                addFragment(myComment2)
+
             }
             currentItem = 0
             offscreenPageLimit = 1

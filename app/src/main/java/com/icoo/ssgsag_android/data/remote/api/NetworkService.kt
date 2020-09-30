@@ -26,6 +26,8 @@ import com.icoo.ssgsag_android.data.model.signUp.UniversityListResponse
 import com.icoo.ssgsag_android.data.model.subscribe.SubscribeResponse
 import com.icoo.ssgsag_android.data.model.user.myBoard.BookmarkedResponse
 import com.icoo.ssgsag_android.data.model.user.myBoard.MyCommentResponse
+import com.icoo.ssgsag_android.data.model.user.myBoard.MyPost
+import com.icoo.ssgsag_android.data.model.user.myBoard.MyPostResponse
 import com.icoo.ssgsag_android.data.model.user.userInfo.UserInfoResponse
 import com.icoo.ssgsag_android.data.model.user.userNotice.UserNoticeResponse
 import io.reactivex.*
@@ -142,6 +144,13 @@ interface NetworkService {
         @Header("Authorization") token: String
     ) : Single<IntResponse>
 
+    // 내 게시글 조회
+    @GET("/user/myContent")
+    fun getMyPost(
+        @Header("Authorization") token: String,
+        @Query("curPage") curPage: Int,
+        @Query("pageSize") pageSize: Int
+    ): Single<MyPostResponse>
     // 내 댓글 조회
     @GET("/user/myComment")
     fun getMyComment(

@@ -3,8 +3,8 @@
         xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
-                name="postInfo"
-                type="com.icoo.ssgsag_android.data.model.community.board.PostInfo" />
+                name="myPost"
+                type="com.icoo.ssgsag_android.data.model.user.myBoard.MyPost" />
     </data>
 <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -24,6 +24,8 @@
                 tools:src="@drawable/ic_board_counsel_grey"
                 android:layout_marginLeft="24dp"
                 android:layout_gravity="center_vertical"
+                myPostCategory1="@{myPost.category1}"
+                myPostCategory2="@{myPost.category2}"
                 />
         <LinearLayout
                 android:layout_width="wrap_content"
@@ -42,23 +44,9 @@
                         android:textSize="10dp"
                         android:fontFamily="@font/noto_sans_kr_medium"
                         android:textColor="@color/grey_1"
-                        tools:text="자유 수다톡" />
+                        myPostCategory1="@{myPost.category1}"
+                        myPostCategory2="@{myPost.category2}"/>
 
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="10dp"
-                        android:fontFamily="@font/noto_sans_kr_medium"
-                        android:textColor="@color/grey_1"
-                        tools:text=" | " />
-
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="10dp"
-                        android:fontFamily="@font/noto_sans_kr_medium"
-                        android:textColor="@color/grey_1"
-                        tools:text="취업/진로" />
             </LinearLayout>
 
             <TextView
@@ -69,6 +57,7 @@
                     android:fontFamily="@font/noto_sans_kr_bold"
                     android:layout_marginTop="6dp"
                     tools:text="오늘 입학 후 첫 등교해보았습니다"
+                    android:text="@{myPost.title}"
                     />
 
             <TextView
@@ -79,6 +68,7 @@
                     android:fontFamily="@font/noto_sans_kr_regular"
                     android:layout_marginTop="6dp"
                     tools:text="5분 전"
+                    regDate="@{myPost.regDate}"
                     android:layout_marginBottom="14dp"
                     />
         </LinearLayout>
