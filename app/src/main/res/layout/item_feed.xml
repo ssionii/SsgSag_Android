@@ -44,6 +44,7 @@
                     android:textColor="@color/grey_1"
                     android:fontFamily="@font/noto_sans_kr_regular"
                     tools:text="카테고리"
+                    feedCategoryTitle="@{feed.categoryIdx}"
                     android:layout_marginTop="1dp"
                     />
 

@@ -108,6 +108,10 @@ fun setFeedCategoryTitle(view: TextView, categoryIdx: Int?) {
     when(categoryIdx){
         101 -> view.text = "대학생활"
         102 -> view.text = "취업뉴스"
+        103 -> view.text = "IT"
+        104 -> view.text = "마케팅"
+        105 -> view.text = "디자인"
+        106 -> view.text = "기타"
         else -> view.visibility = GONE
     }
 }
