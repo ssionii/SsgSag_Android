@@ -114,8 +114,6 @@ class  BoardCounselPostWriteActivity: BaseActivity<ActivityBoardCounselPostWrite
                 photoURI = this
             }
 
-//            viewDataBinding.actBoardPostWriteEtTitle.setText(title)
-//            viewDataBinding.actBoardPostWriteEtDescription.setText(content)
             (viewDataBinding.actBoardCounselPostWriteRvCategory.adapter as BaseRecyclerViewAdapter<CounselBoardCategory, *>).run{
 
                 replaceAll(categoryList)
@@ -218,6 +216,10 @@ class  BoardCounselPostWriteActivity: BaseActivity<ActivityBoardCounselPostWrite
 
                     viewModel.editBoardPost(jsonObject)
                 }
+            }
+
+            if(!uploadButtonClickable){
+                Toast.makeText(this, "카테고리와 내용을 확인해주세요!", Toast.LENGTH_SHORT).show()
             }
 
         }

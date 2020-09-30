@@ -60,6 +60,8 @@ class  BoardTalkPostWriteActivity : BaseActivity<ActivityBoardTalkPostWriteBindi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        viewDataBinding.vm = viewModel
+
         postIdx = intent.getIntExtra("postIdx", 0)
         postWriteType = intent.getIntExtra("postWriteType", PostWriteType.WRITE)
 
@@ -84,8 +86,9 @@ class  BoardTalkPostWriteActivity : BaseActivity<ActivityBoardTalkPostWriteBindi
             title = it.community.title
             content = it.community.content
 
-            viewDataBinding.actBoardPostWriteEtTitle.setText(title)
-            viewDataBinding.actBoardPostWriteEtDescription.setText(content)
+            it.community.photoUrlList?.apply{
+                photoURI = this
+            }
 
             onDataCheck()
         })
@@ -137,6 +140,10 @@ class  BoardTalkPostWriteActivity : BaseActivity<ActivityBoardTalkPostWriteBindi
 
                     viewModel.editBoardPost(jsonObject)
                 }
+            }
+
+            if(!uploadButtonClickable){
+                Toast.makeText(this, "카테고리와 내용을 확인해주세요!", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -200,12 +207,10 @@ class  BoardTalkPostWriteActivity : BaseActivity<ActivityBoardTalkPostWriteBindi
         if(title != "" && content != ""){
             viewDataBinding.actBoardPostWriteClUpload.run{
                 uploadButtonClickable = true
-                setBackgroundColor(this.resources.getColor(R.color.ssgsag))
             }
         }else{
             viewDataBinding.actBoardPostWriteClUpload.run{
                 uploadButtonClickable = false
-                setBackgroundColor(this.resources.getColor(R.color.grey_2))
             }
         }
     }
