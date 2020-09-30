@@ -193,6 +193,9 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
             goFeed()
         }
 
+        viewDataBinding.fragCommunityIvScrollToTop.setOnClickListener {
+            viewDataBinding.fragCommunityNsv.smoothScrollTo(0, 0)
+        }
     }
 
     private fun setPullToRefresh(){
