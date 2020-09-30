@@ -25,6 +25,7 @@ class BoardPostDetailViewModel(
     val commentList : LiveData<ArrayList<PostComment>> = _commentList
 
     var isReply = MutableLiveData<Boolean>()
+    var getPostDetailStatus = MutableLiveData<Int>()
     var deleteStatus = MutableLiveData<Int>()
     var bookmarkStatus = MutableLiveData<Int>()
     var likeStatus = MutableLiveData<Int>()
@@ -48,8 +49,11 @@ class BoardPostDetailViewModel(
                 Log.e("get post detail error", it.message)
             }
             .subscribe({
-                _postDetail.value = it
-                _commentList.value = it.communityCommentList
+                getPostDetailStatus.value = it.status
+                if(it.status == 200) {
+                    _postDetail.value = it.data
+                    _commentList.value = it.data.communityCommentList
+                }
 
             }) {
                 Log.e("get post detail error", it.message)

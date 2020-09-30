@@ -17,6 +17,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseActivity
 import com.icoo.ssgsag_android.base.BaseRecyclerViewAdapter
+import com.icoo.ssgsag_android.base.dialogFragment.OneButtonDialogFragment
 import com.icoo.ssgsag_android.data.model.community.board.BoardPostDetail
 import com.icoo.ssgsag_android.data.model.community.board.PostComment
 import com.icoo.ssgsag_android.databinding.ActivityBoardPostDetailBinding
@@ -306,6 +307,20 @@ class BoardPostDetailActivity : BaseActivity<ActivityBoardPostDetailBinding, Boa
                 } else {
                     viewDataBinding.actBoardPostDetailIvLike.setImageDrawable(resources.getDrawable(R.drawable.ic_like_big_outlined))
                 }
+            }
+        })
+
+        viewModel.getPostDetailStatus.observe(this, Observer {
+            if(it == 404){
+                val dialog = OneButtonDialogFragment.newInstance("삭제된 게시글입니다.", "확인")
+                dialog.setDialogDismissListener(object : OneButtonDialogFragment.OneButtonDialogDismissListener{
+                    override fun buttonClick() {
+                        finish()
+                    }
+
+                    override fun onDialogDismissed() {}
+                })
+                dialog.show(supportFragmentManager, null)
             }
         })
 

@@ -3,6 +3,7 @@ package com.icoo.ssgsag_android.data.model.community
 import com.google.gson.JsonObject
 import com.icoo.ssgsag_android.data.model.base.NullDataResponse
 import com.icoo.ssgsag_android.data.model.community.board.BoardPostDetail
+import com.icoo.ssgsag_android.data.model.community.board.BoardPostDetailResponse
 import com.icoo.ssgsag_android.data.model.community.board.BoardPostList
 import io.reactivex.Single
 import okhttp3.MultipartBody
@@ -15,7 +16,7 @@ interface CommunityRepository {
     fun writeBoardPost(body: JsonObject) : Single<NullDataResponse>
     fun editBoardPost(body: JsonObject) : Single<NullDataResponse>
 
-    fun getBoardPostDetail(communityIdx : Int) : Single<BoardPostDetail>
+    fun getBoardPostDetail(communityIdx : Int) : Single<BoardPostDetailResponse>
     fun refreshPostDetail(communityIdx: Int) : Single<BoardPostDetail>
     fun deleteBoardPost(communityIdx : Int) : Single<NullDataResponse>
     fun likeCommunityPost(communityIdx : Int) : Single<NullDataResponse>

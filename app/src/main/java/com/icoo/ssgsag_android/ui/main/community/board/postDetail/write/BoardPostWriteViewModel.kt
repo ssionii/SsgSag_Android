@@ -46,9 +46,11 @@ class BoardPostWriteViewModel(
                 Log.e("get post detail error", it.message)
             }
             .subscribe({
-                _postDetail.value = it
-                it.community.photoUrlList?.apply {
-                    photoUrl.value = this
+                if(it.status == 200) {
+                    _postDetail.value = it.data
+                    it.data.community.photoUrlList?.apply {
+                        photoUrl.value = this
+                    }
                 }
 
             }) {

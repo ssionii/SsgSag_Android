@@ -6,6 +6,7 @@ import com.icoo.ssgsag_android.data.local.pref.PreferenceManager
 import com.icoo.ssgsag_android.data.model.base.NullDataResponse
 import com.icoo.ssgsag_android.data.model.base.StringResponse
 import com.icoo.ssgsag_android.data.model.community.board.BoardPostDetail
+import com.icoo.ssgsag_android.data.model.community.board.BoardPostDetailResponse
 import com.icoo.ssgsag_android.data.model.community.board.BoardPostList
 import com.icoo.ssgsag_android.data.model.event.EventRepository
 import com.icoo.ssgsag_android.data.remote.api.NetworkService
@@ -30,9 +31,9 @@ class CommunityRepositoryImpl (val api: NetworkService, val pref: PreferenceMana
             = api.editBoardPost("application/json", pref.findPreference("TOKEN", ""), body)
         .map{ it }
 
-    override fun getBoardPostDetail(communityIdx: Int): Single<BoardPostDetail>
+    override fun getBoardPostDetail(communityIdx: Int): Single<BoardPostDetailResponse>
             = api.getPostDetail(pref.findPreference("TOKEN", ""), communityIdx)
-        .map { it.data }
+        .map { it }
 
     override fun refreshPostDetail(communityIdx: Int): Single<BoardPostDetail>
         = api.refreshPostDetail(pref.findPreference("TOKEN", ""), communityIdx ,1)
