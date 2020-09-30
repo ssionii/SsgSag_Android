@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
+import com.icoo.ssgsag_android.SsgSagApplication
 import com.icoo.ssgsag_android.base.BaseViewModel
 import com.icoo.ssgsag_android.data.model.community.CommunityRepository
 import com.icoo.ssgsag_android.data.model.community.board.BoardPostDetail
@@ -105,6 +106,9 @@ class BoardPostDetailViewModel(
                     if(it.status == 200){
                         var tempPostDetail = postDetail.value!!
                         tempPostDetail.save = false
+                        Toast.makeText(
+                            context,
+                            "[내 정보 > 스크랩한 글] 에 보관되었습니다.",Toast.LENGTH_SHORT).show()
 
                         _postDetail.value = tempPostDetail
                     }
