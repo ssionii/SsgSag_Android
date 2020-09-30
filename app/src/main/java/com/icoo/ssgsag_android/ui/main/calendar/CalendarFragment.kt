@@ -57,7 +57,7 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding, CalendarViewModel
         replaceFragment(calendarListFragment)
 
         setButton()
-        if(!SharedPreferenceController.getCalendarCoachMark(activity!!))
+        if(!SharedPreferenceController.getCalendarCoachMark(requireActivity()))
             setCoachMark()
 
     }
@@ -185,19 +185,19 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding, CalendarViewModel
 
         viewDataBinding.fragCalendarClCoachmarkContainer.visibility = VISIBLE
 
-        SharedPreferenceController.setCalendarCoachMark(activity!!, true)
+        SharedPreferenceController.setCalendarCoachMark(requireActivity(), true)
 
         val d = resources.displayMetrics.density
-        val widthPx = MainActivity.GetWidth.windowWidth / 8 * 3
+        val widthPx = MainActivity.GetWidth.windowWidth / 10 * 3
 
-        val rightDpValue = widthPx / d - 84
-        val bottomDpValue = 13
+        val leftDpValue = (widthPx / d) - 73
+        val bottomDpValue = 12
 
-        val rightMargin = (rightDpValue * d).toInt()
+        val leftMargin = (leftDpValue * d).toInt()
         val bottomMargin = (bottomDpValue * d).toInt()
 
         (viewDataBinding.fragCalendarClCoachmark.layoutParams as ConstraintLayout.LayoutParams).apply{
-            marginEnd = rightMargin
+            marginStart = leftMargin
             verticalMargin = bottomMargin
         }
 

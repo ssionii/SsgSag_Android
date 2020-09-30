@@ -6,11 +6,15 @@ import android.content.Intent
 import android.graphics.Point
 import android.os.Bundle
 import android.util.Log
+import android.view.MotionEvent
+import android.view.View
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.Observer
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseFragment
+import com.icoo.ssgsag_android.data.local.pref.SharedPreferenceController
 import com.icoo.ssgsag_android.data.model.feed.Feed
 import com.icoo.ssgsag_android.databinding.FragmentCommunityBinding
 import com.icoo.ssgsag_android.ui.main.MainActivity
@@ -22,6 +26,7 @@ import com.icoo.ssgsag_android.ui.main.community.review.CommunityReviewActivity
 import com.icoo.ssgsag_android.ui.main.review.club.ReviewDetailActivity
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import com.icoo.ssgsag_android.util.view.WrapContentLinearLayoutManager
+import org.jetbrains.anko.verticalMargin
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -59,14 +64,16 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
         setRv()
         setButton()
 
+        if(!SharedPreferenceController.getCalendarCoachMark(requireActivity()))
+            setCoachMark()
 
     }
 
-    override fun onResume() {
-        super.onResume()
-
-        viewModel.getCommunityMain()
-    }
+//    override fun onResume() {
+//        super.onResume()
+//
+//        viewModel.getCommunityMain()
+//    }
 
     private fun setSsgsagNewsVp(d : Float, width: Int){
 
@@ -185,6 +192,39 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
 
         viewDataBinding.fragCommunityLlFeedMore.setSafeOnClickListener {
             goFeed()
+        }
+
+    }
+
+    private fun setCoachMark(){
+
+        viewDataBinding.fragCommunityClCoachmarkContainer.visibility = View.VISIBLE
+
+        SharedPreferenceController.setCommunityCoachMark(requireActivity(), true)
+
+//        val d = resources.displayMetrics.density
+//        val widthPx = MainActivity.GetWidth.windowWidth / 10 * 5
+//
+//        val rightDpValue = widthPx / d - 97
+//        val bottomDpValue = 12
+//
+//        val leftMargin = (rightDpValue * d).toInt()
+//        val bottomMargin = (bottomDpValue * d).toInt()
+//
+//        (viewDataBinding.fragCommunityClCoachmarkContainer.layoutParams as ConstraintLayout.LayoutParams).apply{
+//            marginStart = leftMargin
+//            verticalMargin = bottomMargin
+//        }
+
+        viewDataBinding.fragCommunityClCoachmarkContainer.setOnTouchListener( object : View.OnTouchListener{
+            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+                return true
+            }
+        })
+
+        viewDataBinding.fragCommunityClCoachmark.setOnClickListener {
+            viewDataBinding.fragCommunityClCoachmarkContainer.visibility = View.GONE
+
         }
 
     }
