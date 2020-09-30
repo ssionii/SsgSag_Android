@@ -1,4 +1,5 @@
 package com.icoo.ssgsag_android.util.dataBinding
+import android.util.Log
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -161,7 +162,6 @@ fun setRegDate(view: TextView, date: String?){
     if(date != null){
         val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA)
         val current = Date()
-        val dateString = formatter.format(current)
 
         val date2 = formatter.parse(date)
         val formatter2 = SimpleDateFormat("yyyy년 M월 d일", Locale.KOREA)
@@ -170,13 +170,20 @@ fun setRegDate(view: TextView, date: String?){
 
         var text = ""
 
-        val monthGap = dateString.substring(5, 7).toInt() - date.substring(5, 7).toInt()
-        val dayGap = dateString.substring(8, 10).toInt() - date.substring(8, 10).toInt()
-        val hourGap = dateString.substring(11, 13).toInt() - date.substring(11, 13).toInt()
-        val minuteGap = dateString.substring(14, 16).toInt() - date.substring(14, 16).toInt()
+        val gap = current.time - date2.time
+
+        val minuteGap = (gap/1000/60).toInt()
+        val hourGap =  (gap / 1000 / 60 / 60).toInt()
+        val dayGap = (gap / 1000 / 60 / 60 / 24).toInt()
+        val monthGap = (gap / 1000 / 60 / 60 / 24 / 30).toInt()
+
+        Log.e("minuteGap", minuteGap.toString())
+        Log.e("dayGap", dayGap.toString())
+        Log.e("hourGap", hourGap.toString())
+        Log.e("monthGap", monthGap.toString())
 
 
-        if(monthGap == 0 && dayGap < 7){
+        if(dayGap < 7){
             if(dayGap == 0){
                 if(hourGap == 0){
                     if(minuteGap <= 0){ text = "지금" }
