@@ -46,6 +46,8 @@ class BoardPostWriteViewModel(
             .subscribeOn(schedulerProvider.io())
             .observeOn(schedulerProvider.mainThread())
             .subscribe({
+                if(it.status == 200)
+                    Toast.makeText(context, "업로드 완료!", Toast.LENGTH_SHORT).show()
                 writeStatus.value = it.status
             }, {
 
@@ -56,13 +58,14 @@ class BoardPostWriteViewModel(
 
     fun editBoardPost(jsonObject: JSONObject){
 
-        Log.e("수정!", "호로")
         val body = JsonParser().parse(jsonObject.toString()) as JsonObject
 
         addDisposable(repository.editBoardPost(body)
             .subscribeOn(schedulerProvider.io())
             .observeOn(schedulerProvider.mainThread())
             .subscribe({
+                if(it.status == 200)
+                    Toast.makeText(context, "수정 완료!", Toast.LENGTH_SHORT).show()
                 editStatus.value = it.status
             }, {
 
