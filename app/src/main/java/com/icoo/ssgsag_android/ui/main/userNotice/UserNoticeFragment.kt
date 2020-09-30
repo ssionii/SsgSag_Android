@@ -39,6 +39,7 @@ class UserNoticeFragment : BaseFragment<FragmentUserNoticeBinding,UserNoticeView
 
         setRv()
         refreshRv()
+        setPullToRefresh()
 
     }
 
@@ -111,6 +112,17 @@ class UserNoticeFragment : BaseFragment<FragmentUserNoticeBinding,UserNoticeView
         }
     }
 
+    private fun setPullToRefresh(){
+        viewDataBinding.fragUserNoticeSrl.run{
+            setOnRefreshListener {
+                (viewDataBinding.fragUserNoticeRv.adapter as BaseRecyclerViewAdapter<*,*>).clearAll()
+                curPage = 0
+                viewModel.getUserNotice(curPage, pageSize)
+                viewDataBinding.fragUserNoticeSrl.isRefreshing = false
+            }
+        }
+    }
+
     private fun refreshRv(){
         viewModel.noticeList.observe(viewLifecycleOwner, Observer {
             (viewDataBinding.fragUserNoticeRv.adapter as BaseRecyclerViewAdapter<UserNotice, *>).run{
@@ -119,6 +131,5 @@ class UserNoticeFragment : BaseFragment<FragmentUserNoticeBinding,UserNoticeView
             }
         })
     }
-
-
+    
 }
