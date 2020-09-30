@@ -52,6 +52,8 @@ class CommunityFeedActivity : BaseActivity<ActivityCommunityFeedBinding, FeedVie
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        viewDataBinding.vm = viewModel
+
         viewDataBinding.actCommunityFeedToolbar.toolbarBackTvTitle.text = "슥삭 추천정보"
 
         viewModel.getTodayFeeds(curPage, pageSize)

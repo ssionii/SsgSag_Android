@@ -57,41 +57,7 @@ class FeedViewModel(
         )
     }
 
-//    fun getCategoryFeeds(curPage: Int, categoryIndex : Int){
-//        addDisposable(repository.getCategoryFeeds(curPage, categoryIndex)
-//            .subscribeOn(schedulerProvider.io())
-//            .observeOn(schedulerProvider.mainThread())
-//            .doOnSubscribe { showProgress() }
-//            .doOnTerminate { hideProgress() }
-//            .subscribe({
-//                it.run {
-//                    _tmpFeeds.setValue(this) // 10개씩 쪼개서 가져온 데이터
-//                }
-//            }, {
-//            })
-//        )
-//    }
 
-//    fun getBookmarkedFeeds(curPage: Int){
-//        addDisposable(repository.getBookmarkedFeeds(curPage)
-//            .subscribeOn(schedulerProvider.io())
-//            .observeOn(schedulerProvider.mainThread())
-//            .doOnSubscribe { showProgress() }
-//            .doOnTerminate { hideProgress() }
-//            .subscribe({
-//                it.run {
-//                    _bookmarkedFeeds.setValue(this)
-//                    if(curPage == 0){
-//                        tmpBookmarkedFeeds.clear()
-//                    }
-//                        tmpBookmarkedFeeds.addAll(this)
-//                }
-//            }, {
-//
-//            })
-//        )
-//    }
-//
     fun getFeed(idx: Int){
         addDisposable(repository.getFeed(idx)
             .subscribeOn(schedulerProvider.io())
@@ -114,8 +80,6 @@ class FeedViewModel(
         addDisposable(repository.getFeedRefresh(idx)
             .subscribeOn(schedulerProvider.io())
             .observeOn(schedulerProvider.mainThread())
-            .doOnSubscribe { showProgress() }
-            .doOnTerminate { hideProgress() }
             .subscribe({
                 it.run {
                     _feed.value = this
@@ -135,8 +99,6 @@ class FeedViewModel(
             addDisposable(repository.bookmarkFeed(feedIdx)
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.mainThread())
-                .doOnSubscribe { showProgress() }
-                .doOnTerminate { hideProgress() }
                 .subscribe({
                     if(it == 200) {
                         Toast.makeText(SsgSagApplication.getGlobalApplicationContext(),
@@ -152,8 +114,6 @@ class FeedViewModel(
             addDisposable(repository.unbookmarkFeed(feedIdx)
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.mainThread())
-                .doOnSubscribe { showProgress() }
-                .doOnTerminate { hideProgress() }
                 .subscribe({
                     if(it == 200) {
 
@@ -173,8 +133,6 @@ class FeedViewModel(
             addDisposable(repository.bookmarkFeed(feedItem.feedIdx)
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.mainThread())
-                .doOnSubscribe { showProgress() }
-                .doOnTerminate { hideProgress() }
                 .subscribe({
                     if(it == 200) {
                         Toast.makeText(SsgSagApplication.getGlobalApplicationContext(),
@@ -196,8 +154,6 @@ class FeedViewModel(
             addDisposable(repository.unbookmarkFeed(feedItem.feedIdx)
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.mainThread())
-                .doOnSubscribe { showProgress() }
-                .doOnTerminate { hideProgress() }
                 .subscribe({
                     if(it == 200) {
                         refreshedFeed = feedItem
