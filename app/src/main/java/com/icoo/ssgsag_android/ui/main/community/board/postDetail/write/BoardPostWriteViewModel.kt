@@ -1,6 +1,8 @@
 package com.icoo.ssgsag_android.ui.main.community.board.postDetail.write
 
 import android.util.Log
+import android.view.View
+import android.view.View.GONE
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,18 +12,30 @@ import com.icoo.ssgsag_android.base.BaseViewModel
 import com.icoo.ssgsag_android.data.model.community.CommunityRepository
 import com.icoo.ssgsag_android.data.model.community.board.BoardPostDetail
 import com.icoo.ssgsag_android.util.scheduler.SchedulerProvider
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import org.json.JSONObject
+import java.io.File
 
 class BoardPostWriteViewModel(
     private val repository: CommunityRepository,
     private val schedulerProvider: SchedulerProvider
 ) : BaseViewModel(){
 
+    private val _isProgress = MutableLiveData<Int>()
+    val isProgress: LiveData<Int> get() = _isProgress
+
     private var _postDetail = MutableLiveData<BoardPostDetail>()
     val postDetail : LiveData<BoardPostDetail> = _postDetail
 
     var writeStatus = MutableLiveData<Int>()
     var editStatus = MutableLiveData<Int>()
+    var photoUrl = MutableLiveData<String>()
+
+    init {
+        _isProgress.value = GONE
+    }
 
     fun getPostDetail(postIdx : Int){
         addDisposable(repository.getBoardPostDetail(postIdx)
@@ -56,6 +70,26 @@ class BoardPostWriteViewModel(
 
     }
 
+    fun getPhotoUrl(imgUri : String){
+        val file  = File(imgUri)
+        val requestfile: RequestBody =
+            RequestBody.create(MediaType.parse("multipart/form-detailData"), file)
+        val data: MultipartBody.Part =
+            MultipartBody.Part.createFormData("photo", file.name, requestfile)
+
+        addDisposable(repository.getPhotoUrl(data)
+            .subscribeOn(schedulerProvider.io())
+            .observeOn(schedulerProvider.mainThread())
+            .doOnSubscribe { showProgress() }
+            .doOnTerminate { hideProgress() }
+            .subscribe({
+                photoUrl.value = it
+            }, {
+
+            })
+        )
+    }
+
     fun editBoardPost(jsonObject: JSONObject){
 
         val body = JsonParser().parse(jsonObject.toString()) as JsonObject
@@ -72,5 +106,13 @@ class BoardPostWriteViewModel(
             })
         )
 
+    }
+
+    private fun showProgress() {
+        _isProgress.value = View.VISIBLE
+    }
+
+    private fun hideProgress() {
+        _isProgress.value = View.GONE
     }
 }

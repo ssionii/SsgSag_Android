@@ -24,7 +24,7 @@ class ClubReviewRepositoryImpl (val api: NetworkService, val pref: PreferenceMan
         .map { it.data }
 
     override fun uploadPhoto(data: MultipartBody.Part): Single<StringResponse> = api
-        .postClubRgstrPhoto(pref.findPreference("TOKEN", ""), data)
+        .postPhoto(pref.findPreference("TOKEN", ""), data)
         .map{ it }
 
 

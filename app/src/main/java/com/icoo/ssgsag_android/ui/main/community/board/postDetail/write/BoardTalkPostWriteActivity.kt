@@ -164,6 +164,14 @@ class  BoardTalkPostWriteActivity : BaseActivity<ActivityBoardTalkPostWriteBindi
                 finish()
             }
         })
+
+        viewModel.photoUrl.observe(this, Observer {
+
+            viewDataBinding.actBoardPostWriteLlUploadPhoto.visibility = View.GONE
+            viewDataBinding.actBoardPostWriteClPhoto.visibility = View.VISIBLE
+
+            this.photoURI = it
+        })
     }
 
 
@@ -209,14 +217,7 @@ class  BoardTalkPostWriteActivity : BaseActivity<ActivityBoardTalkPostWriteBindi
                 val selectedImageUri: Uri = data.data
                 photoURI = getRealPathFromURI(selectedImageUri)
 
-                Glide.with(this)
-                    .load(selectedImageUri)
-                    .centerCrop()
-                    .error(R.drawable.img_default) //에러시 나올 이미지 적용
-                    .into(viewDataBinding.actBoardPostWriteIvPhoto)
-
-                viewDataBinding.actBoardPostWriteLlUploadPhoto.visibility = View.GONE
-                viewDataBinding.actBoardPostWriteClPhoto.visibility = View.VISIBLE
+                viewModel.getPhotoUrl(photoURI)
             }
         }
     }

@@ -75,6 +75,8 @@ class  BoardCounselPostWriteActivity: BaseActivity<ActivityBoardCounselPostWrite
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        viewDataBinding.vm = viewModel
+
         postIdx = intent.getIntExtra("postIdx", 0)
         postWriteType = intent.getIntExtra("postWriteType", PostWriteType.WRITE)
 
@@ -240,6 +242,14 @@ class  BoardCounselPostWriteActivity: BaseActivity<ActivityBoardCounselPostWrite
                 finish()
             }
         })
+
+        viewModel.photoUrl.observe(this, Observer {
+
+            viewDataBinding.actBoardPostWriteLlUploadPhoto.visibility = GONE
+            viewDataBinding.actBoardPostWriteClPhoto.visibility = VISIBLE
+
+            this.photoURI = it
+        })
     }
 
     private fun EditText.onChange(cb: (String) -> Unit) {
@@ -282,14 +292,7 @@ class  BoardCounselPostWriteActivity: BaseActivity<ActivityBoardCounselPostWrite
                 val selectedImageUri: Uri = data.data
                 photoURI = getRealPathFromURI(selectedImageUri)
 
-                Glide.with(this)
-                    .load(selectedImageUri)
-                    .centerCrop()
-                    .error(R.drawable.img_default) //에러시 나올 이미지 적용
-                    .into(viewDataBinding.actBoardPostWriteIvPhoto)
-
-                viewDataBinding.actBoardPostWriteLlUploadPhoto.visibility = GONE
-                viewDataBinding.actBoardPostWriteClPhoto.visibility = VISIBLE
+                viewModel.getPhotoUrl(photoURI)
             }
         }
     }

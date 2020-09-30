@@ -5,6 +5,7 @@ import com.icoo.ssgsag_android.data.model.base.NullDataResponse
 import com.icoo.ssgsag_android.data.model.community.board.BoardPostDetail
 import com.icoo.ssgsag_android.data.model.community.board.BoardPostList
 import io.reactivex.Single
+import okhttp3.MultipartBody
 
 interface CommunityRepository {
 
@@ -31,4 +32,6 @@ interface CommunityRepository {
     fun deletePostReply(ccommentIdx : Int) : Single<NullDataResponse>
     fun likeCommunityReply(ccommunityIdx : Int) : Single<NullDataResponse>
     fun unlikeCommunityReply(ccommunityIdx : Int) : Single<NullDataResponse>
+
+    fun getPhotoUrl(data: MultipartBody.Part) : Single<String>
 }

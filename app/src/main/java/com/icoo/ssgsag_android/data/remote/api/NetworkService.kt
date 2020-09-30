@@ -418,6 +418,13 @@ interface NetworkService {
         @Part photo: MultipartBody.Part?
     ): Single<StringResponse>
 
+    // 사진 등록
+    @Multipart
+    @POST("/upload/photo")
+    fun postPhoto(
+        @Header("Authorization") token: String,
+        @Part photo: MultipartBody.Part?
+    ): Single<StringResponse>
 
     // region
     // 동아리 등록
@@ -491,14 +498,6 @@ interface NetworkService {
         @Query("keyword") keyword: String,
         @Query("curPage") curPage: Int
     ): Single<ClubsResponse>
-
-    // 동아리 사진 등록
-    @Multipart
-    @POST("/upload/photo")
-    fun postClubRgstrPhoto(
-        @Header("Authorization") token: String,
-        @Part photo: MultipartBody.Part?
-    ): Single<StringResponse>
 
     // 동아리 후기 등록 여부 조회
     @GET("/club/{clubIdx}/post/already")
