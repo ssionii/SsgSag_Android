@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.Toast
 import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -269,6 +270,8 @@ class BoardPostDetailActivity : BaseActivity<ActivityBoardPostDetailBinding, Boa
 
                     viewDataBinding.actBoardPostDetailEtComment.text.clear()
                 }
+            }else{
+                Toast.makeText(this, "내용을 입력해주세요", Toast.LENGTH_SHORT).show()
             }
         }
 
