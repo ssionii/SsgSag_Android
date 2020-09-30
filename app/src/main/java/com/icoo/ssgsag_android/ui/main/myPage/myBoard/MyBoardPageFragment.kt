@@ -44,6 +44,7 @@ class MyBoardPageFragment : BaseFragment<FragmentMyBoardPageBinding, MyPageViewM
 
         setRv()
         refreshRv()
+        setPullToRefresh()
 
     }
 
@@ -245,7 +246,6 @@ class MyBoardPageFragment : BaseFragment<FragmentMyBoardPageBinding, MyPageViewM
 
         viewModel.myPostList.observe(viewLifecycleOwner, Observer {
             (viewDataBinding.actMyBoardPageRv.adapter as BaseRecyclerViewAdapter<MyPost, *>).run{
-
                 addItem(it)
                 notifyDataSetChanged()
             }
@@ -253,7 +253,6 @@ class MyBoardPageFragment : BaseFragment<FragmentMyBoardPageBinding, MyPageViewM
 
         viewModel.myCommentList.observe(viewLifecycleOwner, Observer {
             (viewDataBinding.actMyBoardPageRv.adapter as BaseRecyclerViewAdapter<MyComment, *>).run{
-
                 addItem(it)
                 notifyDataSetChanged()
             }
@@ -272,6 +271,23 @@ class MyBoardPageFragment : BaseFragment<FragmentMyBoardPageBinding, MyPageViewM
                 notifyDataSetChanged()
             }
         })
+    }
+
+    private fun setPullToRefresh(){
+        viewDataBinding.fragMyBoardPageSrl.run{
+            setOnRefreshListener {
+                (viewDataBinding.actMyBoardPageRv.adapter as BaseRecyclerViewAdapter<*, *>).clearAll()
+                curPage = 0
+
+                when(myBoardType){
+                    MyBoardType.MY_POST -> viewModel.getMyPost(curPage, pageSize)
+                    MyBoardType.MY_COMMENT -> viewModel.getMyComment(curPage, pageSize)
+                    MyBoardType.BOOKMARK_POST -> viewModel.getBookmarkedPost(curPage, pageSize)
+                    MyBoardType.BOOKMARK_NEWS -> viewModel.getBookmarkedFeed(curPage)
+                }
+                viewDataBinding.fragMyBoardPageSrl.isRefreshing = false
+            }
+        }
     }
 
     companion object {
