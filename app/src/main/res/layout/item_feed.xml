@@ -82,7 +82,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/noto_sans_kr_regular"
-                        android:text=" | "
+                        android:text="﹒"
                         android:textSize="10dp"
                         android:textColor="@color/grey_2"
                         android:layout_gravity="center_vertical"/>
@@ -91,7 +91,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/noto_sans_kr_regular"
-                        regDateByDot="@{feed.feedRegDate}"
+                        regDate="@{feed.feedRegDate}"
                         tools:text="2020.09.25"
                         android:textSize="10dp"
                         android:textColor="@color/grey_2"

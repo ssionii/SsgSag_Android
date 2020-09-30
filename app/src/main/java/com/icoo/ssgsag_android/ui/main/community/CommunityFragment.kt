@@ -12,13 +12,17 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.Observer
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseFragment
+import com.icoo.ssgsag_android.base.BaseRecyclerViewAdapter
 import com.icoo.ssgsag_android.data.local.pref.SharedPreferenceController
+import com.icoo.ssgsag_android.data.model.community.board.BoardPostDetail
 import com.icoo.ssgsag_android.data.model.feed.Feed
 import com.icoo.ssgsag_android.databinding.FragmentCommunityBinding
 import com.icoo.ssgsag_android.ui.main.MainActivity
 import com.icoo.ssgsag_android.ui.main.community.board.CommunityBoardActivity
+import com.icoo.ssgsag_android.ui.main.community.board.CommunityBoardType
 import com.icoo.ssgsag_android.ui.main.community.board.postDetail.BoardPostDetailActivity
 import com.icoo.ssgsag_android.ui.main.community.feed.CommunityFeedActivity
 import com.icoo.ssgsag_android.ui.main.community.feed.FeedWebActivity
@@ -63,6 +67,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
         setSsgsagNewsVp(d, width)
         setRv()
         setButton()
+        setPullToRefresh()
 
         if(!SharedPreferenceController.getCalendarCoachMark(requireActivity()))
             setCoachMark()
@@ -194,6 +199,15 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding, CommunityViewMo
             goFeed()
         }
 
+    }
+
+    private fun setPullToRefresh(){
+        viewDataBinding.fragCommunitySrl.run{
+            setOnRefreshListener {
+                viewModel.getCommunityMain()
+                viewDataBinding.fragCommunitySrl.isRefreshing = false
+            }
+        }
     }
 
     private fun setCoachMark(){

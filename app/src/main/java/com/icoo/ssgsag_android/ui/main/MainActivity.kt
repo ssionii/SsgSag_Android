@@ -144,7 +144,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, SsgSagViewModel>() {
                 override fun onTabSelected(tab: TabLayout.Tab?) {
                     when(tab?.position){
                         3 -> {
-                            viewModel.getUserNoticeCount()
                             viewDataBinding.actMainClNoticeCount.visibility = GONE
                         }
                     }
