@@ -214,6 +214,10 @@ class CommunityFeedActivity : BaseActivity<ActivityCommunityFeedBinding, FeedVie
             finish()
         }
 
+        viewDataBinding.actCommunityFeedIvScrollToTop.setOnClickListener {
+            viewDataBinding.actCommunityNsv.smoothScrollTo(0, 0)
+        }
+
     }
 
 
