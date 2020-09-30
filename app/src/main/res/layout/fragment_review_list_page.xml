@@ -91,7 +91,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                clVisibilityByBool="@{vm.isEmpty()}"
+                clVisibilityByIntR="@{vm.reviewList.size()}"
                 app:layout_constraintTop_toBottomOf="@+id/frag_review_list_page_cl_club_tab"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent">
