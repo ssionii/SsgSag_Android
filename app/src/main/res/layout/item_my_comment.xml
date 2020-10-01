@@ -30,7 +30,7 @@
                 <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_board_counsel_grey" />
+                        myCommentCategory="@{myComment.community.category}"/>
 
                 <LinearLayout
                         android:layout_width="wrap_content"
@@ -45,7 +45,7 @@
                             android:fontFamily="@font/noto_sans_kr_medium"
                             android:textColor="@color/grey_1"
                             android:textSize="10dp"
-                            myCommentType="@{myComment.community.category}"
+                            myCommentCategory="@{myComment.community.category}"
                             tools:text="고민 상담톡 | 취업/진로" />
 
                     <TextView

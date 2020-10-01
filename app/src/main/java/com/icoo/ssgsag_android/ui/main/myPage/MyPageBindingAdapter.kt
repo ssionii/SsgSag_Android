@@ -41,8 +41,8 @@ fun setMyPageIcon(view : ImageView, category : String){
 }
 
 
-@BindingAdapter("myCommentType")
-fun setMyCommentType(view : TextView, category : String){
+@BindingAdapter("myCommentCategory")
+fun seyMyCommentCategory(view : TextView, category : String){
     when(category){
         "FREE" ->{
             view.text = "자유 수다톡"
@@ -58,6 +58,17 @@ fun setMyCommentType(view : TextView, category : String){
         }
     }
 }
+
+
+@BindingAdapter("myCommentCategory")
+fun seyMyCommentCategory(view : ImageView, category : String){
+    when(category){
+        "FREE" -> view.setImageDrawable(view.resources.getDrawable(R.drawable.ic_board_free_grey))
+        else -> view.setImageDrawable(view.resources.getDrawable(R.drawable.ic_board_counsel_grey))
+
+    }
+}
+
 
 
 @BindingAdapter("myPostCategory1", "myPostCategory2")
