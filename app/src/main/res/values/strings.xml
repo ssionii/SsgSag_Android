@@ -422,6 +422,9 @@
     <string name="kakao_scheme">kakaoc04255800313c33eff056de904ed9023</string>
     <string name="kakao_ads_client_id">DAN-1hr8ofguvdyeb</string>
 
+    <string name="default_notification_channel_name">슥삭</string>
+    <string name="default_notification_channel_id">ssgsag-6d216</string>
+
     <string name="adjust_app_token">j5uza6tddv5s</string>
 
 </resources>
