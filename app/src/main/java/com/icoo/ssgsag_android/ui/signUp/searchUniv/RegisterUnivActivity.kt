@@ -12,8 +12,6 @@ import androidx.core.os.bundleOf
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseActivity
 import com.icoo.ssgsag_android.databinding.ActivityRegisterUnivBinding
-import com.icoo.ssgsag_android.databinding.ActivitySearchUnivBinding
-import com.icoo.ssgsag_android.ui.main.feed.context
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import org.jetbrains.anko.backgroundColor
 import org.koin.androidx.viewmodel.ext.android.viewModel

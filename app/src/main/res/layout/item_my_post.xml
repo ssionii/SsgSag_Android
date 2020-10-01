@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+                name="myPost"
+                type="com.icoo.ssgsag_android.data.model.user.myBoard.MyPost" />
+    </data>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+        <ImageView
+                android:id="@+id/item_my_post_iv_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:src="@drawable/ic_board_counsel_grey"
+                android:layout_marginLeft="24dp"
+                android:layout_gravity="center_vertical"
+                myPostCategory1="@{myPost.category1}"
+                myPostCategory2="@{myPost.category2}"
+                />
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp">
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="10dp"
+                        android:fontFamily="@font/noto_sans_kr_medium"
+                        android:textColor="@color/grey_1"
+                        myPostCategory1="@{myPost.category1}"
+                        myPostCategory2="@{myPost.category2}"/>
+
+            </LinearLayout>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14dp"
+                    android:textColor="@color/black_1"
+                    android:fontFamily="@font/noto_sans_kr_bold"
+                    android:layout_marginTop="6dp"
+                    tools:text="오늘 입학 후 첫 등교해보았습니다"
+                    android:text="@{myPost.title}"
+                    />
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="10dp"
+                    android:textColor="@color/grey_2"
+                    android:fontFamily="@font/noto_sans_kr_regular"
+                    android:layout_marginTop="6dp"
+                    tools:text="5분 전"
+                    regDate="@{myPost.regDate}"
+                    android:layout_marginBottom="14dp"
+                    />
+        </LinearLayout>
+
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_arrow_next"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="24dp"/>
+    </LinearLayout>
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/grey_4"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

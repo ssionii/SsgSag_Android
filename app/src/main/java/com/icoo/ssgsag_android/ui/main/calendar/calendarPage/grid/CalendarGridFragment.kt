@@ -27,13 +27,14 @@ class CalendarGridFragment :BaseFragment<FragmentCalendarGridBinding, CalendarVi
         setTab()
     }
 
+
     private fun setCalendarViewPager() {
 
         calendarPagerAdapter = CalendarPagerAdapter(childFragmentManager).apply {
             setNumOfMonth(COUNT_PAGE)
         }
 
-        viewModel.setHeaderDate(calendarPagerAdapter.getMonthDisplayed(position))
+        setHeaderDate()
 
         viewDataBinding.fragCalGridVpPage.run {
             adapter = calendarPagerAdapter
@@ -62,6 +63,10 @@ class CalendarGridFragment :BaseFragment<FragmentCalendarGridBinding, CalendarVi
                 }
             })
         }
+    }
+
+    fun setHeaderDate(){
+        viewModel.setHeaderDate(calendarPagerAdapter.getMonthDisplayed(position))
     }
 
     private fun setTab(){

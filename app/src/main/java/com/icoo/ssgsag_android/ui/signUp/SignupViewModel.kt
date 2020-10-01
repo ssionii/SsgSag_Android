@@ -40,9 +40,6 @@ class SignupViewModel(
     val activityToStart: LiveData<Pair<KClass<*>, Bundle?>> get() = _activityToStart
 
 
-
-    private val context = SsgSagApplication.getGlobalApplicationContext()
-
     fun signup(body: JsonObject){
 
         addDisposable(signupRepository.signup(body)

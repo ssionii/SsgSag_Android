@@ -55,6 +55,7 @@ import java.io.InputStreamReader
 import java.lang.IndexOutOfBoundsException
 import java.lang.ref.WeakReference
 import java.net.URL
+import java.net.URLEncoder
 import java.util.*
 import java.util.regex.Pattern
 import kotlin.collections.ArrayList
@@ -404,7 +405,7 @@ class AccountMgtActivity : AppCompatActivity() {
         act_account_mgt_rl_loading.visibility = View.VISIBLE
         val file: File = File(mImageURI)
         val requestfile: RequestBody = RequestBody.create(MediaType.parse("multipart/form-detailData"), file)
-        val data: MultipartBody.Part = MultipartBody.Part.createFormData("profile", file.name, requestfile)
+        val data: MultipartBody.Part = MultipartBody.Part.createFormData("profile", URLEncoder.encode(file.name, "UTF-8"), requestfile)
 
         val postPhotoResponse =
             networkService.postPhotoResponse(SharedPreferenceController.getAuthorization(this), data)
@@ -420,6 +421,7 @@ class AccountMgtActivity : AppCompatActivity() {
                     val intent: Intent = Intent()
                     intent.putExtra("result", "0")
                     setResult(Activity.RESULT_OK, intent)
+                    setResult(Activity.RESULT_OK)
                     finish()
                 }
                 act_account_mgt_rl_loading.visibility = View.GONE

@@ -13,7 +13,6 @@ import com.bumptech.glide.request.RequestOptions
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseRecyclerViewAdapter
 import com.icoo.ssgsag_android.data.model.poster.posterDetail.PosterDetail
-import com.icoo.ssgsag_android.ui.main.feed.context
 import com.icoo.ssgsag_android.util.extensionFunction.getItemBase
 import org.jetbrains.anko.textColor
 import org.w3c.dom.Text

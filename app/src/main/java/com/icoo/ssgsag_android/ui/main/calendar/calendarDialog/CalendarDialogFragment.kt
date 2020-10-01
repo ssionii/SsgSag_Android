@@ -2,11 +2,10 @@ package com.icoo.ssgsag_android.ui.main.calendar.calendarDialog
 
 import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Log
 import android.view.KeyEvent
 import androidx.viewpager.widget.ViewPager
 import com.icoo.ssgsag_android.R
-import com.icoo.ssgsag_android.base.BaseDialogFragment
+import com.icoo.ssgsag_android.base.dialogFragment.BaseDialogFragment
 import com.icoo.ssgsag_android.databinding.DialogFragmentCalendarBinding
 import com.icoo.ssgsag_android.ui.main.calendar.calendarDialog.calendarDialogPage.CalendarDialogPageViewModel
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener

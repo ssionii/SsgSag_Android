@@ -50,9 +50,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.main.subscribe.SubscribeActivity"/>
-        <activity android:name=".ui.main.feed.FeedWebActivity"
+        <activity android:name=".ui.main.community.feed.FeedWebActivity"
                 android:usesCleartextTraffic="true"/>
-        <activity android:name=".ui.main.myPage.MyPageActivity"/>
+        <activity android:name=".ui.main.myPage.myBoard.MyBoardActivity"/>
         <activity android:name=".ui.main.myPage.contact.ContactActivity"/>
         <activity android:name=".ui.main.myPage.pushAlarm.PushAlarmActivity"/>
         <activity android:name=".ui.main.myPage.serviceInfo.license.LicenseActivity"/>
@@ -85,7 +85,7 @@
                 android:windowSoftInputMode="adjustResize">
         </activity>
         <activity android:name=".ui.main.ssgSag.filter.SsgSagFilterActivity"/>
-        <activity android:name=".ui.main.feed.bookmark.BookmarkedFeedActivity"/>
+        <activity android:name=".ui.main.community.feed.BookmarkedFeedActivity"/>
         <activity android:name=".ui.main.review.club.ReviewDetailActivity"/>
         <activity android:name=".ui.main.review.club.reviews.MoreReviewActivity"/>
         <activity android:name=".ui.main.review.club.registration.ClubManagerCheckActivity"/>
@@ -93,19 +93,18 @@
                 android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".ui.main.review.club.registration.ClubRgstrActivity"
                 android:windowSoftInputMode="adjustResize"/>
-        <activity android:name=".ui.main.review.HowWriteReviewActivity"/>
+        <activity android:name=".ui.main.community.review.HowWriteReviewActivity"/>
         <activity android:name=".ui.main.review.club.write.ReviewWriteActivity"
                 android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".ui.main.review.club.registration.NonRgstrClubActivity"/>
-        <activity android:name=".ui.main.review.ReviewDoneActivity"/>
-        <activity android:name=".ui.main.review.photoViewPager.PhotoViewPagerActivity"/>
+        <activity android:name=".ui.main.community.review.ReviewDoneActivity"/>
+        <activity android:name=".ui.main.community.review.photoViewPager.PhotoViewPagerActivity"/>
         <activity android:name=".ui.main.review.club.reviews.blogReview.RgstrBlogReviewActivity"
                 android:windowSoftInputMode="adjustResize"/>
-        <activity android:name=".ui.main.review.event.ReviewEventActivity"
+        <activity android:name=".ui.main.community.review.event.ReviewEventActivity"
                 android:windowSoftInputMode="adjustResize">
         </activity>
         <activity android:name=".ui.main.allPosters.category.AllCategoryActivity"/>
-        <activity android:name=".ui.main.feed.category.FeedCategoryActivity"/>
 
         <activity android:name=".ui.main.myPage.myReview.MyReviewActivity"/>
         <activity android:name=".ui.main.myPage.myReview.MyReviewDetailActivity"/>
@@ -116,6 +115,16 @@
 
         <activity android:name=".ui.main.calendar.calendarPage.list.CalendarListDeleteActivity"/>
         <activity android:name=".ui.main.block.MainBlockActivity"/>
+
+        <activity android:name=".ui.main.community.board.CommunityBoardActivity" />
+        <activity android:name=".ui.main.community.board.postDetail.BoardPostDetailActivity"
+                android:windowSoftInputMode="adjustResize"/>
+        <activity android:name=".ui.main.community.board.postDetail.write.BoardCounselPostWriteActivity"
+                android:windowSoftInputMode="adjustResize"/>
+        <activity android:name=".ui.main.community.board.postDetail.write.BoardTalkPostWriteActivity"
+                android:windowSoftInputMode="adjustResize"/>
+        <activity android:name=".ui.main.community.review.CommunityReviewActivity"/>
+        <activity android:name=".ui.main.community.feed.CommunityFeedActivity"/>
 
 
 
@@ -130,10 +139,6 @@
         <meta-data
                 android:name="com.kakao.sdk.AppKey"
                 android:value="@string/kakao_app_key"/>
-        <meta-data android:name="AdBrixRmAppKey"
-                   android:value="@string/adbrix_app_key"/>
-        <meta-data android:name="AdBrixRmSecretKey"
-                   android:value="@string/adbrix_secret_key"/>
 <!--        <meta-data-->
 <!--                android:name="com.google.android.gms.ads.APPLICATION_ID"-->
 <!--                android:value="ca-app-pub-6888357719311971~5202997355"/>-->

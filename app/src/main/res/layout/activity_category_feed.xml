@@ -5,7 +5,7 @@
     <data>
         <variable
                 name="vm"
-                type="com.icoo.ssgsag_android.ui.main.feed.FeedViewModel" />
+                type="com.icoo.ssgsag_android.ui.main.community.feed.FeedViewModel" />
     </data>
 
     <LinearLayout
@@ -34,7 +34,6 @@
                     android:textColor="#444444"
                     android:fontFamily="@font/noto_sans_kr_bold"
                     android:layout_centerInParent="true"
-                    feedsTitle="@{vm.category}"
                     tool:text="마케팅"/>
         </RelativeLayout>
 

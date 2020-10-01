@@ -14,7 +14,6 @@ import com.icoo.ssgsag_android.data.local.pref.SharedPreferenceController
 import com.icoo.ssgsag_android.data.model.login.LoginRepository
 import com.icoo.ssgsag_android.ui.login.LoginActivity
 import com.icoo.ssgsag_android.ui.main.MainActivity
-import com.icoo.ssgsag_android.ui.main.feed.context
 import com.icoo.ssgsag_android.ui.signUp.SignupActivity
 import com.icoo.ssgsag_android.util.scheduler.SchedulerProvider
 import io.reactivex.Observable

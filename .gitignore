@@ -9,7 +9,7 @@
 /build
 /captures
 .externalNativeBuild
-
+*.pem
 
 # Created by https://www.gitignore.io/api/java,kotlin,androidstudio
 # Edit at https://www.gitignore.io/?templates=java,kotlin,androidstudio
@@ -74,6 +74,9 @@ obj/
 *.iml
 *.iws
 /out/
+
+# Keystore files
+*.jks
 
 # User-specific configurations
 .idea/caches/

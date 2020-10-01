@@ -15,12 +15,14 @@ import com.icoo.ssgsag_android.base.BaseFragment
 import com.icoo.ssgsag_android.data.model.schedule.Schedule
 import com.icoo.ssgsag_android.databinding.FragmentCalendarListPageBinding
 import com.icoo.ssgsag_android.ui.main.MainActivity
+import com.icoo.ssgsag_android.ui.main.calendar.CalendarViewModel
 import com.icoo.ssgsag_android.ui.main.calendar.calendarDetail.CalendarDetailActivity
 import com.icoo.ssgsag_android.ui.main.calendar.posterBookmark.PosterBookmarkBottomSheet
 import com.icoo.ssgsag_android.util.DateUtil
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import com.icoo.ssgsag_android.util.view.WrapContentLinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -32,9 +34,14 @@ class CalendarListPageFragment : BaseFragment<FragmentCalendarListPageBinding, C
         get() = R.layout.fragment_calendar_list_page
     override val viewModel: CalendarListViewModel by viewModel()
 
+    val calendarViewModel: CalendarViewModel by viewModel()
     var calendarListPageRecyclerViewAdapter = CalendarListPageRecyclerViewAdapter()
 
     private var dataList: ArrayList<Schedule> = arrayListOf()
+
+    private var calendarHeaderDate = ""
+    val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA)
+    val formatter2 = SimpleDateFormat("yyyy년 M월", Locale.KOREA)
 
     private var isFavorite = false
     private var filterClick = false
@@ -87,8 +94,14 @@ class CalendarListPageFragment : BaseFragment<FragmentCalendarListPageBinding, C
                             (layoutManager as WrapContentLinearLayoutManager).findLastVisibleItemPosition()
 
                         calendarListPageRecyclerViewAdapter.apply {
-
                             if (itemList.size < curPosition) curPosition = position
+
+                            val date = formatter.parse(itemList[position].posterEndDate)
+                            val dateString = formatter2.format(date)
+
+                            if(calendarHeaderDate != dateString){
+                                calendarViewModel.setHeaderDate(dateString)
+                            }
                         }
 
                     }

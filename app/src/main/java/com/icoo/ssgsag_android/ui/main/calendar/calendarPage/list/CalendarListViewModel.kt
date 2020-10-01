@@ -10,7 +10,6 @@ import com.icoo.ssgsag_android.data.model.poster.PosterRepository
 import com.icoo.ssgsag_android.data.model.schedule.Schedule
 import com.icoo.ssgsag_android.data.model.schedule.ScheduleRepository
 import com.icoo.ssgsag_android.ui.main.calendar.calendarDetail.CalendarDetailActivity
-import com.icoo.ssgsag_android.ui.main.feed.context
 import com.icoo.ssgsag_android.util.scheduler.SchedulerProvider
 import io.reactivex.Single
 import java.util.*

@@ -7,24 +7,33 @@ import android.os.Bundle
 import android.view.Display
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.ViewGroup
 import android.widget.RelativeLayout
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
-import com.crashlytics.android.Crashlytics
+import com.bumptech.glide.request.RequestOptions
+import com.google.android.material.tabs.TabLayout
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.base.BaseActivity
 import com.icoo.ssgsag_android.base.BasePagerAdapter
 import com.icoo.ssgsag_android.data.local.pref.PreferenceManager
 import com.icoo.ssgsag_android.data.local.pref.SharedPreferenceController
 import com.icoo.ssgsag_android.databinding.ActivityMainBinding
+import com.icoo.ssgsag_android.databinding.ItemCalendarListBinding
+import com.icoo.ssgsag_android.databinding.NavigationMainBinding
 import com.icoo.ssgsag_android.ui.main.MainActivity.mainActivityContext.mainContext
 import com.icoo.ssgsag_android.ui.main.calendar.CalendarFragment
 import com.icoo.ssgsag_android.ui.main.calendar.calendarDetail.CalendarDetailActivity
 import com.icoo.ssgsag_android.ui.main.coachmark.FilterCoachmarkDialogFragment
-import com.icoo.ssgsag_android.ui.main.feed.FeedFragment
-import com.icoo.ssgsag_android.ui.main.review.main.ReviewMainFragment
+import com.icoo.ssgsag_android.ui.main.community.CommunityFragment
+import com.icoo.ssgsag_android.ui.main.myPage.MyPageFragment
 import com.icoo.ssgsag_android.ui.main.ssgSag.SsgSagViewModel
+import com.icoo.ssgsag_android.ui.main.userNotice.UserNoticeFragment
 import com.icoo.ssgsag_android.util.listener.BackPressHandler
-import io.fabric.sdk.android.Fabric
+import org.jetbrains.anko.image
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -64,9 +73,16 @@ class MainActivity : BaseActivity<ActivityMainBinding, SsgSagViewModel>() {
         //많아가지고 일단 이렇게 했슴다... 점진적으로 다른 클래스에서 서버통신할때 토큰받아오는거 TOKEN으로 수정합시당
         PreferenceManager(this).putPreference("TOKEN", SharedPreferenceController.getAuthorization(this))
 
-        setViewPager()
-        setTabLayout()
+        viewModel.getUserInfo()
         getWindowWidth()
+        setViewPager()
+
+        viewModel.userInfo.observe(this, Observer {
+            setTabLayout(it.userProfileUrl)
+        })
+
+        setBottomNavigation()
+
 
         if(intent.getStringExtra("param")!=null)
             goToCalendarDetail(intent.getStringExtra("param"))
@@ -87,35 +103,67 @@ class MainActivity : BaseActivity<ActivityMainBinding, SsgSagViewModel>() {
         //ViewPager
         viewDataBinding.actMainVp.run {
             adapter = BasePagerAdapter(supportFragmentManager).apply {
-                addFragment(FeedFragment())
                 addFragment(MainFragment())
                 addFragment(CalendarFragment())
-                addFragment(ReviewMainFragment())
+                addFragment(CommunityFragment())
+                addFragment(UserNoticeFragment())
+                addFragment(MyPageFragment())
                 isSaveEnabled = false
             }
-            currentItem = 1
-            offscreenPageLimit = 3
+            currentItem = 0
+            offscreenPageLimit = 4
         }
     }
 
-    private fun setTabLayout() {
-        //TabLayout
-        val bottomNavigationLayout: View =
-            LayoutInflater.from(this).inflate(R.layout.navigation_main, null)
+    private fun setTabLayout(profileUrl : String) {
+
+        val viewGroup : ViewGroup = viewDataBinding.root as ViewGroup
+
+        val naviBinding = DataBindingUtil.inflate<NavigationMainBinding>(LayoutInflater.from(this), R.layout.navigation_main, viewGroup, false)
+
+        Glide.with(this)
+            .load(profileUrl)
+            .error(R.drawable.img_default_profile)
+            .apply(RequestOptions().circleCrop())
+            .into(naviBinding.naviMainIvMypage)
 
         viewDataBinding.actMainTl.run {
             setupWithViewPager(viewDataBinding.actMainVp)
-            getTabAt(0)!!.customView =
-                bottomNavigationLayout.findViewById(R.id.top_navigation_rl_feed) as RelativeLayout
-            getTabAt(1)!!.customView =
-                bottomNavigationLayout.findViewById(R.id.top_navigation_rl_ssg_sag) as RelativeLayout
-            getTabAt(2)!!.customView =
-                bottomNavigationLayout.findViewById(R.id.top_navigation_rl_calendar) as RelativeLayout
-            getTabAt(3)!!.customView =
-                bottomNavigationLayout.findViewById(R.id.top_navigation_rl_review) as RelativeLayout
+
+            getTabAt(0)!!.customView = naviBinding.topNavigationRlHome
+            getTabAt(1)!!.customView = naviBinding.topNavigationRlCalendar
+            getTabAt(2)!!.customView = naviBinding.topNavigationRlCommunity
+            getTabAt(3)!!.customView = naviBinding.topNavigationRlNotification
+            getTabAt(4)!!.customView = naviBinding.topNavigationRlMypage
 
             setTabRippleColor(null)
+
+            addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
+                override fun onTabReselected(tab: TabLayout.Tab?) {}
+
+                override fun onTabSelected(tab: TabLayout.Tab?) {
+                    when(tab?.position){
+                        3 -> {
+                            viewDataBinding.actMainClNoticeCount.visibility = GONE
+                        }
+                    }
+                }
+
+                override fun onTabUnselected(tab: TabLayout.Tab?) {
+                    when(tab?.position){
+                        3 -> viewModel.getUserNoticeCount()
+                    }
+                }
+
+            })
         }
+
+
+    }
+
+    private fun setBottomNavigation(){
+        viewDataBinding.actMainClNoticeCount.bringToFront()
+        viewModel.getUserNoticeCount()
     }
 
     fun moveFragment(item: Int){
@@ -146,7 +194,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, SsgSagViewModel>() {
         display.getSize(size)
 
        GetWidth.windowWidth = size.x
-
     }
 
 

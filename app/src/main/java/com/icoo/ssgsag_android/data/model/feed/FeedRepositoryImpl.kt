@@ -10,9 +10,9 @@ class FeedRepositoryImpl (val api: NetworkService, val pref: PreferenceManager) 
         .getCategoryFeeds(pref.findPreference("TOKEN", ""), curPage, categoryIdx)
         .map { it.data }
 
-    override fun getTodayFeeds(): Single<ArrayList<FeedCategory>> = api
-        .getTodayFeeds(pref.findPreference("TOKEN", ""))
-        .map {it.data}
+    override fun getTodayFeeds(curPage: Int, pageSize: Int): Single<FeedMain> = api
+        .getTodayFeeds(pref.findPreference("TOKEN", ""), curPage, pageSize)
+        .map { it.data }
 
     override fun getBookmarkedFeeds(curPage: Int): Single<ArrayList<Feed>> = api
         .getBookmarkedFeeds(pref.findPreference("TOKEN", ""), 1, curPage)

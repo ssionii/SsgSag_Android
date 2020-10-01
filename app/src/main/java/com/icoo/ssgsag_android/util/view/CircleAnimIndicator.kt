@@ -9,7 +9,6 @@ import android.view.animation.Animation
 import android.view.animation.ScaleAnimation
 import android.widget.ImageView
 import android.widget.LinearLayout
-import com.icoo.ssgsag_android.ui.main.feed.context
 import java.util.jar.Attributes
 
 public class CircleAnimIndicator(context : Context, attrs : AttributeSet?) : LinearLayout(context, attrs) {
@@ -56,6 +55,10 @@ public class CircleAnimIndicator(context : Context, attrs : AttributeSet?) : Lin
 
 
         selectDot(0)
+    }
+
+    fun deleteDoPanel(){
+        this.removeAllViews()
     }
 
     /**

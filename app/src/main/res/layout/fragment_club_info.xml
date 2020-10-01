@@ -5,7 +5,7 @@
     <data>
         <variable
                 name="vm"
-                type="com.icoo.ssgsag_android.ui.main.review.reviewDetail.ReviewDetailViewModel" />
+                type="com.icoo.ssgsag_android.ui.main.community.review.reviewDetail.ReviewDetailViewModel" />
     </data>
 
     <androidx.core.widget.NestedScrollView

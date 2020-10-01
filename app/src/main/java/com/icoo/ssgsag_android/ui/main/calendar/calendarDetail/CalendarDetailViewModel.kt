@@ -15,7 +15,6 @@ import com.icoo.ssgsag_android.data.model.poster.PosterRepository
 import com.icoo.ssgsag_android.data.model.poster.posterDetail.PosterDetail
 import com.icoo.ssgsag_android.data.model.poster.posterDetail.analytics.Analytics
 import com.icoo.ssgsag_android.data.model.schedule.ScheduleRepository
-import com.icoo.ssgsag_android.ui.main.feed.context
 import com.icoo.ssgsag_android.util.scheduler.SchedulerProvider
 import io.reactivex.Single
 import org.json.JSONArray
@@ -66,7 +65,7 @@ class CalendarDetailViewModel(
                         }else
                             _detailImage.postValue(this.photoUrl)
                     }else{
-                        _detailImage.postValue(this.photoUrl2)
+                        _detailImage.postValue(this.photoUrl2!!)
                     }
                 }
             }, {
