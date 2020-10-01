@@ -12,8 +12,7 @@ import androidx.viewpager.widget.PagerAdapter
 import com.icoo.ssgsag_android.R
 import com.icoo.ssgsag_android.data.model.ads.AdItem
 import com.icoo.ssgsag_android.databinding.ItemBannerImageBinding
-import com.icoo.ssgsag_android.ui.main.allPosters.AllPostersFragment
-import com.icoo.ssgsag_android.ui.main.feed.FeedWebActivity
+import com.icoo.ssgsag_android.ui.main.community.feed.FeedWebActivity
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 
 

@@ -8,5 +8,6 @@ data class Feed (
     val feedUrl: String,
     val feedPreviewImgUrl: String?,
     var isSave:Int,
-    val showNum: Int
+    val showNum: Int,
+    val categoryIdx : Int
 )

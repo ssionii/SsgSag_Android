@@ -63,7 +63,7 @@ class TodaySwipePosterActivity
 
         viewDataBinding.actTodaySwipePosterRlGoCalendar.setSafeOnClickListener {
             finish()
-            (MainActivity.mainActivityContext.mainContext as MainActivity).moveFragment(2)
+            (MainActivity.mainActivityContext.mainContext as MainActivity).moveFragment(1)
 
         }
     }

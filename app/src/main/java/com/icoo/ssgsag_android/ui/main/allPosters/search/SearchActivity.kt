@@ -20,7 +20,7 @@ import com.icoo.ssgsag_android.base.BaseRecyclerViewAdapter
 import com.icoo.ssgsag_android.data.model.poster.posterDetail.PosterDetail
 import com.icoo.ssgsag_android.databinding.ActivitySearchBinding
 import com.icoo.ssgsag_android.databinding.ItemAllPostersBinding
-import com.icoo.ssgsag_android.ui.main.review.ReviewListRecyclerViewAdapter
+import com.icoo.ssgsag_android.ui.main.community.review.ReviewListRecyclerViewAdapter
 import com.icoo.ssgsag_android.ui.main.review.club.registration.ClubManagerCheckActivity
 import com.icoo.ssgsag_android.util.extensionFunction.setSafeOnClickListener
 import com.icoo.ssgsag_android.util.view.WrapContentLinearLayoutManager

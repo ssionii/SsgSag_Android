@@ -15,13 +15,21 @@ import com.icoo.ssgsag_android.data.model.poster.PosterResponse
 import com.icoo.ssgsag_android.data.model.poster.TodaySsgSagResponse
 import com.icoo.ssgsag_android.data.model.poster.posterDetail.PosterDetailResponse
 import com.icoo.ssgsag_android.data.model.ads.AdsDataResponse
+import com.icoo.ssgsag_android.data.model.community.CommunityMainResponse
+import com.icoo.ssgsag_android.data.model.community.board.BoardPostDetailResponse
+import com.icoo.ssgsag_android.data.model.community.board.BoardPostListResponse
 import com.icoo.ssgsag_android.data.model.poster.allPoster.AllPosterAd
 import com.icoo.ssgsag_android.data.model.poster.allPoster.AllPosterAdResponse
 import com.icoo.ssgsag_android.data.model.review.club.response.*
 import com.icoo.ssgsag_android.data.model.signUp.SignUpResponse
 import com.icoo.ssgsag_android.data.model.signUp.UniversityListResponse
 import com.icoo.ssgsag_android.data.model.subscribe.SubscribeResponse
+import com.icoo.ssgsag_android.data.model.user.myBoard.BookmarkedResponse
+import com.icoo.ssgsag_android.data.model.user.myBoard.MyCommentResponse
+import com.icoo.ssgsag_android.data.model.user.myBoard.MyPost
+import com.icoo.ssgsag_android.data.model.user.myBoard.MyPostResponse
 import com.icoo.ssgsag_android.data.model.user.userInfo.UserInfoResponse
+import com.icoo.ssgsag_android.data.model.user.userNotice.UserNoticeResponse
 import io.reactivex.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -121,6 +129,50 @@ interface NetworkService {
         @Header("Content-Type") content_type: String,
         @Body() body: JsonObject
     ): Single<NullDataResponse>
+
+    // 알림 조회
+    @GET("/user/notify")
+    fun getUserNotice(
+        @Header("Authorization") token: String,
+        @Query("curPage") curPage: Int,
+        @Query("pageSize") pageSize: Int
+    ) : Single<UserNoticeResponse>
+
+    // 알림 조회
+    @GET("/user/notify/count")
+    fun getUserNoticeCount(
+        @Header("Authorization") token: String
+    ) : Single<IntResponse>
+
+    // 내 게시글 조회
+    @GET("/user/myContent")
+    fun getMyPost(
+        @Header("Authorization") token: String,
+        @Query("curPage") curPage: Int,
+        @Query("pageSize") pageSize: Int
+    ): Single<MyPostResponse>
+    // 내 댓글 조회
+    @GET("/user/myComment")
+    fun getMyComment(
+        @Header("Authorization") token: String,
+        @Query("curPage") curPage: Int,
+        @Query("pageSize") pageSize: Int
+    ): Single<MyCommentResponse>
+    // 저장한 게시글 조회
+    @GET("/community/save")
+    fun getBookmarkedPost(
+        @Header("Authorization") token: String,
+        @Query("curPage") curPage: Int,
+        @Query("pageSize") pageSize: Int
+    ): Single<BookmarkedResponse>
+
+    //저장한 피드 조회
+    @GET("/feed")
+    fun getBookmarkedFeeds(
+        @Header("Authorization") token: String,
+        @Query("save") isSave: Int,
+        @Query("curPage") curPage: Int
+    ):Single<FeedsResponse>
 
     //region 유저 로그 수집
     //포스터 상세보기에서 웹사이트 버튼 클릭
@@ -327,9 +379,11 @@ interface NetworkService {
 
     //region
     // 오늘의 피드 조회
-    @GET("/feed/today")
+    @GET("/feed/v2/today")
     fun getTodayFeeds(
-        @Header("Authorization") token: String
+        @Header("Authorization") token: String,
+        @Query("curPage") curPage: Int,
+        @Query("categoryIdx") category: Int
     ):Single<FeedTodayResponse>
     //카테고리별 피드 조회(최신순)
     @GET("/feed")
@@ -337,13 +391,6 @@ interface NetworkService {
         @Header("Authorization") token: String,
         @Query("curPage") curPage: Int,
         @Query("categoryIdx") category: Int
-    ):Single<FeedsResponse>
-    //저장한 피드 조회(등록순)
-    @GET("/feed")
-    fun getBookmarkedFeeds(
-        @Header("Authorization") token: String,
-        @Query("save") isSave: Int,
-        @Query("curPage") curPage: Int
     ):Single<FeedsResponse>
     //피드 한개 조회(조회수 안 올라감)
     @GET("/feed/{feedIdx}")
@@ -380,6 +427,13 @@ interface NetworkService {
         @Part photo: MultipartBody.Part?
     ): Single<StringResponse>
 
+    // 사진 등록
+    @Multipart
+    @POST("/upload/photo")
+    fun postPhoto(
+        @Header("Authorization") token: String,
+        @Part photo: MultipartBody.Part?
+    ): Single<StringResponse>
 
     // region
     // 동아리 등록
@@ -454,14 +508,6 @@ interface NetworkService {
         @Query("curPage") curPage: Int
     ): Single<ClubsResponse>
 
-    // 동아리 사진 등록
-    @Multipart
-    @POST("/upload/photo")
-    fun postClubRgstrPhoto(
-        @Header("Authorization") token: String,
-        @Part photo: MultipartBody.Part?
-    ): Single<StringResponse>
-
     // 동아리 후기 등록 여부 조회
     @GET("/club/{clubIdx}/post/already")
     fun getAlreadyWriteReview(
@@ -513,6 +559,138 @@ interface NetworkService {
         @Header("Authorization") token: String,
         @Path("clubPostIdx") clubPostIdx: Int
     ): Single<NullDataResponse>
+
+
+    // 커뮤니티
+    // 메인 화면 조회
+    @GET("/community/mainview")
+    fun getCommunityMain(
+        @Header("Authorization") token: String
+    ): Single<CommunityMainResponse>
+
+
+    // 게시글 조회
+    @GET("/community")
+    fun getBoardPost(
+        @Header("Authorization") token: String,
+        @Query("category") category: String,
+        @Query("curPage") curPage: Int,
+        @Query("pageSize") pageSize: Int
+    ): Single<BoardPostListResponse>
+    // 게시글 작성
+    @POST("/community")
+    fun writeBoardPost(
+        @Header("Content-Type") content_type: String,
+        @Header("Authorization") token: String,
+        @Body() body : JsonObject
+    ): Single<NullDataResponse>
+    // 게시글 수정
+    @PUT("/community")
+    fun editBoardPost(
+        @Header("Content-Type") content_type: String,
+        @Header("Authorization") token: String,
+        @Body() body : JsonObject
+    ): Single<NullDataResponse>
+    // 게시글 상세보기
+    @GET("/community/{communityIdx}")
+    fun getPostDetail(
+        @Header("Authorization") token: String,
+        @Path("communityIdx") communityIdx: Int
+    ): Single<BoardPostDetailResponse>
+    // 게시글 상세보기 (조회수 반영 X)
+    @GET("/community/{communityIdx}")
+    fun refreshPostDetail(
+        @Header("Authorization") token: String,
+        @Path("communityIdx") communityIdx: Int,
+        @Query("isReset") isReset : Int
+    ): Single<BoardPostDetailResponse>
+    // 게시글 삭제
+    @DELETE("/community/{communityIdx}")
+    fun deleteBoardPost(
+        @Header("Authorization") token: String,
+        @Path("communityIdx") communityIdx : Int
+    ): Single<NullDataResponse>
+    // 게시글 좋아요
+    @POST("/community/like")
+    fun likeCommunityPost(
+        @Header("Authorization") token: String,
+        @Query("communityIdx") communityIdx: Int
+    ): Single<NullDataResponse>
+    // 게시글 좋아요 취소
+    @DELETE("/community/like")
+    fun unlikeCommunityPost(
+        @Header("Authorization") token: String,
+        @Query("communityIdx") communityIdx: Int
+    ): Single<NullDataResponse>
+    // 게시글 북마크
+    @POST("/community/save")
+    fun bookmarkCommunityPost(
+        @Header("Authorization") token: String,
+        @Query("communityIdx") communityIdx: Int
+    ): Single<NullDataResponse>
+    // 게시글 북마크 취소
+    @DELETE("/community/save")
+    fun unbookmarkCommunityPost(
+        @Header("Authorization") token: String,
+        @Query("communityIdx") communityIdx: Int
+    ): Single<NullDataResponse>
+
+
+    // 댓글 작성
+    @POST("/community/comment")
+    fun writePostComment(
+        @Header("Content-Type") content_type: String,
+        @Header("Authorization") token: String,
+        @Body() body : JsonObject
+    ):Single<NullDataResponse>
+    // 댓글 삭제
+    @DELETE("/community/comment/{commentIdx}")
+    fun deletePostComment(
+        @Header("Authorization") token: String,
+        @Path("commentIdx") commentIdx : Int
+    ): Single<NullDataResponse>
+    // 댓글 좋아요
+    @POST("/community/comment/like")
+    fun likeCommunityComment(
+        @Header("Authorization") token: String,
+        @Query("commentIdx") communityIdx: Int
+    ): Single<NullDataResponse>
+    // 댓글 좋아요 취소
+    @DELETE("/community/comment/like")
+    fun unlikeCommunityComment(
+        @Header("Authorization") token: String,
+        @Query("commentIdx") communityIdx: Int
+    ): Single<NullDataResponse>
+
+
+    // 답글 작성
+    @POST("/community/ccomment")
+    fun writePostReply(
+        @Header("Content-Type") content_type: String,
+        @Header("Authorization") token: String,
+        @Body() body : JsonObject
+    ):Single<NullDataResponse>
+    // 답글 삭제
+    @DELETE("/community/ccomment/{ccommentIdx}")
+    fun deletePostReply(
+        @Header("Authorization") token: String,
+        @Path("ccommentIdx") ccommentIdx : Int
+    ): Single<NullDataResponse>
+    // 답글 좋아요
+    @POST("/community/ccomment/like")
+    fun likeCommunityReply(
+        @Header("Authorization") token: String,
+        @Query("ccommentIdx") ccommunityIdx: Int
+    ): Single<NullDataResponse>
+    // 답글 좋아요 취소
+    @DELETE("/community/ccomment/like")
+    fun unlikeCommunityReply(
+        @Header("Authorization") token: String,
+        @Query("ccommentIdx") ccommunityIdx: Int
+    ): Single<NullDataResponse>
+
+
+
 
 
     // 광고

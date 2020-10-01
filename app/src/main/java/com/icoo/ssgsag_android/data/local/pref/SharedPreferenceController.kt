@@ -21,7 +21,7 @@ object SharedPreferenceController{
     private val seeFeedCoachMark = "feedCoachMark"
     private val seeSsgSagCoachMark = "ssgSagCoachMark"
     private val seeCalendarCoachMark = "calendarCoachMark"
-    private val seeReviewCoachMark = "reviewCoachMark"
+    private val seeCommunityCoachMark = "communityCoachMark"
 
     private val firebaseInstanceId = "instanceId"
 
@@ -180,17 +180,17 @@ object SharedPreferenceController{
         return pref.getBoolean(seeCalendarCoachMark, true)
     }
 
-    fun setReviewCoachMark(context: Context, v : Boolean)
+    fun setCommunityCoachMark(context: Context, v : Boolean)
     {
-        val pref = context.getSharedPreferences(seeReviewCoachMark, Context.MODE_PRIVATE) //현재 내 기기에서만 볼수 있는 데이터
+        val pref = context.getSharedPreferences(seeCommunityCoachMark, Context.MODE_PRIVATE) //현재 내 기기에서만 볼수 있는 데이터
         val editor = pref.edit()
-        editor.putBoolean(seeReviewCoachMark, v)
+        editor.putBoolean(seeCommunityCoachMark, v)
         editor.apply()
     }
 
-    fun getReviewCoachMark(context: Context) : Boolean {
-        val pref = context.getSharedPreferences(seeReviewCoachMark, Context.MODE_PRIVATE) //현재 내 기기에서만 볼수 있는 데이터
-        return pref.getBoolean(seeReviewCoachMark, true)
+    fun getCommunityCoachMark(context: Context) : Boolean {
+        val pref = context.getSharedPreferences(seeCommunityCoachMark, Context.MODE_PRIVATE) //현재 내 기기에서만 볼수 있는 데이터
+        return pref.getBoolean(seeCommunityCoachMark, true)
     }
 
     fun setFireBaseInstanceId(context: Context, v: String) {

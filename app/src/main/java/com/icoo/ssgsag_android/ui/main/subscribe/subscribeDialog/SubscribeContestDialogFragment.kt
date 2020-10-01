@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.view.KeyEvent
 import com.icoo.ssgsag_android.BR
 import com.icoo.ssgsag_android.R
-import com.icoo.ssgsag_android.base.BaseDialogFragment
+import com.icoo.ssgsag_android.base.dialogFragment.BaseDialogFragment
 import com.icoo.ssgsag_android.base.BaseRecyclerViewAdapter
 import com.icoo.ssgsag_android.data.model.subscribe.SubscribeFilter
 import com.icoo.ssgsag_android.databinding.ItemFilterMatchParentBinding

@@ -6,15 +6,13 @@ import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.icoo.ssgsag_android.base.BaseViewModel
-import com.icoo.ssgsag_android.data.model.poster.Poster
 import com.icoo.ssgsag_android.data.model.poster.PosterRepository
 import com.icoo.ssgsag_android.data.model.poster.posterDetail.PosterDetail
 import com.icoo.ssgsag_android.data.model.user.UserRepository
 import com.icoo.ssgsag_android.data.model.user.userInfo.UserInfo
-import com.icoo.ssgsag_android.ui.main.myPage.MyPageActivity
+import com.icoo.ssgsag_android.ui.main.myPage.MyPageFragment
 import com.icoo.ssgsag_android.ui.main.subscribe.SubscribeActivity
 import com.icoo.ssgsag_android.util.scheduler.SchedulerProvider
-import org.w3c.dom.Comment
 import kotlin.reflect.KClass
 
 class SsgSagViewModel(
@@ -27,10 +25,16 @@ class SsgSagViewModel(
     val isProgress: LiveData<Int> get() = _isProgress
     private val _allPosters = MutableLiveData<ArrayList<PosterDetail>>()
     val allPosters: LiveData<ArrayList<PosterDetail>> get() = _allPosters
+
     private val _posterCount = MutableLiveData<Int>()
     val posterCount: LiveData<Int> get() = _posterCount
+    private val _noticeCount = MutableLiveData<Int>()
+    val noticeCount: LiveData<Int> get() = _noticeCount
+
     private val _userCnt = MutableLiveData<Int>()
     val userCnt: LiveData<Int> get() = _userCnt
+    private val _userInfo = MutableLiveData<UserInfo>()
+    val userInfo : LiveData<UserInfo> get() = _userInfo
 
 
     var endImageCount = 0
@@ -91,12 +95,37 @@ class SsgSagViewModel(
         )
     }
 
-
     fun posterCountDown() {
         _posterCount.let {
             it.postValue(it.value!!.toInt() - 1)
         }
+    }
 
+
+    fun getUserNoticeCount(){
+        addDisposable(
+            userRepository.getUserNoticeCount()
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.mainThread())
+                .subscribe({
+                    _noticeCount.value = it
+                }, {
+                    Log.e("get notice count error", it.message)
+                })
+        )
+    }
+
+    fun getUserInfo(){
+        addDisposable(
+            userRepository.getUserInfo()
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.mainThread())
+                .subscribe({
+                    _userInfo.value = it
+                }, {
+                    Log.e("get user info error", it.message)
+                })
+        )
     }
 
     fun navigatePhoto(activity: KClass<*>, photoUrl: String) {
@@ -106,7 +135,7 @@ class SsgSagViewModel(
 
     fun navigatePage(idx: Int){
         when(idx) {
-            0-> _activityToStart.postValue(Pair(MyPageActivity::class, null))
+            0-> _activityToStart.postValue(Pair(MyPageFragment::class, null))
             1->  _activityToStart.postValue(Pair(SubscribeActivity::class, null))
         }
     }
@@ -117,9 +146,5 @@ class SsgSagViewModel(
 
     private fun hideProgress() {
         _isProgress.value = View.INVISIBLE
-    }
-
-    companion object {
-        private val TAG = "SsgSagViewModel"
     }
 }

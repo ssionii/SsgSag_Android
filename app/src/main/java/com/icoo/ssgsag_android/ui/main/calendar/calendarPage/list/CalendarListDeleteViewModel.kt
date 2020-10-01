@@ -10,7 +10,6 @@ import com.icoo.ssgsag_android.SsgSagApplication
 import com.icoo.ssgsag_android.base.BaseViewModel
 import com.icoo.ssgsag_android.data.model.schedule.Schedule
 import com.icoo.ssgsag_android.data.model.schedule.ScheduleRepository
-import com.icoo.ssgsag_android.ui.main.feed.context
 import com.icoo.ssgsag_android.util.scheduler.SchedulerProvider
 import org.json.JSONArray
 import org.json.JSONObject

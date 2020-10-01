@@ -29,6 +29,8 @@
                     android:id="@+id/item_all_posters_card_iv_poster"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:adjustViewBounds="true"
+                    topCropGlideImg="@{poster.photoUrl}"
                     tools:src="@drawable/img_poster"/>
         </androidx.cardview.widget.CardView>
 

@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+                name="postComment"
+                type="com.icoo.ssgsag_android.data.model.community.board.PostComment" />
+    </data>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        replyCommentBg="@{postComment.selected}">
+    <LinearLayout
+            android:id="@+id/item_board_post_detail_recomment_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="12dp"
+            android:layout_marginLeft="60dp"
+            android:layout_marginRight="20dp">
+        <ImageView
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:src="@drawable/profile"
+                profileImg="@{postComment.userProfileUrl}"/>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_marginLeft="8dp">
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+                <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="12dp"
+                        android:textColor="@color/black_1"
+                        android:letterSpacing="-0.02"
+                        tools:text="파이오오"
+                        android:text="@{postComment.userNickname}"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/noto_sans_kr_bold"
+                        />
+                <ImageView
+                        ivVisibilityByBool="@{postComment.mine}"
+                        android:id="@+id/item_board_post_detail_reply_iv_more"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_category_etc"/>
+            </LinearLayout>
+
+            <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="@color/grey_4"
+                    app:cardCornerRadius="3dp"
+                    app:cardElevation="0dp">
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="10dp"
+                        android:textColor="@color/grey_1"
+                        android:letterSpacing="-0.02"
+                        tools:text="\ufeff@파이오오"
+                        android:fontFamily="@font/noto_sans_kr_medium"
+                        replyUserName="@{postComment.commentName}"
+                        android:layout_marginHorizontal="4dp"
+                        android:layout_marginTop="1dp"
+                        android:layout_marginBottom="2dp"/>
+            </androidx.cardview.widget.CardView>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12dp"
+                    android:layout_marginTop="2dp"
+                    android:textColor="@color/black_1"
+                    android:letterSpacing="-0.02"
+                    android:text="@{postComment.content}"
+                    android:linksClickable="true"
+                    android:autoLink="web"
+                    tools:text="참여대상이 최대 20억 밸류의 시드 투자 유치를 원하는 창업 3년 이내의 초기 창업기업 또는 팀이라고?"
+                    android:fontFamily="@font/noto_sans_kr_regular"
+                    />
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="10dp"
+                        android:textColor="@color/grey_2"
+                        android:letterSpacing="-0.02"
+                        tools:text="21시간"
+                        regDate="@{postComment.regDate}"
+                        android:fontFamily="@font/noto_sans_kr_regular"
+                        />
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="10dp"
+                        android:textColor="@color/grey_1"
+                        android:letterSpacing="-0.02"
+                        tools:text="공감 0"
+                        commentLikeTextColor="@{postComment.like}"
+                        postDetailLikeNum="@{postComment.likeNum}"
+                        android:fontFamily="@font/noto_sans_kr_medium"
+                        android:layout_marginLeft="12dp"
+                        />
+                <TextView
+                        android:id="@+id/item_board_post_detail_reply_tv_reply"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="10dp"
+                        android:textColor="@color/grey_1"
+                        android:letterSpacing="-0.02"
+                        android:text="답글 달기"
+                        android:fontFamily="@font/noto_sans_kr_medium"
+                        android:layout_marginLeft="12dp"
+                        />
+                <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"/>
+                <ImageView
+                        android:id="@+id/item_board_post_detail_reply_iv_like"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        commentLike="@{postComment.like}"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/grey_4"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/item_board_post_detail_recomment_ll"
+            android:layout_marginTop="12dp"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

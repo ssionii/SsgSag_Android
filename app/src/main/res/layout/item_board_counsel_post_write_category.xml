@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+                name="category"
+                type="com.icoo.ssgsag_android.data.model.community.board.CounselBoardCategory" />
+    </data>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_marginBottom="8dp">
+    <androidx.cardview.widget.CardView
+            android:id="@+id/item_board_counsel_post_write_category_cv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:cardCornerRadius="4dp"
+            app:cardElevation="0dp"
+            categoryBg="@{category.click}">
+        <TextView
+                android:id="@+id/item_board_counsel_post_write_category_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12dp"
+                android:textColor="@color/grey_2"
+                android:letterSpacing="-0.02"
+                android:gravity="center_horizontal"
+                tools:text="일상/연애"
+                android:fontFamily="@font/noto_sans_kr_bold"
+                android:layout_gravity="center"
+                android:text="@{category.name}"
+                categoryText="@{category.click}"
+                />
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

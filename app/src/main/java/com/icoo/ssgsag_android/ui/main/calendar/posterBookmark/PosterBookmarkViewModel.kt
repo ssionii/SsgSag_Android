@@ -5,7 +5,6 @@ import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.icoo.ssgsag_android.base.BaseViewModel
 import com.icoo.ssgsag_android.data.model.poster.PosterRepository
-import com.icoo.ssgsag_android.ui.main.feed.context
 import com.icoo.ssgsag_android.util.scheduler.SchedulerProvider
 
 class PosterBookmarkViewModel(

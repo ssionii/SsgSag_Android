@@ -10,7 +10,8 @@ import com.icoo.ssgsag_android.base.BaseViewModel
 import com.icoo.ssgsag_android.data.model.review.ReviewRepository
 import com.icoo.ssgsag_android.data.model.review.club.ClubPost
 import com.icoo.ssgsag_android.data.model.review.club.ClubReviewRepository
-import com.icoo.ssgsag_android.ui.main.feed.context
+import com.icoo.ssgsag_android.ui.main.community.review.ReviewType
+import com.icoo.ssgsag_android.SsgSagApplication.Companion.getGlobalApplicationContext
 import com.icoo.ssgsag_android.util.scheduler.SchedulerProvider
 
 class MyReviewViewModel(
@@ -26,7 +27,7 @@ class MyReviewViewModel(
     val internQuestions = arrayListOf("Q1. 성장 | 인턴 기간동안 얼마나 성장했나요?", "Q2. 급여 | 급여는 만족스러웠나요?"
         , "Q3. 강도 | 근무 강도는 어땠나요?", "Q4. 사내문화 | 사내문화는 및 분위기는 어땠나요?")
 
-    var reviewType = "club"
+    var reviewType = 0
 
     private val _myReviews = MutableLiveData<ArrayList<ClubPost>>()
     val myReviews : LiveData<ArrayList<ClubPost>> get() = _myReviews
@@ -91,11 +92,7 @@ class MyReviewViewModel(
 
     fun setMyReviewDetail(review: ClubPost){
         _myReviewDetail.value = review
-        when(review.clubType){
-            0,1 -> reviewType ="club"
-            2 -> reviewType = "act"
-            3 -> reviewType = "intern"
-        }
+        reviewType = review.clubType!!
     }
 
     fun updateReview(body: JsonObject){
@@ -127,21 +124,21 @@ class MyReviewViewModel(
 
     fun setScoreQuestion(){
         when(reviewType){
-            "club" -> {
+            ReviewType.UNION_CLUB, ReviewType.UNIV_CLUB -> {
                 _questions.postValue(clubQuestions)
                 _rateLabels.postValue(arrayListOf(context.resources.getStringArray(R.array.fun_label), context.resources.getStringArray(
                     R.array.degree_label)
                     ,context.resources.getStringArray(R.array.intense_label), context.resources.getStringArray(
                         R.array.basic_label)))
             }
-            "act" -> {
+            ReviewType.ACT -> {
                 _questions.postValue(actQuestions)
                 _rateLabels.postValue(arrayListOf(context.resources.getStringArray(R.array.basic_label), context.resources.getStringArray(
                     R.array.fun_label)
                     ,context.resources.getStringArray(R.array.intense_label), context.resources.getStringArray(
                         R.array.basic_label)))
             }
-            "intern" -> {
+            ReviewType.INTERN -> {
                 _questions.postValue(internQuestions)
                 _rateLabels.postValue(arrayListOf(context.resources.getStringArray(R.array.growth_label), context.resources.getStringArray(
                     R.array.basic_label)
