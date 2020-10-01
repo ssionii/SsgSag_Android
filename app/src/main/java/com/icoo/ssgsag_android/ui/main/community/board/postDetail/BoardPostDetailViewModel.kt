@@ -106,9 +106,6 @@ class BoardPostDetailViewModel(
                     if(it.status == 200){
                         var tempPostDetail = postDetail.value!!
                         tempPostDetail.save = false
-                        Toast.makeText(
-                            context,
-                            "[내 정보 > 스크랩한 글] 에 보관되었습니다.",Toast.LENGTH_SHORT).show()
 
                         _postDetail.value = tempPostDetail
                     }
@@ -127,6 +124,10 @@ class BoardPostDetailViewModel(
                     if(it.status == 200){
                         var tempPostDetail = postDetail.value!!
                         tempPostDetail.save = true
+
+                        Toast.makeText(
+                            context,
+                            "[내 정보 > 스크랩한 글] 에 보관되었습니다.",Toast.LENGTH_SHORT).show()
 
                         _postDetail.value = tempPostDetail
                     }
