@@ -61,9 +61,6 @@ class FeedWebActivity : BaseActivity<ActivityFeedWebDetailBinding, FeedViewModel
                     super.onPageFinished(view, url)
                 }
             }
-
-
-
         }
 
         viewDataBinding.actFeedWebDetailTvName.text = intent.getStringExtra("title")
